@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keranjang & Checkout | Peziarah</title>
+<meta name="description" content="Selesaikan pesananmu di Peziarah.">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://peziarah.com/keranjang/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Peziarah">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Keranjang & Checkout | Peziarah">
+<meta property="og:description" content="Selesaikan pesananmu di Peziarah.">
+<meta property="og:url" content="https://peziarah.com/keranjang/">
+<meta property="og:image" content="https://peziarah.com/assets/og-peziarah.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Rosario kayu Peziarah — kado rohani buatan tangan">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Keranjang & Checkout | Peziarah">
+<meta name="twitter:description" content="Selesaikan pesananmu di Peziarah.">
+<meta name="twitter:image" content="https://peziarah.com/assets/og-peziarah.jpg">
+<meta name="theme-color" content="#F7F3EA">
+<link rel="icon" href="/assets/favicon.png" type="image/png">
+<script src="/support.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H8J9GKJ2NT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-H8J9GKJ2NT');
+</script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Cinzel:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F3EA;color:#1A1712;font-family:'Hanken Grotesk',Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  a:hover{color:#6C4BA6}
+  button{font-family:'Space Mono',monospace;cursor:pointer}
+  input,textarea,select{font-family:'Hanken Grotesk',Helvetica,sans-serif}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:#6C4BA6}
+  ::selection{background:#6C4BA6;color:#F7F3EA}
+</style>
+</helmet>
+
+<div style="overflow-x:clip;position:relative;min-height:100vh;display:flex;flex-direction:column">
+
+  <header style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 20px;background:#F7F3EA;border-bottom:1px solid #E7DFD1">
+    <a href="/" style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(16px,4.2vw,19px);letter-spacing:0.16em">PEZIARAH</a>
+    <nav style="{{ deskNavStyle }}">
+      <a href="/katalog/">Katalog</a>
+      <a href="/ziarah/">Ziarah</a>
+      <a href="/jurnal/">Jurnal</a>
+      <a href="/hampers/">Hampers</a>
+    </nav>
+    <div style="{{ deskUtilStyle }}">
+      <div style="{{ searchWrapStyle }}">
+        <button type="button" aria-label="Cari" onClick="{{ toggleSearch }}" style="border:none;background:none;padding:0;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#1A1712">CARI</button>
+        <input type="search" aria-label="Cari produk" value="{{ q }}" onChange="{{ onQ }}" onKeyDown="{{ onQKey }}" placeholder="rosario, salib, batik…" style="{{ searchInputStyle }}" />
+      </div>
+      <a href="#" style="color:#6C4BA6;white-space:nowrap">KERANJANG ({{ count }})</a>
+    </div>
+    <button type="button" aria-label="Buka menu" onClick="{{ toggleMenu }}" style="{{ burgerStyle }}">
+      <span style="display:block;width:22px;height:2px;background:#1A1712"></span>
+      <span style="display:block;width:22px;height:2px;background:#1A1712"></span>
+    </button>
+
+    <div style="{{ resultsStyle }}">
+      <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172;padding:4px 6px 12px">{{ resultsLabel }}</div>
+      <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
+        <a href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
+          <span style="{{ r.thumbStyle }}"></span>
+          <span style="flex:1;min-width:0">
+            <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.02em">{{ r.name }}</span>
+            <span style="display:block;font-family:'Space Mono',monospace;font-size:11px;color:#8A8172;margin-top:2px">{{ r.cat }}</span>
+          </span>
+          <span style="font-family:'Space Mono',monospace;font-size:12px;white-space:nowrap">{{ r.price }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </header>
+
+  <div style="{{ drawerStyle }}">
+    <button type="button" aria-label="Tutup menu" onClick="{{ toggleMenu }}" style="position:absolute;top:14px;right:18px;width:44px;height:44px;border:none;background:none;color:#1A1712;font-family:'Space Mono',monospace;font-size:22px">×</button>
+    <a href="/" style="font-family:'Cinzel',serif;font-weight:600;font-size:24px;letter-spacing:0.16em;color:#1A1712">PEZIARAH</a>
+    <span style="width:34px;height:1px;background:#D6CBB8;margin:26px 0 30px"></span>
+    <nav style="display:flex;flex-direction:column;align-items:center;gap:22px;font-family:'Archivo',sans-serif;font-weight:700;font-size:30px;letter-spacing:-0.03em;color:#1A1712">
+      <a href="/katalog/" onClick="{{ toggleMenu }}">Katalog</a>
+      <a href="/ziarah/" onClick="{{ toggleMenu }}">Ziarah</a>
+      <a href="/jurnal/" onClick="{{ toggleMenu }}">Jurnal</a>
+      <a href="/hampers/" onClick="{{ toggleMenu }}">Hampers</a>
+    </nav>
+    <div style="display:flex;gap:14px;margin-top:38px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:#8A8172">
+      <a href="#" onClick="{{ toggleMenu }}" style="color:#6C4BA6">KERANJANG ({{ count }})</a>
+    </div>
+  </div>
+
+  <main data-screen-label="Keranjang" style="flex:1;padding:clamp(30px,4.4vw,56px) 28px 80px;max-width:1280px;width:100%;margin:0 auto">
+
+    <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:clamp(24px,3.4vw,40px)">
+      <h1 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(34px,6vw,64px);line-height:0.95;letter-spacing:-0.04em;margin:0">Keranjang kamu</h1>
+      <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.12em;color:#8A8172">{{ countLabel }}</span>
+    </div>
+
+    <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:1px solid #D6CBB8;padding:clamp(40px,6vw,80px) 0;display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start;justify-content:space-between">
+        <div style="flex:1 1 380px;min-width:280px">
+          <h2 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:clamp(24px,3.4vw,36px);letter-spacing:-0.03em;margin:0 0 14px;max-width:20ch">Belum ada apa-apa di sini.</h2>
+          <p style="margin:0 0 28px;font-size:16px;line-height:1.6;color:#5B5347;max-width:42ch">Mulai dari rosario yang paling sering dicari, atau lihat seluruh katalog.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <a href="/katalog/" style="padding:15px 28px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px" style-hover="background:#6C4BA6">Lihat Katalog</a>
+            <a href="/hampers/" style="padding:15px 28px;border-radius:999px;border:1px solid #1A1712;font-weight:600;font-size:15px" style-hover="background:#1A1712;color:#F7F3EA">Hampers</a>
+          </div>
+        </div>
+        <div style="flex:1 1 300px;min-width:260px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">PALING DICARI</span>
+          <sc-for list="{{ picks }}" as="p" hint-placeholder-count="3">
+            <a href="{{ p.href }}" style="display:flex;align-items:center;gap:14px;border-top:1px solid #E7DFD1;padding-top:14px" style-hover="opacity:0.72">
+              <span style="{{ p.thumbStyle }}"></span>
+              <span style="flex:1;min-width:0">
+                <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:16px;letter-spacing:-0.02em">{{ p.name }}</span>
+                <span style="display:block;font-family:'Space Mono',monospace;font-size:11px;color:#8A8172;margin-top:3px">{{ p.price }}</span>
+              </span>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasItems }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-wrap:wrap;gap:clamp(28px,3.6vw,56px);align-items:flex-start">
+
+        <div style="flex:1 1 520px;min-width:300px">
+          <sc-for list="{{ lines }}" as="l" hint-placeholder-count="2">
+            <div style="display:flex;gap:clamp(14px,2vw,22px);padding:22px 0;border-top:1px solid #D6CBB8">
+              <a href="{{ l.href }}" style="{{ l.mediaStyle }}">
+                <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#9A9083">{{ l.slot }}</span>
+              </a>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;justify-content:space-between;gap:16px;align-items:baseline">
+                  <a href="{{ l.href }}" style="font-family:'Archivo',sans-serif;font-weight:700;font-size:clamp(17px,2vw,21px);letter-spacing:-0.025em;line-height:1.15">{{ l.name }}</a>
+                  <span style="font-family:'Space Mono',monospace;font-size:14px;white-space:nowrap">{{ l.lineTotal }}</span>
+                </div>
+                <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#8A8172">{{ l.meta }}</div>
+                <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:2px">
+                  <div style="display:flex;align-items:center;border:1px solid #D6CBB8;border-radius:999px;overflow:hidden">
+                    <button type="button" aria-label="Kurangi" onClick="{{ l.dec }}" style="width:42px;height:42px;border:none;background:none;font-size:17px;color:#1A1712" style-hover="background:#EFE8DA">−</button>
+                    <span style="min-width:34px;text-align:center;font-family:'Space Mono',monospace;font-size:14px">{{ l.qty }}</span>
+                    <button type="button" aria-label="Tambah" onClick="{{ l.inc }}" style="width:42px;height:42px;border:none;background:none;font-size:17px;color:#1A1712" style-hover="background:#EFE8DA">+</button>
+                  </div>
+                  <span style="font-family:'Space Mono',monospace;font-size:11px;color:#8A8172">{{ l.unitLabel }}</span>
+                  <button type="button" onClick="{{ l.remove }}" style="margin-left:auto;border:none;background:none;padding:0;font-size:11px;letter-spacing:0.1em;color:#8A8172;text-decoration:underline" style-hover="color:#6C4BA6">HAPUS</button>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+
+          <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid #D6CBB8;padding-top:20px">
+            <a href="/katalog/" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;border-bottom:1px solid #C3B9A6;padding-bottom:3px">← LANJUT BELANJA</a>
+            <button type="button" onClick="{{ clearCart }}" style="border:none;background:none;padding:0;font-size:12px;letter-spacing:0.1em;color:#8A8172;text-decoration:underline" style-hover="color:#6C4BA6">KOSONGKAN TAS</button>
+          </div>
+        </div>
+
+        <aside style="flex:1 1 340px;min-width:290px;position:sticky;top:96px;border-radius:28px;background:#EFE8DA;padding:clamp(22px,2.6vw,32px)">
+          <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:22px;letter-spacing:-0.03em;margin:0 0 20px">Ringkasan</h2>
+
+          <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:20px">
+            <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">TUJUAN PENGIRIMAN</span>
+            <sc-for list="{{ zones }}" as="z" hint-placeholder-count="3">
+              <button type="button" onClick="{{ z.pick }}" style="{{ z.style }}">
+                <span>{{ z.name }}</span>
+                <span style="font-family:'Space Mono',monospace;font-size:12px">{{ z.cost }}</span>
+              </button>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:11px;font-size:15px;border-top:1px solid #DCD2C0;padding-top:18px">
+            <div style="display:flex;justify-content:space-between;gap:12px"><span style="color:#5B5347">Subtotal</span><span style="font-family:'Space Mono',monospace;font-size:14px">{{ subtotal }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px"><span style="color:#5B5347">Ongkir</span><span style="font-family:'Space Mono',monospace;font-size:14px">{{ shipping }}</span></div>
+            <sc-if value="{{ freeShip }}" hint-placeholder-val="{{ false }}">
+              <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#6C4BA6">GRATIS ONGKIR — BELANJA DI ATAS RP 500.000</div>
+            </sc-if>
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline;border-top:1px solid #DCD2C0;padding-top:14px;margin-top:4px">
+              <span style="font-family:'Archivo',sans-serif;font-weight:700;font-size:17px">Total</span>
+              <span style="font-family:'Space Mono',monospace;font-weight:700;font-size:19px">{{ total }}</span>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px;margin:24px 0 18px;padding:5px;border-radius:999px;background:#E2D9C7">
+            <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="2">
+              <button type="button" onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ isWa }}" hint-placeholder-val="{{ true }}">
+            <div>
+              <p style="margin:0 0 18px;font-size:14px;line-height:1.55;color:#5B5347">Pesanan kamu dikirim sebagai chat ke WhatsApp kami. Kami balas dengan total akhir + instruksi transfer, biasanya di bawah 1 jam pada jam kerja.</p>
+              <textarea aria-label="Catatan pesanan" value="{{ note }}" onChange="{{ onNote }}" placeholder="Catatan — nama penerima, tanggal dibutuhkan, permintaan khusus…" rows="3" style="width:100%;padding:14px;border-radius:16px;border:1px solid #D6CBB8;background:#F7F3EA;font-size:14px;line-height:1.5;resize:vertical;margin-bottom:16px"></textarea>
+              <a href="{{ waHref }}" target="_blank" rel="noopener" style="display:block;text-align:center;padding:17px 24px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px" style-hover="background:#6C4BA6">Kirim Pesanan via WhatsApp</a>
+              <p style="margin:14px 0 0;font-family:'Space Mono',monospace;font-size:10px;line-height:1.6;letter-spacing:0.06em;color:#8A8172">KERANJANG TERSIMPAN DI PERANGKAT INI SAMPAI KAMU HAPUS</p>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isForm }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <sc-if value="{{ ordered }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:20px;background:#F7F3EA;border:1px solid #D6CBB8;padding:20px">
+                  <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6C4BA6">PESANAN DICATAT</span>
+                  <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:24px;letter-spacing:-0.02em;margin:8px 0 14px">{{ orderCode }}</div>
+                  <p style="margin:0 0 16px;font-size:14px;line-height:1.6;color:#5B5347">Transfer {{ total }} ke rekening di bawah, lalu kirim bukti transfer via WhatsApp dengan menyebut kode pesanan.</p>
+                  <div style="display:flex;flex-direction:column;gap:6px;font-family:'Space Mono',monospace;font-size:13px;border-top:1px solid #E7DFD1;padding-top:14px;margin-bottom:18px">
+                    <span>{{ bankName }}</span>
+                    <span style="font-size:17px;letter-spacing:0.04em">{{ bankNumber }}</span>
+                    <span style="color:#8A8172">a.n. {{ bankHolder }}</span>
+                  </div>
+                  <a href="{{ proofHref }}" target="_blank" rel="noopener" style="display:block;text-align:center;padding:15px 24px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px" style-hover="background:#6C4BA6">Kirim Bukti Transfer</a>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <sc-for list="{{ fields }}" as="f" hint-placeholder-count="5">
+                    <label style="display:flex;flex-direction:column;gap:6px">
+                      <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#8A8172">{{ f.label }}</span>
+                      <input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.placeholder }}" style="{{ f.style }}" />
+                    </label>
+                  </sc-for>
+                  <label style="display:flex;flex-direction:column;gap:6px">
+                    <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#8A8172">ALAMAT LENGKAP</span>
+                    <textarea value="{{ addr }}" onChange="{{ onAddr }}" placeholder="Jalan, nomor, RT/RW, kelurahan, kecamatan, kota, kode pos" rows="3" style="{{ addrStyle }}"></textarea>
+                  </label>
+                  <button type="button" onClick="{{ submit }}" style="{{ submitStyle }}">{{ submitLabel }}</button>
+                  <p style="margin:2px 0 0;font-family:'Space Mono',monospace;font-size:10px;line-height:1.6;letter-spacing:0.06em;color:#8A8172">PEMBAYARAN MANUAL — TRANSFER BANK, KONFIRMASI VIA WHATSAPP</p>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </aside>
+      </div>
+    </sc-if>
+  </main>
+
+  <footer style="background:#1A1712;color:#F7F3EA;padding:64px 28px 32px">
+    <div style="display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;margin-bottom:48px">
+      <div style="flex:1 1 300px;min-width:260px">
+        <div style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(32px,5.4vw,68px);letter-spacing:0.06em;line-height:1">PEZIARAH</div>
+        <p style="margin:18px 0 0;max-width:38ch;font-size:15px;line-height:1.55;color:#A8A092">Gift shop, operator ziarah dan jurnal iman Katolik. Dibuat di, dan dikirim ke, seluruh Indonesia.</p></div><div style="flex:2 1 560px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:34px 40px;font-size:14px"><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BELANJA</span><a href="/katalog/#rosario">Rosario</a><a href="/katalog/#salib">Salib &amp; Krusifiks</a><a href="/katalog/#perhiasan">Perhiasan</a><a href="/katalog/#apparel">Tenun &amp; Batik</a><a href="/katalog/#wallart">Wall Art</a><a href="/katalog/#merch">Merch</a><a href="/hampers/">Hampers</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ZIARAH</span><a href="/ziarah/#rute">Semua Rute</a><a href="/ziarah/rute/sendangsono/">Sendangsono</a><a href="/ziarah/rute/ganjuran/">Ganjuran</a><a href="/ziarah/rute/muntilan/">Muntilan</a><a href="/ziarah/rute/custom/">Susun Rute Sendiri</a><a href="/jurnal/#ziarah">Catatan Ziarah</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BANTUAN</span><a href="/faq/#pengiriman">Pengiriman</a><a href="/faq/#retur">Tukar &amp; Retur</a><a href="/faq/#produk">Ukuran &amp; Perawatan</a><a href="/tentang/">Tentang Kami</a><a href="/kontak/">Hubungi Kami</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">IKUTI</span><a href="https://instagram.com/peziarahsociety" target="_blank" rel="noopener">Instagram</a><a href="https://facebook.com/peziarahsociety" target="_blank" rel="noopener">Facebook</a><a href="#">WhatsApp</a></div></div></div>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;border-top:1px solid rgba(247,243,234,0.14);padding-top:22px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#8A8172">
+      <span>© 2026 PEZIARAH</span>
+      <span style="text-transform:uppercase">{{ verse }}</span>
+      <span><a href="/kebijakan-privasi/" style="color:inherit;text-decoration:none">KEBIJAKAN PRIVASI</a> · <a href="/syarat-ketentuan/" style="color:inherit;text-decoration:none">SYARAT &amp; KETENTUAN</a></span>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+// Checkout is front-end only: WhatsApp hands the order to a human, the form
+// records it locally and shows transfer instructions. Swap `submit()` for a
+// POST /api/orders when a backend lands — the cart module stays as-is.
+const WA = "6281200000000";
+const BANK = { name: "BCA", number: "123 456 7890", holder: "Peziarah Nusantara" };
+
+// Flat-rate zones stand in for a courier API. Free above this subtotal.
+const FREE_OVER = 500000;
+const ZONES = [
+  { id: "jabodetabek", name: "Jabodetabek", cost: 20000 },
+  { id: "jawa", name: "Pulau Jawa", cost: 30000 },
+  { id: "luar", name: "Luar Jawa", cost: 45000 }
+];
+
+let CART = null;
+let FORMS = null;
+let PRODUCTS = [];
+let CAT_LABEL = {};
+
+class Component extends DCLogic {
+  state = {
+    verse: "“Sebab kami hidup karena percaya, bukan karena melihat” — 2 Kor 5:7",
+    items: [], mobile: false, menu: false,
+    q: "", searchOpen: false,
+    zone: "jabodetabek", tab: "wa", note: "",
+    name: "", phone: "", email: "", addr: "",
+    ordered: false, orderCode: ""
+  };
+
+  componentDidMount() {
+    import("/data/verses.js").then(m => this.setState({ verse: m.currentVerse() }));
+    import("/data/products.js").then(m => {
+      PRODUCTS = m.PRODUCTS;
+      CAT_LABEL = {};
+      m.CATEGORIES.forEach(c => { CAT_LABEL[c.id] = c.name; });
+      this.forceUpdate();
+    });
+    import("/data/forms.js").then(m => { FORMS = m; });
+    import("/data/cart.js").then(m => {
+      CART = m;
+      this.setState({ items: m.getCart() });
+      this._off = m.subscribe(items => this.setState({ items }));
+    });
+    this._sync = () => {
+      const mobile = window.innerWidth < 860;
+      if (mobile !== this.state.mobile) this.setState({ mobile, menu: false });
+    };
+    this._sync();
+    window.addEventListener("resize", this._sync);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this._sync);
+    if (this._off) this._off();
+  }
+
+  rp(n) { return CART ? CART.formatRupiah(n) : "Rp " + Math.round(n).toLocaleString("id-ID"); }
+
+  chrome() {
+    const m = this.state.mobile;
+    return {
+      verse: this.state.verse,
+      deskNavStyle: m ? "display:none" : "display:flex;gap:22px;font-size:13px;font-weight:500",
+      deskUtilStyle: m ? "display:none" : "display:flex;gap:16px;align-items:center;font-family:'Space Mono',monospace;font-size:12px",
+      burgerStyle: m
+        ? "display:flex;flex-direction:column;justify-content:center;gap:6px;width:44px;height:44px;align-items:flex-end;padding:0;border:none;background:none;cursor:pointer"
+        : "display:none",
+      drawerStyle: (m && this.state.menu)
+        ? "position:fixed;inset:0;z-index:80;background:#F7F3EA;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 24px"
+        : "display:none",
+      toggleMenu: () => this.setState(s => ({ menu: !s.menu }))
+    };
+  }
+
+  // Inline expanding search: the field grows out of the CARI label and shows a
+  // live result panel under the header.
+  search() {
+    const open = this.state.searchOpen;
+    const q = this.state.q.trim().toLowerCase();
+    const hits = q.length < 2 ? [] : PRODUCTS.filter(p =>
+      p.name.toLowerCase().includes(q) || (CAT_LABEL[p.cat] || "").toLowerCase().includes(q)
+    ).slice(0, 6);
+
+    return {
+      q: this.state.q,
+      searchWrapStyle: "display:flex;align-items:center;gap:10px",
+      searchInputStyle: `width:${open ? 230 : 0}px;opacity:${open ? 1 : 0};padding:${open ? "9px 14px" : "9px 0"};border:1px solid #D6CBB8;border-radius:999px;background:#F7F3EA;font-size:13px;transition:width .3s ease,opacity .25s ease`,
+      toggleSearch: () => this.setState(s => ({ searchOpen: !s.searchOpen, q: s.searchOpen ? "" : s.q })),
+      onQ: e => this.setState({ q: e.target.value }),
+      onQKey: e => { if (e.key === "Escape") this.setState({ searchOpen: false, q: "" }); },
+      results: hits.map(p => ({
+        name: p.name,
+        cat: (CAT_LABEL[p.cat] || "").toUpperCase(),
+        price: p.price,
+        href: `/produk/${p.id}/`,
+        thumbStyle: "width:46px;height:46px;border-radius:12px;flex:none;" + (p.image
+          ? `background:#EAE3D5 url("${p.image}") center/cover`
+          : "background-image:repeating-linear-gradient(60deg,#DCD2C0 0 8px,#EAE3D5 8px 16px)")
+      })),
+      resultsLabel: hits.length ? `${hits.length} HASIL UNTUK “${this.state.q.trim()}”` : "TIDAK ADA HASIL",
+      resultsStyle: (open && q.length >= 2)
+        ? "position:absolute;top:100%;right:20px;width:min(420px,calc(100vw - 40px));background:#F7F3EA;border:1px solid #D6CBB8;border-radius:20px;box-shadow:0 18px 44px rgba(26,23,18,0.14);padding:14px;z-index:70"
+        : "display:none"
+    };
+  }
+
+  lineFor(item) {
+    const key = CART.keyOf(item);
+    const bump = d => CART.setQty(key, item.qty + d);
+    const src = PRODUCTS.find(p => p.id === item.id);
+    const image = item.image || (src ? src.image : "");
+    const bits = [item.variant && `${item.variantLabel || "PILIHAN"}: ${item.variant}`, item.gift && "KOTAK KADO + KARTU DOA"].filter(Boolean);
+    return {
+      name: item.name,
+      qty: item.qty,
+      href: `/produk/${item.id}/`,
+      meta: bits.length ? bits.join("  ·  ") : (CAT_LABEL[item.cat] || "").toUpperCase(),
+      unitLabel: `${this.rp(item.unit)} / pc`,
+      lineTotal: this.rp(item.unit * item.qty),
+      slot: image ? "" : "[ foto ]",
+      mediaStyle: "position:relative;display:block;flex:none;width:clamp(84px,12vw,128px);height:clamp(84px,12vw,128px);border-radius:20px;overflow:hidden;" + (image
+        ? `background:#EAE3D5 url("${image}") center/cover`
+        : "background-image:repeating-linear-gradient(60deg,#DCD2C0 0 14px,#EAE3D5 14px 28px)"),
+      inc: () => bump(1),
+      dec: () => bump(-1),
+      remove: () => CART.remove(key)
+    };
+  }
+
+  // Order text used by both checkout paths.
+  orderMessage(code) {
+    const lines = this.state.items.map(i => {
+      const v = i.variant ? ` (${i.variant})` : "";
+      return `• ${i.name}${v} × ${i.qty} — ${this.rp(i.unit * i.qty)}`;
+    });
+    const zone = ZONES.find(z => z.id === this.state.zone);
+    const sub = this.subtotalValue();
+    const ship = this.shipValue();
+    const parts = [
+      code ? `Konfirmasi pesanan ${code}` : "Halo Peziarah, saya mau pesan:",
+      "",
+      ...lines,
+      "",
+      `Subtotal: ${this.rp(sub)}`,
+      `Ongkir (${zone.name}): ${ship === 0 ? "Gratis" : this.rp(ship)}`,
+      `Total: ${this.rp(sub + ship)}`
+    ];
+    if (this.state.name) parts.push("", `Nama: ${this.state.name}`, `Telepon: ${this.state.phone}`, `Alamat: ${this.state.addr}`);
+    if (this.state.note.trim()) parts.push("", `Catatan: ${this.state.note.trim()}`);
+    return parts.join("\n");
+  }
+
+  subtotalValue() { return this.state.items.reduce((n, i) => n + i.unit * i.qty, 0); }
+
+  // Cart as one text block for the order log (one line per item).
+  itemLines() {
+    return this.state.items.map(i => {
+      const v = i.variant ? ` (${i.variant})` : "";
+      const g = i.gift ? " [kado]" : "";
+      return `${i.name}${v}${g} × ${i.qty} — ${this.rp(i.unit * i.qty)}`;
+    }).join("\n");
+  }
+
+  shipValue() {
+    const zone = ZONES.find(z => z.id === this.state.zone) || ZONES[0];
+    return this.subtotalValue() >= FREE_OVER ? 0 : zone.cost;
+  }
+
+  field(key, label, placeholder, type) {
+    return {
+      label, placeholder, type: type || "text",
+      value: this.state[key],
+      onChange: e => this.setState({ [key]: e.target.value }),
+      style: "padding:13px 15px;border-radius:14px;border:1px solid #D6CBB8;background:#F7F3EA;font-size:14px;width:100%"
+    };
+  }
+
+  renderVals() {
+    const items = this.state.items;
+    const n = items.reduce((a, i) => a + i.qty, 0);
+    const sub = this.subtotalValue();
+    const ship = this.shipValue();
+    const free = sub >= FREE_OVER && items.length > 0;
+    const filled = this.state.name.trim() && this.state.phone.trim() && this.state.addr.trim();
+
+    return {
+      ...this.chrome(),
+      ...this.search(),
+      count: n,
+      countLabel: n === 0 ? "KOSONG" : `${n} ITEM · ${items.length} BARIS`,
+      isEmpty: items.length === 0,
+      hasItems: items.length > 0,
+      lines: CART ? items.map(i => this.lineFor(i)) : [],
+      clearCart: () => { if (CART) CART.clear(); },
+
+      picks: PRODUCTS.filter(p => p.badge === "BEST SELLER" || p.badge === "BARU").slice(0, 3).map(p => ({
+        name: p.name, price: p.price, href: `/produk/${p.id}/`,
+        thumbStyle: "width:56px;height:56px;border-radius:14px;flex:none;" + (p.image
+          ? `background:#EAE3D5 url("${p.image}") center/cover`
+          : "background-image:repeating-linear-gradient(60deg,#DCD2C0 0 8px,#EAE3D5 8px 16px)")
+      })),
+
+      zones: ZONES.map(z => {
+        const on = this.state.zone === z.id;
+        return {
+          name: z.name,
+          cost: (sub >= FREE_OVER) ? "Gratis" : this.rp(z.cost),
+          pick: () => this.setState({ zone: z.id }),
+          style: `display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;padding:13px 16px;border-radius:14px;text-align:left;font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:500;border:1px solid ${on ? "#6C4BA6" : "#DCD2C0"};background:${on ? "#6C4BA6" : "transparent"};color:${on ? "#F7F3EA" : "#1A1712"}`
+        };
+      }),
+
+      subtotal: this.rp(sub),
+      shipping: ship === 0 ? "Gratis" : this.rp(ship),
+      freeShip: free,
+      total: this.rp(sub + ship),
+
+      tabs: [
+        { id: "wa", label: "WHATSAPP" },
+        { id: "form", label: "TRANSFER" }
+      ].map(t => {
+        const on = this.state.tab === t.id;
+        return {
+          label: t.label,
+          pick: () => this.setState({ tab: t.id }),
+          style: `flex:1;padding:11px 8px;border-radius:999px;border:none;font-size:11px;letter-spacing:0.1em;background:${on ? "#F7F3EA" : "transparent"};color:${on ? "#1A1712" : "#8A8172"};box-shadow:${on ? "0 2px 8px rgba(26,23,18,0.1)" : "none"}`
+        };
+      }),
+      isWa: this.state.tab === "wa",
+      isForm: this.state.tab === "form",
+      note: this.state.note,
+      onNote: e => this.setState({ note: e.target.value }),
+      waHref: `https://wa.me/${WA}?text=${encodeURIComponent(this.orderMessage(""))}`,
+
+      fields: [
+        this.field("name", "NAMA PENERIMA", "Nama lengkap"),
+        this.field("phone", "NOMOR WHATSAPP", "08xx xxxx xxxx", "tel"),
+        this.field("email", "EMAIL (OPSIONAL)", "nama@email.com", "email")
+      ],
+      addr: this.state.addr,
+      onAddr: e => this.setState({ addr: e.target.value }),
+      addrStyle: "padding:13px 15px;border-radius:14px;border:1px solid #D6CBB8;background:#F7F3EA;font-size:14px;line-height:1.5;resize:vertical;width:100%",
+      submitLabel: filled ? "Buat Pesanan" : "Lengkapi data dulu",
+      submitStyle: `padding:16px 24px;border-radius:999px;border:none;font-weight:600;font-size:15px;background:${filled ? "#1A1712" : "#C3B9A6"};color:#F7F3EA;margin-top:6px`,
+      submit: () => {
+        if (!filled) return;
+        // Front-end order id. A real backend issues this.
+        const code = "PZ-" + Date.now().toString(36).slice(-5).toUpperCase();
+        const zone = ZONES.find(z => z.id === this.state.zone) || ZONES[0];
+        if (FORMS) FORMS.submit("pesanan", {
+          kode_pesanan: code,
+          nama: this.state.name,
+          telepon: this.state.phone,
+          email: this.state.email,
+          alamat: this.state.addr,
+          zona_pengiriman: zone.name,
+          subtotal: this.rp(sub),
+          ongkir: ship === 0 ? "Gratis" : this.rp(ship),
+          total: this.rp(sub + ship),
+          rincian_barang: this.itemLines(),
+          catatan: this.state.note
+        });
+        this.setState({ ordered: true, orderCode: code });
+      },
+      showForm: !this.state.ordered,
+      ordered: this.state.ordered,
+      orderCode: this.state.orderCode,
+      bankName: BANK.name,
+      bankNumber: BANK.number,
+      bankHolder: BANK.holder,
+      proofHref: `https://wa.me/${WA}?text=${encodeURIComponent(this.orderMessage(this.state.orderCode))}`
+    };
+  }
+}
+
+</script>
+</body>
+</html>
