@@ -1,0 +1,75 @@
+# Peziarah
+
+> Toko rohani Katolik asal Indonesia. Menjual rosario, salib dan krusifiks,
+> perhiasan rohani, tenun dan batik bermotif rohani, lilin, wall art, buku,
+> hampers, serta merch untuk rombongan ziarah paroki. Semua dikerjakan
+> pengrajin lokal dalam batch kecil dan dikirim ke seluruh Indonesia.
+> Didirikan alumni SMU Van Lith Angkatan 7 (lulusan tahun 2000) sebagai
+> komunitas kolektif lintas profesi dan provinsi, bekerja sama dengan seniman,
+> pengrajin, dan komunitas lokal.
+> Situs: https://peziarah.com
+
+Peziarah is an Indonesian Catholic gift shop selling handmade rosaries,
+crosses, devotional jewellery, batik, candles, wall art, hampers, and
+custom merchandise for parish pilgrimage groups. Prices are in Indonesian
+Rupiah (IDR). Orders are placed on the site and confirmed over WhatsApp.
+
+## Yang dijual (kategori)
+
+- **Rosario** — rosario kayu, batu, dan mutiara; dirangkai tangan.
+- **Salib & Krusifiks** — salib dinding dan meja, kayu sonokeling dengan korpus kuningan.
+  - **Altar Rumah** (sub-kategori) — nis kayu dan altar meja kecil untuk figur devosi.
+- **Perhiasan & Aksesori** — kalung, cincin, gelang, anting bermotif rohani (ichthys, salib).
+- **Tenun & Batik** — batik tulis dan tenun bermotif rohani; bisa dijahit jadi kemeja atau dress.
+- **Wall Art** — ikon cukil kayu, poster risograph, panel kuningan.
+- **Merch** — kaos grafis, tote, bandana, patch.
+- **Lilin Aroma** — lilin kedelai untuk doa dan adorasi.
+- **Carry Goods** — dopp kit kulit, dry bag untuk ziarah.
+- **Buku** — buku dan jurnal jahit tangan.
+- **Body Art** — tato studio permanen bertema rohani dan henna, oleh artist Gilang "Bara" Prawira (Terang Ink). Harga per cm, minimum berlaku.
+- **Hampers** — paket kado untuk Komuni Pertama, Krisma, baptis, dan Natal.
+
+## Layanan
+
+- **Ziarah** — penyusunan rute ziarah di Jawa (Sendangsono, Ganjuran, Muntilan, dan lainnya)
+  plus merch custom bernama paroki, minimum 12 pcs.
+- **Custom paroki** — kaos, syal tenun, dan tag koper dicetak nama paroki, tanggal, dan rute.
+
+## Cara pesan & bayar
+
+- Pesanan dibuat lewat keranjang di situs, lalu dikonfirmasi via WhatsApp.
+- Pembayaran: transfer bank manual, konfirmasi bukti transfer lewat WhatsApp.
+- Gratis ongkir untuk pembelian di atas Rp 500.000.
+- Tukar 14 hari untuk kesalahan ukuran, satu kali gratis.
+
+## Yang perlu diketahui
+
+- Setiap produk diperiksa satu per satu sebelum dipaketkan; dikemas kertas dan kain,
+  tanpa plastik sekali pakai, dengan kartu perawatan bernama pengrajinnya.
+- Beberapa produk dibuat dalam edisi terbatas bernomor seri dan tidak diulang.
+- Peziarah **tidak** menjual atau menjanjikan benda yang sudah diberkati.
+  Pemberkatan benda rohani adalah wewenang imam dan tidak diperjualbelikan.
+
+## Halaman utama
+
+- [Beranda](https://peziarah.com/): ringkasan kategori, produk unggulan, dan edisi terbatas.
+- [Shuttle Kerkhof Muntilan–Sendangsono](https://peziarah.com/jurnal/artikel/shuttle-kerkhof-sendangsono/): layanan antar-jemput peziarah, Rp 45.000 per orang pulang-pergi, 4 trip per hari.
+- [Katalog](https://peziarah.com/katalog/): seluruh produk dengan filter kategori dan pencarian.
+- [Hampers](https://peziarah.com/hampers/): paket kado siap kirim.
+- [Ziarah](https://peziarah.com/ziarah/): rute ziarah dan merch rombongan.
+- [Jurnal](https://peziarah.com/jurnal/): tulisan tentang tempat ziarah dan proses kerajinan.
+- [FAQ](https://peziarah.com/faq/): pengiriman, retur, ukuran, perawatan, pembayaran.
+- [Kontak](https://peziarah.com/kontak/): WhatsApp, email, dan pendaftaran vendor pengrajin.
+- [Tentang Kami](https://peziarah.com/tentang/): siapa di balik Peziarah — kolektif alumni Van Lith Angkatan 7 (lulusan 2000), pengrajin mitra, dan batas yang dipegang.
+
+## Halaman produk
+
+Setiap produk punya halamannya sendiri di https://peziarah.com/produk/<id>/ — misalnya
+https://peziarah.com/produk/guadalupe-nis/. Daftar lengkap ada di https://peziarah.com/sitemap.xml.
+Artikel jurnal yang sudah ditulis ada di https://peziarah.com/jurnal/artikel/<slug>/.
+
+## Catatan teknis
+
+- Halaman dirender di browser (client-side). Data katalog ada di https://peziarah.com/data/products.js
+  dalam format ES module, berisi `CATEGORIES` dan `PRODUCTS`.
+- Sitemap: https://peziarah.com/sitemap.xml
