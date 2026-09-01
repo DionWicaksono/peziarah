@@ -31,6 +31,11 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Store","@id":"https://peziarah.com/#store","name":"Peziarah","url":"https://peziarah.com/","image":"https://peziarah.com/assets/og-peziarah.jpg","logo":"https://peziarah.com/assets/favicon.png","description":"Toko rohani Katolik: rosario, salib, perhiasan, batik rohani, dan hampers buatan pengrajin lokal Indonesia.","address":{"@type":"PostalAddress","addressCountry":"ID"},"areaServed":"ID","sameAs":["https://instagram.com/peziarahsociety","https://facebook.com/peziarahsociety"],"currenciesAccepted":"IDR","paymentAccepted":"Transfer bank, QRIS, COD","priceRange":"Rp 129K – Rp 2.520K"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Kategori Peziarah","itemListElement":[{"@type":"ListItem","position":1,"name":"Rosario","url":"https://peziarah.com/katalog/#rosario"},{"@type":"ListItem","position":2,"name":"Salib & Krusifiks","url":"https://peziarah.com/katalog/#salib"},{"@type":"ListItem","position":3,"name":"Perhiasan & Aksesori","url":"https://peziarah.com/katalog/#perhiasan"},{"@type":"ListItem","position":4,"name":"Tenun & Batik","url":"https://peziarah.com/katalog/#apparel"},{"@type":"ListItem","position":5,"name":"Wall Art","url":"https://peziarah.com/katalog/#wallart"},{"@type":"ListItem","position":6,"name":"Merch","url":"https://peziarah.com/katalog/#merch"},{"@type":"ListItem","position":7,"name":"Lilin Aroma","url":"https://peziarah.com/katalog/#lilin"},{"@type":"ListItem","position":8,"name":"Carry Goods","url":"https://peziarah.com/katalog/#carry"},{"@type":"ListItem","position":9,"name":"Buku","url":"https://peziarah.com/katalog/#buku"},{"@type":"ListItem","position":10,"name":"Body Art","url":"https://peziarah.com/katalog/#bodyart"}],"numberOfItems":10}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://peziarah.com/#website","name":"Peziarah","url":"https://peziarah.com/","inLanguage":"id-ID","publisher":{"@id":"https://peziarah.com/#store"}}</script>
+<link rel="modulepreload" href="/data/verses.js">
+<link rel="modulepreload" href="/data/products.js">
+<link rel="modulepreload" href="/data/hampers.js">
+<link rel="modulepreload" href="/data/journal.js">
+<link rel="modulepreload" href="/data/cart.js">
 <script src="/support.js" onerror="var s=document.createElement('script');s.src='support.js';document.head.appendChild(s)"></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8J9GKJ2NT"></script>
@@ -41,6 +46,7 @@
   gtag('config', 'G-H8J9GKJ2NT');
 </script>
 <noscript><style>x-dc{display:none!important}</style></noscript>
+<style>x-dc{display:none}</style>
 </head>
 <body>
 <div id="__pr" style="font-family:'Hanken Grotesk',Helvetica,Arial,sans-serif;background:#F7F3EA;color:#1A1712;padding:28px 28px 60px;max-width:1180px;margin:0 auto">
@@ -109,7 +115,7 @@
 <div style="overflow-x:clip;position:relative">
 
   <header style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:#F7F3EA;border-bottom:1px solid #E7DFD1">
-    <a href="#" style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(16px,4.2vw,19px);letter-spacing:0.16em">PEZIARAH</a>
+    <a href="/" style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(16px,4.2vw,19px);letter-spacing:0.16em">PEZIARAH</a>
     <nav style="{{ deskNavStyle }}">
       <a href="#katalog">Katalog</a>
       <a href="/ziarah/">Ziarah</a>
@@ -145,7 +151,7 @@
 
   <div style="{{ drawerStyle }}">
     <button type="button" aria-label="Tutup menu" onClick="{{ toggleMenu }}" style="position:absolute;top:14px;right:18px;width:44px;height:44px;border:none;background:none;color:#1A1712;font-family:'Space Mono',monospace;font-size:22px;cursor:pointer">×</button>
-    <a href="#" onClick="{{ toggleMenu }}" style="font-family:'Cinzel',serif;font-weight:600;font-size:24px;letter-spacing:0.16em;color:#1A1712">PEZIARAH</a>
+    <a href="/" onClick="{{ toggleMenu }}" style="font-family:'Cinzel',serif;font-weight:600;font-size:24px;letter-spacing:0.16em;color:#1A1712">PEZIARAH</a>
     <span style="width:34px;height:1px;background:#D6CBB8;margin:26px 0 30px"></span>
     <nav style="display:flex;flex-direction:column;align-items:center;gap:22px;font-family:'Archivo',sans-serif;font-weight:700;font-size:30px;letter-spacing:-0.03em;color:#1A1712">
       <a href="#katalog" onClick="{{ toggleMenu }}">Katalog</a>
@@ -376,7 +382,7 @@
     <div style="display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;margin-bottom:56px">
       <div style="flex:1 1 300px;min-width:260px">
         <div style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(34px,5.6vw,72px);letter-spacing:0.06em;line-height:1">PEZIARAH</div>
-        <p style="margin:18px 0 0;max-width:38ch;font-size:15px;line-height:1.55;color:#A8A092">Gift shop, operator ziarah dan jurnal iman Katolik. Dibuat di, dan dikirim ke, seluruh Indonesia.</p></div><div style="flex:2 1 560px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:34px 40px;font-size:14px"><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BELANJA</span><a href="/katalog/#rosario">Rosario</a><a href="/katalog/#salib">Salib &amp; Krusifiks</a><a href="/katalog/#perhiasan">Perhiasan</a><a href="/katalog/#apparel">Tenun &amp; Batik</a><a href="/katalog/#wallart">Wall Art</a><a href="/katalog/#merch">Merch</a><a href="/hampers/">Hampers</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ZIARAH</span><a href="/ziarah/#rute">Semua Rute</a><a href="/ziarah/rute/sendangsono/">Sendangsono</a><a href="/ziarah/rute/ganjuran/">Ganjuran</a><a href="/ziarah/rute/muntilan/">Muntilan</a><a href="/ziarah/rute/custom/">Susun Rute Sendiri</a><a href="/jurnal/#ziarah">Catatan Ziarah</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BANTUAN</span><a href="/faq/#pengiriman">Pengiriman</a><a href="/faq/#retur">Tukar &amp; Retur</a><a href="/faq/#produk">Ukuran &amp; Perawatan</a><a href="/tentang/">Tentang Kami</a><a href="/kontak/">Hubungi Kami</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">IKUTI</span><a href="https://instagram.com/peziarahsociety" target="_blank" rel="noopener">Instagram</a><a href="https://facebook.com/peziarahsociety" target="_blank" rel="noopener">Facebook</a><a href="#">WhatsApp</a></div></div></div>
+        <p style="margin:18px 0 0;max-width:38ch;font-size:15px;line-height:1.55;color:#A8A092">Gift shop, operator ziarah dan jurnal iman Katolik. Dibuat di, dan dikirim ke, seluruh Indonesia.</p></div><div style="flex:2 1 560px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:34px 40px;font-size:14px"><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BELANJA</span><a href="/katalog/#rosario">Rosario</a><a href="/katalog/#salib">Salib &amp; Krusifiks</a><a href="/katalog/#perhiasan">Perhiasan</a><a href="/katalog/#apparel">Tenun &amp; Batik</a><a href="/katalog/#wallart">Wall Art</a><a href="/katalog/#merch">Merch</a><a href="/hampers/">Hampers</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ZIARAH</span><a href="/ziarah/#rute">Semua Rute</a><a href="/ziarah/rute/sendangsono/">Sendangsono</a><a href="/ziarah/rute/ganjuran/">Ganjuran</a><a href="/ziarah/rute/muntilan/">Muntilan</a><a href="/ziarah/rute/custom/">Susun Rute Sendiri</a><a href="/jurnal/#ziarah">Catatan Ziarah</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BANTUAN</span><a href="/faq/#pengiriman">Pengiriman</a><a href="/faq/#retur">Tukar &amp; Retur</a><a href="/faq/#produk">Ukuran &amp; Perawatan</a><a href="/tentang/">Tentang Kami</a><a href="/kontak/">Hubungi Kami</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">IKUTI</span><a href="https://instagram.com/peziarahsociety" target="_blank" rel="noopener">Instagram</a><a href="https://facebook.com/peziarahsociety" target="_blank" rel="noopener">Facebook</a><a href="https://wa.me/6281200000000" target="_blank" rel="noopener">WhatsApp</a></div></div></div>
     <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;border-top:1px solid rgba(247,243,234,0.14);padding-top:22px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#8A8172">
       <span>© 2026 PEZIARAH</span>
       <span style="text-transform:uppercase">{{ verse }}</span>
