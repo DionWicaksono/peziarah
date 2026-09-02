@@ -222,6 +222,102 @@
     </div>
   </section>
 
+  <div style="max-width:1280px;margin:0 auto;padding:0 28px">
+  <section data-screen-label="Peta Gua Maria" id="peta-gua-maria" style="{{ mapSectionStyle }}">
+    <div style="max-width:1280px;margin:0 auto;padding:0 28px">
+      <span style="display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">KETUK PENANDA — 13 TITIK UTAMA, 60 KANTONG</span>
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(26px,3.6vw,42px);line-height:1.04;letter-spacing:-0.035em;margin:10px 0 14px">Pilih titiknya dari peta</h2>
+      <p style="margin:0;max-width:60ch;font-size:clamp(15px,1.5vw,17px);line-height:1.6;color:#5B5347">Ini rangka yang kami pakai waktu menyusun rute custom. Ketuk titik yang kamu incar, lalu kirim ke form permintaan — kami rangkai yang searah jadi satu perjalanan.</p>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px">
+        <div style="display:flex;gap:4px;padding:4px;border-radius:999px;background:#E7DFD1">
+          <sc-for list="{{ layers }}" as="l" hint-placeholder-count="2">
+            <button type="button" onClick="{{ l.pick }}" style="{{ l.style }}">{{ l.label }}</button>
+          </sc-for>
+        </div>
+        <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;line-height:1.5;color:#8A8172;max-width:44ch">{{ layerNote }}</span>
+      </div>
+    </div>
+
+    <div style="{{ mapScrollStyle }}">
+      <div style="{{ mapInnerStyle }}">
+        <img src="/assets/java-gua-maria.webp" width="1600" height="519" loading="lazy" decoding="async" alt="Siluet Pulau Jawa dengan sebelas penanda Gua Maria" style="width:100%;display:block;user-select:none;pointer-events:none" />
+        <sc-for list="{{ guas }}" as="g" hint-placeholder-count="11">
+          <button type="button" onClick="{{ g.onSelect }}" onMouseEnter="{{ g.onEnter }}" onMouseLeave="{{ g.onLeave }}" aria-label="{{ g.aria }}" style="{{ g.hitStyle }}">
+            <span style="{{ g.dotStyle }}">{{ g.no }}</span>
+            <span style="{{ g.labelStyle }}">{{ g.short }}</span>
+          </button>
+        </sc-for>
+        <sc-for list="{{ pockets }}" as="p" hint-placeholder-count="12">
+          <button type="button" onClick="{{ p.onSelect }}" onMouseEnter="{{ p.onEnter }}" onMouseLeave="{{ p.onLeave }}" aria-label="{{ p.aria }}" style="{{ p.hitStyle }}">
+            <span style="{{ p.dotStyle }}">{{ p.count }}</span>
+            <span style="{{ p.labelStyle }}">{{ p.short }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <span style="{{ swipeHintStyle }}">← GESER PETA →</span>
+
+    <div style="{{ railStyle }}">
+      <sc-for list="{{ chips }}" as="c" hint-placeholder-count="12">
+        <button type="button" onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</button>
+      </sc-for>
+    </div>
+
+    <p style="max-width:1280px;margin:16px auto 0;padding:0 28px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;line-height:1.6;color:#9A9083">Posisi pada peta bersifat perkiraan, dibuat untuk gambaran arah — bukan untuk navigasi.</p>
+
+    <sc-if value="{{ pocOpen }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div onClick="{{ closeGua }}" style="position:fixed;inset:0;z-index:88;background:rgba(26,23,18,0.44)"></div>
+        <div role="dialog" aria-modal="true" style="{{ sheetStyle }}">
+          <div style="{{ handleStyle }}"></div>
+          <button type="button" aria-label="Tutup" onClick="{{ closeGua }}" style="{{ sheetCloseStyle }}">×</button>
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6C4BA6">KANTONG ZIARAH — {{ poc.count }} TITIK</span>
+          <h3 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(22px,4.2vw,29px);line-height:1.1;letter-spacing:-0.035em;margin:12px 0 0;padding-right:34px">{{ poc.region }}</h3>
+          <p style="margin:8px 0 0;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;line-height:1.5;color:#8A8172">{{ poc.dio }}</p>
+          <div style="display:flex;flex-direction:column;margin-top:22px;border-top:1px solid #E7DFD1">
+            <sc-for list="{{ poc.items }}" as="i" hint-placeholder-count="6">
+              <button type="button" onClick="{{ i.ask }}" style="display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;padding:14px 2px;border:none;border-bottom:1px solid #E7DFD1;background:none;font-family:'Hanken Grotesk',Helvetica,sans-serif" style-hover="background:#EDE6D8">
+                <span style="{{ i.badgeStyle }}">{{ i.no }}</span>
+                <span style="flex:1;min-width:0">
+                  <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;line-height:1.25;letter-spacing:-0.02em;color:#1A1712">{{ i.name }}</span>
+                  <span style="display:block;margin-top:4px;font-size:13px;line-height:1.45;color:#8A8172">{{ i.place }}</span>
+                </span>
+                <span style="flex:none;font-family:'Space Mono',monospace;font-size:14px;color:#B6AC99;padding-top:3px">→</span>
+              </button>
+            </sc-for>
+          </div>
+          <p style="margin:16px 0 0;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;line-height:1.6;color:#9A9083">Bulatan hijau = titik utama, ada di peta Layer 1. Ketuk baris mana pun untuk memasukkannya ke permintaan rute.</p>
+          <button type="button" onClick="{{ poc.ask }}" style="display:block;width:100%;margin-top:18px;padding:16px 24px;border-radius:999px;border:none;background:#1A1712;color:#F7F3EA;font-size:13px;letter-spacing:0.08em" style-hover="background:#6C4BA6">MASUKKAN WILAYAH INI KE PERMINTAAN</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ guaOpen }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div onClick="{{ closeGua }}" style="position:fixed;inset:0;z-index:88;background:rgba(26,23,18,0.44)"></div>
+        <div role="dialog" aria-modal="true" style="{{ sheetStyle }}">
+          <div style="{{ handleStyle }}"></div>
+          <button type="button" aria-label="Tutup" onClick="{{ closeGua }}" style="{{ sheetCloseStyle }}">×</button>
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6C4BA6">TITIK {{ gua.no }} — {{ gua.area }}</span>
+          <h3 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(24px,4.6vw,32px);line-height:1.08;letter-spacing:-0.035em;margin:12px 0 0">{{ gua.name }}</h3>
+          <p style="margin:16px 0 0;font-size:16px;line-height:1.65;color:#5B5347">{{ gua.note }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:20px">
+            <sc-for list="{{ gua.tags }}" as="t" hint-placeholder-count="2">
+              <span style="padding:6px 12px;border-radius:999px;background:#EDE6D8;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#5B5347">{{ t }}</span>
+            </sc-for>
+          </div>
+          <button type="button" onClick="{{ gua.ask }}" style="display:block;width:100%;margin-top:26px;padding:16px 24px;border-radius:999px;border:none;background:#1A1712;color:#F7F3EA;font-size:13px;letter-spacing:0.08em" style-hover="background:#6C4BA6">MASUKKAN KE PERMINTAAN RUTE</button>
+          <div style="display:flex;justify-content:space-between;gap:12px;margin-top:18px">
+            <button type="button" onClick="{{ prevGua }}" style="flex:1;padding:12px;border-radius:999px;border:1px solid #D6CBB8;background:none;font-size:11px;letter-spacing:0.08em;color:#5B5347" style-hover="background:#EDE6D8">← SEBELUMNYA</button>
+            <button type="button" onClick="{{ nextGua }}" style="flex:1;padding:12px;border-radius:999px;border:1px solid #D6CBB8;background:none;font-size:11px;letter-spacing:0.08em;color:#5B5347" style-hover="background:#EDE6D8">BERIKUTNYA →</button>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </section>
+  </div>
+
   <section data-screen-label="Galeri" style="{{ galeriStyle }}">
     <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:28px;border-top:1px solid #D6CBB8;padding-top:26px">
       <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(24px,3.2vw,38px);letter-spacing:-0.035em;margin:0">Arsip &amp; foto</h2>
@@ -387,6 +483,168 @@ let POSTS = [];
 let PRODUCTS = [];
 let CAT_LABEL = {};
 
+const GUAS = [
+  { no: "01", x: 24.1, y: 29.6, short: "Lembah Karmel", name: "Gua Maria Lembah Karmel", area: "Cikanyere, Cianjur — Jawa Barat",
+    note: "Kompleks retret Karmel di kaki Gunung Gede. Jalan salibnya panjang dan menanjak di lereng; paling ramai saat pekan Kerahiman Ilahi. Titik paling barat yang biasa kami masukkan rute.",
+    tags: ["UDARA DINGIN", "JALAN SALIB PANJANG", "ADA RUMAH RETRET"] },
+  { no: "02", x: 37.8, y: 35.9, short: "Sawer Rahmat", name: "Gua Maria Sawer Rahmat", area: "Cisantana, Kuningan — Jawa Barat",
+    note: "Di lereng Gunung Ciremai, dengan jalan salib berundak dan patung-patung ukir kayu. Nama Sundanya berarti curahan rahmat. Sering dipasangkan dengan Cirebon dalam satu hari.",
+    tags: ["LERENG CIREMAI", "PATUNG UKIR", "BERUNDAK"] },
+  { no: "03", x: 46.1, y: 57.7, short: "Kaliori", name: "Gua Maria Kaliori", area: "Banyumas, Purwokerto — Jawa Tengah",
+    note: "Gua Maria utama Keuskupan Purwokerto, berdiri di bukit dengan pandangan lepas ke lembah. Halamannya luas, jadi enak untuk rombongan besar yang bawa bus.",
+    tags: ["HALAMAN LUAS", "AKSES BUS BESAR", "DI BUKIT"] },
+  { no: "04", x: 55.1, y: 61.7, short: "Sendangsono", name: "Gua Maria Sendangsono", area: "Kulon Progo — DI Yogyakarta",
+    note: "Tempat 171 orang Jawa pertama dibaptis pada 1904. Mata airnya keluar di bawah dua pohon sono; tata kompleksnya karya Romo Mangunwijaya. Ini titik yang paling sering diminta rombongan kami.",
+    tags: ["RUTE KAMI", "MATA AIR", "SEJAK 1904"] },
+  { no: "05", x: 57.2, y: 57.6, short: "Makam Rm. Sanjaya", name: "Makam Romo Sanjaya & Kerkhof Muntilan", area: "Muntilan, Magelang — Jawa Tengah",
+    note: "Kompleks makam di belakang Museum Misi Muntilan, tempat Romo Sanjaya dimakamkan setelah dibunuh pada 1948. Bukan gua Maria, tapi hampir semua rombongan yang ke Sendangsono berhenti di sini dulu — dan shuttle kami memang berangkat dari Muntilan.",
+    tags: ["RUTE KAMI", "TITIK AWAL SHUTTLE", "MAKAM MARTIR"] },
+  { no: "06", x: 57.1, y: 47.9, short: "Kerep Ambarawa", name: "Gua Maria Kerep Ambarawa", area: "Ambarawa, Semarang — Jawa Tengah",
+    note: "Replika Lourdes yang diberkati 1954, sekarang salah satu yang paling padat di Jawa — apalagi 15 Agustus. Patung Bunda Maria Assumpta setinggi 42 meter berdiri di kompleks yang sama.",
+    tags: ["PALING RAMAI", "REPLIKA LOURDES", "PATUNG 42 M"] },
+  { no: "07", x: 58.2, y: 69.7, short: "Sendang Sriningsih", name: "Gua Maria Sendang Sriningsih", area: "Klaten — Jawa Tengah",
+    note: "Di perbukitan sisi timur Prambanan. Jalan salibnya menanjak sekitar satu kilometer, dan banyak peziarah memilih datang malam supaya lebih hening.",
+    tags: ["ZIARAH MALAM", "MENANJAK 1 KM", "DEKAT PRAMBANAN"] },
+  { no: "08", x: 56.5, y: 73.1, short: "Ganjuran", name: "Candi Hati Kudus Tuhan Yesus Ganjuran", area: "Sumbermulyo, Bambanglipuro, Bantul — DI Yogyakarta",
+    note: "Bukan gua, tapi candi — Hati Kudus Yesus dalam bentuk candi Jawa yang diberkati 1930, lengkap dengan tradisi mandi air perwitasari. Salah satu rute yang paling sering kami jalankan, biasanya dirangkai dengan Sendangsono dalam dua hari.",
+    tags: ["RUTE KAMI", "CANDI JAWA 1930", "AIR PERWITASARI"] },
+  { no: "09", x: 58.6, y: 77.1, short: "Tritis", name: "Gua Maria Tritis", area: "Giring, Paliyan, Gunungkidul — DI Yogyakarta",
+    note: "Bukan bangunan — ini gua karst asli dengan stalaktit yang meneteskan air, dari situ namanya. Paling sunyi dari sebelas titik ini, dan medannya perlu jalan kaki.",
+    tags: ["GUA ALAM", "SANGAT HENING", "PERLU JALAN KAKI"] },
+  { no: "10", x: 68.0, y: 71.6, short: "Fatima Ponorogo", name: "Gua Maria Fatima Sendang Waluyojatiningsih", area: "Klepu, Sooko, Ponorogo — Jawa Timur",
+    note: "Kompleks tenang di sisi barat Jawa Timur, banyak dipakai rombongan dari Madiun dan Solo. Ukurannya sedang, cocok jadi titik istirahat di tengah perjalanan lintas provinsi.",
+    tags: ["TITIK ISTIRAHAT", "RELATIF SEPI"] },
+  { no: "11", x: 73.4, y: 69.7, short: "Lourdes Puhsarang", name: "Gua Maria Lourdes Puhsarang", area: "Kediri — Jawa Timur",
+    note: "Bersebelahan dengan Gereja Puhsarang tahun 1936, yang dibangun dengan bentuk dan bahan Jawa — batu kali, tanpa besi. Kompleks jalan salibnya salah satu yang terbesar di Jawa Timur.",
+    tags: ["GEREJA 1936", "ARSITEKTUR JAWA", "KOMPLEKS BESAR"] },
+  { no: "12", x: 74.5, y: 78.8, short: "Sendangrejo", name: "Gua Maria Sendangrejo", area: "Blitar — Jawa Timur",
+    note: "Titik selatan Jawa Timur, sering dirangkai dengan Puhsarang dalam satu putaran Kediri–Blitar. Suasananya kampung, tanpa keramaian pedagang.",
+    tags: ["SUASANA KAMPUNG", "SEPAKET DENGAN KEDIRI"] },
+  { no: "13", x: 94.2, y: 88.0, short: "Jatiningrum", name: "Gua Maria Jatiningrum", area: "Banyuwangi — Jawa Timur",
+    note: "Ujung timur. Biasanya jadi titik terakhir sebelum rombongan menyeberang ke Bali, atau titik pertama untuk yang datang dari arah sana.",
+    tags: ["UJUNG TIMUR", "DEKAT PELABUHAN KETAPANG"] }
+];
+
+// Kantong ziarah — dikelompokkan per wilayah, dengan keuskupan sebagai label kedua.
+// Posisi penanda adalah titik tengah wilayah, bukan koordinat masing-masing gua.
+const POCKETS = [
+  { id: "jkt", x: 21.6, y: 9.6, short: "Jakarta–Tangerang", region: "Jakarta, Tangerang & Bekasi", dio: "Keuskupan Agung Jakarta",
+    items: [
+      ["Gua Maria Bunda Penebus", "Par. St. Thomas Rasul, Bojong Indah, Jakarta Barat"],
+      ["Gua Maria Ratu Rosari", "Desa Putera, Jagakarsa, Jakarta Selatan"],
+      ["Gua Maria Fatima", "Biara Suster Gembala Baik RGS, Jakarta Timur"],
+      ["Gua Maria Fatima", "Par. St. Arnoldus Janssen, Kota Bekasi"],
+      ["Gua Maria Luber Rahmat", "Par. St. Monika, Serpong, Tangerang Selatan"],
+      ["Gua Maria Penuh Rahmat", "Par. St. Laurensius, Alam Sutera, Tangerang Selatan"],
+      ["Gua Maria Ratu Damai", "Par. St. Barnabas Rasul, Pamulang, Tangerang Selatan"],
+      ["Gua Maria Bunda Hati Kudus", "Par. St. Nikodemus, Ciputat, Tangerang Selatan"],
+      ["Gua Maria Immaculata", "Stasi Maria Immaculata, Teluknaga, Kab. Tangerang"]
+    ] },
+  { id: "bgr", x: 18.6, y: 27.9, short: "Bogor–Sukabumi", region: "Bogor, Rangkasbitung & Sukabumi", dio: "Keuskupan Bogor",
+    items: [
+      ["Gua Maria Lembah Karmel", "Lembah Karmel, Cikanyere, Cipanas — Cianjur"],
+      ["Gua Maria Bukit Kanada", "Par. Santa Maria Tak Bernoda, Rangkasbitung"],
+      ["Gua Maria Biara Santa Clara", "Biara Suster Santa Clara, Pacet, Sindanglaya, Cipanas"],
+      ["Gua Maria Sumber Kahuripan", "Par. St. Fransiskus Asisi, Cibadak, Sukabumi"]
+    ] },
+  { id: "bdg", x: 33.5, y: 33.3, short: "Bandung–Kuningan", region: "Bandung, Subang & Kuningan", dio: "Keuskupan Bandung",
+    items: [
+      ["Gua Maria Fatima Sawer Rahmat", "Cisantana, Cigugur, Kuningan"],
+      ["Gua Maria Karmel", "Biara Karmel OCD, Par. Santa Maria, Lembang, Bandung"],
+      ["Gua Maria Tebar Kamulyan", "Par. Kristus Sang Penabur, Subang"]
+    ] },
+  { id: "pwt", x: 46.3, y: 49.7, short: "Purwokerto–Tegal", region: "Purwokerto, Tegal, Cilacap & Wonosobo", dio: "Keuskupan Purwokerto",
+    items: [
+      ["Gua Maria Kaliori", "Kaliori, Banyumas — Purwokerto"],
+      ["Gua Maria Ratu Surga dan Bumi", "Mejasem Barat, Kramat, Tegal"],
+      ["Gua Maria Cor Unum", "Mulyoharjo, Pemalang"],
+      ["Gua Santa Maria Nusakambangan", "Ds. Klaces, Kampung Laut, Cilacap — perlu izin & perahu"],
+      ["Gua Maria Taroanggro", "Anggrunggondo, Reco, Kertek, Wonosobo"]
+    ] },
+  { id: "smg", x: 57.2, y: 40.5, short: "Semarang–Ambarawa", region: "Semarang, Ambarawa, Kendal & Pati", dio: "Keuskupan Agung Semarang",
+    items: [
+      ["Gua Maria Kerep", "Par. St. Yusuf, Ambarawa"],
+      ["Taman Doa & Semadi Bukit Kendalisodo", "Glodogan, Harjosari, Bawen, Kab. Semarang"],
+      ["Gua Maria Sendang Sancta Rosa Mystica", "Banyuurip, Delik, Tuntang, Kab. Semarang"],
+      ["Goa Maria Pereng Getasan", "Jampelan, Getasan, Kab. Semarang"],
+      ["Goa Maria Ngaliyan", "Panti Asuhan Wikrama Putra, Ngaliyan, Semarang"],
+      ["Gua Maria Talanging Sih", "Kapel Kristus Raja, Tegalsari, Semarang"],
+      ["Gua Bunda Maria Ratu", "Besokor, Weleri, Kab. Kendal"],
+      ["Gua Maria Ratu Rosari Juwana", "Par. adm. St. Maria La Salette, Juwana, Kab. Pati"]
+    ] },
+  { id: "mgl", x: 53.2, y: 53.4, short: "Muntilan–Magelang", region: "Muntilan, Magelang, Temanggung & Purworejo", dio: "Keuskupan Agung Semarang · Keuskupan Purwokerto",
+    items: [
+      ["Makam Romo Sanjaya & Kerkhof Muntilan", "Museum Misi Muntilan, Kab. Magelang — titik awal shuttle kami"],
+      ["Gua Maria Grabag", "Wil. St. Yusuf Grabag, Kab. Magelang"],
+      ["Taman Doa Santa Maria Rawaseneng", "Ngemplak, Kandangan, Temanggung"],
+      ["Gua Maria Kendi Kencana", "Ketangi, Purwodadi, Kab. Purworejo"]
+    ] },
+  { id: "blr", x: 64.1, y: 40.5, short: "Grobogan–Blora", region: "Grobogan & Blora", dio: "Keuskupan Agung Semarang · Keuskupan Surabaya",
+    items: [
+      ["Gua Maria Penadaran", "Penadaran, Gubug, Kab. Grobogan"],
+      ["Gua Maria Sendang Harjo", "Sendangharjo, Kec. Blora, Kab. Blora"]
+    ] },
+  { id: "yog", x: 56.2, y: 69.7, short: "Yogyakarta", region: "Yogyakarta, Sleman, Kulon Progo, Bantul & Gunungkidul", dio: "Keuskupan Agung Semarang",
+    items: [
+      ["Gua Maria Lourdes Sendangsono", "Par. Promasan, Kalibawang, Kulon Progo"],
+      ["Candi Hati Kudus Tuhan Yesus Ganjuran", "Sumbermulyo, Bambanglipuro, Bantul"],
+      ["Gua Maria Tritis", "Par. St. Petrus Kanisius, Giring, Paliyan, Gunungkidul"],
+      ["Gua Maria Lawangsih", "Par. Nanggulan, Kulon Progo"],
+      ["Gua Maria Watu Blencong", "Borosuci, Par. Boro, Banjarasri, Kalibawang, Kulon Progo"],
+      ["Gua Maria Sendang Jatiningsih", "Par. St. Petrus & Paulus, Jitar, Sumberarum, Moyudan, Sleman"],
+      ["Sumur Maria Kitiran Mas", "Ger. St. Maria Assumpta, Pakem, Kaliurang, Sleman"],
+      ["Salib Suci & Gua Maria Bunda Berduka Cita Gunung Sempu", "Par. Pugeran, Kasihan, Bantul"],
+      ["Gua Maria Sendang Ratu Rosario", "Ngijorejo, Wonosari, Gunungkidul"],
+      ["Taman Maria Wahyu Ibu Ku Giriwening", "Sampang, Gedangsari, Gunungkidul"]
+    ] },
+  { id: "slo", x: 61.6, y: 62.5, short: "Solo–Klaten", region: "Solo, Klaten, Boyolali, Karanganyar & Wonogiri", dio: "Keuskupan Agung Semarang",
+    items: [
+      ["Gua Maria Sendang Sriningsih", "Dsn. Jali, Gayamharjo, Prambanan, Klaten"],
+      ["Gua Maria Marganingsih", "Par. Santa Maria Bunda Kristus, Ngaren, Bayat, Klaten"],
+      ["Gua Maria Mojosongo", "Par. Santa Maria Regina Purbowardayan, Debegan, Solo"],
+      ["Gua Maria Sendang Pawita Sinar Surya", "Par. St. Pius X, Sendang, Panjang, Tawangmangu, Karanganyar"],
+      ["Gua Maria Mawar", "Par. Hati Tak Bernoda SP Maria, Kembangsari, Musuk, Boyolali"],
+      ["Gua Maria Bunda Pemersatu", "Par. Jumapolo, Karanganyar"],
+      ["Gua Maria Sendang Ratu Kenya", "St. Ignatius, Danan, Giriwoyo, Wonogiri"],
+      ["Gua Maria Fatima Sendang Klayu", "Jlegong, Wonogiri"]
+    ] },
+  { id: "kdr", x: 71.0, y: 71.5, short: "Kediri–Blitar", region: "Kediri, Ponorogo & Blitar", dio: "Keuskupan Surabaya",
+    items: [
+      ["Gua Maria Lourdes Puh Sarang", "Par. St. Vincentius a Paulo, Semen, Kediri"],
+      ["Gua Maria Fatima Sendang Waluyojatiningsih", "Klepu, Sooko, Kab. Ponorogo"],
+      ["Gua Maria Sendangrejo", "Stasi St. Thomas Ngadirejo, Par. St. Maria Blitar"]
+    ] },
+  { id: "mlg", x: 79.9, y: 78.8, short: "Malang", region: "Malang", dio: "Keuskupan Malang",
+    items: [
+      ["Gua Maria Sendang Purwaningsih", "Par. Purworejo, Donomulyo, Kab. Malang"],
+      ["Gua Maria Sendang Retno Adi", "Biara Putri Karmel, Ngadireso, Poncokusumo, Malang"]
+    ] },
+  { id: "bwi", x: 93.7, y: 88.0, short: "Banyuwangi", region: "Banyuwangi", dio: "Keuskupan Malang",
+    items: [
+      ["Gua Maria Jatiningrum", "Par. Ratu Para Rasul, Curah Jati, Banyuwangi"],
+      ["Wisata Iman Beji Antaboga", "Kalisepanjang, Glenmore, Kab. Banyuwangi"]
+    ] }
+];
+// Nama di dalam POPKETS tidak selalu identik dengan nama di GUAS, jadi
+// pemetaannya ditulis eksplisit: nama-di-kantong → nomor pin Layer 1.
+const MAJOR = {
+  "Gua Maria Lembah Karmel": "01",
+  "Gua Maria Fatima Sawer Rahmat": "02",
+  "Gua Maria Kaliori": "03",
+  "Gua Maria Lourdes Sendangsono": "04",
+  "Makam Romo Sanjaya & Kerkhof Muntilan": "05",
+  "Gua Maria Kerep": "06",
+  "Gua Maria Sendang Sriningsih": "07",
+  "Candi Hati Kudus Tuhan Yesus Ganjuran": "08",
+  "Gua Maria Tritis": "09",
+  "Gua Maria Fatima Sendang Waluyojatiningsih": "10",
+  "Gua Maria Lourdes Puh Sarang": "11",
+  "Gua Maria Sendangrejo": "12",
+  "Gua Maria Jatiningrum": "13"
+};
+const POCKET_TOTAL = POCKETS.reduce((n, p) => n + p.items.length, 0);
+
+
 const INCLUDED = [
   "Penyusunan rute dan itinerary, termasuk revisi",
   "Transportasi darat ber-AC dan koordinator lapangan",
@@ -407,7 +665,8 @@ class Component extends DCLogic {
   state = {
     verse: "“Sebab kami hidup karena percaya, bukan karena melihat” — 2 Kor 5:7",
     mobile: false, menu: false, cartCount: 0, q: "", searchOpen: false,
-    slug: "", loaded: false
+    slug: "", loaded: false,
+    guaIdx: null, guaHover: null, guaLayer: "utama", pocIdx: null, pocHover: null, mapScrolls: false
   };
 
   componentDidMount() {
@@ -501,6 +760,148 @@ class Component extends DCLogic {
       : "background-image:repeating-linear-gradient(60deg,#DCD2C0 0 16px,#EAE3D5 16px 32px)");
   }
 
+  guaMap() {
+    const m = this.state.mobile;
+    const { guaIdx, guaHover, guaLayer, pocIdx, pocHover } = this.state;
+    const pinsOn = guaLayer === "utama";
+    const open = guaIdx !== null;
+    const g = open ? GUAS[guaIdx] : null;
+    const p = pocIdx !== null ? POCKETS[pocIdx] : null;
+    const go = i => this.setState({ guaIdx: (i + GUAS.length) % GUAS.length });
+    // Halaman rute tidak punya form; titik yang dipilih dikirim ke /ziarah/
+    // lewat ?dest= — query string HARUS mendahului fragment.
+    const askFor = name => () => {
+      this.setState({ guaIdx: null, pocIdx: null });
+      location.href = "/ziarah/?dest=" + encodeURIComponent(name) + "#form-ziarah";
+    };
+
+    return {
+      mapSectionStyle: this.state.slug === "custom"
+        ? "background:#F1EADC;border:1px solid #E2D9C7;border-radius:26px;padding:clamp(28px,3.4vw,40px) 0 clamp(18px,2.4vw,26px);margin:clamp(34px,4.4vw,52px) 0"
+        : "display:none",
+      // Yogyakarta punya empat titik dalam radius 25 km. Di bawah ~1180px
+      // lebar peta, jaraknya jatuh di bawah lebar bulatan dan penanda saling
+      // menelan area klik — jadi peta punya lebar minimum dan digeser, bukan
+      // dikecilkan.
+      mapScrollStyle: "overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;" + (m
+        ? "margin-top:22px;padding:0 20px 4px"
+        : "margin-top:26px;padding:0 20px 4px"),
+      mapInnerStyle: `position:relative;margin:0 auto;${m ? "width:1250px" : "width:100%;min-width:1180px;max-width:1600px"}`,
+      guas: GUAS.map((x, i) => {
+        const on = guaIdx === i || guaHover === i;
+        const sel = guaIdx === i;
+        const anchor = x.x > 78 ? "right:50%;transform:translateX(15px)"
+          : x.x < 14 ? "left:50%;transform:translateX(-15px)"
+          : "left:50%;transform:translateX(-50%)";
+        return {
+          no: x.no, short: x.short,
+          aria: `${x.name}, ${x.area}`,
+          onSelect: () => this.setState({ guaIdx: i }),
+          onEnter: () => { if (!m) this.setState({ guaHover: i }); },
+          onLeave: () => { if (!m) this.setState({ guaHover: null }); },
+          hitStyle: `position:absolute;left:${x.x}%;top:${x.y}%;transform:translate(-50%,-50%);width:32px;height:32px;display:${pinsOn ? "flex" : "none"};align-items:center;justify-content:center;padding:0;border:none;background:none;z-index:${on ? 8 : 4}`,
+          dotStyle: `width:${m ? 24 : 26}px;height:${m ? 24 : 26}px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-weight:700;font-size:11px;transition:transform .18s ease,background .18s ease,box-shadow .18s ease;` + (sel
+            ? "background:#C9E45B;color:#1A1712;transform:scale(1.22);box-shadow:0 0 0 5px rgba(201,228,91,0.32),0 4px 14px rgba(26,23,18,0.4)"
+            : on
+              ? "background:#F7F3EA;color:#6C4BA6;transform:scale(1.14);box-shadow:0 0 0 3px rgba(247,243,234,0.5),0 0 0 2px #6C4BA6 inset,0 4px 12px rgba(26,23,18,0.32)"
+              : "background:#F7F3EA;color:#6C4BA6;box-shadow:0 0 0 2px rgba(108,75,166,0.85),0 2px 7px rgba(26,23,18,0.26)"),
+          labelStyle: `position:absolute;top:calc(50% + 21px);${anchor};white-space:nowrap;padding:5px 10px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;pointer-events:none;transition:opacity .16s ease;opacity:${on ? 1 : 0}`,
+          chipStyle: `flex:none;padding:9px 15px;border-radius:999px;font-size:11px;letter-spacing:0.06em;white-space:nowrap;transition:background .16s ease,color .16s ease;` + (sel
+            ? "border:1px solid #1A1712;background:#1A1712;color:#F7F3EA"
+            : "border:1px solid #D6CBB8;background:transparent;color:#5B5347")
+        };
+      }),
+      swipeHintStyle: this.state.mapScrolls
+        ? "display:block;text-align:center;padding:10px 20px 0;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#9A9083"
+        : "display:none",
+      railStyle: m
+        ? "display:flex;gap:8px;overflow-x:auto;padding:18px 20px 6px;-webkit-overflow-scrolling:touch"
+        : "display:flex;flex-wrap:wrap;gap:8px;max-width:1280px;margin:0 auto;padding:24px 28px 0",
+      pockets: POCKETS.map((x, i) => {
+        const on = pocIdx === i || pocHover === i;
+        const sel = pocIdx === i;
+        const n = x.items.length;
+        const size = Math.round(Math.min(50, 27 + n * 1.9));
+        const anchor = x.x > 78 ? "right:50%;transform:translateX(15px)"
+          : x.x < 14 ? "left:50%;transform:translateX(-15px)"
+          : "left:50%;transform:translateX(-50%)";
+        return {
+          count: String(n), short: x.short,
+          aria: `${x.region} — ${n} titik ziarah`,
+          onSelect: () => this.setState({ pocIdx: i }),
+          onEnter: () => { if (!m) this.setState({ pocHover: i }); },
+          onLeave: () => { if (!m) this.setState({ pocHover: null }); },
+          hitStyle: `position:absolute;left:${x.x}%;top:${x.y}%;transform:translate(-50%,-50%);width:${size + 8}px;height:${size + 8}px;display:${pinsOn ? "none" : "flex"};align-items:center;justify-content:center;padding:0;border:none;background:none;z-index:${on ? 8 : 4}`,
+          dotStyle: `width:${size}px;height:${size}px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-weight:700;font-size:${size > 38 ? 14 : 12}px;transition:transform .18s ease,background .18s ease,box-shadow .18s ease;` + (sel
+            ? "background:#C9E45B;color:#1A1712;transform:scale(1.12);box-shadow:0 0 0 5px rgba(201,228,91,0.3),0 0 0 14px rgba(201,228,91,0.14),0 4px 14px rgba(26,23,18,0.36)"
+            : on
+              ? "background:#F7F3EA;color:#6C4BA6;transform:scale(1.08);box-shadow:0 0 0 2px #6C4BA6,0 0 0 13px rgba(108,75,166,0.2),0 4px 12px rgba(26,23,18,0.3)"
+              : "background:rgba(247,243,234,0.95);color:#6C4BA6;box-shadow:0 0 0 2px rgba(108,75,166,0.8),0 0 0 10px rgba(108,75,166,0.15),0 2px 7px rgba(26,23,18,0.22)"),
+          labelStyle: `position:absolute;top:calc(50% + ${Math.round(size / 2) + 14}px);${anchor};white-space:nowrap;padding:5px 10px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;pointer-events:none;transition:opacity .16s ease;opacity:${on ? 1 : 0}`
+        };
+      }),
+      chips: pinsOn
+        ? GUAS.map((x, i) => ({
+            label: `${x.no} · ${x.short}`,
+            pick: () => this.setState({ guaIdx: i }),
+            style: `flex:none;padding:9px 15px;border-radius:999px;font-size:11px;letter-spacing:0.06em;white-space:nowrap;transition:background .16s ease,color .16s ease;` + (guaIdx === i
+              ? "border:1px solid #1A1712;background:#1A1712;color:#F7F3EA"
+              : "border:1px solid #D6CBB8;background:transparent;color:#5B5347")
+          }))
+        : POCKETS.map((x, i) => ({
+            label: `${x.short} · ${x.items.length}`,
+            pick: () => this.setState({ pocIdx: i }),
+            style: `flex:none;padding:9px 15px;border-radius:999px;font-size:11px;letter-spacing:0.06em;white-space:nowrap;transition:background .16s ease,color .16s ease;` + (pocIdx === i
+              ? "border:1px solid #1A1712;background:#1A1712;color:#F7F3EA"
+              : "border:1px solid #D6CBB8;background:transparent;color:#5B5347")
+          })),
+      layers: [
+        { id: "utama", label: `${GUAS.length} TITIK UTAMA` },
+        { id: "semua", label: `SEMUA KANTONG · ${POCKET_TOTAL}` }
+      ].map(t => {
+        const on = guaLayer === t.id;
+        return {
+          label: t.label,
+          pick: () => this.setState({ guaLayer: t.id, guaIdx: null, pocIdx: null, guaHover: null, pocHover: null }),
+          style: `padding:10px 16px;border-radius:999px;border:none;font-size:11px;letter-spacing:0.08em;white-space:nowrap;background:${on ? "#1A1712" : "transparent"};color:${on ? "#F7F3EA" : "rgba(26,23,18,0.6)"}`
+        };
+      }),
+      layerNote: pinsOn
+        ? "Titik-titik yang paling sering diminta rombongan."
+        : "Penanda menunjukkan jumlah titik per wilayah, bukan posisi masing-masing gua.",
+      pocOpen: pocIdx !== null,
+      poc: p ? {
+        region: p.region, dio: p.dio, count: String(p.items.length),
+        ask: askFor(`Kantong ziarah ${p.region}`),
+        items: p.items.map(([name, place]) => ({
+          name, place,
+          no: MAJOR[name] || "",
+          badgeStyle: MAJOR[name]
+            ? "flex:none;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#C9E45B;color:#1A1712;font-family:'Space Mono',monospace;font-weight:700;font-size:10px"
+            : "flex:none;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #D6CBB8;background:transparent",
+          ask: askFor(name)
+        }))
+      } : { region: "", dio: "", count: "", ask: () => {}, items: [] },
+      guaOpen: open,
+      closeGua: () => this.setState({ guaIdx: null, pocIdx: null }),
+      prevGua: () => go(guaIdx - 1),
+      nextGua: () => go(guaIdx + 1),
+      sheetStyle: m
+        ? "position:fixed;left:0;right:0;bottom:0;z-index:89;background:#F7F3EA;border-radius:26px 26px 0 0;padding:10px 22px 28px;max-height:78vh;overflow-y:auto;box-shadow:0 -18px 50px rgba(26,23,18,0.24)"
+        : "position:fixed;top:0;right:0;bottom:0;width:min(430px,92vw);z-index:89;background:#F7F3EA;padding:38px 34px;overflow-y:auto;box-shadow:-18px 0 54px rgba(26,23,18,0.2)",
+      handleStyle: m
+        ? "width:46px;height:4px;border-radius:999px;background:#D6CBB8;margin:0 auto 18px"
+        : "display:none",
+      sheetCloseStyle: `position:absolute;top:${m ? 14 : 22}px;right:${m ? 16 : 24}px;width:40px;height:40px;border:none;background:none;font-family:'Space Mono',monospace;font-size:24px;line-height:1;color:#1A1712`,
+      gua: g ? {
+        no: g.no, name: g.name, area: g.area, note: g.note, tags: g.tags,
+        ask: askFor(g.name)
+      } : { no: "", name: "", area: "", note: "", tags: [], ask: () => {} }
+    };
+  }
+
+
+
   renderVals() {
     const m = this.state.mobile;
     // Unknown slug falls back to the first route rather than rendering an empty
@@ -525,6 +926,7 @@ class Component extends DCLogic {
 
     return {
       ...this.chrome(),
+      ...this.guaMap(),
       ...this.search(),
 
       name: route.name || "",

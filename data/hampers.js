@@ -47,6 +47,14 @@ export const HAMPERS = [
     occasions: ["nikah", "paskah"],
     image: "/assets/salib-sonokeling-kuningan.webp", slot: "[ hampers kalvari ]", tone: "dark", h: 420 },
 
+  { id: "hampers-pernikahan", name: "Hampers Pernikahan “Lima Roti Dua Ikan”", price: "Rp 1.950K", base: 1950000, pieces: 8,
+    page: "/hampers/pernikahan/",
+    badge: "BISA DIUKIR NAMA",
+    blurb: "Untuk pasangan yang baru saling berjanji. Temanya mukjizat lima roti dan dua ikan — yang sedikit, kalau diserahkan, jadi cukup untuk banyak orang. Nama dan tanggal pernikahan kami ukir di tutup kotaknya.",
+    contents: ["Pendant kuningan “5 roti 2 ikan” — sepasang, bisa dipakai sebagai bros", "Kotak kayu putih, ukir nama pasangan & tanggal", "Buku Misa Pernikahan bersampul kulit — nama dicetak", "Rosario mutiara air tawar, krusifiks kuningan", "Lilin lebah “Matrimony” 1 batang", "Botol kecil minyak Krisma", "Kaleng “Panis Angelicus” — kue kering rumahan", "Kartu berkat tulis tangan"],
+    occasions: ["nikah"],
+    image: "/assets/hampers-pernikahan.webp", slot: "", tone: "light", h: 460, ratio: "4 / 5" },
+
   { id: "hampers-penghiburan", name: "Hampers Penghiburan", price: "Rp 690K", base: 690000, pieces: 4,
     badge: "",
     blurb: "Dikirim tanpa pita, tanpa warna terang. Untuk rumah yang sedang berkabung — kami tulis kartunya sesuai pesanmu.",
