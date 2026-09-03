@@ -73,6 +73,9 @@
 <h3 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:700;font-size:18px;letter-spacing:-0.024em;margin:26px 0 10px"><a href="/ziarah/rute/custom/" style="color:#6C4BA6;text-decoration:none">Rute rombongan kamu sendiri</a></h3>
 <p style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#8A8172;margin:0 0 8px">SELURUH INDONESIA · 1–5 hari, sesuai rute · FLEKSIBEL · MIN. 12 PESERTA</p>
 <p style="font-size:17px;line-height:1.68;color:#3A342B;max-width:64ch;margin:0 0 18px">Makam pendiri kongregasi, gereja di kampung asal, ziarah tujuh gereja versi paroki kamu.</p>
+<h2 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(22px,3vw,32px);letter-spacing:-0.03em;margin:44px 0 16px">Gua Maria di Bali</h2>
+<p style="font-size:17px;line-height:1.68;color:#3A342B;max-width:64ch;margin:0 0 18px">Lima titik, semuanya di Bali barat dan tengah. Belum ada rute Bali yang kami jalankan — pulaunya dipisah laut, jadi untuk sekarang peta ini bahan untuk menyusun rute sendiri.</p>
+<ul style="margin:0 0 22px;padding-left:20px;max-width:64ch"><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px"><strong>Gua Maria Palasari</strong> — Ekasari, Melaya, Jembrana. Yang tertua di Bali; warga setempat menyebutnya Palinggih Dewi Kaniaka Maria.</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px"><strong>Gua Maria Gumbrih</strong> — Pekutatan, Jembrana. Wilayah Paroki Santa Maria Ratu Gumbrih, di pedesaan.</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px"><strong>Gua Maria Selabih</strong> — Selemadeg Barat, Tabanan. Paling sepi; jalannya melewati hutan produktif dan perkebunan warga.</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px"><strong>Gua Maria Bunda Karmel Bedugul</strong> — Batunya, Baturiti, Tabanan. Dataran tinggi, hawa dingin, ada Rumah Retret St. Yoseph.</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px"><strong>Gua Maria Ratu Surga Pelaga</strong> — Petang, Badung. Sekitar 45 km dari Denpasar, di tengah perkebunan, dengan bangunan joglo terbuka.</li></ul>
 <h2 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(22px,3vw,32px);letter-spacing:-0.03em;margin:44px 0 16px">Cara kerjanya</h2>
 <ul style="margin:0 0 22px;padding-left:20px;max-width:64ch"><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px">Ceritakan rombonganmu: jumlah peserta, berapa lansia atau anak, bulan yang diincar, dan anggaran per orang walau masih kisaran.</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px">Kami balas usulan rute, penginapan, transportasi, dan estimasi biaya per orang dalam 2 hari kerja.</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px">Dua putaran revisi biasanya cukup. Slot misa, pendamping rohani, dan seragam rombongan harus dipesan paling lambat H-30.</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px">Koordinator lapangan ikut sepanjang perjalanan — satu koordinator per bus.</li></ul>
 <h2 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(22px,3vw,32px);letter-spacing:-0.03em;margin:44px 0 16px">Gua Maria di Jawa</h2>
@@ -185,9 +188,17 @@
   <section data-screen-label="Peta Gua Maria" id="peta-gua-maria" style="background:#F1EADC;border-top:1px solid #E2D9C7;padding:clamp(42px,5.2vw,70px) 0 clamp(22px,3vw,34px);margin-bottom:clamp(34px,4.4vw,58px)">
     <div style="max-width:1280px;margin:0 auto;padding:0 28px">
       <span style="display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">DUA LAPIS — KETUK PENANDA UNTUK BACA</span>
-      <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(26px,3.6vw,42px);line-height:1.04;letter-spacing:-0.035em;margin:10px 0 14px">Gua Maria di Jawa</h2>
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(26px,3.6vw,42px);line-height:1.04;letter-spacing:-0.035em;margin:10px 0 14px">Gua Maria di Jawa &amp; Bali</h2>
       <p style="margin:0;max-width:60ch;font-size:clamp(15px,1.5vw,17px);line-height:1.6;color:#5B5347">Ini rangka yang kami pakai waktu menyusun rute. Tidak semuanya masuk dalam satu perjalanan — biasanya tiga sampai lima titik yang searah, sisanya ditinggal untuk lain kali.</p>
       <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px">
+        <div style="display:flex;gap:4px;padding:4px;border-radius:999px;background:#E7DFD1">
+          <sc-for list="{{ regions }}" as="r" hint-placeholder-count="2">
+            <button type="button" onClick="{{ r.pick }}" style="{{ r.style }}">{{ r.label }}</button>
+          </sc-for>
+        </div>
+        <span style="{{ regionNoteStyle }}">{{ regionNote }}</span>
+      </div>
+      <div style="{{ layerRowStyle }}">
         <div style="display:flex;gap:4px;padding:4px;border-radius:999px;background:#E7DFD1">
           <sc-for list="{{ layers }}" as="l" hint-placeholder-count="2">
             <button type="button" onClick="{{ l.pick }}" style="{{ l.style }}">{{ l.label }}</button>
@@ -199,7 +210,8 @@
 
     <div style="{{ mapScrollStyle }}">
       <div style="{{ mapInnerStyle }}">
-        <img src="/assets/java-gua-maria.webp" width="1600" height="519" loading="lazy" decoding="async" alt="Siluet Pulau Jawa dengan sebelas penanda Gua Maria" style="width:100%;display:block;user-select:none;pointer-events:none" />
+        <img src="/assets/java-gua-maria.webp" width="1600" height="519" loading="lazy" decoding="async" alt="Siluet Pulau Jawa dengan tiga belas penanda Gua Maria" style="{{ jawaImgStyle }}" />
+        <img src="/assets/bali-gua-maria.webp" width="1600" height="977" loading="lazy" decoding="async" alt="Siluet Pulau Bali dengan lima penanda Gua Maria" style="{{ baliImgStyle }}" />
         <sc-for list="{{ guas }}" as="g" hint-placeholder-count="11">
           <button type="button" onClick="{{ g.onSelect }}" onMouseEnter="{{ g.onEnter }}" onMouseLeave="{{ g.onLeave }}" aria-label="{{ g.aria }}" style="{{ g.hitStyle }}">
             <span style="{{ g.dotStyle }}">{{ g.no }}</span>
@@ -799,12 +811,42 @@ const MAJOR = {
 };
 const POCKET_TOTAL = POCKETS.reduce((n, p) => n + p.items.length, 0);
 
+// Bali. Koordinat x/y dihitung dari lintang-bujur asli tiap titik, dipetakan
+// ke kotak pulau utama di siluetnya (114,434–115,713 BT; 8,059–8,848 LS).
+// Belum ada rute Bali — pulaunya dipisah laut, jadi peta ini untuk dilihat
+// dan dijadikan bahan waktu menyusun rute sendiri.
+const BALI = [
+  { no: "01", x: 9.6, y: 25.9, short: "Palasari", name: "Gua Maria Palasari", area: "Ekasari, Melaya, Jembrana — Bali",
+    note: "Yang tertua di Bali. Penduduk setempat menyebutnya Palinggih Dewi Kaniaka Maria — palinggih berarti tempat suci. Sebagian besar warga dusun Palasari Katolik dan tetap memakai pakaian adat Bali waktu ke gereja.",
+    tags: ["TERTUA DI BALI", "KAMPUNG KATOLIK", "ADAT BALI"] },
+  { no: "02", x: 35.2, y: 48.4, short: "Gumbrih", name: "Gua Maria Gumbrih", area: "Jl. Gereja, Gumbrih, Pekutatan, Jembrana — Bali",
+    note: "Masuk wilayah Paroki Santa Maria Ratu Gumbrih. Letaknya di pedesaan dan jauh dari keramaian, jadi suasananya masih apa adanya.",
+    tags: ["PEDESAAN", "SEPI", "PAROKI GUMBRIH"] },
+  { no: "03", x: 39.4, y: 50.5, short: "Selabih", name: "Gua Maria Selabih", area: "Selabih, Selemadeg Barat, Tabanan — Bali",
+    note: "Paling jauh dari keramaian di antara lima titik ini — jalannya melewati hutan produktif dan perkebunan warga. Yang datang biasanya memang mencari tempat yang hening.",
+    tags: ["PALING SEPI", "LEWAT PERKEBUNAN", "JALAN KECIL"] },
+  { no: "04", x: 58.0, y: 31.3, short: "Bunda Karmel", name: "Gua Maria Bunda Karmel Bedugul", area: "Jl. Baturiti Bedugul No. 88, Batunya, Baturiti, Tabanan — Bali",
+    note: "Di dataran tinggi Bedugul, hawanya dingin dan sekelilingnya hijau. Jalan salibnya tertata rapi, patung Bunda Maria putih, dinding guanya batu alam. Di kompleks yang sama ada Rumah Retret St. Yoseph.",
+    tags: ["UDARA DINGIN", "ADA RUMAH RETRET", "JALAN SALIB RAPI"] },
+  { no: "05", x: 62.2, y: 33.8, short: "Pelaga", name: "Gua Maria Ratu Surga Pelaga", area: "Pelaga, Petang, Badung — Bali",
+    note: "Sekitar 45 km dari Denpasar, jalannya mudah dicari. Di depan tempat doa ada bangunan bergaya joglo yang terbuka, dan letaknya di tengah perkebunan warga — sejuk dan tenang.",
+    tags: ["45 KM DARI DENPASAR", "JOGLO TERBUKA", "DI PERKEBUNAN"] }
+];
+
+// Satu komponen, dua pulau. Tiap wilayah bawa gambar, ukuran, dan daftar
+// titiknya sendiri; Bali belum punya lapis kantong, jadi tombol lapisnya
+// tidak muncul di sana.
+const REGIONS = [
+  { id: "jawa", label: "JAWA", guas: GUAS, pockets: POCKETS, minW: 1180, mobileW: 1250 },
+  { id: "bali", label: "BALI", guas: BALI, pockets: [], minW: 880, mobileW: 940 }
+];
+
 
 class Component extends DCLogic {
   state = {
     verse: "“Sebab kami hidup karena percaya, bukan karena melihat” — 2 Kor 5:7",
     mobile: false, menu: false, cartCount: 0, q: "", searchOpen: false,
-    guaIdx: null, guaHover: null, guaLayer: "utama", pocIdx: null, pocHover: null, mapScrolls: false,
+    region: "jawa", guaIdx: null, guaHover: null, guaLayer: "utama", pocIdx: null, pocHover: null, mapScrolls: false,
     tab: "form", sent: false, refCode: "",
     org: "", person: "", phone: "", pax: "", month: "", dest: "", merch: "Belum tahu"
   };
@@ -850,7 +892,7 @@ class Component extends DCLogic {
       const mobile = window.innerWidth < 860;
       // Peta punya lebar minimum 1180px (+40px padding) supaya penanda Yogya
       // tidak saling tumpuk; di bawah itu petanya digeser dan perlu petunjuk.
-      const mapScrolls = window.innerWidth < 1240;
+      const mapScrolls = window.innerWidth < this.region().minW + 60;
       if (mobile !== this.state.mobile) this.setState({ mobile, menu: false });
       if (mapScrolls !== this.state.mapScrolls) this.setState({ mapScrolls });
     };
@@ -906,14 +948,19 @@ class Component extends DCLogic {
     };
   }
 
+  region() { return REGIONS.find(r => r.id === this.state.region) || REGIONS[0]; }
+
   guaMap() {
     const m = this.state.mobile;
     const { guaIdx, guaHover, guaLayer, pocIdx, pocHover } = this.state;
-    const pinsOn = guaLayer === "utama";
+    const R = this.region();
+    const LIST = R.guas, POCS = R.pockets;
+    const hasPockets = POCS.length > 0;
+    const pinsOn = !hasPockets || guaLayer === "utama";
     const open = guaIdx !== null;
-    const g = open ? GUAS[guaIdx] : null;
-    const p = pocIdx !== null ? POCKETS[pocIdx] : null;
-    const go = i => this.setState({ guaIdx: (i + GUAS.length) % GUAS.length });
+    const g = open ? LIST[guaIdx] : null;
+    const p = pocIdx !== null ? POCS[pocIdx] : null;
+    const go = i => this.setState({ guaIdx: (i + LIST.length) % LIST.length });
     const askFor = name => () => {
       this.setState({ guaIdx: null, pocIdx: null, dest: name });
       setTimeout(() => {
@@ -930,8 +977,29 @@ class Component extends DCLogic {
       mapScrollStyle: "overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;" + (m
         ? "margin-top:22px;padding:0 20px 4px"
         : "margin-top:26px;padding:0 20px 4px"),
-      mapInnerStyle: `position:relative;margin:0 auto;${m ? "width:1250px" : "width:100%;min-width:1180px;max-width:1600px"}`,
-      guas: GUAS.map((x, i) => {
+      mapInnerStyle: `position:relative;margin:0 auto;${m ? `width:${R.mobileW}px` : `width:100%;min-width:${R.minW}px;max-width:1600px`}`,
+      regions: REGIONS.map(r => {
+        const on = r.id === R.id;
+        return {
+          label: r.label,
+          pick: () => this.setState({ region: r.id, guaIdx: null, pocIdx: null, guaHover: null, pocHover: null, guaLayer: "utama" }, this._sync),
+          style: "flex:none;padding:10px 20px;border-radius:999px;font-size:11px;letter-spacing:0.1em;transition:background .16s ease,color .16s ease;border:1px solid " + (on
+            ? "#1A1712;background:#1A1712;color:#F7F3EA"
+            : "#D6CBB8;background:transparent;color:#5B5347")
+        };
+      }),
+      regionNote: R.id === "bali"
+        ? "Lima titik, semuanya di Bali barat dan tengah. Belum ada rute Bali — pakai peta ini sebagai bahan waktu menyusun rute sendiri."
+        : "",
+      regionNoteStyle: R.id === "bali"
+        ? "font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;line-height:1.5;color:#8A8172;max-width:44ch"
+        : "display:none",
+      jawaImgStyle: R.id === "jawa" ? "width:100%;display:block;user-select:none;pointer-events:none" : "display:none",
+      baliImgStyle: R.id === "bali" ? "width:100%;display:block;user-select:none;pointer-events:none" : "display:none",
+      layerRowStyle: hasPockets
+        ? "display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px"
+        : "display:none",
+      guas: LIST.map((x, i) => {
         const on = guaIdx === i || guaHover === i;
         const sel = guaIdx === i;
         const anchor = x.x > 78 ? "right:50%;transform:translateX(15px)"
@@ -961,7 +1029,7 @@ class Component extends DCLogic {
       railStyle: m
         ? "display:flex;gap:8px;overflow-x:auto;padding:18px 20px 6px;-webkit-overflow-scrolling:touch"
         : "display:flex;flex-wrap:wrap;gap:8px;max-width:1280px;margin:0 auto;padding:24px 28px 0",
-      pockets: POCKETS.map((x, i) => {
+      pockets: POCS.map((x, i) => {
         const on = pocIdx === i || pocHover === i;
         const sel = pocIdx === i;
         const n = x.items.length;
@@ -985,14 +1053,14 @@ class Component extends DCLogic {
         };
       }),
       chips: pinsOn
-        ? GUAS.map((x, i) => ({
+        ? LIST.map((x, i) => ({
             label: `${x.no} · ${x.short}`,
             pick: () => this.setState({ guaIdx: i }),
             style: `flex:none;padding:9px 15px;border-radius:999px;font-size:11px;letter-spacing:0.06em;white-space:nowrap;transition:background .16s ease,color .16s ease;` + (guaIdx === i
               ? "border:1px solid #1A1712;background:#1A1712;color:#F7F3EA"
               : "border:1px solid #D6CBB8;background:transparent;color:#5B5347")
           }))
-        : POCKETS.map((x, i) => ({
+        : POCS.map((x, i) => ({
             label: `${x.short} · ${x.items.length}`,
             pick: () => this.setState({ pocIdx: i }),
             style: `flex:none;padding:9px 15px;border-radius:999px;font-size:11px;letter-spacing:0.06em;white-space:nowrap;transition:background .16s ease,color .16s ease;` + (pocIdx === i
@@ -1000,7 +1068,7 @@ class Component extends DCLogic {
               : "border:1px solid #D6CBB8;background:transparent;color:#5B5347")
           })),
       layers: [
-        { id: "utama", label: `${GUAS.length} TITIK UTAMA` },
+        { id: "utama", label: `${LIST.length} TITIK UTAMA` },
         { id: "semua", label: `SEMUA KANTONG · ${POCKET_TOTAL}` }
       ].map(t => {
         const on = guaLayer === t.id;
