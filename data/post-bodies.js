@@ -34,7 +34,7 @@ export const BODIES = {
     { quote: "Ziarah tidak seharusnya batal karena urusan sebelas kilometer." },
     { p: "Kalau ternyata penuh terus, kami tambah hari. Kalau ternyata sepi, kami hentikan dan mengaku di jurnal ini juga." },
 
-    { cta: "Daftar kursi", href: "/#shuttle",
+    { cta: "Daftar kursi", href: "Landing.dc.html#shuttle",
       note: "Isi nama, tanggal, dan jumlah kursi — kami konfirmasi lewat WhatsApp. Jadwal dan rincian tarifnya ada di halaman shuttle." }
   ],
 
@@ -102,6 +102,64 @@ export const BODIES = {
     ] },
     { p: "Tiga kalimat itu yang kami pakai sebagai rem. Selebihnya, kami tidak minta maaf karena barangnya dibuat bagus. Membuat sesuatu sebaik mungkin untuk alasan yang paling tinggi adalah persis yang dilakukan setiap pemahat relief, setiap penenun kasula, dan setiap orang yang pernah menyulam nama santo di atas kain." },
     { p: "Batas mana saja yang kami tolak — dan kenapa tato masuk katalog sementara barang lain tidak — kami tulis terpisah, di “Di mana batas merch iman”." }
+  ],
+
+  "ketika-romo-berulah": [
+    { p: "Kamu baru buka Threads. Belum sempat mencari apa pun, dan yang muncul paling atas di feed-mu adalah tangkapan layar: Romo X di Paroki Y, katanya, [...] (isi sendiri titik-titiknya). Di bawahnya sudah ada empat ratus komentar. Dua di antaranya dari orang yang kamu kenal — satu tetangga lingkungan, satu pemazmur." },
+    { p: "Kamu berhenti scroll bukan karena kabarnya seru. Kamu berhenti karena itu romomu. Itu parokimu. Minggu depan kamu masih akan duduk di bangku yang sama, dan orang yang sedang dibicarakan seluruh timeline itu yang akan mengangkat hosti di depan matamu." },
+    { p: "Tulisan ini bukan tentang kasus itu, karena kasus seperti itu jumlahnya banyak dan bentuknya berbeda-beda. Tulisan ini tentang detik-detik setelah kamu berhenti scroll." },
+
+    { h2: "Pertama, satu kata yang menipu: “berulah”" },
+    { p: "Kata itu memuat terlalu banyak hal sekaligus, dan di situlah percakapan biasanya mulai rusak. Dalam satu bulan, di grup WhatsApp yang sama, “romo berulah” bisa berarti: khotbahnya sepuluh menit terlalu politis; ia bikin konten TikTok berjoget; ia galak ke petugas tatib; laporan keuangan pembangunan tidak pernah keluar; ia menjalin hubungan dengan seorang perempuan; atau ia melakukan sesuatu kepada seorang anak." },
+    { p: "Enam hal itu diletakkan dalam satu kata, lalu ditanggapi dengan satu nada. Kadang nadanya marah semua, kadang maklum semua. Dua-duanya salah, karena yang terakhir bukan versi lebih berat dari yang pertama — ia bukan spesies yang sama." },
+    { box: "Empat lapis yang harus dipisah sebelum bersikap", rows: [
+      ["Selera", "Gaya khotbah, humor, media sosial, pilihan lagu, mobil, cara berpakaian. Boleh tidak disukai. Bukan pelanggaran."],
+      ["Kelalaian pastoral", "Pilih kasih, kasar, tidak bisa dihubungi saat ada yang sakratul maut, uang paroki yang tidak dipertanggungjawabkan. Ini urusan struktur, dan ada salurannya."],
+      ["Kaul yang dilanggar", "Hubungan dengan seorang perempuan — selibat yang tidak lagi dijalani. Nyata, berat, dan bukan urusan umat untuk mengadili. Tapi juga bukan urusan yang boleh dibiarkan menggantung bertahun-tahun, karena yang paling dirugikan dari menggantung itu perempuan tersebut."],
+      ["Kejahatan", "Kekerasan, penyalahgunaan kuasa, apa pun terhadap anak dan orang rentan. Ini bukan urusan internal. Ini urusan hukum, dan menahannya di dalam adalah bagian dari kejahatannya."]
+    ] },
+    { p: "Lapis ketiga itu yang paling sering ditumpuk ke lapis keempat oleh timeline, dan paling sering ditarik ke lapis pertama oleh paroki. Dua-duanya keliru. Seorang imam yang menjalin hubungan dengan perempuan dewasa, atas kehendak keduanya, sedang melanggar kaul yang ia ikrarkan — bukan melakukan kejahatan. Tapi kalau perempuan itu orang yang ia dampingi, ia bimbing, ia dengar pengakuannya, atau ia atasi secara struktural, maka kesetaraan yang diandaikan kata ‘dewasa’ itu tidak ada, dan perkaranya pindah ke lapis keempat. Pertanyaan yang memisahkan keduanya bukan ‘apakah ia mencintainya’, tapi ‘apakah ia punya kuasa atas dirinya’." },
+
+    { h2: "Empat sikap yang selalu muncul" },
+    { p: "Coba baca kolom komentar mana pun. Empat suara ini hampir selalu ada." },
+
+    { h2: "1. Yang kritis" },
+    { p: "“Justru karena ia imam, standarnya lebih tinggi. Umat berhak tahu. Diam itu yang selama puluhan tahun membuat hal-hal seperti ini bisa berpindah paroki dan mulai lagi dari nol.”" },
+    { p: "Sikap ini punya sejarah di belakangnya, dan sejarahnya kuat. Hampir semua perbaikan serius di Gereja mana pun tidak datang dari kebaikan hati struktur, tapi dari tekanan yang tidak mau berhenti — sebagian besar dari umat sendiri, banyak yang awalnya dituduh merusak nama baik Gereja." },
+    { p: "Kelemahannya satu: ia gampang kehilangan lapisan. Ketika energi yang benar untuk lapis ketiga dipakai untuk lapis pertama, yang terjadi bukan reformasi, tapi perburuan. Dan umat paroki yang pernah memburu satu romo karena hal sepele akan lebih sulit dipercaya waktu ia bicara soal hal yang serius." },
+
+    { h2: "2. Yang old school" },
+    { p: "“Itu romo. Jangan diumbar. Ada caranya sendiri — lapor ke keuskupan, jangan ke Threads. Kalau nama imam dirusak di depan umum, yang rusak bukan cuma orangnya, tapi kepercayaan orang pada Ekaristi yang ia layani.”" },
+    { p: "Bagian yang benar dari sikap ini sering diabaikan orang yang buru-buru menertawakannya: pengumuman publik memang bukan alat yang presisi. Ia tidak bisa dibatalkan, tidak bisa diverifikasi ulang, dan tidak bisa membedakan dugaan dari temuan. Ada romo yang hidupnya patah karena tuduhan yang belakangan tidak terbukti, dan tidak ada satu pun utas yang menghapus dirinya sendiri setelahnya." },
+    { p: "Tapi sikap ini punya beban sejarah yang jauh lebih berat. Kalimat “ada caranya sendiri” adalah kalimat yang paling sering dipakai untuk memastikan tidak ada cara apa pun yang dipakai. “Jangan bikin ribut” terdengar seperti menjaga Gereja; dalam praktiknya, berkali-kali, ia menjaga pelaku." },
+    { quote: "Menjaga nama baik Gereja dan menjaga orang yang merusaknya sering kali adalah tindakan yang sama, dilakukan dengan alasan yang berbeda." },
+
+    { h2: "3. Yang tidak peduli" },
+    { p: "“Saya ke gereja untuk Ekaristi, bukan untuk romonya. Sakramen tetap sah siapa pun yang memberikan. Saya datang, saya komuni, saya pulang.”" },
+    { p: "Secara teologis, kalimat pertama tidak bisa dibantah: keabsahan sakramen tidak bergantung pada kekudusan pelayannya — kalau bergantung, tidak ada satu pun dari kita yang bisa yakin pernah dibaptis. Sikap ini juga jujur soal keterbatasan. Umat kebanyakan tidak punya akses, tidak punya bukti, dan tidak punya kuasa apa pun atas penempatan imam." },
+    { p: "Yang perlu diakui: ini bukan sikap netral, ini keputusan. Orang yang bisa berkata “saya tidak terpengaruh” hampir selalu orang yang memang tidak terkena. Yang terkena — perempuan itu, keluarganya, petugas yang dimaki, korban — tidak punya opsi untuk datang, komuni, lalu pulang." },
+
+    { h2: "4. Yang tidak masalah" },
+    { p: "“Romo juga manusia. Kita ini siapa, kok menuntut orang lain sempurna. Coba kamu yang jadi dia.”" },
+    { p: "Ini yang paling simpatik dan paling sering menyelamatkan orang. Beban satu imam paroki di Indonesia tidak masuk akal: ribuan umat, misa berlapis, wilayah yang luas, undangan yang tidak bisa ditolak, dan hampir tidak ada orang yang bertanya bagaimana keadaan dirinya. Umat yang bisa memaklumi romonya yang lelah adalah umat yang sehat." },
+    { p: "Tapi belas kasih punya arah yang bisa keliru. “Romo juga manusia” bisa dipakai untuk menjelaskan kenapa khotbahnya datar dan sumbunya pendek. Dipakai untuk lapis keempat, ia berhenti jadi belas kasih dan berubah jadi izin. Dan yang membayar izin itu bukan yang memberikannya." },
+
+    { h2: "Sintesis: bukan pilih satu, tapi pasangkan" },
+    { p: "Empat sikap di atas dibicarakan seolah kita harus memilih salah satu identitas. Menurut kami itu keliru. Tiga dari empat itu bukan sikap — itu cara menghindar yang punya alasan berbeda: yang old school menghindar demi struktur, yang tidak peduli menghindar demi ketenangan sendiri, yang tidak masalah menghindar demi kenyamanan bersama. Dan yang kritis, kalau tanpa lapisan, menghindar juga — dari kerja yang lebih lambat dan lebih membosankan daripada menulis komentar." },
+    { p: "Yang lebih berguna: pasangkan sikap dengan lapisan." },
+    { list: [
+      "Lapis selera — pakai sikap keempat. Bilang di grup kalau perlu, lalu selesai. Ini bukan salib yang perlu dipikul siapa pun.",
+      "Lapis kelalaian — pakai sikap pertama, dengan cara sikap kedua. Bicara langsung kalau mungkin; kalau tidak, lewat Dewan Pastoral Paroki, dengan catatan tanggal dan kejadian, tertulis. Kalau tiga bulan tidak ada apa-apa, naik ke keuskupan — juga tertulis, juga tercatat. Yang membuat saluran internal bekerja bukan kesopanannya, tapi jejaknya.",
+      "Lapis kaul — pakai sikap pertama dan keempat sekaligus, dan itu tidak kontradiktif. Belas kasih untuk dua orang yang keadaannya tidak sederhana; ketegasan bahwa keadaan itu harus diselesaikan, bukan dipelihara diam-diam selama satu dekade. Yang layak diperjuangkan umat bukan hukuman, tapi kejelasan — ia meminta laisisasi, atau ia kembali menjalani kaulnya. Menggantung adalah pilihan yang paling merugikan perempuannya, dan paling nyaman bagi semua orang lain.",
+      "Lapis kejahatan — tidak ada perdebatan sikap di sini. Dampingi orang yang mengalami, jangan interogasi dia, dan bawa ke aparat serta ke keuskupan sekaligus. Menunggu izin siapa pun sebelum melapor bukan kesantunan; itu keterlibatan.",
+      "Untuk semua lapisan: pisahkan “saya dengar” dari “saya tahu”. Satu tangkapan layar bukan keduanya."
+    ] },
+    { p: "Dan satu hal yang tidak muat di mana pun dalam empat sikap itu: kemungkinan bahwa kabar yang kamu baca tidak lengkap. Bukan bohong — tidak lengkap. Kebanyakan utas yang meledak adalah potongan satu menit dari relasi bertahun-tahun antara satu orang dan satu umat, ditulis oleh orang yang paling marah pada menit itu. Itu tidak membuatnya salah. Itu membuatnya belum cukup." },
+
+    { h2: "Kenapa kami menulis ini di jurnal" },
+    { p: "Karena hampir semua yang kami jual dipakai orang di paroki — dan paroki bukan tempat netral. Kami tidak berada di posisi untuk menilai imam siapa pun, dan tidak berminat. Yang kami lihat berulang, dari ratusan percakapan dengan panitia ziarah dan pengurus lingkungan, adalah orang baik yang bingung: sudah tahu ada yang tidak benar, tidak mau jadi orang yang meributkan, lalu memilih diam dan menyebutnya kerendahan hati." },
+    { quote: "Diam yang dipilih karena tidak tahu harus ke mana bukan kerendahan hati. Itu cuma tidak tahu harus ke mana." },
+    { p: "Itu yang tulisan ini coba jawab. Bukan supaya kamu punya pendapat yang lebih tajam soal Romo X di Paroki Y, tapi supaya kalau suatu hari yang di timeline itu benar-benar romomu, kamu tahu urutan langkahnya — dan tahu bahwa lapisannya tidak satu, dan yang paling berat tidak boleh diselesaikan di dalam." }
   ],
 
   "batas-merch-iman": [
