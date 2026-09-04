@@ -136,8 +136,8 @@ export const POSTS = [
 
   { id: "ketika-romo-berulah", pillar: "editorial",
     title: "Ketika Romo “berulah”, umat harus bagaimana",
-    dek: "Empat cara umat menanggapi kabar soal imamnya sendiri — dan kenapa tiga di antaranya sama-sama menghindar.",
-    author: "Dion Wicaksono", date: "4 September 2026", read: 13,
+    dek: "Lima cara umat menanggapi kabar soal imamnya sendiri — dan kenapa hampir semuanya salah alamat.",
+    author: "Dion Wicaksono", date: "4 September 2026", read: 15,
     image: "/assets/romo-berulah.webp", slot: "" },
 
   { id: "devosi-bukan-estetika", pillar: "editorial", feature: true,

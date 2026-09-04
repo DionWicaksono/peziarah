@@ -120,8 +120,8 @@ export const BODIES = {
     ] },
     { p: "Lapis ketiga itu yang paling sering ditumpuk ke lapis keempat oleh timeline, dan paling sering ditarik ke lapis pertama oleh paroki. Dua-duanya keliru. Seorang imam yang menjalin hubungan dengan perempuan dewasa, atas kehendak keduanya, sedang melanggar kaul yang ia ikrarkan — bukan melakukan kejahatan. Tapi kalau perempuan itu orang yang ia dampingi, ia bimbing, ia dengar pengakuannya, atau ia atasi secara struktural, maka kesetaraan yang diandaikan kata ‘dewasa’ itu tidak ada, dan perkaranya pindah ke lapis keempat. Pertanyaan yang memisahkan keduanya bukan ‘apakah ia mencintainya’, tapi ‘apakah ia punya kuasa atas dirinya’." },
 
-    { h2: "Empat sikap yang selalu muncul" },
-    { p: "Coba baca kolom komentar mana pun. Empat suara ini hampir selalu ada." },
+    { h2: "Lima sikap yang selalu muncul" },
+    { p: "Coba baca kolom komentar mana pun. Lima suara ini hampir selalu ada." },
 
     { h2: "1. Yang kritis" },
     { p: "“Justru karena ia imam, standarnya lebih tinggi. Umat berhak tahu. Diam itu yang selama puluhan tahun membuat hal-hal seperti ini bisa berpindah paroki dan mulai lagi dari nol.”" },
@@ -144,17 +144,30 @@ export const BODIES = {
     { p: "Ini yang paling simpatik dan paling sering menyelamatkan orang. Beban satu imam paroki di Indonesia tidak masuk akal: ribuan umat, misa berlapis, wilayah yang luas, undangan yang tidak bisa ditolak, dan hampir tidak ada orang yang bertanya bagaimana keadaan dirinya. Umat yang bisa memaklumi romonya yang lelah adalah umat yang sehat." },
     { p: "Tapi belas kasih punya arah yang bisa keliru. “Romo juga manusia” bisa dipakai untuk menjelaskan kenapa khotbahnya datar dan sumbunya pendek. Dipakai untuk lapis keempat, ia berhenti jadi belas kasih dan berubah jadi izin. Dan yang membayar izin itu bukan yang memberikannya." },
 
+    { h2: "5. Yang ekstrim" },
+    { p: "“Ganti romonya. Kalau perlu ordonya sekalian. Paroki ini tidak akan beres selama dia masih di situ.”" },
+    { p: "Sikap ini biasanya muncul paling belakangan, dari orang yang sudah mencoba jalur lain dan tidak mendapat jawaban. Kemarahannya bukan berlebihan — ia hasil akumulasi. Dan tuntutannya sering kali secara substansi benar: ada keadaan di mana satu-satunya penyelesaian yang jujur memang perpindahan tugas." },
+    { p: "Masalahnya bukan besarnya tuntutan, tapi alamatnya. Tuntutan itu hampir selalu diteriakkan ke tempat yang tidak punya wewenang apa pun: grup WhatsApp, kolom komentar, rapat lingkungan, kadang ke romonya sendiri. Padahal yang bisa memindahkan seorang imam jumlahnya sedikit dan jelas — dan tidak ada satu pun dari mereka yang membaca utasmu." },
+    { box: "Siapa yang sebenarnya bisa memindahkan", rows: [
+      ["Imam diosesan", "Uskup keuskupan setempat. Ia yang menugaskan, ia yang bisa menarik. Jalur masuknya lewat vikaris jenderal atau kantor keuskupan — tertulis, bukan lewat orang dekat."],
+      ["Imam anggota ordo/kongregasi", "Provinsial ordonya, bukan uskup. Paroki yang dikelola ordo dipimpin atas kesepakatan uskup–provinsial, jadi surat ke keuskupan saja sering berhenti di situ. Yang perlu ditembusi keduanya."],
+      ["“Ganti ordonya”", "Ini keputusan uskup, dan skalanya bertahun-tahun, bukan bulan. Praktis tidak pernah jadi jawaban untuk satu perkara satu orang — dan menuntutnya justru membuat perkara yang nyata jadi terdengar tidak masuk akal."],
+      ["Dewan Pastoral Paroki", "Tidak punya wewenang memindahkan siapa pun. Tapi ia satu-satunya badan yang catatannya diakui resmi — dan catatan itulah yang bikin surat ke keuskupan tidak bisa diabaikan sebagai gosip."]
+    ] },
+    { p: "Jadi yang membedakan tuntutan yang ekstrim dari tuntutan yang bekerja bukan volumenya. Bedanya satu hal saja: apakah ia sampai ke meja orang yang bisa mengabulkannya, dengan bentuk yang bisa dia tindak lanjuti. Marah yang dialamatkan benar adalah tenaga. Marah yang dialamatkan salah cuma melelahkan orang yang marah." },
+
     { h2: "Sintesis: bukan pilih satu, tapi pasangkan" },
-    { p: "Empat sikap di atas dibicarakan seolah kita harus memilih salah satu identitas. Menurut kami itu keliru. Tiga dari empat itu bukan sikap — itu cara menghindar yang punya alasan berbeda: yang old school menghindar demi struktur, yang tidak peduli menghindar demi ketenangan sendiri, yang tidak masalah menghindar demi kenyamanan bersama. Dan yang kritis, kalau tanpa lapisan, menghindar juga — dari kerja yang lebih lambat dan lebih membosankan daripada menulis komentar." },
+    { p: "Lima sikap di atas dibicarakan seolah kita harus memilih salah satu identitas. Menurut kami itu keliru. Tiga dari lima itu bukan sikap — itu cara menghindar yang punya alasan berbeda: yang old school menghindar demi struktur, yang tidak peduli menghindar demi ketenangan sendiri, yang tidak masalah menghindar demi kenyamanan bersama. Dan yang kritis, kalau tanpa lapisan, menghindar juga — dari kerja yang lebih lambat dan lebih membosankan daripada menulis komentar." },
     { p: "Yang lebih berguna: pasangkan sikap dengan lapisan." },
     { list: [
       "Lapis selera — pakai sikap keempat. Bilang di grup kalau perlu, lalu selesai. Ini bukan salib yang perlu dipikul siapa pun.",
       "Lapis kelalaian — pakai sikap pertama, dengan cara sikap kedua. Bicara langsung kalau mungkin; kalau tidak, lewat Dewan Pastoral Paroki, dengan catatan tanggal dan kejadian, tertulis. Kalau tiga bulan tidak ada apa-apa, naik ke keuskupan — juga tertulis, juga tercatat. Yang membuat saluran internal bekerja bukan kesopanannya, tapi jejaknya.",
       "Lapis kaul — pakai sikap pertama dan keempat sekaligus, dan itu tidak kontradiktif. Belas kasih untuk dua orang yang keadaannya tidak sederhana; ketegasan bahwa keadaan itu harus diselesaikan, bukan dipelihara diam-diam selama satu dekade. Yang layak diperjuangkan umat bukan hukuman, tapi kejelasan — ia meminta laisisasi, atau ia kembali menjalani kaulnya. Menggantung adalah pilihan yang paling merugikan perempuannya, dan paling nyaman bagi semua orang lain.",
       "Lapis kejahatan — tidak ada perdebatan sikap di sini. Dampingi orang yang mengalami, jangan interogasi dia, dan bawa ke aparat serta ke keuskupan sekaligus. Menunggu izin siapa pun sebelum melapor bukan kesantunan; itu keterlibatan.",
+      "Untuk semua lapisan, kalau tuntutanmu adalah pergantian: alamatkan ke uskup untuk imam diosesan, ke provinsial untuk imam ordo — tertulis, dengan tanggal, lewat Dewan Pastoral Paroki kalau bisa. Volume tidak memindahkan siapa pun; berkas memindahkan.",
       "Untuk semua lapisan: pisahkan “saya dengar” dari “saya tahu”. Satu tangkapan layar bukan keduanya."
     ] },
-    { p: "Dan satu hal yang tidak muat di mana pun dalam empat sikap itu: kemungkinan bahwa kabar yang kamu baca tidak lengkap. Bukan bohong — tidak lengkap. Kebanyakan utas yang meledak adalah potongan satu menit dari relasi bertahun-tahun antara satu orang dan satu umat, ditulis oleh orang yang paling marah pada menit itu. Itu tidak membuatnya salah. Itu membuatnya belum cukup." },
+    { p: "Dan satu hal yang tidak muat di mana pun dalam kelima sikap itu: kemungkinan bahwa kabar yang kamu baca tidak lengkap. Bukan bohong — tidak lengkap. Kebanyakan utas yang meledak adalah potongan satu menit dari relasi bertahun-tahun antara satu orang dan satu umat, ditulis oleh orang yang paling marah pada menit itu. Itu tidak membuatnya salah. Itu membuatnya belum cukup." },
 
     { h2: "Kenapa kami menulis ini di jurnal" },
     { p: "Karena hampir semua yang kami jual dipakai orang di paroki — dan paroki bukan tempat netral. Kami tidak berada di posisi untuk menilai imam siapa pun, dan tidak berminat. Yang kami lihat berulang, dari ratusan percakapan dengan panitia ziarah dan pengurus lingkungan, adalah orang baik yang bingung: sudah tahu ada yang tidak benar, tidak mau jadi orang yang meributkan, lalu memilih diam dan menyebutnya kerendahan hati." },
