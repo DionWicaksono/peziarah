@@ -37,7 +37,39 @@ const FORMS = {
       jumlah_peserta: "entry.1452372506",
       bulan: "entry.1535909132",
       rute: "entry.14233846",
-      seragam: "entry.2025480568"
+      seragam: "entry.2025480568",
+      intensi: "entry.1516614689"
+    }
+  },
+  // Ziarah > Isi Form > tab "Susun Sendiri"
+  "ziarah-susun-sendiri": {
+    id: "1FAIpQLSepbQvqoJt0wh-1A1JsxkmAkDF2ymI2PPGIN2OUv2FO9Fp-CA",
+    fields: {
+      kode: "entry.703849438",
+      nama_kontak: "entry.816256591",
+      telepon: "entry.403766276",
+      jumlah_orang: "entry.1569515252",
+      intensi: "entry.1548954716",
+      destinasi: "entry.1213985974",
+      gaya: "entry.1491789214",
+      pengalaman_rohani: "entry.1153465734",
+      minat: "entry.1618334888",
+      pace: "entry.1424827999"
+    }
+  },
+  // /ziarah/grup-kecil/ — private trips, 2-8 people
+  concierge: {
+    id: "1FAIpQLSfkUvh1ZxrtD5iwbTXDM2-QV9kxiM3xxFe2UYs07zi2MwU9tA",
+    fields: {
+      kode: "entry.171551440",
+      nama_kontak: "entry.1590764818",
+      telepon: "entry.812654982",
+      jumlah_orang: "entry.1654339630",
+      lama: "entry.829856438",
+      waktu: "entry.653476284",
+      destinasi: "entry.1938164244",
+      perhatian: "entry.2283438",
+      intensi: "entry.297185404"
     }
   },
   vendor: {
@@ -78,10 +110,13 @@ export function getArchive() {
 // Fire-and-forget. Resolves true once the request was dispatched without a
 // network error — NOT a guarantee that Google accepted it.
 export function submit(kind, values) {
-  const form = FORMS[kind];
-  if (!form) return Promise.resolve(false);
-
   archive(kind, values);
+
+  const form = FORMS[kind];
+  if (!form || !form.id) {
+    if (typeof console !== "undefined") console.warn("[forms] no endpoint mapped for", kind, "— archived locally only");
+    return Promise.resolve(false);
+  }
 
   const body = new FormData();
   Object.keys(values).forEach(k => {

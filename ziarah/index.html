@@ -163,7 +163,8 @@
       <h1 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(40px,8vw,112px);line-height:0.88;letter-spacing:-0.045em;margin:16px 0 0;max-width:16ch">Menuju titik-titik doa & permohonan.</h1>
       <p style="margin:22px 0 0;max-width:52ch;font-size:clamp(16px,1.6vw,19px);line-height:1.55;color:#F7F3EA">Kami merancang ziarah untuk rombongan paroki, komunitas, dan keluarga besar — rute, transportasi, pendamping rohani, sampai seragam. Belum ada jadwal terbuka; setiap perjalanan disusun dari permintaan.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px">
-        <a href="#form-ziarah" style="padding:16px 30px;border-radius:999px;background:#C9E45B;color:#1A1712;font-weight:600;font-size:15px" style-hover="background:#F7F3EA">Ajukan Permintaan</a>
+        <a href="#form-ziarah" style="padding:16px 30px;border-radius:999px;background:#C9E45B;color:#1A1712;font-weight:600;font-size:15px" style-hover="background:#F7F3EA">Rombongan</a>
+        <a href="/ziarah/grup-kecil/" style="padding:16px 30px;border-radius:999px;border:1px solid rgba(247,243,234,0.45);font-weight:600;font-size:15px;color:#F7F3EA" style-hover="background:rgba(247,243,234,0.14)">Grup Kecil</a>
         <a href="#rute" style="padding:16px 30px;border-radius:999px;border:1px solid rgba(247,243,234,0.45);font-weight:600;font-size:15px;color:#F7F3EA" style-hover="background:rgba(247,243,234,0.14)">Lihat Rute</a>
       </div>
     </div>
@@ -462,6 +463,17 @@
     </div>
   </section>
 
+  <section data-screen-label="Concierge" style="padding:0 28px clamp(46px,6vw,84px);max-width:1280px;margin:0 auto">
+    <div style="border-radius:34px;background:#EFE8DA;border:1px solid #DFD4BE;padding:clamp(26px,4vw,52px);display:flex;flex-wrap:wrap;align-items:center;gap:clamp(22px,3.4vw,48px)">
+      <div style="flex:1 1 380px;min-width:280px">
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#6C4BA6">ZIARAH PRIBADI</span>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(24px,3.4vw,40px);line-height:1;letter-spacing:-0.035em;margin:14px 0 12px;max-width:22ch">Datang dalam grup kecil, bukan rombongan?</h2>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#5B5347;max-width:52ch;text-wrap:pretty">Keluarga inti, pasangan baru, atau reuni kecil teman seperjuangan dulu — kendaraan hanya untuk grupmu, ritme mengikuti yang paling perlu diperhatikan, dan ada yang menjelaskan sejarah tempatnya. Kami urus dari pengemudi sampai jam Misa.</p>
+      </div>
+      <a href="/ziarah/grup-kecil/" style="padding:16px 30px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#6C4BA6">Lihat Layanan Pribadi</a>
+    </div>
+  </section>
+
   <section data-screen-label="Permintaan Ziarah" id="tanya" style="padding:0 28px clamp(48px,6vw,86px);max-width:1280px;margin:0 auto">
     <div style="border-radius:34px;background:#EFE8DA;color:#1A1712;border:1px solid #DFD4BE;padding:clamp(28px,4.4vw,60px);display:flex;flex-wrap:wrap;gap:clamp(30px,4vw,60px)">
       <div style="flex:1 1 330px;min-width:280px">
@@ -505,6 +517,11 @@
 
             <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
               <div style="display:flex;flex-direction:column;gap:12px">
+                <label style="display:flex;flex-direction:column;gap:7px;padding:16px 17px;border-radius:20px;background:#F7F3EA;border:1px solid #D6CBB8">
+                  <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#6C4BA6">INTENSI — APA YANG KAMU BAWA?</span>
+                  <textarea value="{{ intensi }}" onChange="{{ onIntensi }}" placeholder="mis. berdoa untuk kesembuhan ayah, mencari arah hidup, bersyukur atas kelahiran anak" rows="3" style="{{ areaStyle }}"></textarea>
+                  <span style="font-size:13px;line-height:1.5;color:#8A8172">Boleh dilewati. Tapi kalau ditulis, ini yang kami pakai untuk memilih titik henti dan menyiapkan doanya.</span>
+                </label>
                 <sc-for list="{{ fields }}" as="f" hint-placeholder-count="5">
                   <label style="display:flex;flex-direction:column;gap:6px">
                     <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#8A8172">{{ f.label }}</span>
@@ -525,6 +542,95 @@
                 </label>
                 <button type="button" onClick="{{ submit }}" style="{{ submitStyle }}">{{ submitLabel }}</button>
                 <p style="margin:2px 0 0;font-family:'Space Mono',monospace;font-size:10px;line-height:1.6;letter-spacing:0.06em;color:#8A8172">BELUM ADA JADWAL TERBUKA — SEMUA PERJALANAN DISUSUN DARI PERMINTAAN</p>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isByo }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <sc-if value="{{ byoSent }}" hint-placeholder-val="{{ false }}">
+              <div style="border-radius:22px;background:#F7F3EA;border:1px solid #D6CBB8;padding:24px">
+                <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6C4BA6">RANCANGAN TERCATAT</span>
+                <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:22px;letter-spacing:-0.02em;margin:10px 0 14px">{{ byoCode }}</div>
+                <p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:#5B5347">Kirim rancangannya ke WhatsApp kami. Kami balas dengan rute, penginapan, dan estimasi biaya — biasanya dalam 2 hari kerja.</p>
+                <a href="{{ byoSendHref }}" target="_blank" rel="noopener" style="display:block;text-align:center;padding:16px 24px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px" style-hover="background:#6C4BA6">Kirim Rancangan</a>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ byoOpen }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;flex-direction:column;gap:16px">
+                <p style="margin:0;font-size:15px;line-height:1.6;color:#5B5347">Enam pertanyaan. Kamu yang menentukan isinya, kami yang menyusun sisanya — rute, penginapan, jam Misa, ritme jalan.</p>
+
+                <div style="border-top:1px solid #DDD2BC;padding-top:15px">
+                  <span style="display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#6C4BA6;margin-bottom:10px">01 · INTENSI KAMU</span>
+                  <textarea value="{{ intensi }}" onChange="{{ onIntensi }}" placeholder="Apa yang kamu bawa dalam ziarah ini?" rows="3" style="{{ areaStyle }}"></textarea>
+                </div>
+
+                <div style="border-top:1px solid #DDD2BC;padding-top:15px">
+                  <span style="display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#8A8172;margin-bottom:10px">02 · DESTINASI</span>
+                  <textarea value="{{ byoDest }}" onChange="{{ onByoDest }}" placeholder="Sendangsono, Ganjuran, Ambarawa — atau tulis “belum tahu, tolong usulkan”" rows="2" style="{{ areaStyle }}"></textarea>
+                </div>
+
+                <div style="border-top:1px solid #DDD2BC;padding-top:15px">
+                  <span style="display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#8A8172;margin-bottom:10px">03 · GAYA PERJALANAN</span>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <sc-for list="{{ gayaOpts }}" as="o" hint-placeholder-count="5">
+                      <button type="button" onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="border-top:1px solid #DDD2BC;padding-top:15px">
+                  <span style="display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#8A8172;margin-bottom:4px">04 · PENGALAMAN ROHANI</span>
+                  <span style="display:block;font-size:13px;color:#8A8172;margin-bottom:10px">Pilih sebanyak yang kamu mau.</span>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <sc-for list="{{ pengOpts }}" as="o" hint-placeholder-count="6">
+                      <button type="button" onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="border-top:1px solid #DDD2BC;padding-top:15px">
+                  <span style="display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#8A8172;margin-bottom:10px">05 · MINAT DI LUAR DOA</span>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <sc-for list="{{ minatOpts }}" as="o" hint-placeholder-count="5">
+                      <button type="button" onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="border-top:1px solid #DDD2BC;padding-top:15px">
+                  <span style="display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#8A8172;margin-bottom:10px">06 · PACE</span>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <sc-for list="{{ paceOpts }}" as="o" hint-placeholder-count="4">
+                      <button type="button" onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="{{ recapStyle }}">
+                  <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#C9E45B">RANCANGAN KAMU SEJAUH INI</span>
+                  <div style="margin-top:6px">
+                    <sc-for list="{{ recap }}" as="r" hint-placeholder-count="3">
+                      <div style="display:flex;gap:14px;flex-wrap:wrap;border-top:1px solid rgba(247,243,234,0.16);padding:11px 0">
+                        <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#A8A092;flex:0 0 86px">{{ r.k }}</span>
+                        <span style="flex:1 1 160px;font-size:15px;line-height:1.5;color:#F7F3EA;text-wrap:pretty">{{ r.v }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="border-top:1px solid #DDD2BC;padding-top:15px;display:flex;flex-direction:column;gap:12px">
+                  <sc-for list="{{ byoFields }}" as="f" hint-placeholder-count="3">
+                    <label style="display:flex;flex-direction:column;gap:6px">
+                      <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#8A8172">{{ f.label }}</span>
+                      <input type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.placeholder }}" style="{{ f.style }}" />
+                    </label>
+                  </sc-for>
+                </div>
+
+                <button type="button" onClick="{{ byoSubmit }}" style="{{ byoSubmitStyle }}">{{ byoSubmitLabel }}</button>
+                <p style="margin:2px 0 0;font-family:'Space Mono',monospace;font-size:10px;line-height:1.6;letter-spacing:0.06em;color:#8A8172">SETIAP RANCANGAN DISUSUN MANUAL — TIDAK ADA PAKET OTOMATIS</p>
               </div>
             </sc-if>
           </div>
@@ -557,7 +663,7 @@
     <div style="display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;margin-bottom:48px">
       <div style="flex:1 1 300px;min-width:260px">
         <div style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(32px,5.4vw,68px);letter-spacing:0.06em;line-height:1">PEZIARAH</div>
-        <p style="margin:18px 0 0;max-width:38ch;font-size:15px;line-height:1.55;color:#A8A092">Gift shop, operator ziarah dan jurnal iman Katolik. Dibuat di, dan dikirim ke, seluruh Indonesia.</p></div><div style="flex:2 1 560px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:34px 40px;font-size:14px"><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BELANJA</span><a href="/katalog/#rosario">Rosario</a><a href="/katalog/#salib">Salib &amp; Krusifiks</a><a href="/katalog/#perhiasan">Perhiasan</a><a href="/katalog/#apparel">Tenun &amp; Batik</a><a href="/katalog/#wallart">Wall Art</a><a href="/katalog/#merch">Merch</a><a href="/hampers/">Hampers</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ZIARAH</span><a href="/ziarah/#rute">Semua Rute</a><a href="/ziarah/rute/sendangsono/">Sendangsono</a><a href="/ziarah/rute/ganjuran/">Ganjuran</a><a href="/ziarah/rute/muntilan/">Muntilan</a><a href="/ziarah/rute/custom/">Susun Rute Sendiri</a><a href="/jurnal/#ziarah">Catatan Ziarah</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BANTUAN</span><a href="/faq/#pengiriman">Pengiriman</a><a href="/faq/#retur">Tukar &amp; Retur</a><a href="/faq/#produk">Ukuran &amp; Perawatan</a><a href="/tentang/">Tentang Kami</a><a href="/kontak/">Hubungi Kami</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">IKUTI</span><a href="https://instagram.com/peziarahsociety" target="_blank" rel="noopener">Instagram</a><a href="https://facebook.com/peziarahsociety" target="_blank" rel="noopener">Facebook</a><a href="https://wa.me/6281200000000" target="_blank" rel="noopener">WhatsApp</a></div></div></div>
+        <p style="margin:18px 0 0;max-width:38ch;font-size:15px;line-height:1.55;color:#A8A092">Gift shop, operator ziarah dan jurnal iman Katolik. Dibuat di, dan dikirim ke, seluruh Indonesia.</p></div><div style="flex:2 1 560px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:34px 40px;font-size:14px"><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BELANJA</span><a href="/katalog/#rosario">Rosario</a><a href="/katalog/#salib">Salib &amp; Krusifiks</a><a href="/katalog/#perhiasan">Perhiasan</a><a href="/katalog/#apparel">Tenun &amp; Batik</a><a href="/katalog/#wallart">Wall Art</a><a href="/katalog/#merch">Merch</a><a href="/hampers/">Hampers</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ZIARAH</span><a href="/ziarah/#rute">Semua Rute</a><a href="/ziarah/grup-kecil/">Grup Kecil</a><a href="/ziarah/rute/sendangsono/">Sendangsono</a><a href="/ziarah/rute/ganjuran/">Ganjuran</a><a href="/ziarah/rute/muntilan/">Muntilan</a><a href="/ziarah/rute/custom/">Susun Rute Sendiri</a><a href="/jurnal/#ziarah">Catatan Ziarah</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BANTUAN</span><a href="/faq/#pengiriman">Pengiriman</a><a href="/faq/#retur">Tukar &amp; Retur</a><a href="/faq/#produk">Ukuran &amp; Perawatan</a><a href="/tentang/">Tentang Kami</a><a href="/kontak/">Hubungi Kami</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">IKUTI</span><a href="https://instagram.com/peziarahsociety" target="_blank" rel="noopener">Instagram</a><a href="https://facebook.com/peziarahsociety" target="_blank" rel="noopener">Facebook</a><a href="https://wa.me/6281200000000" target="_blank" rel="noopener">WhatsApp</a></div></div></div>
     <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;border-top:1px solid rgba(247,243,234,0.14);padding-top:22px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#8A8172">
       <span>© 2026 PEZIARAH</span>
       <span style="text-transform:uppercase">{{ verse }}</span>
@@ -649,6 +755,12 @@ let CAT_LABEL = {};
 let ZPOSTS = [];
 let ZROUTES = [];
 let FORMS = null;
+
+// "Susun Sendiri": the composer answers become the brief we build from.
+const GAYA = ["Motor", "Mobil sendiri", "Private driver", "Backpacker", "Keluarga"];
+const PENGALAMAN = ["Misa", "Pengakuan dosa", "Rosario", "Jalan salib", "Refleksi hening", "Pendampingan rohani"];
+const MINAT = ["Arsitektur", "Sejarah", "Kuliner", "Fotografi", "Alam"];
+const PACE = ["1 hari", "Weekend", "3 hari", "5 hari"];
 
 const GUAS = [
   { no: "01", x: 24.1, y: 29.6, short: "Lembah Karmel", name: "Gua Maria Lembah Karmel", area: "Cikanyere, Cianjur — Jawa Barat",
@@ -848,7 +960,10 @@ class Component extends DCLogic {
     mobile: false, menu: false, cartCount: 0, q: "", searchOpen: false,
     region: "jawa", guaIdx: null, guaHover: null, guaLayer: "utama", pocIdx: null, pocHover: null, mapScrolls: false,
     tab: "form", sent: false, refCode: "",
-    org: "", person: "", phone: "", pax: "", month: "", dest: "", merch: "Belum tahu"
+    org: "", person: "", phone: "", pax: "", month: "", dest: "", merch: "Belum tahu",
+    intensi: "",
+    byoDest: "", gaya: "", peng: [], minat: [], pace: "",
+    byoPerson: "", byoPhone: "", byoPax: "", byoSent: false, byoCode: ""
   };
 
   // Datang dari halaman lain: ?dest= mengisi form, dan hash perlu scroll sendiri
@@ -1170,11 +1285,65 @@ class Component extends DCLogic {
       s.dest && `Rute: ${s.dest}`,
       `Seragam rombongan: ${s.merch}`
     ].filter(Boolean);
+    if (s.intensi.trim()) parts.push("", `Intensi: ${s.intensi.trim()}`);
     return parts.join("\n");
+  }
+
+  chip(on) {
+    return `padding:10px 17px;border-radius:999px;font-family:'Hanken Grotesk',sans-serif;font-size:14px;line-height:1.2;border:1px solid ${on ? "#1A1712" : "#D6CBB8"};background:${on ? "#1A1712" : "transparent"};color:${on ? "#F7F3EA" : "#1A1712"}`;
+  }
+
+  single(key, list) {
+    return list.map(v => ({
+      label: v,
+      pick: () => this.setState({ [key]: this.state[key] === v ? "" : v }),
+      style: this.chip(this.state[key] === v)
+    }));
+  }
+
+  multi(key, list) {
+    return list.map(v => {
+      const on = this.state[key].includes(v);
+      return {
+        label: v,
+        pick: () => this.setState(s => ({
+          [key]: on ? s[key].filter(x => x !== v) : s[key].concat(v)
+        })),
+        style: this.chip(on)
+      };
+    });
+  }
+
+  // The read-back card: only the lines the visitor actually filled in.
+  byoRecap() {
+    const s = this.state;
+    return [
+      s.intensi.trim() && { k: "INTENSI", v: s.intensi.trim() },
+      s.byoDest.trim() && { k: "DESTINASI", v: s.byoDest.trim() },
+      s.gaya && { k: "GAYA", v: s.gaya },
+      s.peng.length && { k: "ROHANI", v: s.peng.join(", ") },
+      s.minat.length && { k: "MINAT", v: s.minat.join(", ") },
+      s.pace && { k: "PACE", v: s.pace }
+    ].filter(Boolean);
+  }
+
+  byoMessage(code) {
+    const s = this.state;
+    const lines = this.byoRecap().map(r => `${r.k.charAt(0) + r.k.slice(1).toLowerCase()}: ${r.v}`);
+    return [
+      code ? `Rancangan ziarah ${code} (Susun Sendiri)` : "Halo Peziarah, saya mau menyusun ziarah sendiri.",
+      "",
+      s.byoPerson && `Nama: ${s.byoPerson}`,
+      s.byoPhone && `Telepon: ${s.byoPhone}`,
+      s.byoPax && `Jumlah orang: ${s.byoPax}`,
+      "",
+      ...lines
+    ].filter(x => x !== false && x !== undefined).join("\n");
   }
 
   renderVals() {
     const filled = this.state.org.trim() && this.state.person.trim() && this.state.phone.trim() && this.state.pax.trim();
+    const byoReady = this.state.byoPerson.trim() && this.state.byoPhone.trim() && this.byoRecap().length > 0;
 
     return {
       ...this.chrome(),
@@ -1218,17 +1387,59 @@ class Component extends DCLogic {
 
       tabs: [
         { id: "form", label: "ISI FORM" },
+        { id: "byo", label: "SUSUN SENDIRI" },
         { id: "wa", label: "WHATSAPP" }
       ].map(t => {
         const on = this.state.tab === t.id;
         return {
           label: t.label,
           pick: () => this.setState({ tab: t.id }),
-          style: `flex:1;padding:11px 8px;border-radius:999px;border:none;font-size:11px;letter-spacing:0.1em;background:${on ? "#1A1712" : "transparent"};color:${on ? "#F7F3EA" : "rgba(26,23,18,0.66)"}`
+          style: `flex:1;padding:11px 6px;border-radius:999px;border:none;font-size:11px;letter-spacing:0.07em;white-space:nowrap;background:${on ? "#1A1712" : "transparent"};color:${on ? "#F7F3EA" : "rgba(26,23,18,0.66)"}`
         };
       }),
       isWa: this.state.tab === "wa",
       isForm: this.state.tab === "form",
+      isByo: this.state.tab === "byo",
+      intensi: this.state.intensi,
+      onIntensi: e => this.setState({ intensi: e.target.value }),
+      byoDest: this.state.byoDest,
+      onByoDest: e => this.setState({ byoDest: e.target.value }),
+      gayaOpts: this.single("gaya", GAYA),
+      pengOpts: this.multi("peng", PENGALAMAN),
+      minatOpts: this.multi("minat", MINAT),
+      paceOpts: this.single("pace", PACE),
+      recap: this.byoRecap(),
+      recapStyle: this.byoRecap().length
+        ? "border-radius:22px;background:#1A1712;color:#F7F3EA;padding:20px 22px"
+        : "display:none",
+      byoFields: [
+        this.field("byoPerson", "NAMA KAMU", "Nama lengkap"),
+        this.field("byoPhone", "NOMOR WHATSAPP", "08xx xxxx xxxx", "tel"),
+        this.field("byoPax", "BERAPA ORANG", "mis. 2 orang, atau 5 orang + 2 anak")
+      ],
+      byoOpen: !this.state.byoSent,
+      byoSent: this.state.byoSent,
+      byoCode: this.state.byoCode,
+      byoSendHref: `https://wa.me/${WA}?text=${encodeURIComponent(this.byoMessage(this.state.byoCode))}`,
+      byoSubmitLabel: byoReady ? "Simpan & Kirim Rancangan" : "Isi nama, WhatsApp, dan satu pilihan",
+      byoSubmitStyle: `padding:16px 24px;border-radius:999px;border:none;font-weight:600;font-size:15px;margin-top:2px;background:${byoReady ? "#1A1712" : "#C3B9A6"};color:#F7F3EA`,
+      byoSubmit: () => {
+        if (!byoReady) return;
+        const code = "BY-" + Date.now().toString(36).slice(-5).toUpperCase();
+        if (FORMS) FORMS.submit("ziarah-susun-sendiri", {
+          kode: code,
+          nama_kontak: this.state.byoPerson,
+          telepon: this.state.byoPhone,
+          jumlah_orang: this.state.byoPax,
+          intensi: this.state.intensi,
+          destinasi: this.state.byoDest,
+          gaya: this.state.gaya,
+          pengalaman_rohani: this.state.peng.join(", "),
+          minat: this.state.minat.join(", "),
+          pace: this.state.pace
+        });
+        this.setState({ byoSent: true, byoCode: code });
+      },
       waHref: `https://wa.me/${WA}?text=${encodeURIComponent(this.message(""))}`,
 
       fields: [
@@ -1262,7 +1473,8 @@ class Component extends DCLogic {
           jumlah_peserta: this.state.pax,
           bulan: this.state.month,
           rute: this.state.dest,
-          seragam: this.state.merch
+          seragam: this.state.merch,
+          intensi: this.state.intensi
         });
         this.setState({ sent: true, refCode: code });
       },
