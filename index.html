@@ -217,7 +217,7 @@
 
       <div style="display:flex;gap:0;margin:clamp(12px,1.8vw,28px) -6px 0">
         <sc-for list="{{ slides }}" as="s" hint-placeholder-count="2">
-          <button type="button" aria-label="{{ s.alt }}" onClick="{{ s.pick }}" style="{{ s.dotStyle }}"></button>
+          <button type="button" aria-label="{{ s.alt }}" onClick="{{ s.pick }}" style="{{ s.dotStyle }}"><span style="{{ s.pillStyle }}"></span></button>
         </sc-for>
       </div>
     </div>
@@ -790,7 +790,8 @@ class Component extends DCLogic {
           scrimStyle: `position:absolute;inset:0;background:${s.scrimCss || `linear-gradient(180deg,${sc(0.62)} 0%,${sc(0.14)} 30%,${sc(0.5)} 66%,${sc(0.88)} 100%)`}`,
           // 10px pill, but 42px of padded hit area for thumbs: background-clip
           // keeps the paint inside the content box.
-          dotStyle: `width:${on ? 30 : 10}px;height:10px;padding:16px 6px;box-sizing:content-box;background-clip:content-box;border-radius:999px;border:none;cursor:pointer;background-color:${on ? "#C9E45B" : "rgba(247,243,234,0.32)"};transition:width .35s ease,background-color .35s ease`,
+          dotStyle: "display:grid;place-items:center;width:42px;height:42px;padding:0;margin:0;border:none;background:none;-webkit-appearance:none;appearance:none;cursor:pointer",
+          pillStyle: `display:block;width:${on ? 30 : 10}px;height:10px;border-radius:999px;background-color:${on ? "#C9E45B" : "rgba(247,243,234,0.32)"};transition:width .35s ease,background-color .35s ease`,
           pick: () => { this.play(); this.setState({ slide: i }); }
         };
       }),
