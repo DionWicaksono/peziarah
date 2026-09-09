@@ -556,6 +556,7 @@
 
 // Same single sources of truth as every other page — no landing-only copies.
 let PRODUCTS = [];
+let FORMS = null;
 
 const GUAS = [
   { no: "01", x: 24.1, y: 29.6, short: "Lembah Karmel", name: "Gua Maria Lembah Karmel", area: "Cikanyere, Cianjur — Jawa Barat",
@@ -1130,9 +1131,32 @@ class Component extends DCLogic {
       shuttleNote: s.s_note || "Kami balas lewat WhatsApp untuk konfirmasi kursi. Bayar di tempat.",
       onShuttle: e => {
         e.preventDefault();
-        const txt = `Halo Peziarah, saya mau daftar shuttle Kerkhof Muntilan–Sendangsono (pp).%0ANama: ${s.s_name || "-"}%0AWA: ${s.s_wa || "-"}%0ATanggal: ${s.s_date || "-"}%0AKeberangkatan: ${s.s_time || "06.00 dari Kerkhof"}%0AKembali: ${s.s_back || "17.00 dari parkiran Sendangsono"}%0AJumlah kursi: ${s.s_seats || "-"}`;
-        window.open("https://wa.me/6281200000000?text=" + txt.replace(/ /g, "%20"), "_blank", "noopener");
-        this.setState({ s_note: "Terkirim ke WhatsApp kami. Kursi dianggap terisi setelah kami balas." });
+        // Same contract as every other form: log to the Sheet, keep a local
+        // copy, then hand off to WhatsApp — which is the real confirmation.
+        const code = "SH-" + Date.now().toString(36).slice(-5).toUpperCase();
+        const time = s.s_time || "06.00 dari Kerkhof";
+        const back = s.s_back || "17.00 dari parkiran Sendangsono";
+        if (FORMS) FORMS.submit("shuttle", {
+          kode: code,
+          nama: s.s_name,
+          telepon: s.s_wa,
+          tanggal: s.s_date,
+          jumlah_kursi: s.s_seats,
+          keberangkatan: time,
+          kembali: back
+        });
+        const txt = [
+          `Pendaftaran shuttle ${code} (Kerkhof Muntilan–Sendangsono, pp)`,
+          "",
+          `Nama: ${s.s_name || "-"}`,
+          `WA: ${s.s_wa || "-"}`,
+          `Tanggal: ${s.s_date || "-"}`,
+          `Keberangkatan: ${time}`,
+          `Kembali: ${back}`,
+          `Jumlah kursi: ${s.s_seats || "-"}`
+        ].join("\n");
+        window.open("https://wa.me/6281200000000?text=" + encodeURIComponent(txt), "_blank", "noopener");
+        this.setState({ s_note: `Tercatat dengan kode ${code}. Kirim ringkasannya lewat WhatsApp — kursi dianggap terisi setelah kami balas.` });
       }
     };
   }
