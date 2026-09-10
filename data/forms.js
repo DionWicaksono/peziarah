@@ -72,6 +72,19 @@ const FORMS = {
       intensi: "entry.297185404"
     }
   },
+  // Landing "Shuttle Harian" — Kerkhof Muntilan <-> Sendangsono seat booking
+  shuttle: {
+    id: "1FAIpQLScXaIE6faz3KBrdQAOKvOcsmEP0H03MKfPA36zE0qOqFENxXA",
+    fields: {
+      kode: "entry.745457333",
+      nama: "entry.861171670",
+      telepon: "entry.998831788",
+      tanggal: "entry.2031690989",
+      jumlah_kursi: "entry.637978168",
+      keberangkatan: "entry.761298991",
+      kembali: "entry.1815178876"
+    }
+  },
   vendor: {
     id: "1FAIpQLSdeoeidNDOTr8dTvisyB1IlP6jQNQr73Ple-srOn9TmSBFMUw",
     fields: {
@@ -127,9 +140,14 @@ export function submit(kind, values) {
     }
   });
 
+  // keepalive: the caller usually navigates straight to WhatsApp (window.open,
+  // or a location change on mobile) and an in-flight fetch would be cancelled
+  // with the tab that started it. keepalive lets the browser finish the POST
+  // after teardown. Body is far below the 64 KB keepalive cap.
   return fetch(`https://docs.google.com/forms/d/e/${form.id}/formResponse`, {
     method: "POST",
     mode: "no-cors",
+    keepalive: true,
     body
   }).then(() => true).catch(() => false);
 }
