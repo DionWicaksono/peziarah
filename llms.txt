@@ -59,6 +59,7 @@ Rupiah (IDR). Orders are placed on the site and confirmed over WhatsApp.
 - [Beranda](https://peziarah.com/): ringkasan kategori, produk unggulan, dan edisi terbatas.
 - [Shuttle Kerkhof Muntilan–Sendangsono](https://peziarah.com/jurnal/artikel/shuttle-kerkhof-sendangsono/): layanan antar-jemput peziarah, Rp 45.000 per orang pulang-pergi, 4 trip per hari.
 - [Katalog](https://peziarah.com/katalog/): seluruh produk dengan filter kategori dan pencarian.
+- [Bulan Rosario](https://peziarah.com/bulan-rosario/): halaman referensi devosi — misteri rosario menurut hari (Gembira: Senin & Sabtu; Sedih: Selasa & Jumat; Mulia: Rabu & Minggu; Terang/Cahaya: Kamis), urutan doa rosario lengkap 11 langkah, panduan tuan rumah rosario lingkungan, dan rosario buatan tangan. Pesanan lingkungan 40–80 pcs dengan ukir nama paroki. Rosario tidak dijual dalam keadaan sudah diberkati — pemberkatan dilakukan imam di paroki penerima.
 - [Hampers](https://peziarah.com/hampers/): paket kado siap kirim.
 - [Hampers Pernikahan “Lima Roti Dua Ikan”](https://peziarah.com/hampers/pernikahan/): hampers pernikahan isi 8, Rp 1.950.000, kotak kayu diukir nama pasangan dan tanggal, pengerjaan 14 hari kerja.
 - [Ziarah](https://peziarah.com/ziarah/): rute ziarah dan merch rombongan.
