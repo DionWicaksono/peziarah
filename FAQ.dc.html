@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAQ — Pengiriman, Tukar & Retur, Ukuran & Perawatan | Peziarah</title>
+<meta name="description" content="Jawaban soal ongkir dan lama kirim, tukar 14 hari, ukuran rosario dan cincin, perawatan kayu dan perak, serta cara pembayaran.">
+<meta name="keywords" content="ongkir peziarah, retur, ukuran rosario, perawatan perak, cara bayar">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://peziarah.com/faq/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Peziarah">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="FAQ — Pengiriman, Tukar & Retur, Ukuran & Perawatan | Peziarah">
+<meta property="og:description" content="Jawaban soal ongkir dan lama kirim, tukar 14 hari, ukuran rosario dan cincin, perawatan kayu dan perak, serta cara pembayaran.">
+<meta property="og:url" content="https://peziarah.com/faq/">
+<meta property="og:image" content="https://peziarah.com/assets/og-peziarah.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Rosario kayu Peziarah — kado rohani buatan tangan">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FAQ — Pengiriman, Tukar & Retur, Ukuran & Perawatan | Peziarah">
+<meta name="twitter:description" content="Jawaban soal ongkir dan lama kirim, tukar 14 hari, ukuran rosario dan cincin, perawatan kayu dan perak, serta cara pembayaran.">
+<meta name="twitter:image" content="https://peziarah.com/assets/og-peziarah.jpg">
+<meta name="theme-color" content="#F7F3EA">
+<link rel="icon" href="/assets/favicon.png" type="image/png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Cinzel:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:96px}
+  body{margin:0;background:#F7F3EA;color:#1A1712;font-family:'Hanken Grotesk',Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  a:hover{color:#6C4BA6}
+  button{font-family:'Space Mono',monospace;cursor:pointer}
+  input,textarea{font-family:'Hanken Grotesk',Helvetica,sans-serif}
+  input:focus,textarea:focus{outline:none;border-color:#6C4BA6}
+  ::selection{background:#6C4BA6;color:#F7F3EA}
+</style>
+</helmet>
+
+<div style="overflow-x:clip;position:relative;min-height:100vh;display:flex;flex-direction:column">
+
+  <header style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 20px;background:#F7F3EA;border-bottom:1px solid #E7DFD1">
+    <a href="Landing.dc.html" style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(16px,4.2vw,19px);letter-spacing:0.16em">PEZIARAH</a>
+    <nav style="{{ deskNavStyle }}">
+      <a href="Katalog.dc.html">Katalog</a>
+      <a href="Ziarah.dc.html">Ziarah</a>
+      <a href="Jurnal.dc.html">Jurnal</a>
+      <a href="Hampers.dc.html">Hampers</a>
+    </nav>
+    <div style="{{ deskUtilStyle }}">
+      <div style="{{ searchWrapStyle }}">
+        <button type="button" aria-label="Cari" onClick="{{ toggleSearch }}" style="border:none;background:none;padding:0;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#1A1712">CARI</button>
+        <input type="search" aria-label="Cari produk" value="{{ q }}" onChange="{{ onQ }}" onKeyDown="{{ onQKey }}" placeholder="rosario, salib, batik…" style="{{ searchInputStyle }}" />
+      </div>
+      <a href="Tas.dc.html" style="white-space:nowrap">KERANJANG ({{ cartCount }})</a>
+    </div>
+    <button type="button" aria-label="Buka menu" onClick="{{ toggleMenu }}" style="{{ burgerStyle }}">
+      <span style="display:block;width:22px;height:2px;background:#1A1712"></span>
+      <span style="display:block;width:22px;height:2px;background:#1A1712"></span>
+    </button>
+
+    <div style="{{ resultsStyle }}">
+      <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172;padding:4px 6px 12px">{{ resultsLabel }}</div>
+      <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
+        <a href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
+          <span style="{{ r.thumbStyle }}"></span>
+          <span style="flex:1;min-width:0">
+            <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.02em">{{ r.name }}</span>
+            <span style="display:block;font-family:'Space Mono',monospace;font-size:11px;color:#8A8172;margin-top:2px">{{ r.cat }}</span>
+          </span>
+          <span style="font-family:'Space Mono',monospace;font-size:12px;white-space:nowrap">{{ r.price }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </header>
+
+  <div style="{{ drawerStyle }}">
+    <button type="button" aria-label="Tutup menu" onClick="{{ toggleMenu }}" style="position:absolute;top:14px;right:18px;width:44px;height:44px;border:none;background:none;color:#1A1712;font-family:'Space Mono',monospace;font-size:22px">×</button>
+    <a href="Landing.dc.html" style="font-family:'Cinzel',serif;font-weight:600;font-size:24px;letter-spacing:0.16em;color:#1A1712">PEZIARAH</a>
+    <span style="width:34px;height:1px;background:#D6CBB8;margin:26px 0 30px"></span>
+    <nav style="display:flex;flex-direction:column;align-items:center;gap:22px;font-family:'Archivo',sans-serif;font-weight:700;font-size:30px;letter-spacing:-0.03em;color:#1A1712">
+      <a href="Katalog.dc.html" onClick="{{ toggleMenu }}">Katalog</a>
+      <a href="Ziarah.dc.html" onClick="{{ toggleMenu }}">Ziarah</a>
+      <a href="Jurnal.dc.html" onClick="{{ toggleMenu }}">Jurnal</a>
+      <a href="Hampers.dc.html" onClick="{{ toggleMenu }}">Hampers</a>
+    </nav>
+    <div style="display:flex;gap:14px;margin-top:38px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:#8A8172">
+      <a href="Tas.dc.html" style="white-space:nowrap">KERANJANG ({{ cartCount }})</a>
+    </div>
+  </div>
+
+  <main style="flex:1;max-width:1280px;width:100%;margin:0 auto;padding:clamp(34px,4.6vw,64px) 28px 80px">
+
+    <section data-screen-label="FAQ Hero" style="margin-bottom:clamp(30px,3.8vw,48px)">
+      <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#8A8172">BANTUAN</span>
+      <h1 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(38px,7vw,92px);line-height:0.9;letter-spacing:-0.045em;margin:14px 0 0;max-width:16ch">Pertanyaan yang sering masuk.</h1>
+      <p style="margin:20px 0 0;max-width:52ch;font-size:clamp(16px,1.5vw,18px);line-height:1.6;color:#5B5347">Dikelompokkan untuk mempermudah. Kalau jawabannya tidak ada di sini, WhatsApp kami saja — bisa dijawab manusia, bisa bot. Maaf kami memang sesibuk itu.</p>
+      <div style="margin-top:26px;max-width:460px">
+        <input type="search" aria-label="Cari pertanyaan" value="{{ fq }}" onChange="{{ onFq }}" placeholder="Cari pertanyaan — mis. ongkir, tukar, ukuran" style="width:100%;padding:15px 20px;border-radius:999px;border:1px solid #D6CBB8;background:#F7F3EA;font-size:15px" />
+      </div>
+    </section>
+
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,60px);align-items:flex-start">
+
+      <nav style="{{ railStyle }}">
+        <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">TOPIK</span>
+        <div style="display:flex;flex-direction:column;gap:2px;margin-top:14px">
+          <sc-for list="{{ rail }}" as="s" hint-placeholder-count="8">
+            <a href="{{ s.href }}" style="{{ s.style }}">
+              <span>{{ s.name }}</span>
+              <span style="font-family:'Space Mono',monospace;font-size:11px;color:#8A8172">{{ s.count }}</span>
+            </a>
+          </sc-for>
+        </div>
+        <div style="margin-top:26px;border-top:1px solid #D6CBB8;padding-top:18px">
+          <p style="margin:0 0 14px;font-size:14px;line-height:1.6;color:#5B5347">Masih bingung?</p>
+          <a href="{{ waHref }}" target="_blank" rel="noopener" style="display:block;text-align:center;padding:13px 20px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:14px" style-hover="background:#6C4BA6">Tanya via WhatsApp</a>
+        </div>
+      </nav>
+
+      <div style="flex:1 1 520px;min-width:290px">
+        <sc-if value="{{ noHits }}" hint-placeholder-val="{{ false }}">
+          <div style="border-top:1px solid #D6CBB8;padding:44px 0">
+            <h2 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:24px;letter-spacing:-0.03em;margin:0 0 10px">Tidak ada yang cocok dengan “{{ fq }}”.</h2>
+            <p style="margin:0 0 22px;font-size:15px;line-height:1.6;color:#5B5347;max-width:44ch">Coba kata lain, atau tanya langsung — pertanyaan yang sering masuk biasanya kami tambahkan ke halaman ini.</p>
+            <a href="{{ waHref }}" target="_blank" rel="noopener" style="display:inline-block;padding:14px 26px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px" style-hover="background:#6C4BA6">Tanya via WhatsApp</a>
+          </div>
+        </sc-if>
+
+        <sc-for list="{{ sections }}" as="s" hint-placeholder-count="8">
+          <section id="{{ s.id }}" data-screen-label="{{ s.name }}" style="border-top:1px solid #D6CBB8;padding:clamp(26px,3vw,38px) 0 clamp(20px,2.4vw,30px)">
+            <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px">
+              <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(24px,3.2vw,38px);letter-spacing:-0.035em;margin:0">{{ s.name }}</h2>
+              <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">{{ s.kicker }}</span>
+            </div>
+            <p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:#5B5347;max-width:52ch">{{ s.note }}</p>
+            <div style="display:flex;flex-direction:column">
+              <sc-for list="{{ s.items }}" as="i" hint-placeholder-count="4">
+                <div style="border-top:1px solid #E7DFD1">
+                  <button type="button" onClick="{{ i.toggle }}" aria-expanded="{{ i.expanded }}" style="display:flex;width:100%;gap:18px;align-items:flex-start;justify-content:space-between;padding:18px 0;border:none;background:none;text-align:left;font-family:'Archivo',sans-serif;font-weight:700;font-size:clamp(16px,1.8vw,19px);letter-spacing:-0.022em;line-height:1.35;color:#1A1712" style-hover="color:#6C4BA6">
+                    <span>{{ i.q }}</span>
+                    <span style="{{ i.iconStyle }}">+</span>
+                  </button>
+                  <div style="{{ i.bodyStyle }}">
+                    <p style="margin:0 0 18px;font-size:15px;line-height:1.68;color:#5B5347;max-width:62ch">{{ i.a }}</p>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </section>
+        </sc-for>
+
+        <section style="border-top:1px solid #D6CBB8;padding-top:clamp(26px,3vw,38px)">
+          <div style="border-radius:30px;background:#1A1712;color:#F7F3EA;padding:clamp(26px,3.6vw,48px);display:flex;flex-wrap:wrap;gap:32px;align-items:center;justify-content:space-between">
+            <div style="flex:1 1 320px;min-width:260px">
+              <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#C9E45B">MASIH ADA PERTANYAAN</span>
+              <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(24px,3.4vw,42px);line-height:0.96;letter-spacing:-0.038em;margin:14px 0 12px;max-width:20ch">Kami balas di bawah satu jam pada jam kerja.</h2>
+              <p style="margin:0;font-size:15px;line-height:1.6;color:rgba(247,243,234,0.8);max-width:44ch">Senin–Sabtu 09.00–18.00 WIB. Di luar jam itu, tetap masuk — dibalas pagi berikutnya.</p>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <a href="{{ waHref }}" target="_blank" rel="noopener" style="padding:16px 28px;border-radius:999px;background:#C9E45B;color:#1A1712;font-weight:600;font-size:15px" style-hover="background:#F7F3EA">WhatsApp</a>
+              <a href="Kontak.dc.html" style="padding:16px 28px;border-radius:999px;border:1px solid rgba(247,243,234,0.45);font-weight:600;font-size:15px;color:#F7F3EA" style-hover="background:rgba(247,243,234,0.14)">Semua Kontak</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer style="background:#1A1712;color:#F7F3EA;padding:64px 28px 32px">
+    <div style="display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;margin-bottom:48px">
+      <div style="flex:1 1 300px;min-width:260px">
+        <div style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(32px,5.4vw,68px);letter-spacing:0.06em;line-height:1">PEZIARAH</div>
+        <p style="margin:18px 0 0;max-width:38ch;font-size:15px;line-height:1.55;color:#A8A092">Gift shop, operator ziarah dan jurnal iman Katolik. Dibuat di, dan dikirim ke, seluruh Indonesia.</p></div><div style="flex:2 1 560px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:34px 40px;font-size:14px"><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BELANJA</span><a href="Katalog.dc.html#rosario">Rosario</a><a href="Katalog.dc.html#salib">Salib &amp; Krusifiks</a><a href="Katalog.dc.html#perhiasan">Perhiasan</a><a href="Katalog.dc.html#apparel">Tenun &amp; Batik</a><a href="Katalog.dc.html#wallart">Wall Art</a><a href="Katalog.dc.html#merch">Merch</a><a href="Hampers.dc.html">Hampers</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ZIARAH</span><a href="Ziarah.dc.html#rute">Semua Rute</a><a href="Concierge.dc.html">Grup Kecil</a><a href="Rute.dc.html#sendangsono">Sendangsono</a><a href="Rute.dc.html#ganjuran">Ganjuran</a><a href="Rute.dc.html#muntilan">Muntilan</a><a href="Rute.dc.html#custom">Susun Rute Sendiri</a><a href="Jurnal.dc.html#ziarah">Catatan Ziarah</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BANTUAN</span><a href="FAQ.dc.html#pengiriman">Pengiriman</a><a href="FAQ.dc.html#retur">Tukar &amp; Retur</a><a href="FAQ.dc.html#produk">Ukuran &amp; Perawatan</a><a href="Tentang.dc.html">Tentang Kami</a><a href="Kontak.dc.html">Hubungi Kami</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">IKUTI</span><a href="https://instagram.com/peziarahsociety" target="_blank" rel="noopener">Instagram</a><a href="https://facebook.com/peziarahsociety" target="_blank" rel="noopener">Facebook</a><a href="https://wa.me/6281200000000" target="_blank" rel="noopener">WhatsApp</a></div></div></div>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;border-top:1px solid rgba(247,243,234,0.14);padding-top:22px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#8A8172">
+      <span>© 2026 PEZIARAH</span>
+      <span style="text-transform:uppercase">{{ verse }}</span>
+      <span><a href="/kebijakan-privasi/" style="color:inherit;text-decoration:none">KEBIJAKAN PRIVASI</a> · <a href="/syarat-ketentuan/" style="color:inherit;text-decoration:none">SYARAT &amp; KETENTUAN</a></span>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+// FAQ content lives here as one array so a CMS can replace it wholesale.
+// Section ids are the URL anchors the footer links to (#pengiriman, #retur).
+const WA = "6281200000000";
+
+const SECTIONS = [
+  { id: "pesanan", name: "Pesanan & Pembayaran", kicker: "SEBELUM BAYAR",
+    note: "Cara memesan, metode bayar, dan apa yang terjadi setelah kamu klik kirim.",
+    items: [
+      { q: "Bagaimana cara memesan?", a: "Masukkan barang ke Keranjang, lalu pilih salah satu dari dua jalur di halaman Keranjang: kirim pesanan sebagai chat WhatsApp, atau isi formulir dan transfer manual. Keduanya sampai ke orang yang sama — WhatsApp cuma lebih cepat kalau kamu masih mau tanya-tanya." },
+      { q: "Apa saja metode pembayarannya?", a: "Transfer bank (BCA), QRIS, dan COD untuk Jabodetabek. Untuk pesanan di atas Rp 1 juta tersedia cicilan 0% lewat kartu kredit — tanya dulu lewat WhatsApp karena diproses manual." },
+      { q: "Berapa lama saya harus transfer?", a: "Kami tahan pesanan 1×24 jam setelah kode pesanan keluar. Lewat itu, stok dilepas lagi — terutama untuk item edisi terbatas yang tinggal beberapa buah." },
+      { q: "Bisa minta invoice untuk paroki atau sekolah?", a: "Bisa. Sebutkan nama lembaga, alamat, dan NPWP kalau ada saat memesan; kami kirim kwitansi dan faktur yang bisa dipertanggungjawabkan ke bendahara." },
+      { q: "Pesanan saya sudah masuk atau belum?", a: "Kalau kamu dapat kode pesanan (PZ-XXXXX) berarti sudah tercatat. Kirim kode itu ke WhatsApp kami untuk cek status kapan saja." }
+    ] },
+
+  { id: "pengiriman", name: "Pengiriman", kicker: "ONGKIR & ESTIMASI",
+    note: "Ke mana kami kirim, berapa lama, dan berapa biayanya.",
+    items: [
+      { q: "Berapa lama pesanan sampai?", a: "1–4 hari kerja untuk Pulau Jawa, 3–7 hari kerja untuk luar Jawa. Jabodetabek bisa instant di hari yang sama kalau pesan sebelum jam 14.00. Barang custom dan batik jahit punya waktu produksi sendiri, 10–14 hari kerja sebelum dikirim." },
+      { q: "Berapa ongkirnya?", a: "Flat Rp 20.000 untuk Jabodetabek, Rp 30.000 untuk Pulau Jawa, dan Rp 45.000 untuk luar Jawa. Gratis ongkir untuk pesanan di atas Rp 500.000, ke mana pun di Indonesia." },
+      { q: "Pakai kurir apa?", a: "JNE, SiCepat, dan instant courier untuk Jabodetabek. Kalau kamu punya preferensi kurir tertentu, sebutkan saat memesan — biasanya bisa kami turuti." },
+      { q: "Bisa kirim ke luar negeri?", a: "Bisa, tapi belum otomatis. Kirim daftar barang dan alamat lengkap lewat WhatsApp, kami hitung ongkir dan bea kirim dulu sebelum kamu bayar. Paling sering ke Malaysia, Singapura, dan Belanda." },
+      { q: "Kalau paket rusak atau hilang di jalan?", a: "Tanggung jawab kami. Kirim foto paket saat diterima ke WhatsApp, kami ganti barangnya atau kembalikan uangnya — tanpa kamu perlu berdebat dengan kurir." },
+      { q: "Bisa dikirim langsung ke penerima hadiah?", a: "Bisa, dan gratis. Tulis nama serta alamat penerima di catatan pesanan, plus pesan untuk kartu doa kalau ada. Kami tidak menyertakan nota harga di paket hadiah." }
+    ] },
+
+  { id: "retur", name: "Tukar & Retur", kicker: "14 HARI",
+    note: "Kalau salah ukuran atau berubah pikiran. Kami buat ini semudah mungkin, tapi ada batasnya.",
+    items: [
+      { q: "Bisa tukar kalau salah ukuran?", a: "Bisa — gratis sekali tukar dalam 14 hari sejak barang diterima, selama label masih utuh dan barang belum dipakai. Ongkir kirim balik kami tanggung untuk penukaran ukuran pertama." },
+      { q: "Bagaimana cara mengajukan tukar atau retur?", a: "Chat WhatsApp dengan kode pesanan dan foto barangnya. Kami balas dengan alamat kirim balik dan resi. Jangan kirim balik sebelum dapat konfirmasi — paket tanpa nomor pengajuan sulit kami lacak." },
+      { q: "Apa yang tidak bisa ditukar?", a: "Barang custom (nama, ukiran, bordir paroki), batik yang sudah dijahit sesuai ukuran kamu, perhiasan yang sudah disesuaikan ukurannya, produk henna yang segelnya terbuka, dan semua sesi body art. Itu semua dikerjakan khusus untukmu dan tidak bisa dijual lagi." },
+      { q: "Uangnya kembali penuh?", a: "Untuk barang cacat produksi atau salah kirim: penuh, termasuk ongkir. Untuk berubah pikiran: harga barang kembali penuh, ongkir awal tidak dikembalikan. Dana masuk 3–5 hari kerja setelah barang kami terima dan periksa." },
+      { q: "Barangnya cacat, tapi sudah lewat 14 hari.", a: "Kalau cacatnya dari produksi — rantai rosario putus, sablon retak sejak awal, kayu pecah — tetap kami ganti meski lewat 14 hari. Batas 14 hari itu untuk berubah pikiran, bukan untuk cacat produksi." }
+    ] },
+
+  { id: "produk", name: "Produk & Perawatan", kicker: "BAHAN & UKURAN",
+    note: "Soal bahan, ukuran, dan cara merawat supaya tahan lama.",
+    items: [
+      { q: "Barangnya benar-benar handmade?", a: "Ya, dan kami sebut nama pengrajinnya di Jurnal. Rosario dirangkai satuan, batik ditulis tangan, tenun ditenun ATBM, salib dipahat dan diamplas manual. Konsekuensinya: ada variasi kecil antar unit — itu bukan cacat." },
+      { q: "Kenapa warna di foto agak beda dengan barangnya?", a: "Kayu sonokeling dan jati punya serat yang berbeda-beda, dan batik tulis diwarnai per batch. Foto kami tidak diedit warnanya, tapi layar kamu dan cahaya di rumahmu ikut bicara. Kalau selisihnya jauh dari wajar, kabari kami." },
+      { q: "Bagaimana cara tahu ukuran yang tepat?", a: "Setiap halaman produk punya tabel ukuran dan panjang tali untuk rosario. Kalau masih ragu, kirim ukuran pergelangan atau lingkar leher lewat WhatsApp — kami sarankan yang mana." },
+      { q: "Cara merawat kayu dan logam?", a: "Kayu: lap kain kering, sesekali oles minyak zaitun tipis, jauhkan dari lembap berlebih. Logam kuningan dan perak: hindari parfum langsung, simpan di pouch flanel bawaan, lap tipis kalau mulai gelap. Batik: cuci lerak, jangan diperas kencang, jemur balik di tempat teduh." },
+      { q: "Benar setiap pesanan didoakan?", a: "Benar. Semua pesanan dikumpulkan dan didoakan bersama tiap Jumat sore di kapel kami sebelum dipaketkan. Kalau kamu mau menitipkan intensi doa, tulis di catatan pesanan — dibacakan, bukan sekadar dicatat." }
+    ] },
+
+  { id: "rombongan", name: "Custom & Rombongan", kicker: "MIN. 12 PCS",
+    note: "Seragam paroki, hampers acara, dan pesanan nama satuan.",
+    items: [
+      { q: "Bisa cetak nama paroki dan tanggal ziarah?", a: "Itu justru yang paling sering kami kerjakan. Kaos, outerwear, syal tenun, sampai tag koper — minimum 12 pcs, produksi 10–14 hari kerja. Kirim daftar ukuran lewat WhatsApp, kami balas mockup dalam 2 hari kerja sebelum produksi jalan." },
+      { q: "Bisa pesan custom perorangan, satu biji?", a: "Tergantung pengrajinnya. Ukiran nama di salib dan penyesuaian ukuran perhiasan biasanya bisa. Bordir dan sablon butuh minimum 12 pcs karena biaya setup-nya. Tanya dulu — kami jujur kalau tidak masuk." },
+      { q: "Hampers untuk acara kantor atau paroki?", a: "Bisa, mulai 20 set dengan isi yang kamu pilih sendiri dari katalog, plus kartu ucapan dicetak. Lihat halaman Hampers untuk paket yang sudah jadi, atau minta susunan khusus." },
+      { q: "Ada diskon untuk pesanan besar?", a: "Ada, bertingkat mulai 12 pcs dan naik di 30 serta 60 pcs. Angkanya tergantung barangnya — kami kirim rincian setelah tahu jumlah dan itemnya." }
+    ] },
+
+  { id: "ziarah", name: "Ziarah", kicker: "BERDASARKAN PERMINTAAN",
+    note: "Perjalanan rombongan. Detail lengkapnya ada di halaman Ziarah.",
+    items: [
+      { q: "Ada jadwal ziarah terbuka yang bisa saya ikuti?", a: "Belum. Untuk sekarang semua perjalanan disusun dari permintaan rombongan — minimum 12 peserta. Kalau kamu ingin diberi tahu saat ada jadwal terbuka, titip nomor lewat WhatsApp." },
+      { q: "Berapa biaya per orang?", a: "Tergantung empat hal: rute, jumlah peserta, kelas penginapan, dan lama perjalanan. Kami kirim rincian setelah tahu keempatnya — tanpa biaya konsultasi." },
+      { q: "Apa yang termasuk dalam biaya?", a: "Penyusunan rute dan revisinya, transportasi darat ber-AC, koordinator lapangan, penginapan, pendamping rohani untuk Misa di jalan, buku doa rute cetak khusus, dan sumbangan ke pengelola tempat ziarah. Rinciannya ada di halaman Ziarah." },
+      { q: "Rombongan kami banyak lansia. Bisa disesuaikan?", a: "Bisa, dan sering. Ritme jalan, jumlah titik per hari, jarak parkir ke lokasi, sampai jeda istirahat kami susun ulang. Sebutkan saja saat mengajukan permintaan." }
+    ] },
+
+  { id: "bodyart", name: "Body Art", kicker: "TATO & HENNA",
+    note: "Sesi studio permanen dan set henna. Dua hal yang sangat berbeda.",
+    items: [
+      { q: "Bagaimana harga tato dihitung?", a: "Rp 180.000 per sentimeter dimensi terpanjang, minimum Rp 900.000. Sudah termasuk konsultasi desain, sesi tato, dan salep perawatan. Sketsa final selalu disetujui bersama sebelum tinta pertama." },
+      { q: "Bisa langsung datang tanpa janji?", a: "Tidak. Setiap sesi butuh konsultasi desain dulu, dan DP 30% mengunci jadwal. Studio kami di Pejaten, Jakarta Selatan, buka Senin–Sabtu 10.00–18.00 dengan janji." },
+      { q: "Ada touch-up kalau hasilnya memudar?", a: "Sekali, gratis, dalam 3 bulan setelah sesi — selama perawatan pasca-sesi diikuti. Setelah itu dihitung sebagai sesi baru dengan tarif normal." },
+      { q: "Henna-nya aman dan halal?", a: "Set henna kami pakai pasta henna alami tanpa PPD, jadi tidak ada henna hitam yang bikin iritasi. Bertahan 1–2 minggu dan luruh sendiri. Aman untuk acara pernikahan dan pemakaian di kulit sensitif." }
+    ] },
+
+  { id: "vendor", name: "Vendor & Kerja Sama", kicker: "PENGRAJIN & STUDIO",
+    note: "Kalau kamu yang membuat, bukan yang membeli.",
+    items: [
+      { q: "Saya pengrajin. Bagaimana cara menitipkan produk?", a: "Isi formulir vendor di halaman Kontak. Kami tinjau tiap dua minggu; kalau cocok, kami minta sampel. Yang kami cari: dikerjakan tangan atau batch kecil, bisa produksi ulang minimal 12 unit dalam 3 minggu, dan bersedia namanya ditulis di Jurnal." },
+      { q: "Produk seperti apa yang tidak diterima?", a: "Barang impor massal, dropship, dan reseller tanpa produksi sendiri. Bukan soal kualitas — model bisnis kami bertumpu pada cerita pengrajin yang bisa kami tulis dan pertanggungjawabkan." },
+      { q: "Apakah semua pengajuan dibalas?", a: "Tidak semua, dan kami minta maaf untuk itu. Kalau dalam sebulan belum ada kabar, biasanya berarti belum cocok untuk kurasi periode ini — silakan ajukan lagi kalau ada lini produk baru." }
+    ] }
+];
+
+let PRODUCTS = [];
+let CAT_LABEL = {};
+
+class Component extends DCLogic {
+  state = {
+    verse: "“Sebab kami hidup karena percaya, bukan karena melihat” — 2 Kor 5:7",
+    mobile: false, narrow: false, menu: false, cartCount: 0, q: "", searchOpen: false,
+    open: {}, fq: ""
+  };
+
+  componentDidMount() {
+    import("./data/verses.js").then(m => this.setState({ verse: m.currentVerse() }));
+    import("./data/products.js").then(m => {
+      PRODUCTS = m.PRODUCTS;
+      CAT_LABEL = {};
+      m.CATEGORIES.forEach(c => { CAT_LABEL[c.id] = c.name; });
+      this.forceUpdate();
+    });
+    import("./data/cart.js").then(m => {
+      this.setState({ cartCount: m.count() });
+      this._offCart = m.subscribe(items => this.setState({ cartCount: items.reduce((n, i) => n + i.qty, 0) }));
+    });
+    // Two independent thresholds: the topic rail collapses under 1000, the
+    // header chrome under 860 — same breakpoint as every sibling page.
+    this._sync = () => {
+      const mobile = window.innerWidth < 1000;
+      const narrow = window.innerWidth < 860;
+      if (mobile !== this.state.mobile || narrow !== this.state.narrow) {
+        this.setState({ mobile, narrow, menu: narrow ? this.state.menu : false });
+      }
+    };
+    this._sync();
+    window.addEventListener("resize", this._sync);
+    // Arriving at #pengiriman or #retur opens that section's first answer, so
+    // the landing spot never looks like a wall of closed rows.
+    const h = (location.hash || "").replace(/^#/, "");
+    const sec = SECTIONS.find(s => s.id === h);
+    if (sec) this.setState({ open: { [`${sec.id}-0`]: true } });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this._sync);
+    if (this._offCart) this._offCart();
+  }
+
+  chrome() {
+    const nrw = this.state.narrow;
+    return {
+      verse: this.state.verse,
+      cartCount: this.state.cartCount,
+      deskNavStyle: nrw ? "display:none" : "display:flex;gap:22px;font-size:13px;font-weight:500",
+      deskUtilStyle: nrw ? "display:none" : "display:flex;gap:16px;align-items:center;font-family:'Space Mono',monospace;font-size:12px",
+      burgerStyle: nrw
+        ? "display:flex;flex-direction:column;justify-content:center;gap:6px;width:44px;height:44px;align-items:flex-end;padding:0;border:none;background:none;cursor:pointer"
+        : "display:none",
+      drawerStyle: (nrw && this.state.menu)
+        ? "position:fixed;inset:0;z-index:80;background:#F7F3EA;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 24px"
+        : "display:none",
+      toggleMenu: () => this.setState(s => ({ menu: !s.menu }))
+    };
+  }
+
+  search() {
+    const open = this.state.searchOpen;
+    const q = this.state.q.trim().toLowerCase();
+    const hits = q.length < 2 ? [] : PRODUCTS.filter(x =>
+      x.name.toLowerCase().includes(q) || (CAT_LABEL[x.cat] || "").toLowerCase().includes(q)
+    ).slice(0, 6);
+    return {
+      q: this.state.q,
+      searchWrapStyle: "display:flex;align-items:center;gap:10px",
+      searchInputStyle: `width:${open ? 230 : 0}px;opacity:${open ? 1 : 0};padding:${open ? "9px 14px" : "9px 0"};border:1px solid #D6CBB8;border-radius:999px;background:#F7F3EA;font-size:13px;transition:width .3s ease,opacity .25s ease`,
+      toggleSearch: () => this.setState(s => ({ searchOpen: !s.searchOpen, q: s.searchOpen ? "" : s.q })),
+      onQ: e => this.setState({ q: e.target.value }),
+      onQKey: e => { if (e.key === "Escape") this.setState({ searchOpen: false, q: "" }); },
+      results: hits.map(x => ({
+        name: x.name,
+        cat: (CAT_LABEL[x.cat] || "").toUpperCase(),
+        price: x.price,
+        href: `Produk.dc.html?id=${x.id}`,
+        thumbStyle: "width:46px;height:46px;border-radius:12px;flex:none;" + (x.image
+          ? `background:#EAE3D5 url("${x.image}") center/cover`
+          : "background-image:repeating-linear-gradient(60deg,#DCD2C0 0 8px,#EAE3D5 8px 16px)")
+      })),
+      resultsLabel: hits.length ? `${hits.length} HASIL UNTUK “${this.state.q.trim()}”` : "TIDAK ADA HASIL",
+      resultsStyle: (open && q.length >= 2)
+        ? "position:absolute;top:100%;right:20px;width:min(420px,calc(100vw - 40px));background:#F7F3EA;border:1px solid #D6CBB8;border-radius:20px;box-shadow:0 18px 44px rgba(26,23,18,0.14);padding:14px;z-index:70"
+        : "display:none"
+    };
+  }
+
+  renderVals() {
+    const fq = this.state.fq.trim().toLowerCase();
+    // Typing in the FAQ field filters questions in place and auto-opens matches,
+    // so the answer is visible without a second click.
+    const filtered = SECTIONS.map(s => ({
+      ...s,
+      items: fq.length < 2 ? s.items : s.items.filter(i =>
+        i.q.toLowerCase().includes(fq) || i.a.toLowerCase().includes(fq) || s.name.toLowerCase().includes(fq)
+      )
+    })).filter(s => s.items.length > 0);
+
+    return {
+      ...this.chrome(),
+      ...this.search(),
+      fq: this.state.fq,
+      onFq: e => this.setState({ fq: e.target.value }),
+      noHits: fq.length >= 2 && filtered.length === 0,
+      waHref: `https://wa.me/${WA}?text=${encodeURIComponent("Halo Peziarah, saya mau tanya:")}`,
+
+      railStyle: this.state.mobile
+        ? "flex:1 1 100%;min-width:0"
+        : "flex:0 0 250px;position:sticky;top:96px;align-self:flex-start",
+
+      rail: filtered.map(s => ({
+        name: s.name,
+        href: `#${s.id}`,
+        count: s.items.length,
+        style: "display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:9px 12px;border-radius:12px;font-size:14px;font-weight:500;transition:background .18s"
+      })),
+
+      sections: filtered.map(s => ({
+        ...s,
+        items: s.items.map((i, idx) => {
+          const key = `${s.id}-${idx}`;
+          // While filtering, matches open themselves.
+          const isOpen = fq.length >= 2 ? true : !!this.state.open[key];
+          return {
+            q: i.q,
+            a: i.a,
+            expanded: isOpen ? "true" : "false",
+            toggle: () => this.setState(st => ({ open: { ...st.open, [key]: !st.open[key] } })),
+            iconStyle: `flex:none;font-family:'Space Mono',monospace;font-size:20px;line-height:1;color:#8A8172;transform:rotate(${isOpen ? 45 : 0}deg);transition:transform .22s ease`,
+            bodyStyle: isOpen ? "display:block" : "display:none"
+          };
+        })
+      }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

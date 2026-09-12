@@ -1,0 +1,24 @@
+DELTA 19 Agustus 2026 (b)
+=========================
+Timpa file berikut di public_html/ dengan struktur folder yang sama.
+
+Isi perbaikan:
+- "Bukit Sanjaya" -> "Sendangsono & Makam Rm. Sanjaya";
+  titik singgah jadi "Kerkhof Muntilan (Makam Rm. Sanjaya)".
+- 4 artikel baru (Muntilan, Tenun Ende, Warna Ungu, Gua Maria Kerep Ambarawa),
+  sudah di-prerender + masuk sitemap.
+- data/journal.js, data/post-bodies.js, data/routes.js diperbarui — WAJIB
+  ikut diunggah, karena judul rute & daftar artikel dibaca dari file ini.
+
+File:
+ziarah/rute/sendangsono/index.html  46423 chars
+ziarah/index.html  39506 chars
+data/routes.js  30223 chars
+data/journal.js  8578 chars
+data/post-bodies.js  57176 chars
+jurnal/artikel/muntilan-dua-hari/index.html  40417 chars
+jurnal/artikel/tenun-ende-yang-hampir-hilang/index.html  40050 chars
+jurnal/artikel/warna-ungu-dan-kenapa/index.html  36316 chars
+jurnal/artikel/gua-maria-kerep-ambarawa/index.html  41029 chars
+sitemap.xml  11293 chars
+README.txt  5003 chars

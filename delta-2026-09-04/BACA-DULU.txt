@@ -1,0 +1,17 @@
+Delta publish — artikel "Ketika Romo berulah, umat harus bagaimana"
+4 September 2026
+
+Isi folder ini mengikuti struktur root domain. Unggah/timpa 8 file ini
+ke root repo, pertahankan path-nya:
+
+  jurnal/artikel/ketika-romo-berulah/index.html   BARU
+  assets/romo-berulah.webp                        BARU (hero, 1600x900)
+  assets/og/artikel-ketika-romo-berulah.jpg       BARU (share card, 1200x630)
+  data/journal.js                                 TIMPA
+  data/post-bodies.js                             TIMPA
+  jurnal/index.html                               TIMPA (listing Editorial)
+  jurnal/artikel/index.html                       TIMPA (listing)
+  sitemap.xml                                     TIMPA
+
+Catatan: data/journal.js dan data/post-bodies.js wajib ikut. Tanpa keduanya
+artikel tidak muncul di daftar jurnal versi aplikasi.

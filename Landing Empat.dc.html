@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Cinzel:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F3EA;color:#1A1712;font-family:'Hanken Grotesk',Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  a:hover{color:#6C4BA6}
+  @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  ::selection{background:#6C4BA6;color:#fff}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+<link rel="preload" as="image" href="assets/hero-rosario-crop.png" fetchpriority="high">
+</helmet>
+
+<div style="overflow-x:clip;position:relative">
+
+  <header style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:15px clamp(18px,4vw,44px);background:#F7F3EA;border-bottom:1px solid #1A1712">
+    <a href="Landing.dc.html" style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(16px,4.2vw,19px);letter-spacing:0.16em">PEZIARAH</a>
+    <nav style="{{ deskNavStyle }}">
+      <a href="#katalog">Katalog</a>
+      <a href="#ziarah">Ziarah</a>
+      <a href="#jurnal">Jurnal</a>
+      <a href="#hampers">Hampers</a>
+    </nav>
+    <div style="{{ deskUtilStyle }}">
+      <div style="display:flex;align-items:center;gap:10px">
+        <button type="button" aria-label="Cari" onClick="{{ toggleSearch }}" style="border:none;background:none;padding:0;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.08em;color:inherit;cursor:pointer">CARI</button>
+        <input type="search" aria-label="Cari produk" value="{{ q }}" onChange="{{ onQ }}" onKeyDown="{{ onQKey }}" placeholder="rosario, salib, batik…" style="{{ searchInputStyle }}" />
+      </div>
+      <a href="Tas.dc.html" style="white-space:nowrap">KERANJANG ({{ cartCount }})</a>
+    </div>
+    <button type="button" aria-label="Buka menu" onClick="{{ toggleMenu }}" style="{{ burgerStyle }}">
+      <span style="display:block;width:22px;height:1px;background:currentColor"></span>
+      <span style="display:block;width:22px;height:1px;background:currentColor"></span>
+    </button>
+  </header>
+
+  <div style="{{ resultsStyle }}">
+    <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6E6559;padding:2px 4px 10px">{{ resultsLabel }}</div>
+    <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
+      <a href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 4px;border-top:1px solid #E0D8C8" style-hover="background:#F1EADC">
+        <span style="{{ r.thumbStyle }}"></span>
+        <span style="flex:1;min-width:0">
+          <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.02em">{{ r.name }}</span>
+          <span style="display:block;font-family:'Space Mono',monospace;font-size:11px;color:#6E6559;margin-top:2px">{{ r.cat }}</span>
+        </span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;white-space:nowrap">{{ r.price }}</span>
+      </a>
+    </sc-for>
+  </div>
+
+  <div style="{{ drawerStyle }}">
+    <button type="button" aria-label="Tutup menu" onClick="{{ toggleMenu }}" style="position:absolute;top:12px;right:16px;width:44px;height:44px;border:none;background:none;color:#1A1712;font-family:'Space Mono',monospace;font-size:22px;cursor:pointer">×</button>
+    <span style="font-family:'Cinzel',serif;font-weight:600;font-size:24px;letter-spacing:0.16em">PEZIARAH</span>
+    <span style="width:34px;height:1px;background:#1A1712;margin:24px 0 28px"></span>
+    <nav style="display:flex;flex-direction:column;align-items:center;gap:20px;font-family:'Archivo',sans-serif;font-weight:700;font-size:30px;letter-spacing:-0.03em">
+      <a href="#katalog" onClick="{{ toggleMenu }}">Katalog</a>
+      <a href="#ziarah" onClick="{{ toggleMenu }}">Ziarah</a>
+      <a href="#jurnal" onClick="{{ toggleMenu }}">Jurnal</a>
+      <a href="#hampers" onClick="{{ toggleMenu }}">Hampers</a>
+    </nav>
+    <div style="display:flex;gap:14px;margin-top:34px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:#6E6559">
+      <a href="Katalog.dc.html">KATALOG</a>
+      <span>/</span>
+      <a href="Tas.dc.html" style="white-space:nowrap">KERANJANG ({{ cartCount }})</a>
+    </div>
+    <a href="https://wa.me/6281200000000" style="margin-top:30px;padding:13px 24px;background:#C9E45B;color:#1A1712;font-weight:600;font-size:14px">Tanya CS di WhatsApp</a>
+  </div>
+
+  <section data-screen-label="Hero" style="position:relative;min-height:clamp(560px,calc(100dvh - 68px),900px);display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;background:#1A1712;color:#F7F3EA">
+    <sc-for list="{{ slides }}" as="s" hint-placeholder-count="1">
+      <div role="img" aria-label="{{ s.alt }}" style="{{ s.layerStyle }}">
+        <div style="{{ s.scrimStyle }}"></div>
+      </div>
+    </sc-for>
+
+    <span style="position:relative;display:flex;align-items:center;gap:11px;flex-wrap:wrap;padding:clamp(20px,2.6vw,34px) clamp(18px,4vw,44px) clamp(20px,2.4vw,32px);background:linear-gradient(180deg,rgba(26,23,18,0.68) 0%,rgba(26,23,18,0.5) 58%,rgba(26,23,18,0) 100%);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#C9E45B">
+      <span style="width:6px;height:6px;background:#C9E45B"></span>
+      OPERATOR ZIARAH &#183; GIFT SHOP ROHANI &#183; JURNAL IMAN KATOLIK &#8212; EST. 2026
+    </span>
+
+    <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:clamp(8px,1.4vw,20px) clamp(18px,4vw,44px) clamp(22px,2.6vw,36px)">
+      <div style="display:grid;flex:1">
+      <div style="{{ copyOneStyle }}">
+        <h1 style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(38px,8vw,112px);letter-spacing:0.06em;line-height:1;margin:0">PEZIARAH</h1>
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;margin-top:clamp(16px,2vw,24px)">
+          <span style="font-family:'Archivo',sans-serif;font-weight:700;font-size:clamp(19px,2.4vw,27px);letter-spacing:-0.02em">pe&#183;zi&#183;a&#183;rah</span>
+          <span style="font-family:'Space Mono',monospace;font-size:clamp(14px,1.7vw,18px);color:#C9E45B">/p&#601;.zi.a.rah/</span>
+        </div>
+        <p style="margin:14px 0 0;font-style:italic;font-size:clamp(15px,1.8vw,19px);color:#F7F3EA">nomina (kata benda)</p>
+        <p style="margin:14px 0 0;max-width:52ch;font-size:clamp(17px,2.2vw,23px);line-height:1.45;text-wrap:pretty">Operator ziarah, gift shop rohani batch kecil, dan jurnal iman Katolik, tapi tidak selalu dalam urutan itu.</p>
+      </div>
+
+      <div style="{{ copyTwoStyle }}">
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(38px,6.2vw,96px);line-height:0.9;letter-spacing:-0.05em;margin:0;max-width:17ch;text-wrap:balance">Untuk siapa saja yang memerlukan:</h2>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:clamp(22px,2.6vw,30px);margin-top:clamp(18px,2.2vw,28px)">
+          <p style="margin:0;max-width:56ch;font-size:clamp(16px,2vw,19px);line-height:1.5;text-wrap:pretty">Perjalanan menuju tempat ziarah Katolik, hadiah untuk diberikan, buah tangan untuk momen yang nggak terulang, dan bacaan inspirasional. Empat hal yang sama pentingnya, dikerjakan tim yang sama.</p>
+          <a href="https://wa.me/6281200000000" style="display:inline-flex;align-items:center;gap:11px;padding:15px 26px;background:#C9E45B;color:#1A1712;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#F7F3EA;color:#1A1712">
+            <span style="font-family:'Space Mono',monospace;font-size:12px">WA</span>
+            Tanya CS &#8212; balas &#60; 1 jam
+          </a>
+        </div>
+      </div>
+
+      <div style="{{ copyThreeStyle }}">
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#C9E45B">SHUTTLE HARIAN &#8212; KERKHOF MUNTILAN &#8594; SENDANGSONO</span>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(36px,5.8vw,92px);line-height:0.92;letter-spacing:-0.05em;margin:14px 0 0;max-width:20ch"><span style="color:#C9E45B">14</span> kursi, <span style="color:#C9E45B">4</span> trip tiap hari.<br /><span style="color:#C9E45B">Rp 45K</span> pulang-pergi.</h2>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:clamp(20px,2.4vw,28px);margin-top:clamp(22px,2.8vw,36px)">
+          <p style="margin:0;max-width:50ch;font-size:clamp(16px,2vw,19px);line-height:1.5;text-wrap:pretty">Sebelas kilometer dari makam Romo Sanjaya ke Sendangsono, tanpa nawar ojek dan tanpa nunggu rombongan penuh. Bayar di tempat.</p>
+          <a href="#shuttle" style="display:inline-flex;align-items:center;gap:11px;padding:15px 26px;background:#C9E45B;color:#1A1712;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#F7F3EA;color:#1A1712">Lihat jadwal &amp; daftar kursi &#8594;</a>
+        </div>
+      </div>
+
+      <div style="{{ copyFourStyle }}">
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#C9E45B">SEBELUM KAMU PESAN</span>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(34px,5.4vw,88px);line-height:0.92;letter-spacing:-0.05em;margin:14px 0 0;max-width:14ch">Balas <span style="color:#C9E45B">&#60; 1 jam</span>.<br />Bayar <span style="color:#C9E45B">di tempat</span>.<br />Tukar <span style="color:#C9E45B">14 hari</span>.</h2>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:clamp(20px,2.4vw,28px);margin-top:clamp(22px,2.8vw,36px)">
+          <p style="margin:0;max-width:50ch;font-size:clamp(16px,2vw,19px);line-height:1.5;text-wrap:pretty">Dijawab orang, bukan bot. Transfer, QRIS, atau COD. Salah ukuran boleh tukar sekali, gratis.</p>
+          <a href="FAQ.dc.html" style="display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border:1px solid rgba(247,243,234,0.5);color:#F7F3EA;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#F7F3EA;color:#1A1712;border-color:#F7F3EA">Tanya jawab lengkap &#8594;</a>
+        </div>
+      </div>
+      </div>
+
+      <div style="display:flex;gap:0;margin:clamp(12px,1.8vw,28px) -6px 0">
+        <sc-for list="{{ slides }}" as="s" hint-placeholder-count="2">
+          <button type="button" aria-label="{{ s.alt }}" onClick="{{ s.pick }}" style="{{ s.dotStyle }}"><span style="{{ s.pillStyle }}"></span></button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="ziarah" data-screen-label="Ziarah" style="background:#F7F3EA">
+    <div style="background:#452C6E;color:#F7F3EA">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:clamp(22px,3.2vw,40px) clamp(18px,4vw,44px) 16px;border-bottom:1px solid rgba(247,243,234,0.34)">
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#C9E45B">01 &#8212; ZIARAH</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.12em;color:#F7F3EA">{{ ruteMeta }}</span>
+      </div>
+      <div style="padding:clamp(40px,5.2vw,76px) clamp(18px,4vw,44px) clamp(76px,9vw,148px)">
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(34px,5.8vw,86px);line-height:0.9;letter-spacing:-0.045em;margin:0;max-width:18ch;text-wrap:balance">Rute yang sudah kami jalani sendiri.</h2>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:clamp(20px,2.4vw,28px);margin-top:20px">
+          <p style="margin:0;max-width:54ch;font-size:17px;line-height:1.55;color:#F7F3EA;text-wrap:pretty">Kami tidak menjual paket yang belum pernah kami tempuh. Tiap rute punya catatan jam terbaik, medan, dan tempat makan &#8212; ditulis setelah kami pulang, bukan sebelum berangkat.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:12px">
+            <a href="Ziarah.dc.html" style="display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;background:#C9E45B;color:#1A1712;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#F7F3EA;color:#1A1712">Rombongan paroki <span aria-hidden="true">&#8594;</span></a>
+            <a href="Concierge.dc.html" style="display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;background:transparent;color:#F7F3EA;border:1px solid rgba(247,243,234,0.5);font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#F7F3EA;color:#1A1712;border-color:#F7F3EA">Grup kecil 2&#8211;8 <span aria-hidden="true">&#8594;</span></a>
+            <a href="Ziarah.dc.html#rute" style="display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;background:transparent;color:#F7F3EA;border:1px solid rgba(247,243,234,0.5);font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#F7F3EA;color:#1A1712;border-color:#F7F3EA">Lihat semua rute <span aria-hidden="true">&#8594;</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="position:relative;margin-top:calc(-1 * (clamp(42px,5.4vw,92px) + clamp(34px,4.4vw,52px)));padding:0 clamp(18px,4vw,44px) clamp(8px,1.2vw,22px)">
+      <dc-import name="GuaMariaMap" variant="ringkas" ask-href="Ziarah.dc.html#form-ziarah" hint-size="100%,560px"></dc-import>
+    </div>
+  </section>
+
+  <section id="katalog" data-screen-label="Katalog" style="background:#F7F3EA">
+    <div style="position:relative;min-height:clamp(430px,64dvh,760px);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#1A1712;color:#F7F3EA">
+      <img src="assets/salib-sonokeling-crop.png" alt="Salib sonokeling dengan korpus kuningan, buatan tangan" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%" />
+      <div style="position:absolute;inset:0;background:linear-gradient(188deg,rgba(26,23,18,0.3) 0%,rgba(26,23,18,0.08) 34%,rgba(26,23,18,0.28) 100%)"></div>
+      <div style="position:relative;margin-bottom:auto;display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:clamp(22px,3.2vw,40px) clamp(18px,4vw,44px) 16px;border-bottom:1px solid rgba(247,243,234,0.45);background:linear-gradient(180deg,rgba(26,23,18,0.72) 0%,rgba(26,23,18,0.5) 55%,rgba(26,23,18,0) 100%)">
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#C9E45B">02 &#8212; KATALOG</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.12em;color:#F7F3EA">{{ katMeta }}</span>
+      </div>
+      <div style="position:relative;padding:clamp(64px,8vw,120px) clamp(18px,4vw,44px) clamp(28px,3.6vw,52px);background:linear-gradient(180deg,rgba(26,23,18,0) 0%,rgba(26,23,18,0.78) 17%,rgba(26,23,18,0.82) 100%)">
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(34px,5.8vw,86px);line-height:0.9;letter-spacing:-0.045em;margin:0;max-width:16ch;text-wrap:balance">Barang Kurasi/Produksi Sendiri</h2>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:clamp(20px,2.4vw,28px);margin-top:20px">
+          <p style="margin:0;max-width:54ch;font-size:17px;line-height:1.55;text-wrap:pretty">Batch kecil, diperiksa satu per satu, bernomor seri. Dibuat pengrajin di Ungaran, Jogja, Sumba, dan Ende &#8212; produk sarat makna (dan estetika) yang bisa kamu berikan ke orang terdekat, atau sekadar hadiah untuk diri sendiri.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:12px">
+            <a href="Katalog.dc.html" style="display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;background:#6C4BA6;color:#F7F3EA;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#C9E45B;color:#1A1712">Buka katalog lengkap <span aria-hidden="true">&#8594;</span></a>
+            <a href="Hampers.dc.html" style="display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;background:transparent;color:#F7F3EA;border:1px solid rgba(247,243,234,0.5);font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#F7F3EA;color:#1A1712;border-color:#F7F3EA">Kado &amp; hampers <span aria-hidden="true">&#8594;</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="jurnal" data-screen-label="Jurnal" style="background:#F7F3EA">
+    <div style="background:#F1EADC;border-bottom:1px solid #E0D8C8">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:clamp(22px,3.2vw,40px) clamp(18px,4vw,44px) 16px;border-bottom:1px solid #D6CBB8">
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#6C4BA6">03 &#8212; JURNAL</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.12em;color:#6E6559">TERBIT TIAP JUMAT</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:clamp(28px,4vw,64px);align-items:center;padding:clamp(40px,5.4vw,84px) clamp(18px,4vw,44px)">
+        <div>
+          <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(34px,5.2vw,76px);line-height:0.92;letter-spacing:-0.045em;margin:0;max-width:16ch;text-wrap:balance">Bacaan untuk minggu depan.</h2>
+          <p style="margin:clamp(18px,2.2vw,26px) 0 0;max-width:50ch;font-size:clamp(16px,1.8vw,18px);line-height:1.6;color:#423C33;text-wrap:pretty">Ditulis orang yang juga mengemas kotakmu dan menyetir busnya. Esai, catatan ziarah, playlist, dan cerita yang dikirim pembaca.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(22px,2.6vw,30px)">
+            <a href="Jurnal.dc.html" style="display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;background:#6C4BA6;color:#F7F3EA;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#1A1712;color:#F7F3EA">Baca semua tulisan <span aria-hidden="true">&#8594;</span></a>
+            <a href="Jurnal.dc.html#ziarah" style="display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;background:transparent;color:#1A1712;border:1px solid rgba(26,23,18,0.42);font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#1A1712;color:#F7F3EA;border-color:#1A1712">Catatan ziarah <span aria-hidden="true">&#8594;</span></a>
+          </div>
+        </div>
+        <figure style="margin:0">
+          <img src="assets/muntilan-aerial-1930.webp" alt="Muntilan dari udara, sekitar 1930 &#8212; arsip yang kami tulis di jurnal" loading="lazy" decoding="async" style="display:block;width:100%;aspect-ratio:5 / 4;object-fit:cover;background:#EAE3D5" />
+          <figcaption style="margin-top:12px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#6E6559">MUNTILAN DARI UDARA, ± 1930 &#183; ARSIP</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="hampers" data-screen-label="Hampers" style="background:#F7F3EA">
+    <div style="position:relative;min-height:clamp(430px,64dvh,760px);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#1A1712;color:#F7F3EA">
+      <img src="assets/hampers-box.webp" alt="Kotak hampers Peziarah dengan kartu doa tulis tangan" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+      <div style="position:absolute;inset:0;background:linear-gradient(188deg,rgba(26,23,18,0.3) 0%,rgba(26,23,18,0.08) 34%,rgba(26,23,18,0.28) 100%)"></div>
+      <div style="position:relative;margin-bottom:auto;display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:clamp(22px,3.2vw,40px) clamp(18px,4vw,44px) 16px;border-bottom:1px solid rgba(247,243,234,0.45);background:linear-gradient(180deg,rgba(26,23,18,0.72) 0%,rgba(26,23,18,0.5) 55%,rgba(26,23,18,0) 100%)">
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#C9E45B">04 &#8212; HAMPERS</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.12em;color:#F7F3EA">{{ momenMeta }}</span>
+      </div>
+      <div style="position:relative;padding:clamp(64px,8vw,120px) clamp(18px,4vw,44px) clamp(28px,3.6vw,52px);background:linear-gradient(180deg,rgba(26,23,18,0) 0%,rgba(26,23,18,0.78) 17%,rgba(26,23,18,0.82) 100%)">
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(34px,5.8vw,86px);line-height:0.9;letter-spacing:-0.045em;margin:0;max-width:16ch;text-wrap:balance">Kado untuk momen yang nggak terulang.</h2>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:clamp(20px,2.4vw,28px);margin-top:20px">
+          <p style="margin:0;max-width:54ch;font-size:17px;line-height:1.55;text-wrap:pretty">Komuni Pertama, Krisma, pernikahan, penghiburan. Dirangkai per momen &#8212; isinya dari katalog kami sendiri, lengkap dengan kartu doa tulis tangan.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:12px">
+            <a href="Hampers.dc.html" style="display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;background:#6C4BA6;color:#F7F3EA;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#C9E45B;color:#1A1712">Lihat semua hampers <span aria-hidden="true">&#8594;</span></a>
+            <a href="HampersPernikahan.dc.html" style="display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;background:transparent;color:#F7F3EA;border:1px solid rgba(247,243,234,0.5);font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#F7F3EA;color:#1A1712;border-color:#F7F3EA">Untuk pernikahan <span aria-hidden="true">&#8594;</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="shuttle" data-screen-label="Shuttle Bus" style="color:#1A1712;border-top:1px solid #1A1712">
+    <div style="background:#C9E45B;padding:clamp(34px,4vw,52px) clamp(18px,4vw,44px) 0;border-bottom:1px solid #1A1712">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(24px,3.5vw,52px);align-items:end">
+        <div style="padding-bottom:clamp(34px,4vw,54px)">
+          <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#3D2A5E">LAYANAN BARU &#8212; SHUTTLE ZIARAH</span>
+          <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(32px,4.4vw,60px);line-height:0.92;letter-spacing:-0.045em;margin:16px 0 18px">Kerkhof ke Sendangsono.<br>Pulang-pergi.</h2>
+          <p style="margin:0;max-width:48ch;font-size:17px;line-height:1.55;color:#2E2A22;text-wrap:pretty">Dari makam Romo Sanjaya di Kerkhof Muntilan ke Sendangsono, 11 km, tanpa nawar ojek dan tanpa harus nunggu rombongan penuh. Berangkat setiap hari, empat trip pulang-pergi, kembali dari titik yang sama.</p>
+        </div>
+        <div style="position:relative">
+          <img src="assets/shuttle-bus-cutout.webp" width="1400" height="716" loading="lazy" decoding="async" alt="Shuttle bus Peziarah rute Kerkhof Muntilan (Makam Rm. Sanjaya) &#8211; Sendangsono" style="display:block;width:100%;height:auto;filter:drop-shadow(0 16px 24px rgba(26,23,18,0.28))" />
+          <div style="position:absolute;left:-6px;top:-10px;width:clamp(84px,20vw,98px);height:clamp(84px,20vw,98px);border-radius:50%;background:#6C4BA6;color:#F7F3EA;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:'Space Mono',monospace;font-size:10px;line-height:1.35;letter-spacing:0.08em;animation:floaty 5s ease-in-out infinite">
+            HANYA<br><span style="font-family:'Archivo',sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.03em">14</span><br>KURSI/TRIP
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#F7F3EA;padding:clamp(40px,5vw,66px) clamp(18px,4vw,44px)">
+      <div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:14px;margin-bottom:26px">
+          <div style="padding:16px 20px;border:1px solid rgba(26,23,18,0.28);background:#FCFBF7">
+            <div style="font-family:'Archivo',sans-serif;font-size:30px;font-weight:800;letter-spacing:-0.03em;line-height:1">Rp 45K</div>
+            <div style="font-family:'Space Mono',monospace;font-size:11px;color:#3E382F;letter-spacing:0.1em;margin-top:6px">PER ORANG, PP</div>
+          </div>
+          <div style="padding:16px 20px;border:1px solid rgba(26,23,18,0.28);background:#FCFBF7">
+            <div style="font-family:'Archivo',sans-serif;font-size:30px;font-weight:800;letter-spacing:-0.03em;line-height:1">4 trip/hari</div>
+            <div style="font-family:'Space Mono',monospace;font-size:11px;color:#3E382F;letter-spacing:0.1em;margin-top:6px">PERGI 06.00 &#183; 09.00 &#183; 12.00 &#183; 15.00</div>
+            <div style="font-family:'Space Mono',monospace;font-size:11px;color:#3E382F;letter-spacing:0.1em;margin-top:3px">KEMBALI 08.00 &#183; 11.00 &#183; 14.00 &#183; 17.00</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:26px">
+          <a href="https://wa.me/6281200000000?text=Halo%20Peziarah%2C%20saya%20mau%20tanya%20shuttle%20Kerkhof%20Muntilan%E2%80%93Sendangsono." target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;padding:15px 26px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#6C4BA6;color:#F7F3EA">
+            <span style="font-family:'Space Mono',monospace;font-size:12px">WA</span>
+            Tanya jadwal &amp; kursi
+          </a>
+          <a href="Ziarah.dc.html#shuttle" style="display:flex;align-items:center;gap:8px;padding:14px 24px;border:1px solid #1A1712;color:#1A1712;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#1A1712;color:#F7F3EA">Info selengkapnya &#8594;</a>
+        </div>
+        <form onSubmit="{{ onShuttle }}" style="padding:22px;background:#FCFBF7;border:1px solid #1A1712;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:13px">
+          <span style="grid-column:1/-1;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#3E382F">DAFTAR KURSI</span>
+          <input required="required" placeholder="Nama" value="{{ sName }}" onChange="{{ onSName }}" style="padding:13px 15px;border:1px solid #1A1712;background:#F7F3EA;font-size:15px;font-family:inherit;color:#1A1712;min-width:0" />
+          <input required="required" placeholder="Nomor WhatsApp" value="{{ sWa }}" onChange="{{ onSWa }}" style="padding:13px 15px;border:1px solid #1A1712;background:#F7F3EA;font-size:15px;font-family:inherit;color:#1A1712;min-width:0" />
+          <input required="required" type="date" value="{{ sDate }}" onChange="{{ onSDate }}" style="padding:13px 15px;border:1px solid #1A1712;background:#F7F3EA;font-size:15px;font-family:inherit;color:#1A1712;min-width:0" />
+          <select value="{{ sTime }}" onChange="{{ onSTime }}" style="padding:13px 15px;border:1px solid #1A1712;background:#F7F3EA;font-size:15px;font-family:inherit;color:#1A1712;min-width:0">
+            <option value="06.00 dari Kerkhof">06.00 dari Kerkhof</option>
+            <option value="09.00 dari Kerkhof">09.00 dari Kerkhof</option>
+            <option value="12.00 dari Kerkhof">12.00 dari Kerkhof</option>
+            <option value="15.00 dari Kerkhof">15.00 dari Kerkhof</option>
+          </select>
+          <select value="{{ sBack }}" onChange="{{ onSBack }}" style="padding:13px 15px;border:1px solid #1A1712;background:#F7F3EA;font-size:15px;font-family:inherit;color:#1A1712;min-width:0">
+            <option value="08.00 dari parkiran Sendangsono">Kembali 08.00 dari Sendangsono</option>
+            <option value="11.00 dari parkiran Sendangsono">Kembali 11.00 dari Sendangsono</option>
+            <option value="14.00 dari parkiran Sendangsono">Kembali 14.00 dari Sendangsono</option>
+            <option value="17.00 dari parkiran Sendangsono">Kembali 17.00 dari Sendangsono</option>
+          </select>
+          <input required="required" type="number" min="1" max="14" placeholder="Jumlah kursi" value="{{ sSeats }}" onChange="{{ onSSeats }}" style="padding:13px 15px;border:1px solid #1A1712;background:#F7F3EA;font-size:15px;font-family:inherit;color:#1A1712;min-width:0" />
+          <button type="submit" style="padding:14px 24px;border:none;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px;font-family:inherit;cursor:pointer" style-hover="background:#6C4BA6">Kirim pendaftaran</button>
+          <span style="grid-column:1/-1;font-size:13px;line-height:1.5;color:#3E382F">{{ shuttleNote }}</span>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Bukti" style="background:#1A1712;color:#F7F3EA;padding:clamp(56px,6vw,88px) clamp(18px,4vw,44px)">
+    <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:baseline;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid rgba(247,243,234,0.4);margin-bottom:clamp(30px,3.4vw,46px)">
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(28px,4.2vw,54px);line-height:0.95;letter-spacing:-0.04em;margin:0;max-width:20ch">Sudah menemani 4.200+ umat.</h2>
+      <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.12em;color:#A8A092">RATA-RATA 4,9 / 5 &#8212; 1.180 ULASAN</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:clamp(20px,2.4vw,34px)">
+      <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="3">
+        <figure style="margin:0;display:flex;flex-direction:column;gap:16px">
+          <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:#C9E45B">{{ r.stars }}</span>
+          <blockquote style="margin:0;font-size:17px;line-height:1.5;text-wrap:pretty">{{ r.quote }}</blockquote>
+          <figcaption style="font-family:'Space Mono',monospace;font-size:11px;line-height:1.5;letter-spacing:0.06em;color:#A8A092;margin-top:auto">{{ r.who }}<br>{{ r.where }}</figcaption>
+        </figure>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Newsletter" style="background:#6C4BA6;color:#F7F3EA;padding:clamp(52px,6vw,90px) clamp(18px,4vw,44px);display:flex;flex-wrap:wrap;gap:34px 56px;align-items:center;justify-content:space-between">
+    <div style="flex:1 1 420px;min-width:280px">
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(30px,4.6vw,62px);line-height:0.92;letter-spacing:-0.04em;margin:0 0 14px;max-width:17ch">Masuk daftar. Dapat akses drop duluan.</h2>
+      <p style="margin:0;font-size:16px;line-height:1.55;max-width:42ch">Satu email tiap Jumat: refleksi singkat, playlist, dan link early access 24 jam sebelum publik.</p>
+    </div>
+    <form onSubmit="{{ onSubmit }}" style="flex:1 1 340px;min-width:280px;display:flex;flex-direction:column;gap:11px">
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <input type="email" placeholder="nama@email.com" required="required" style="flex:1 1 200px;min-width:0;padding:16px 18px;border:none;font-size:15px;font-family:'Hanken Grotesk',sans-serif;outline:none" />
+        <button type="submit" style="padding:16px 28px;border:none;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px;font-family:'Hanken Grotesk',sans-serif;cursor:pointer" style-hover="background:#C9E45B;color:#1A1712">Gabung</button>
+      </div>
+      <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em">{{ formNote }}</span>
+    </form>
+  </section>
+
+  <footer style="background:#1A1712;color:#F7F3EA;padding:clamp(52px,6vw,80px) clamp(18px,4vw,44px) 30px">
+    <div style="display:flex;flex-wrap:wrap;gap:36px 44px;justify-content:space-between;margin-bottom:48px">
+      <div style="flex:1 1 300px;min-width:260px">
+        <div style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(32px,5.2vw,66px);letter-spacing:0.06em;line-height:1">PEZIARAH</div>
+        <p style="margin:16px 0 0;max-width:38ch;font-size:15px;line-height:1.55;color:#A8A092">Operator ziarah, gift shop rohani batch kecil, dan jurnal iman Katolik. Dibuat di, dan dikirim ke, seluruh Indonesia.</p>
+        <a href="https://wa.me/6281200000000" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:14px 26px;border-radius:999px;background:#6C4BA6;color:#F7F3EA;font-weight:600;font-size:15px" style-hover="background:#C9E45B;color:#1A1712"><span style="font-family:'Space Mono',monospace;font-size:12px">WA</span>Tanya CS &#8212; balas &#60; 1 jam</a>
+        <div style="margin-top:16px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#A8A092;line-height:1.9">SENIN&#8211;SABTU 08.00&#8211;20.00 WIB<br>MUNTILAN, MAGELANG &#183; JAWA TENGAH</div>
+      </div>
+      <div style="flex:2 1 560px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:30px 40px;font-size:14px">
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BELANJA</span>
+          <a href="Katalog.dc.html#rosario">Rosario</a>
+          <a href="Katalog.dc.html#salib">Salib &amp; Krusifiks</a>
+          <a href="Katalog.dc.html#perhiasan">Perhiasan</a>
+          <a href="Katalog.dc.html#apparel">Tenun &amp; Batik</a>
+          <a href="Hampers.dc.html">Hampers</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ZIARAH</span>
+          <a href="Ziarah.dc.html#rute">Semua Rute</a>
+          <a href="Concierge.dc.html">Grup Kecil</a>
+          <a href="Rute.dc.html#sendangsono">Sendangsono</a>
+          <a href="Rute.dc.html#ganjuran">Ganjuran</a>
+          <a href="Ziarah.dc.html#shuttle">Shuttle Harian</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BANTUAN</span>
+          <a href="FAQ.dc.html#pengiriman">Pengiriman</a>
+          <a href="FAQ.dc.html#retur">Tukar &amp; Retur</a>
+          <a href="Tentang.dc.html">Tentang Kami</a>
+          <a href="Kontak.dc.html">Hubungi Kami</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">IKUTI</span>
+          <a href="https://instagram.com/peziarahsociety" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://wa.me/6281200000000" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="Jurnal.dc.html">Jurnal</a>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;border-top:1px solid rgba(247,243,234,0.2);padding-top:20px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#8A8172">
+      <span>&#169; 2026 PEZIARAH</span>
+      <span style="text-transform:uppercase">{{ verse }}</span>
+      <span><a href="/kebijakan-privasi/">KEBIJAKAN PRIVASI</a> &#183; <a href="/syarat-ketentuan/">SYARAT &amp; KETENTUAN</a></span>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+// Same single sources of truth as every other page — no landing-only copies.
+let PRODUCTS = [];
+let FORMS = null;
+
+class Component extends DCLogic {
+  state = { verse: "“Sebab kami hidup karena percaya, bukan karena melihat” — 2 Kor 5:7", note: "Tanpa spam. Berhenti kapan saja.", cats: [], catCount: 0, itemCount: 0, routes: [], routeCount: 0, hampers: [], momen: 0, posts: [], mobile: false, menu: false, cartCount: 0, q: "", searchOpen: false, slide: 0 };
+
+  // Two hero beats: the definition, then the promise. Image per beat.
+  static SLIDES = [
+    // This beat is centred, not bottom-set, so its scrim has to stay dark
+    // through the middle band where the others are deliberately light.
+    { image: "assets/hero-rosario-crop.png", pos: "center 50%",
+      scrimCss: "linear-gradient(180deg,rgba(26,23,18,0.66) 0%,rgba(26,23,18,0.6) 30%,rgba(26,23,18,0.72) 58%,rgba(26,23,18,0.9) 100%)",
+      alt: "Rosario kayu sonokeling Peziarah" },
+    { image: "assets/sendangsono-hero.webp", pos: "center 54%", alt: "Jalan menuju Gua Maria Sendangsono di antara pohon sono" },
+    // Not a photograph: the bus is a cutout parked bottom-right on a violet
+    // field, so the copy keeps the clear left half instead of fighting a
+    // white van for contrast.
+    { layer: '#452C6E url("assets/shuttle-bus-cutout.webp") 112% 92%/min(66%,780px) no-repeat',
+      scrimCss: 'linear-gradient(96deg,rgba(26,23,18,0.84) 0%,rgba(26,23,18,0.6) 44%,rgba(26,23,18,0.1) 74%,rgba(26,23,18,0.22) 100%),linear-gradient(180deg,rgba(26,23,18,0.5) 0%,rgba(26,23,18,0) 26%,rgba(26,23,18,0) 62%,rgba(26,23,18,0.62) 100%)',
+      alt: "Shuttle bus Peziarah rute Kerkhof Muntilan – Sendangsono" },
+    // Lit statue and pale foliage sit right behind this headline, so this
+    // plate carries a heavier scrim than the rest.
+    { image: "assets/kerep-gua.webp", pos: "8% 44%", scrim: 1.45, alt: "Gua Maria Kerep Ambarawa" }
+  ];
+
+  copyStyle(i) {
+    const on = i === this.state.slide;
+    // Beat 1 (the definition) is top-set so it lands above the fold; the rest stay bottom-set.
+    return `grid-area:1/1;align-self:${i === 0 ? "center" : "end"};opacity:${on ? 1 : 0};` + (on
+      ? "transition:opacity .7s ease .2s"
+      : "pointer-events:none;transition:opacity .4s ease");
+  }
+
+  heroSlides() {
+    return {
+      slides: Component.SLIDES.map((s, i) => {
+        const on = i === this.state.slide;
+        const sc = v => `rgba(26,23,18,${Math.min(0.95, v * (s.scrim ?? 1)).toFixed(3)})`;
+        return {
+          alt: s.alt,
+          layerStyle: `position:absolute;inset:0;opacity:${on ? 1 : 0};background:${s.layer || `#1A1712 url("${s.image}") ${s.pos}/cover no-repeat`};transform:scale(${on ? 1.04 : 1});transition:opacity 1.1s ease,transform 7s ease-out`,
+          scrimStyle: `position:absolute;inset:0;background:${s.scrimCss || `linear-gradient(180deg,${sc(0.62)} 0%,${sc(0.14)} 30%,${sc(0.5)} 66%,${sc(0.88)} 100%)`}`,
+          // 10px pill, but 42px of padded hit area for thumbs: background-clip
+          // keeps the paint inside the content box.
+          dotStyle: "display:grid;place-items:center;width:42px;height:42px;padding:0;margin:0;border:none;background:none;-webkit-appearance:none;appearance:none;cursor:pointer",
+          pillStyle: `display:block;width:${on ? 30 : 10}px;height:10px;border-radius:999px;background-color:${on ? "#C9E45B" : "rgba(247,243,234,0.32)"};transition:width .35s ease,background-color .35s ease`,
+          pick: () => { this.play(); this.setState({ slide: i }); }
+        };
+      }),
+      // Both beats share one grid cell, so the hero is always as tall as the
+      // longest copy and the height never jumps between slides.
+      copyOneStyle: this.copyStyle(0),
+      copyTwoStyle: this.copyStyle(1),
+      copyThreeStyle: this.copyStyle(2),
+      copyFourStyle: this.copyStyle(3)
+    };
+  }
+
+  // A manual pick restarts the clock so the chosen beat gets a full turn.
+  play() {
+    clearInterval(this._slideT);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    this._slideT = setInterval(
+      () => this.setState(s => ({ slide: (s.slide + 1) % Component.SLIDES.length })), 9000);
+  }
+
+  componentDidMount() {
+    this.arriveFromHash();
+    import("./data/verses.js").then(m => this.setState({ verse: m.currentVerse() }));
+    import("./data/forms.js").then(m => { FORMS = m; });
+    // Counts describe the whole catalog; the grid shows the first three.
+    import("./data/products.js").then(m => {
+      PRODUCTS = m.PRODUCTS;
+      const top = m.CATEGORIES.filter(c => !c.parent);
+      this.setState({
+        cats: top,
+        catCount: top.length,
+        itemCount: top.reduce((n, c) => n + (Number(c.count) || 0), 0)
+      });
+    });
+    import("./data/routes.js").then(m => {
+      const rs = m.ROUTES.filter(r => r.id !== "custom");
+      this.setState({ routes: rs, routeCount: rs.length });
+    });
+    import("./data/hampers.js").then(m => this.setState({ hampers: m.HAMPERS, momen: (m.OCCASIONS || []).length }));
+    import("./data/journal.js").then(m => {
+      const f = m.POSTS.find(p => p.feature) || m.POSTS[0];
+      this.setState({ posts: [f].concat(m.POSTS.filter(p => p !== f)) });
+    });
+    import("./data/cart.js").then(m => {
+      this.setState({ cartCount: m.count() });
+      this._offCart = m.subscribe(items => this.setState({ cartCount: items.reduce((n, i) => n + i.qty, 0) }));
+    });
+    this._sync = () => {
+      const mobile = window.innerWidth < 860;
+      if (mobile !== this.state.mobile) this.setState({ mobile, menu: mobile ? false : this.state.menu });
+    };
+    this._sync();
+    window.addEventListener("resize", this._sync);
+    this._root = document.getElementById("dc-root") || document;
+    this._motionT = setTimeout(() => this.motionLayer(), 420);
+    this.play();
+  }
+
+  // Hash arrivals need their own scroll: this page paints after the browser has
+  // already given up looking for the target.
+  arriveFromHash() {
+    const id = (location.hash || "").slice(1);
+    if (!id) return;
+    let tries = 0;
+    const tick = () => {
+      const el = document.getElementById(id);
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 78, behavior: "auto" });
+      else if (tries++ < 50) setTimeout(tick, 60);
+    };
+    setTimeout(tick, 60);
+  }
+
+  // Motion through the Web Animations API only: React owns every style
+  // attribute here, so imperative style writes would be reverted on setState.
+  // The hero itself stays static — nothing moves above the fold.
+  motionLayer() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const root = this._root || document;
+    const q = s => Array.from(root.querySelectorAll(s));
+    const rise = (el, delay, dist) => el.animate(
+      [{ opacity: 0, transform: "translateY(" + (dist || 18) + "px)" }, { opacity: 1, transform: "none" }],
+      { duration: 720, delay: delay, easing: "cubic-bezier(.16,.84,.28,1)", fill: "backwards" });
+
+    const seen = new WeakSet();
+    const io = new IntersectionObserver(entries => {
+      entries.filter(e => e.isIntersecting && !seen.has(e.target)).forEach(e => {
+        seen.add(e.target);
+        rise(e.target, (Number(e.target.dataset.mi) || 0) * 60, 20);
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.06 });
+    q('#ziarah h2, #katalog h2, #jurnal h2, #hampers h2, #shuttle h2').forEach(el => io.observe(el));
+    ["#ziarah", "#katalog", "#jurnal", "#hampers"].forEach(sec => {
+      q(sec + " > div:last-of-type > div > a").forEach((el, i) => { el.dataset.mi = String(i); io.observe(el); });
+    });
+    this._io = io;
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this._sync);
+    clearTimeout(this._motionT);
+    clearInterval(this._slideT);
+    if (this._io) this._io.disconnect();
+    if (this._offCart) this._offCart();
+  }
+
+  // Inline expanding header search, results in a panel below the header.
+  search() {
+    const open = this.state.searchOpen;
+    const q = this.state.q.trim().toLowerCase();
+    const cl = {};
+    this.state.cats.forEach(c => { cl[c.id] = c.name; });
+    const hits = q.length < 2 ? [] : PRODUCTS.filter(x =>
+      x.name.toLowerCase().includes(q) || (cl[x.cat] || "").toLowerCase().includes(q)).slice(0, 6);
+    return {
+      q: this.state.q,
+      searchInputStyle: `width:${open ? 210 : 0}px;opacity:${open ? 1 : 0};padding:${open ? "7px 12px" : "7px 0"};border:1px solid #1A1712;background:transparent;color:inherit;font-size:13px;font-family:inherit;transition:width .3s ease,opacity .25s ease`,
+      toggleSearch: () => this.setState(s => ({ searchOpen: !s.searchOpen, q: s.searchOpen ? "" : s.q })),
+      onQ: e => this.setState({ q: e.target.value }),
+      onQKey: e => { if (e.key === "Escape") this.setState({ searchOpen: false, q: "" }); },
+      results: hits.map(x => ({
+        name: x.name, cat: (cl[x.cat] || "").toUpperCase(), price: x.price,
+        href: `Produk.dc.html?id=${x.id}`,
+        thumbStyle: "width:46px;height:46px;flex:none;" + (x.image
+          ? `background:#EAE3D5 url("${x.image}") center/cover`
+          : "background-image:repeating-linear-gradient(60deg,#DCD2C0 0 8px,#EAE3D5 8px 16px)")
+      })),
+      resultsLabel: hits.length ? `${hits.length} HASIL UNTUK “${this.state.q.trim()}”` : "TIDAK ADA HASIL",
+      resultsStyle: (open && q.length >= 2)
+        ? "position:fixed;top:62px;right:clamp(18px,4vw,44px);width:min(420px,calc(100vw - 36px));background:#F7F3EA;color:#1A1712;border:1px solid #1A1712;padding:12px;z-index:70"
+        : "display:none"
+    };
+  }
+
+  chrome() {
+    const m = this.state.mobile;
+    return {
+      verse: this.state.verse,
+      cartCount: this.state.cartCount,
+      formNote: this.state.note,
+      onSubmit: e => { e.preventDefault(); this.setState({ note: "Sip! Cek inbox kamu ya. 🙏" }); },
+      deskNavStyle: m ? "display:none" : "display:flex;gap:24px;font-size:14px;font-weight:500",
+      deskUtilStyle: m ? "display:none" : "display:flex;gap:16px;align-items:center;font-family:'Space Mono',monospace;font-size:12px",
+      burgerStyle: m
+        ? "display:flex;flex-direction:column;justify-content:center;gap:6px;width:44px;height:44px;align-items:flex-end;padding:0;border:none;background:none;color:currentColor;cursor:pointer"
+        : "display:none",
+      drawerStyle: (m && this.state.menu)
+        ? "position:fixed;inset:0;z-index:80;background:#F7F3EA;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 24px"
+        : "display:none",
+      toggleMenu: () => this.setState(s => ({ menu: !s.menu }))
+    };
+  }
+
+  // Shuttle registration hands off to WhatsApp, same channel as every order.
+  shuttle() {
+    const s = this.state;
+    const set = k => e => this.setState({ ["s_" + k]: e.target.value });
+    return {
+      sName: s.s_name || "", sWa: s.s_wa || "", sDate: s.s_date || "", sSeats: s.s_seats || "",
+      sTime: s.s_time || "06.00 dari Kerkhof",
+      sBack: s.s_back || "17.00 dari parkiran Sendangsono",
+      onSName: set("name"), onSWa: set("wa"), onSDate: set("date"), onSSeats: set("seats"), onSTime: set("time"), onSBack: set("back"),
+      shuttleNote: s.s_note || "Kami balas lewat WhatsApp untuk konfirmasi kursi. Bayar di tempat.",
+      onShuttle: e => {
+        e.preventDefault();
+        // Same contract as every other form: log to the Sheet, keep a local
+        // copy, then hand off to WhatsApp — which is the real confirmation.
+        const code = "SH-" + Date.now().toString(36).slice(-5).toUpperCase();
+        const time = s.s_time || "06.00 dari Kerkhof";
+        const back = s.s_back || "17.00 dari parkiran Sendangsono";
+        if (FORMS) FORMS.submit("shuttle", {
+          kode: code,
+          nama: s.s_name,
+          telepon: s.s_wa,
+          tanggal: s.s_date,
+          jumlah_kursi: s.s_seats,
+          keberangkatan: time,
+          kembali: back
+        });
+        const txt = [
+          `Pendaftaran shuttle ${code} (Kerkhof Muntilan–Sendangsono, pp)`,
+          "",
+          `Nama: ${s.s_name || "-"}`,
+          `WA: ${s.s_wa || "-"}`,
+          `Tanggal: ${s.s_date || "-"}`,
+          `Keberangkatan: ${time}`,
+          `Kembali: ${back}`,
+          `Jumlah kursi: ${s.s_seats || "-"}`
+        ].join("\n");
+        window.open("https://wa.me/6281200000000?text=" + encodeURIComponent(txt), "_blank", "noopener");
+        this.setState({ s_note: `Tercatat dengan kode ${code}. Kirim ringkasannya lewat WhatsApp — kursi dianggap terisi setelah kami balas.` });
+      }
+    };
+  }
+
+  media(src, ratio, dark, fit) {
+    return `aspect-ratio:${ratio};width:100%;overflow:hidden;` + (src
+      ? `background:${dark ? "#221E19" : fit === "contain" ? "#F7F3EA" : "#EAE3D5"} url("${src}") center/${fit === "contain" ? "contain no-repeat" : "cover"}`
+      : dark
+        ? "background-image:repeating-linear-gradient(60deg,#2E2820 0 12px,#221E19 12px 24px)"
+        : "background-image:repeating-linear-gradient(60deg,#DCD2C0 0 12px,#EAE3D5 12px 24px)");
+  }
+
+  renderVals() {
+    const s = this.state;
+    return {
+      ...this.chrome(),
+      ...this.heroSlides(),
+      ...this.search(),
+      ...this.shuttle(),
+
+      // Labels read off the same data the cards render from, so they can't drift.
+      ruteMeta: s.routeCount ? s.routeCount + " RUTE" : "",
+      katMeta: s.catCount ? s.catCount + " KATEGORI / " + s.itemCount + " ITEM" : "",
+      itemMeta: s.itemCount ? s.itemCount + " ITEM" : "",
+      momenMeta: s.momen ? s.momen + " MOMEN" : "",
+
+      // Three per section, never more: the button carries the rest.
+      routes: s.routes.slice(0, 3).map(r => ({
+        name: r.short || r.name,
+        region: r.region,
+        note: r.note,
+        tagsLine: (r.tags || []).join(" \u00b7 "),
+        href: "Rute.dc.html#" + r.id,
+        mediaStyle: this.media(r.image, "4 / 3", false)
+      })),
+
+      cats: s.cats.slice(0, 3).map(c => ({
+        name: c.name,
+        count: c.count,
+        href: "Katalog.dc.html#" + c.id,
+        mediaStyle: this.media(c.image, "4 / 3", false, "contain")
+      })),
+
+      // UGC posts carry a quote instead of a title.
+      posts: s.posts.slice(0, 3).map(p => ({
+        title: p.title || (p.quote ? `“${p.quote}”` : ""),
+        kicker: p.title
+          ? `${(p.kolom || (p.pillar === "ziarah" ? "Catatan ziarah" : "Esai")).toUpperCase()} — ${p.read || 6} MENIT`
+          : "CERITA KAMU",
+        href: `Post.dc.html#${p.id}`,
+        mediaStyle: this.media(p.image, "4 / 3", false)
+      })),
+
+      hampers: s.hampers.slice(0, 3).map(h => ({
+        name: h.name,
+        blurb: h.blurb,
+        price: h.price,
+        href: h.page || ("Hampers.dc.html#" + h.id),
+        mediaStyle: this.media(h.image, "4 / 3", false, "contain")
+      })),
+
+      reviews: [
+        { stars: "★★★★★", quote: "Beli rosario sonokeling buat Komuni Pertama anak saya. Kotaknya rapi, ada kartu doa tulis tangan — anaknya sampai nggak mau lepas.", who: "MARIA RATNAWATI, 43", where: "PAROKI ST. YAKOBUS, KELAPA GADING" },
+        { stars: "★★★★★", quote: "CS-nya bales cepat di WA, sabar pas saya tanya ukuran rantai berkali-kali. Barang sampai Manado 3 hari.", who: "YOHANES PANDEAN, 29", where: "PAROKI HATI KUDUS, MANADO" },
+        { stars: "★★★★★", quote: "Pesan 40 syal buat ziarah lansia paroki. Bordirnya rapi, semua ukuran pas, dan harganya masuk anggaran kami.", who: "SR. FRANSISKA, OSF", where: "PANITIA ZIARAH, SEMARANG" }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

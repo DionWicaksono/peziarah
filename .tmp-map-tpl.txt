@@ -1,0 +1,93 @@
+  <section data-screen-label="Peta Gua Maria" id="peta-gua-maria" style="background:#F1EADC;border-top:1px solid #E2D9C7;padding:clamp(42px,5.2vw,70px) 0 clamp(22px,3vw,34px);margin-bottom:clamp(34px,4.4vw,58px)">
+    <div style="max-width:1280px;margin:0 auto;padding:0 28px">
+      <span style="display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">DUA LAPIS — KETUK PENANDA UNTUK BACA</span>
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(26px,3.6vw,42px);line-height:1.04;letter-spacing:-0.035em;margin:10px 0 14px">Gua Maria di Jawa</h2>
+      <p style="margin:0;max-width:60ch;font-size:clamp(15px,1.5vw,17px);line-height:1.6;color:#5B5347">Ini rangka yang kami pakai waktu menyusun rute. Tidak semuanya masuk dalam satu perjalanan — biasanya tiga sampai lima titik yang searah, sisanya ditinggal untuk lain kali.</p>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px">
+        <div style="display:flex;gap:4px;padding:4px;border-radius:999px;background:#E7DFD1">
+          <sc-for list="{{ layers }}" as="l" hint-placeholder-count="2">
+            <button type="button" onClick="{{ l.pick }}" style="{{ l.style }}">{{ l.label }}</button>
+          </sc-for>
+        </div>
+        <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;line-height:1.5;color:#8A8172;max-width:44ch">{{ layerNote }}</span>
+      </div>
+    </div>
+
+    <div style="{{ mapScrollStyle }}">
+      <div style="{{ mapInnerStyle }}">
+        <img src="assets/java-gua-maria.png" alt="Siluet Pulau Jawa dengan sebelas penanda Gua Maria" style="width:100%;display:block;user-select:none;pointer-events:none" />
+        <sc-for list="{{ guas }}" as="g" hint-placeholder-count="11">
+          <button type="button" onClick="{{ g.onSelect }}" onMouseEnter="{{ g.onEnter }}" onMouseLeave="{{ g.onLeave }}" aria-label="{{ g.aria }}" style="{{ g.hitStyle }}">
+            <span style="{{ g.dotStyle }}">{{ g.no }}</span>
+            <span style="{{ g.labelStyle }}">{{ g.short }}</span>
+          </button>
+        </sc-for>
+        <sc-for list="{{ pockets }}" as="p" hint-placeholder-count="12">
+          <button type="button" onClick="{{ p.onSelect }}" onMouseEnter="{{ p.onEnter }}" onMouseLeave="{{ p.onLeave }}" aria-label="{{ p.aria }}" style="{{ p.hitStyle }}">
+            <span style="{{ p.dotStyle }}">{{ p.count }}</span>
+            <span style="{{ p.labelStyle }}">{{ p.short }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <span style="{{ swipeHintStyle }}">← GESER PETA →</span>
+
+    <div style="{{ railStyle }}">
+      <sc-for list="{{ chips }}" as="c" hint-placeholder-count="12">
+        <button type="button" onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</button>
+      </sc-for>
+    </div>
+
+    <p style="max-width:1280px;margin:16px auto 0;padding:0 28px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;line-height:1.6;color:#9A9083">Posisi pada peta bersifat perkiraan, dibuat untuk gambaran arah — bukan untuk navigasi.</p>
+
+    <sc-if value="{{ pocOpen }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div onClick="{{ closeGua }}" style="position:fixed;inset:0;z-index:88;background:rgba(26,23,18,0.44)"></div>
+        <div role="dialog" aria-modal="true" style="{{ sheetStyle }}">
+          <div style="{{ handleStyle }}"></div>
+          <button type="button" aria-label="Tutup" onClick="{{ closeGua }}" style="{{ sheetCloseStyle }}">×</button>
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6C4BA6">KANTONG ZIARAH — {{ poc.count }} TITIK</span>
+          <h3 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(22px,4.2vw,29px);line-height:1.1;letter-spacing:-0.035em;margin:12px 0 0;padding-right:34px">{{ poc.region }}</h3>
+          <p style="margin:8px 0 0;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;line-height:1.5;color:#8A8172">{{ poc.dio }}</p>
+          <div style="display:flex;flex-direction:column;margin-top:22px;border-top:1px solid #E7DFD1">
+            <sc-for list="{{ poc.items }}" as="i" hint-placeholder-count="6">
+              <button type="button" onClick="{{ i.ask }}" style="display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;padding:14px 2px;border:none;border-bottom:1px solid #E7DFD1;background:none;font-family:'Hanken Grotesk',Helvetica,sans-serif" style-hover="background:#EDE6D8">
+                <span style="{{ i.badgeStyle }}">{{ i.no }}</span>
+                <span style="flex:1;min-width:0">
+                  <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;line-height:1.25;letter-spacing:-0.02em;color:#1A1712">{{ i.name }}</span>
+                  <span style="display:block;margin-top:4px;font-size:13px;line-height:1.45;color:#8A8172">{{ i.place }}</span>
+                </span>
+                <span style="flex:none;font-family:'Space Mono',monospace;font-size:14px;color:#B6AC99;padding-top:3px">→</span>
+              </button>
+            </sc-for>
+          </div>
+          <p style="margin:16px 0 0;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;line-height:1.6;color:#9A9083">Bulatan hijau = titik utama, ada di peta Layer 1. Ketuk baris mana pun untuk memasukkannya ke permintaan rute.</p>
+          <button type="button" onClick="{{ poc.ask }}" style="display:block;width:100%;margin-top:18px;padding:16px 24px;border-radius:999px;border:none;background:#1A1712;color:#F7F3EA;font-size:13px;letter-spacing:0.08em" style-hover="background:#6C4BA6">SUSUN RUTE DI WILAYAH INI</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ guaOpen }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div onClick="{{ closeGua }}" style="position:fixed;inset:0;z-index:88;background:rgba(26,23,18,0.44)"></div>
+        <div role="dialog" aria-modal="true" style="{{ sheetStyle }}">
+          <div style="{{ handleStyle }}"></div>
+          <button type="button" aria-label="Tutup" onClick="{{ closeGua }}" style="{{ sheetCloseStyle }}">×</button>
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6C4BA6">TITIK {{ gua.no }} — {{ gua.area }}</span>
+          <h3 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(24px,4.6vw,32px);line-height:1.08;letter-spacing:-0.035em;margin:12px 0 0">{{ gua.name }}</h3>
+          <p style="margin:16px 0 0;font-size:16px;line-height:1.65;color:#5B5347">{{ gua.note }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:20px">
+            <sc-for list="{{ gua.tags }}" as="t" hint-placeholder-count="2">
+              <span style="padding:6px 12px;border-radius:999px;background:#EDE6D8;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#5B5347">{{ t }}</span>
+            </sc-for>
+          </div>
+          <button type="button" onClick="{{ gua.ask }}" style="display:block;width:100%;margin-top:26px;padding:16px 24px;border-radius:999px;border:none;background:#1A1712;color:#F7F3EA;font-size:13px;letter-spacing:0.08em" style-hover="background:#6C4BA6">SUSUN RUTE KE SINI</button>
+          <div style="display:flex;justify-content:space-between;gap:12px;margin-top:18px">
+            <button type="button" onClick="{{ prevGua }}" style="flex:1;padding:12px;border-radius:999px;border:1px solid #D6CBB8;background:none;font-size:11px;letter-spacing:0.08em;color:#5B5347" style-hover="background:#EDE6D8">← SEBELUMNYA</button>
+            <button type="button" onClick="{{ nextGua }}" style="flex:1;padding:12px;border-radius:999px;border:1px solid #D6CBB8;background:none;font-size:11px;letter-spacing:0.08em;color:#5B5347" style-hover="background:#EDE6D8">BERIKUTNYA →</button>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </section>

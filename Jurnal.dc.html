@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jurnal — Catatan Ziarah, Iman & Kerajinan | Peziarah</title>
+<meta name="description" content="Tulisan tentang tempat ziarah di Indonesia, cerita pembaca, dan proses di balik kerajinan rohani yang kami buat.">
+<meta name="keywords" content="jurnal katolik, catatan ziarah, cerita iman, tempat ziarah indonesia">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://peziarah.com/jurnal/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Peziarah">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Jurnal — Catatan Ziarah, Iman & Kerajinan | Peziarah">
+<meta property="og:description" content="Tulisan tentang tempat ziarah di Indonesia, cerita pembaca, dan proses di balik kerajinan rohani yang kami buat.">
+<meta property="og:url" content="https://peziarah.com/jurnal/">
+<meta property="og:image" content="https://peziarah.com/assets/og-peziarah.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Rosario kayu Peziarah — kado rohani buatan tangan">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Jurnal — Catatan Ziarah, Iman & Kerajinan | Peziarah">
+<meta name="twitter:description" content="Tulisan tentang tempat ziarah di Indonesia, cerita pembaca, dan proses di balik kerajinan rohani yang kami buat.">
+<meta name="twitter:image" content="https://peziarah.com/assets/og-peziarah.jpg">
+<meta name="theme-color" content="#F7F3EA">
+<link rel="icon" href="/assets/favicon.png" type="image/png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Cinzel:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F3EA;color:#1A1712;font-family:'Hanken Grotesk',Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  a:hover{color:#6C4BA6}
+  button{font-family:'Space Mono',monospace;cursor:pointer}
+  ::selection{background:#6C4BA6;color:#F7F3EA}
+</style>
+</helmet>
+
+<div style="overflow-x:clip;position:relative">
+
+  <header style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:#F7F3EA;border-bottom:1px solid #E7DFD1">
+    <a href="Landing.dc.html" style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(16px,4.2vw,19px);letter-spacing:0.16em">PEZIARAH</a>
+    <nav style="{{ deskNavStyle }}">
+      <a href="Katalog.dc.html">Katalog</a>
+      <a href="Ziarah.dc.html">Ziarah</a>
+      <a href="Jurnal.dc.html" style="color:#6C4BA6">Jurnal</a>
+      <a href="Hampers.dc.html">Hampers</a>
+    </nav>
+    <div style="{{ deskUtilStyle }}">
+      <div style="{{ searchWrapStyle }}">
+        <button type="button" aria-label="Cari" onClick="{{ toggleSearch }}" style="border:none;background:none;padding:0;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#1A1712">CARI</button>
+        <input type="search" aria-label="Cari produk" value="{{ q }}" onChange="{{ onQ }}" onKeyDown="{{ onQKey }}" placeholder="rosario, salib, batik…" style="{{ searchInputStyle }}" />
+      </div>
+      <a href="Tas.dc.html" style="white-space:nowrap">KERANJANG ({{ cartCount }})</a>
+    </div>
+    <button type="button" aria-label="Buka menu" onClick="{{ toggleMenu }}" style="{{ burgerStyle }}">
+      <span style="display:block;width:22px;height:2px;background:#1A1712"></span>
+      <span style="display:block;width:22px;height:2px;background:#1A1712"></span>
+    </button>
+    <div style="{{ resultsStyle }}">
+      <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172;padding:4px 6px 12px">{{ resultsLabel }}</div>
+      <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
+        <a href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
+          <span style="{{ r.thumbStyle }}"></span>
+          <span style="flex:1;min-width:0">
+            <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.02em">{{ r.name }}</span>
+            <span style="display:block;font-family:'Space Mono',monospace;font-size:11px;color:#8A8172;margin-top:2px">{{ r.cat }}</span>
+          </span>
+          <span style="font-family:'Space Mono',monospace;font-size:12px;white-space:nowrap">{{ r.price }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </header>
+
+  <div style="{{ drawerStyle }}">
+    <button type="button" aria-label="Tutup menu" onClick="{{ toggleMenu }}" style="position:absolute;top:14px;right:18px;width:44px;height:44px;border:none;background:none;color:#1A1712;font-family:'Space Mono',monospace;font-size:22px;cursor:pointer">×</button>
+    <a href="Landing.dc.html" style="font-family:'Cinzel',serif;font-weight:600;font-size:24px;letter-spacing:0.16em;color:#1A1712">PEZIARAH</a>
+    <span style="width:34px;height:1px;background:#D6CBB8;margin:26px 0 30px"></span>
+    <nav style="display:flex;flex-direction:column;align-items:center;gap:22px;font-family:'Archivo',sans-serif;font-weight:700;font-size:30px;letter-spacing:-0.03em;color:#1A1712">
+      <a href="Katalog.dc.html" onClick="{{ toggleMenu }}">Katalog</a>
+      <a href="Ziarah.dc.html" onClick="{{ toggleMenu }}">Ziarah</a>
+      <a href="Jurnal.dc.html" onClick="{{ toggleMenu }}" style="color:#6C4BA6">Jurnal</a>
+      <a href="Hampers.dc.html" onClick="{{ toggleMenu }}">Hampers</a>
+    </nav>
+    <div style="display:flex;gap:14px;margin-top:38px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:#8A8172">
+      <a href="Tas.dc.html" style="white-space:nowrap">KERANJANG ({{ cartCount }})</a>
+    </div>
+  </div>
+
+  <section data-screen-label="Jurnal Masthead" style="position:relative;min-height:clamp(600px,86vh,860px);overflow:hidden;background:#EFE9DC;border-bottom:1px solid #E7DFD1;display:flex">
+    <img src="assets/hampers-peziarah-set.webp" alt="Satu set perlengkapan peziarah di atas latar putih: tote kanvas bertulisan PEZIARAH, keranjang anyaman berisi rosario kayu, lilin, buku doa dan jurnal perjalanan bersampul kulit, serta bucket hat" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% 62%">
+    <div style="position:absolute;inset:0;background:linear-gradient(103deg,rgba(247,243,234,0.97) 0%,rgba(247,243,234,0.92) 28%,rgba(247,243,234,0.5) 54%,rgba(247,243,234,0) 76%)"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(247,243,234,0.9) 0%,rgba(247,243,234,0) 24%,rgba(247,243,234,0) 58%,rgba(247,243,234,0.88) 100%)"></div>
+    <div style="position:relative;width:100%;max-width:1280px;margin:0 auto;padding:clamp(46px,7vw,92px) 28px clamp(24px,3vw,34px);display:flex;flex-direction:column;justify-content:flex-end;gap:clamp(30px,5vw,58px);color:#1A1712">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:22px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#6C4BA6">
+          <span style="width:8px;height:8px;border-radius:50%;background:#6C4BA6;display:inline-block"></span>
+          JURNAL — TERBIT DUA MINGGU SEKALI
+        </div>
+        <h1 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(44px,9vw,148px);line-height:0.86;letter-spacing:-0.05em;margin:0;max-width:14ch;text-wrap:balance">Cerita di baliknya.</h1>
+        <p style="margin:26px 0 0;max-width:48ch;font-size:clamp(16px,2vw,19px);line-height:1.55;color:#4A4238;text-wrap:pretty">Empat rubrik, empat suara: kami soal apa yang kami buat, pembaca soal imannya sendiri, catatan dari jalan, dan opini yang kadang tidak nyaman. Kalau setelah membaca kamu tidak beli apa pun, itu juga tidak apa-apa.</p>
+        <p style="margin:20px 0 0;max-width:52ch;font-family:'Space Mono',monospace;font-size:11px;line-height:1.7;letter-spacing:0.04em;color:#6B6355;border-left:2px solid #6C4BA6;padding-left:14px">Semua tulisan di sini adalah opini penulis, bukan ajaran resmi Gereja. Setiap tulisan ditandatangani. Koreksi kami muat di tempat, bertanggal.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <sc-for list="{{ pills }}" as="p" hint-placeholder-count="5">
+          <button type="button" onClick="{{ p.pick }}" style="{{ p.chipStyle }}">
+            <span style="font-weight:600">{{ p.label }}</span>
+            <span style="{{ p.noteStyle }}">{{ p.note }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Sorotan" style="{{ leadSectionStyle }}">
+    <sc-for list="{{ lead }}" as="p" hint-placeholder-count="1">
+      <a href="{{ p.href }}" style="display:flex;flex-wrap:wrap;gap:clamp(24px,3.5vw,52px);align-items:center">
+        <div style="{{ p.mediaStyle }}">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#9A9083">{{ p.slot }}</div>
+        </div>
+        <div style="flex:1 1 340px;min-width:280px">
+          <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6C4BA6">
+            <span>SOROTAN</span>
+            <span style="width:22px;height:1px;background:#D6CBB8"></span>
+            <span style="color:#8A8172">{{ p.tagline }}</span>
+            <span style="padding:3px 9px;border-radius:999px;border:1px solid rgba(108,75,166,0.4);color:#6C4BA6;letter-spacing:0.12em">OPINI</span>
+          </div>
+          <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(28px,4.4vw,52px);line-height:1.02;letter-spacing:-0.035em;margin:0;text-wrap:balance">{{ p.title }}</h2>
+          <p style="margin:18px 0 0;max-width:46ch;font-size:clamp(15px,1.7vw,18px);line-height:1.58;color:#5C5347;text-wrap:pretty">{{ p.dek }}</p>
+          <div style="display:flex;gap:14px;align-items:center;margin-top:24px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#8A8172">
+            <span>{{ p.author }}</span>
+            <span>·</span>
+            <span>{{ p.date }}</span>
+            <span>·</span>
+            <span>{{ p.read }} MENIT</span>
+          </div>
+        </div>
+      </a>
+    </sc-for>
+  </section>
+
+  <section data-screen-label="Baru" style="{{ freshSectionStyle }}">
+    <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:26px;flex-wrap:wrap">
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(24px,3.2vw,34px);letter-spacing:-0.035em;margin:0">Baru terbit</h2>
+      <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">{{ freshCount }}</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(20px,2.6vw,34px)">
+      <sc-for list="{{ fresh }}" as="p" hint-placeholder-count="2">
+        <a href="{{ p.href }}" style="{{ p.cardStyle }}">
+          <div style="{{ p.mediaStyle }}">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#9A9083">{{ p.slot }}</div>
+            <span style="position:absolute;top:14px;left:14px;padding:6px 12px;border-radius:999px;background:#C9E45B;color:#1A1712;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em">BARU</span>
+          </div>
+          <div style="padding:16px 2px 0">
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6C4BA6;margin-bottom:10px">
+              <span>{{ p.tagline }}</span>
+              <span style="padding:3px 8px;border-radius:999px;border:1px solid rgba(108,75,166,0.4);color:#6C4BA6;letter-spacing:0.12em">OPINI</span>
+            </div>
+            <h3 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:22px;line-height:1.16;letter-spacing:-0.025em;margin:0;text-wrap:balance">{{ p.title }}</h3>
+            <p style="margin:12px 0 0;font-size:15px;line-height:1.52;color:#5C5347;text-wrap:pretty">{{ p.dek }}</p>
+            <div style="display:flex;gap:10px;margin-top:16px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#8A8172">
+              <span>{{ p.date }}</span>
+              <span>·</span>
+              <span>{{ p.read }} MENIT</span>
+            </div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Cerita Iman" style="{{ voiceSectionStyle }}">
+    <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:8px;flex-wrap:wrap">
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(26px,3.4vw,40px);letter-spacing:-0.035em;margin:0">Cerita Iman</h2>
+      <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6C4BA6">DITULIS PEMBACA, BUKAN KAMI</span>
+    </div>
+    <p style="margin:0 0 30px;max-width:50ch;font-size:16px;line-height:1.55;color:#5C5347;text-wrap:pretty">Kiriman kami sunting seperlunya saja — untuk panjang dan ejaan, tidak untuk isi. Nama dan paroki dicantumkan sesuai izin pengirim.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(18px,2.4vw,28px)">
+      <sc-for list="{{ voices }}" as="v" hint-placeholder-count="4">
+        <a href="{{ v.href }}" style="{{ v.cardStyle }}">
+          <span style="font-family:'Archivo',sans-serif;font-weight:800;font-size:44px;line-height:0.7;color:#C9E45B">“</span>
+          <blockquote style="margin:14px 0 0;font-family:'Archivo',sans-serif;font-weight:700;font-size:clamp(19px,2.2vw,25px);line-height:1.24;letter-spacing:-0.025em;text-wrap:pretty">{{ v.quote }}</blockquote>
+          <p style="margin:18px 0 0;font-size:14px;line-height:1.5;color:#5C5347;text-wrap:pretty">{{ v.dek }}</p>
+          <div style="{{ v.thumbStyle }}">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.1em;color:#9A9083">{{ v.slot }}</div>
+          </div>
+          <div style="margin-top:auto;padding-top:22px;border-top:1px solid #E0D7C6;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#8A8172;line-height:1.7">
+            <div style="color:#1A1712">{{ v.author }}</div>
+            <div>{{ v.credit }}</div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Kirim Cerita" style="margin:clamp(52px,6vw,80px) 28px 0;padding:clamp(36px,5vw,64px) clamp(24px,4vw,56px);border-radius:28px;background:#1A1712;color:#F7F3EA">
+    <div style="display:flex;flex-wrap:wrap;gap:44px;justify-content:space-between">
+      <div style="flex:1 1 380px;min-width:290px">
+        <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#C9E45B;margin-bottom:18px">KIRIM CERITAMU</div>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(28px,4.2vw,52px);line-height:1.02;letter-spacing:-0.04em;margin:0;max-width:20ch;text-wrap:balance">Cerita imanmu lebih menarik daripada iklan kami.</h2>
+        <p style="margin:20px 0 0;max-width:44ch;font-size:16px;line-height:1.6;color:#A8A092;text-wrap:pretty">{{ kirimanCopy }}</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px">
+          <a href="https://wa.me/6281200000000?text=Halo%20Peziarah%2C%20saya%20mau%20kirim%20catatan%20ziarah." target="_blank" rel="noopener" style="padding:16px 30px;border-radius:999px;background:#C9E45B;color:#1A1712;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.08em">KIRIM LEWAT WHATSAPP →</a>
+          <a href="mailto:halo@peziarah.id?subject=Catatan%20ziarah" style="padding:16px 30px;border-radius:999px;border:1px solid rgba(247,243,234,0.4);color:#F7F3EA;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.08em">LEWAT EMAIL</a>
+        </div>
+      </div>
+      <div style="flex:1 1 300px;min-width:270px;display:flex;flex-direction:column">
+        <sc-for list="{{ kirimanSteps }}" as="s" hint-placeholder-count="3">
+          <div style="display:flex;gap:20px;align-items:flex-start;padding:20px 0;border-top:1px solid rgba(247,243,234,0.14)">
+            <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#C9E45B;padding-top:3px">{{ s.mark }}</span>
+            <div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:17px;letter-spacing:-0.02em">{{ s.title }}</div>
+              <div style="margin-top:6px;font-size:14px;line-height:1.5;color:#A8A092">{{ s.sub }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Panduan" style="padding:clamp(52px,6vw,80px) 28px 0">
+    <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:24px;flex-wrap:wrap">
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:26px;letter-spacing:-0.03em;margin:0">Panduan</h2>
+      <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">SELALU BERGUNA, TIDAK PERNAH KEDALUWARSA</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(16px,2.2vw,24px)">
+      <sc-for list="{{ panduan }}" as="g" hint-placeholder-count="4">
+        <a href="{{ g.href }}" style="flex:1 1 220px;min-width:200px;padding:24px 22px;border-radius:20px;border:1px solid #E0D7C6;background:#FBF8F1;display:block">
+          <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6C4BA6;margin-bottom:14px">{{ g.mark }}</div>
+          <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:17px;letter-spacing:-0.02em;line-height:1.2">{{ g.title }}</div>
+          <div style="margin-top:10px;font-size:14px;line-height:1.5;color:#5C5347">{{ g.sub }}</div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Arsip" style="{{ gridSectionStyle }}">
+    <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:26px">
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:26px;letter-spacing:-0.03em;margin:0">{{ gridTitle }}</h2>
+      <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">{{ countLabel }}</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(20px,2.6vw,34px)">
+      <sc-for list="{{ posts }}" as="p" hint-placeholder-count="6">
+        <a href="{{ p.href }}" style="{{ p.cardStyle }}">
+          <div style="{{ p.mediaStyle }}">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#9A9083">{{ p.slot }}</div>
+          </div>
+          <div style="padding:16px 2px 0">
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6C4BA6;margin-bottom:10px">
+              <span>{{ p.tagline }}</span>
+              <span style="padding:3px 8px;border-radius:999px;border:1px solid rgba(108,75,166,0.4);color:#6C4BA6;letter-spacing:0.12em">OPINI</span>
+            </div>
+            <h3 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:21px;line-height:1.16;letter-spacing:-0.025em;margin:0;text-wrap:balance">{{ p.title }}</h3>
+            <p style="margin:12px 0 0;font-size:15px;line-height:1.52;color:#5C5347;text-wrap:pretty">{{ p.dek }}</p>
+            <div style="display:flex;gap:10px;margin-top:16px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#8A8172">
+              <span>{{ p.date }}</span>
+              <span>·</span>
+              <span>{{ p.read }} MENIT</span>
+            </div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Langganan" style="margin:clamp(56px,6vw,80px) 28px 0;padding:clamp(38px,5vw,64px) clamp(24px,4vw,56px);border-radius:28px;background:#6C4BA6;color:#F7F3EA">
+    <div style="display:flex;flex-wrap:wrap;gap:36px;align-items:flex-end;justify-content:space-between">
+      <div style="flex:1 1 380px;min-width:280px">
+        <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.14em;color:rgba(247,243,234,0.7);margin-bottom:18px">SURAT DUA MINGGUAN</div>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(28px,4vw,46px);line-height:1.04;letter-spacing:-0.035em;margin:0;max-width:22ch;text-wrap:balance">Satu tulisan, satu barang, tiap dua minggu.</h2>
+      </div>
+      <form onSubmit="{{ submit }}" style="flex:1 1 320px;min-width:280px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <input type="email" required placeholder="alamat email" value="{{ email }}" onChange="{{ setEmail }}" style="flex:1 1 200px;min-width:180px;padding:15px 18px;border-radius:999px;border:1px solid rgba(247,243,234,0.35);background:rgba(26,23,18,0.18);color:#F7F3EA;font-family:'Hanken Grotesk',sans-serif;font-size:15px" />
+          <button type="submit" style="padding:15px 28px;border-radius:999px;border:none;background:#C9E45B;color:#1A1712;font-weight:700;font-size:13px;letter-spacing:0.06em">{{ subLabel }}</button>
+        </div>
+        <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:rgba(247,243,234,0.62)">{{ note }}</span>
+      </form>
+    </div>
+  </section>
+
+  <footer style="background:#1A1712;color:#F7F3EA;padding:64px 28px 32px;margin-top:64px">
+    <div style="display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;margin-bottom:48px">
+      <div style="flex:1 1 300px;min-width:260px">
+        <div style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(32px,5.4vw,68px);letter-spacing:0.06em;line-height:1">PEZIARAH</div>
+        <p style="margin:18px 0 0;max-width:38ch;font-size:15px;line-height:1.55;color:#A8A092">Gift shop, operator ziarah dan jurnal iman Katolik. Dibuat di, dan dikirim ke, seluruh Indonesia.</p></div><div style="flex:2 1 560px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:34px 40px;font-size:14px"><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BELANJA</span><a href="Katalog.dc.html#rosario">Rosario</a><a href="Katalog.dc.html#salib">Salib &amp; Krusifiks</a><a href="Katalog.dc.html#perhiasan">Perhiasan</a><a href="Katalog.dc.html#apparel">Tenun &amp; Batik</a><a href="Katalog.dc.html#wallart">Wall Art</a><a href="Katalog.dc.html#merch">Merch</a><a href="Hampers.dc.html">Hampers</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ZIARAH</span><a href="Ziarah.dc.html#rute">Semua Rute</a><a href="Concierge.dc.html">Grup Kecil</a><a href="Rute.dc.html#sendangsono">Sendangsono</a><a href="Rute.dc.html#ganjuran">Ganjuran</a><a href="Rute.dc.html#muntilan">Muntilan</a><a href="Rute.dc.html#custom">Susun Rute Sendiri</a><a href="Jurnal.dc.html#ziarah">Catatan Ziarah</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BANTUAN</span><a href="FAQ.dc.html#pengiriman">Pengiriman</a><a href="FAQ.dc.html#retur">Tukar &amp; Retur</a><a href="FAQ.dc.html#produk">Ukuran &amp; Perawatan</a><a href="Tentang.dc.html">Tentang Kami</a><a href="Kontak.dc.html">Hubungi Kami</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">IKUTI</span><a href="https://instagram.com/peziarahsociety" target="_blank" rel="noopener">Instagram</a><a href="https://facebook.com/peziarahsociety" target="_blank" rel="noopener">Facebook</a><a href="https://wa.me/6281200000000" target="_blank" rel="noopener">WhatsApp</a></div></div></div>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;border-top:1px solid rgba(247,243,234,0.14);padding-top:22px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#8A8172">
+      <span>© 2026 PEZIARAH</span>
+      <span style="text-transform:uppercase">{{ verse }}</span>
+      <span><a href="/kebijakan-privasi/" style="color:inherit;text-decoration:none">KEBIJAKAN PRIVASI</a> · <a href="/syarat-ketentuan/" style="color:inherit;text-decoration:none">SYARAT &amp; KETENTUAN</a></span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+// Journal index, four pillars (see data/journal.js). UGC posts render as a
+// separate quote-led wall rather than in the article grid — testimony should not
+// look staff-written, or the trust it buys evaporates.
+let POSTS = [];
+let PILLARS = [];
+let PANDUAN = [];
+let WRITTEN = [];
+let KIRIMAN = { max: 600, moderasi: "2–5 hari kerja", kredit: "Nama, paroki, kota" };
+
+class Component extends DCLogic {
+  state = { searchOpen: false, q: "", cartCount: 0, products: [], catLabel: {},
+            verse: "“Sebab kami hidup karena percaya, bukan karena melihat” — 2 Kor 5:7",
+            pillar: "semua", mobile: false, menu: false, email: "", subbed: false, loaded: false };
+
+  componentDidMount() {
+    import("./data/products.js").then(m => {
+      const cl = {}; m.CATEGORIES.forEach(c => { cl[c.id] = c.name; });
+      this.setState({ products: m.PRODUCTS, catLabel: cl });
+    });
+    import("./data/cart.js").then(m => {
+      this.setState({ cartCount: m.count() });
+      this._offCart = m.subscribe(items => this.setState({ cartCount: items.reduce((n, i) => n + i.qty, 0) }));
+    });
+    import("./data/verses.js").then(m => this.setState({ verse: m.currentVerse() }));
+    import("./data/post-bodies.js").then(m => {
+      WRITTEN = Object.keys(m.BODIES);
+      this.forceUpdate();
+    }).catch(() => {});
+    import("./data/journal.js").then(m => {
+      POSTS = m.POSTS;
+      PILLARS = m.PILLARS;
+      PANDUAN = m.PANDUAN;
+      KIRIMAN = m.KIRIMAN;
+      this.setState({ loaded: true });
+    });
+    this._sync = () => {
+      const mobile = window.innerWidth < 860;
+      if (mobile !== this.state.mobile) this.setState({ mobile, menu: false });
+    };
+    this._sync();
+    window.addEventListener("resize", this._sync);
+  }
+
+  componentWillUnmount() { window.removeEventListener("resize", this._sync);
+    if (this._offCart) this._offCart(); }
+
+  chrome() {
+    const m = this.state.mobile;
+    return {
+      verse: this.state.verse,
+      deskNavStyle: m ? "display:none" : "display:flex;gap:22px;font-size:13px;font-weight:500",
+      deskUtilStyle: m ? "display:none" : "display:flex;gap:16px;align-items:center;font-family:'Space Mono',monospace;font-size:12px",
+      burgerStyle: m
+        ? "display:flex;flex-direction:column;gap:5px;width:44px;height:44px;align-items:center;justify-content:center;border:none;background:none"
+        : "display:none",
+      toggleMenu: () => this.setState({ menu: !this.state.menu }),
+      drawerStyle: `position:fixed;inset:0;z-index:80;background:#F7F3EA;flex-direction:column;align-items:center;justify-content:center;padding:60px 28px;${
+        this.state.menu && this.state.mobile ? "display:flex" : "display:none"}`
+    };
+  }
+
+  media(p, h, r) {
+    const base = `position:relative;height:${h}px;border-radius:${r}px;overflow:hidden;`;
+    return p.image
+      ? base + `background:#EAE3D5 url("${p.image}") center 42%/cover`
+      : base + "background-image:repeating-linear-gradient(60deg,#DCD2C0 0 16px,#EAE3D5 16px 32px)";
+  }
+
+  pillarName(id) {
+    const p = PILLARS.find(x => x.id === id);
+    return p ? p.name : "";
+  }
+
+  // A post's kicker: its recurring column if it has one, else its pillar.
+  tagline(p) {
+    return (p.kolom || this.pillarName(p.pillar)).toUpperCase();
+  }
+
+  search() {
+    const open = this.state.searchOpen;
+    const q = (this.state.q || "").trim().toLowerCase();
+    const CL = this.state.catLabel || {};
+    const hits = q.length < 2 ? [] : (this.state.products || []).filter(x =>
+      x.name.toLowerCase().includes(q) || (CL[x.cat] || "").toLowerCase().includes(q)
+    ).slice(0, 6);
+    return {
+      q: this.state.q,
+      cartCount: this.state.cartCount,
+      searchWrapStyle: "display:flex;align-items:center;gap:10px",
+      searchInputStyle: `width:${open ? 230 : 0}px;opacity:${open ? 1 : 0};padding:${open ? "9px 14px" : "9px 0"};border:1px solid #D6CBB8;border-radius:999px;background:#F7F3EA;font-size:13px;transition:width .3s ease,opacity .25s ease`,
+      toggleSearch: () => this.setState(s => ({ searchOpen: !s.searchOpen, q: s.searchOpen ? "" : s.q })),
+      onQ: e => this.setState({ q: e.target.value }),
+      onQKey: e => { if (e.key === "Escape") this.setState({ searchOpen: false, q: "" }); },
+      results: hits.map(x => ({
+        name: x.name,
+        cat: (CL[x.cat] || "").toUpperCase(),
+        price: x.price,
+        href: `Produk.dc.html?id=${x.id}`,
+        thumbStyle: "width:46px;height:46px;border-radius:12px;flex:none;" + (x.image
+          ? `background:#EAE3D5 url("${x.image}") center/cover`
+          : "background-image:repeating-linear-gradient(60deg,#DCD2C0 0 8px,#EAE3D5 8px 16px)")
+      })),
+      resultsLabel: hits.length ? `${hits.length} HASIL UNTUK “${(this.state.q || "").trim()}”` : "TIDAK ADA HASIL",
+      resultsStyle: (open && q.length >= 2)
+        ? "position:absolute;top:100%;right:20px;width:min(420px,calc(100vw - 40px));background:#F7F3EA;border:1px solid #D6CBB8;border-radius:20px;box-shadow:0 18px 44px rgba(26,23,18,0.14);padding:14px;z-index:70"
+        : "display:none"
+    };
+  }
+
+  renderVals() {
+    const active = this.state.pillar;
+    const match = p => active === "semua" || p.pillar === active;
+    const ugc = p => p.pillar === "iman";
+
+    const shown = POSTS.filter(match);
+    const lead = shown.filter(p => p.feature);
+    const isFresh = p => WRITTEN.includes(p.id);
+    const fresh = shown.filter(p => !p.feature && !ugc(p) && isFresh(p));
+    const articles = shown.filter(p => !p.feature && !ugc(p) && !isFresh(p));
+    const voices = shown.filter(ugc);
+    const m = this.state.mobile;
+
+    return {
+      ...this.chrome(),
+      ...this.search(),
+      pills: [{ id: "semua", name: "Semua", note: `${POSTS.length} tulisan` }].concat(PILLARS).map(p => {
+        const on = active === p.id;
+        return {
+          label: p.name,
+          note: p.note,
+          pick: () => this.setState({ pillar: p.id }),
+          chipStyle: `display:flex;flex-direction:column;gap:3px;align-items:flex-start;text-align:left;padding:11px 20px;border-radius:18px;font-family:'Hanken Grotesk',sans-serif;font-size:14px;border:1px solid ${
+            on ? "#1A1712" : "rgba(26,23,18,0.18)"};background:${on ? "#1A1712" : "rgba(247,243,234,0.82)"};backdrop-filter:blur(6px);color:${on ? "#F7F3EA" : "#1A1712"}`,
+          noteStyle: `font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.08em;color:${
+            on ? "rgba(247,243,234,0.62)" : "#8A8172"}`
+        };
+      }),
+
+      lead: lead.map(p => ({
+        ...p,
+        href: `Post.dc.html#${p.id}`,
+        slot: p.image ? "" : p.slot,
+        tagline: this.tagline(p),
+        mediaStyle: this.media(p, m ? 300 : 460, 26) + ";flex:1 1 420px;min-width:280px"
+      })),
+      leadSectionStyle: lead.length
+        ? "padding:clamp(34px,4vw,48px) 28px clamp(38px,4vw,52px);border-bottom:1px solid #E7DFD1"
+        : "display:none",
+
+      fresh: fresh.map(p => ({
+        ...p,
+        href: `Post.dc.html#${p.id}`,
+        slot: p.image ? "" : p.slot,
+        tagline: this.tagline(p),
+        cardStyle: "flex:1 1 320px;min-width:260px;max-width:440px;display:block",
+        mediaStyle: this.media(p, 260, 20)
+      })),
+      freshSectionStyle: fresh.length ? "padding:clamp(40px,4.5vw,56px) 28px 0" : "display:none",
+      freshCount: `${fresh.length} SUDAH BISA DIBACA UTUH`,
+
+      posts: articles.map(p => ({
+        ...p,
+        href: `Post.dc.html#${p.id}`,
+        slot: p.image ? "" : p.slot,
+        tagline: this.tagline(p),
+        cardStyle: "flex:1 1 300px;min-width:260px;max-width:420px;display:block",
+        mediaStyle: this.media(p, 240, 20)
+      })),
+      gridSectionStyle: articles.length ? "padding:clamp(56px,6vw,80px) 28px 0" : "display:none",
+      gridTitle: active === "semua" ? "Arsip" : this.pillarName(active),
+      countLabel: this.state.loaded ? `${articles.length} TULISAN` : "MEMUAT…",
+
+      voices: voices.map(v => ({
+        ...v,
+        href: `#${v.id}`,
+        slot: v.image ? "" : v.slot,
+        credit: `${v.paroki} · ${v.kota} · ${v.date}`,
+        cardStyle: "flex:1 1 300px;min-width:260px;max-width:400px;display:flex;flex-direction:column;padding:26px 24px 24px;border-radius:24px;background:#FBF8F1;border:1px solid #E0D7C6",
+        thumbStyle: v.image
+          ? `position:relative;height:150px;border-radius:16px;overflow:hidden;margin-top:20px;background:#EAE3D5 url("${v.image}") center 38%/cover`
+          : "display:none"
+      })),
+      voiceSectionStyle: voices.length ? "padding:clamp(52px,6vw,80px) 28px 0" : "display:none",
+
+      kirimanCopy: `Tulis maksimal ${KIRIMAN.max} kata, lampirkan satu foto kalau ada. Kami baca semuanya dan balas dalam ${KIRIMAN.moderasi} — yang terbit dikreditkan dengan ${KIRIMAN.kredit.toLowerCase()}, atau anonim kalau kamu mau.`,
+      kirimanSteps: [
+        { mark: "01", title: "Kirim tulisannya.", sub: "WhatsApp atau email — mana pun yang lebih mudah." },
+        { mark: "02", title: "Kami balas dulu.", sub: `Dibaca manusia, bukan filter. ${KIRIMAN.moderasi}.` },
+        { mark: "03", title: "Kamu setujui hasil suntingan.", sub: "Kami sunting panjang dan ejaan, tidak pernah isinya." },
+        { mark: "04", title: "Terbit dengan namamu.", sub: "Atau tanpa nama, kalau itu yang kamu minta." }
+      ],
+
+      panduan: PANDUAN.map((g, i) => ({
+        ...g,
+        href: `#${g.id}`,
+        mark: String(i + 1).padStart(2, "0")
+      })),
+
+      email: this.state.email,
+      setEmail: e => this.setState({ email: e.target.value }),
+      submit: e => { e.preventDefault(); this.setState({ subbed: true }); },
+      subLabel: this.state.subbed ? "TERKIRIM ✓" : "LANGGANAN",
+      note: this.state.subbed
+        ? "Terima kasih — surat pertama datang dua minggu lagi."
+        : "Tanpa spam. Berhenti kapan saja."
+    };
+  }
+}
+</script>
+</body>
+</html>

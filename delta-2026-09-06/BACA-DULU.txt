@@ -1,0 +1,48 @@
+# Upload — 6 September 2026
+
+Folder ini mengikuti struktur situs. Timpa file dengan nama yang sama di server.
+
+## Yang berubah
+
+**Halaman baru: `/ziarah/grup-kecil/`**
+Layanan ziarah pribadi untuk 2–8 orang. Punya hero image sendiri
+(`assets/grup-kecil-hero.webp` + versi 900px) dan form pengajuan
+yang tersambung ke Google Form.
+
+**`/concierge/` → redirect**
+URL lama dipindah ke `/ziarah/grup-kecil/`. File redirect-nya tetap harus
+diupload supaya tautan lama tidak mati.
+
+**`/ziarah/`**
+- Tombol hero jadi tiga: Rombongan · Grup Kecil · Lihat Rute
+- Form dapat kolom **Intensi** ("Apa yang kamu bawa dalam ziarah ini?")
+- Tab baru **Susun Sendiri** — enam pertanyaan, kartu ringkasan, lalu kirim
+- Ada bagian pengantar ke Grup Kecil sebelum form
+
+**`data/forms.js`**
+Tiga form Google sudah terpasang penuh: ziarah, susun-sendiri, grup-kecil.
+Submission juga tersimpan di localStorage pengunjung sebagai cadangan.
+
+**Semua halaman lain**
+Hanya satu perubahan: tautan **Grup Kecil** di footer, kolom ZIARAH.
+
+**`sitemap.xml`**
+`/concierge/` diganti `/ziarah/grup-kecil/`.
+
+## Jumlah file
+
+| Bagian | File |
+|---|---|
+| Halaman utama & kebijakan | 17 |
+| Produk | 33 |
+| Artikel jurnal | 15 |
+| Rute ziarah | 8 |
+| Hampers pernikahan | 1 |
+| Aset gambar | 2 |
+
+## Setelah upload
+
+1. Buka `/ziarah/grup-kecil/` — hero image harus tampil, bukan kotak krem.
+2. Buka `/concierge/` — harus langsung melompat ke URL baru.
+3. Isi form Susun Sendiri sekali; cek barisnya masuk ke Google Sheet.
+4. Submit ulang sitemap di Google Search Console.

@@ -1,0 +1,23 @@
+KRUSIFIKS UKIR DAYAK — SULUR ENGGANG
+Delta upload untuk peziarah.com · 18 Agustus 2026
+
+Struktur folder di bawah ini sama dengan public_html.
+Upload dengan File Manager Hostinger, timpa yang lama:
+
+  data/products.js                         (TIMPA — produk baru sudah termasuk)
+                                           versi ini pakai path /assets/... (benar untuk live site)
+  produk/krusifiks-dayak/index.html        (BARU — buat foldernya)
+  assets/krusifiks-dayak.webp              (BARU)
+  assets/krusifiks-dayak-detail.webp       (BARU)
+  assets/og/krusifiks-dayak.jpg            (BARU — gambar share)
+  sitemap.xml                              (TIMPA)
+
+Detail produk:
+  Harga  Rp 2.450K (M 45 cm) · +Rp 950K (L 60 cm) · +Rp 2.100K (XL 80 cm)
+  Kategori  Salib & Krusifiks
+  Badge  HANDMADE
+  Stok  3
+  URL  https://peziarah.com/produk/krusifiks-dayak/
+
+Kalau harga, stok, atau ukuran mau diubah nanti: cukup edit
+data/products.js lewat File Manager, cari "krusifiks-dayak".

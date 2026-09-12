@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peziarah — Peta Pendapatan, Modal MVP & Business Model Canvas Katolik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1A1712; --ink-2:#2E2820; --bone:#F7F3EA; --paper:#EFE9DC; --line:#DCD2C0;
+  --muted:#8A8172; --muted-2:#5B5347; --violet:#6C4BA6; --violet-soft:#EFE9F7;
+  --lime:#C9E45B; --rose:#9B3B4A; --gold:#A8823C;
+  --serif:'Cinzel',serif; --sans:'Hanken Grotesk',system-ui,sans-serif; --mono:'Space Mono',monospace;
+}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+img,svg,table{max-width:100%}
+body{
+  margin:0; background:var(--bone); color:var(--ink); overflow-wrap:break-word;
+  font-family:var(--sans); font-weight:400; font-size:16.5px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 26px}
+
+/* ---------- nav ---------- */
+nav{
+  position:sticky;top:0;z-index:50;background:rgba(247,243,234,.93);
+  backdrop-filter:saturate(1.4) blur(9px);border-bottom:1px solid var(--line);
+}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:20px}
+.brand{
+  font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ink);white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis;
+}
+.navlinks{display:flex;gap:20px;overflow-x:auto;scrollbar-width:none;flex:1 1 auto;min-width:0;justify-content:flex-end}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;white-space:nowrap;padding:4px 0;border-bottom:1px solid transparent;
+}
+.navlinks a:hover,.navlinks a:focus-visible{color:var(--violet);border-bottom-color:var(--violet)}
+
+/* mobile dropdown nav */
+.navmenu{display:none;position:relative;flex:0 0 auto}
+.navmenu>summary{
+  list-style:none;cursor:pointer;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--violet);
+  border:1px solid var(--line);background:#fff;padding:8px 12px;white-space:nowrap;
+  display:flex;align-items:center;gap:8px;
+}
+.navmenu>summary::-webkit-details-marker{display:none}
+.navmenu>summary::after{content:"▾";font-size:10px;line-height:1}
+.navmenu[open]>summary{border-color:var(--violet)}
+.navmenu[open]>summary::after{content:"▴"}
+.navpanel{
+  position:absolute;top:calc(100% + 10px);right:0;width:min(80vw,282px);
+  background:var(--bone);border:1px solid var(--ink);
+  box-shadow:0 14px 32px rgba(26,23,18,.18);z-index:60;
+  max-height:72vh;overflow-y:auto;
+}
+.navpanel a{
+  display:block;padding:11px 15px;text-decoration:none;color:var(--ink);
+  font-size:.88rem;line-height:1.3;border-bottom:1px solid var(--line);
+}
+.navpanel a:last-child{border-bottom:0}
+.navpanel a:active,.navpanel a:hover{background:var(--violet-soft);color:var(--violet)}
+.navpanel a i{
+  display:block;font-style:normal;font-family:var(--mono);font-size:8px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;
+}
+.brand-short{display:none}
+
+/* ---------- masthead ---------- */
+header.mast{padding:76px 0 54px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--violet);margin:0 0 22px}
+h1{
+  font-family:var(--serif);font-weight:700;font-size:clamp(2.1rem,5.4vw,3.9rem);
+  line-height:1.06;letter-spacing:-.012em;margin:0 0 22px;max-width:19ch;
+}
+.byline{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 30px}
+.lede{font-size:1.12rem;max-width:62ch;color:var(--ink-2);margin:0 0 16px}
+.lede em{font-style:italic}
+
+/* ---------- key figures ---------- */
+.figs{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink);margin:44px 0 0;background:#fff}
+.fig{padding:20px 18px;border-right:1px solid var(--line)}
+.fig:last-child{border-right:0}
+.fig .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;display:block;margin-bottom:9px}
+.fig .v{font-family:var(--serif);font-size:1.72rem;font-weight:700;color:var(--violet);line-height:1;display:block;margin-bottom:9px}
+.fig .d{font-size:.8rem;color:var(--muted-2);line-height:1.4}
+
+/* ---------- sections ---------- */
+section{padding:64px 0;border-bottom:1px solid var(--line)}
+.snum{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink);margin:0 0 26px;padding-bottom:9px;border-bottom:1px solid var(--ink)}
+h2{font-family:var(--serif);font-weight:700;font-size:clamp(1.5rem,3.3vw,2.25rem);line-height:1.14;margin:0 0 18px;max-width:24ch}
+h3{font-family:var(--sans);font-weight:700;font-size:1.06rem;letter-spacing:.005em;margin:38px 0 12px}
+h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;font-weight:700}
+p{max-width:66ch;margin:0 0 15px}
+.dek{font-size:1.04rem;color:var(--muted-2);max-width:64ch;margin-bottom:30px}
+a{color:var(--violet)}
+
+/* ---------- part divider ---------- */
+.part{background:var(--ink);color:var(--bone);padding:52px 0 48px;border:0}
+.part h2{color:var(--bone);max-width:22ch;margin-bottom:14px}
+.part .snum{color:var(--lime);border-bottom-color:rgba(247,243,234,.22)}
+.part p{color:#CFC7B7;max-width:60ch;margin:0}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:26px 0 12px;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.87rem;min-width:560px;background:#fff;table-layout:auto}
+th{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);text-align:left;font-weight:400;padding:11px 12px;
+  border-bottom:1px solid var(--ink);vertical-align:bottom;
+}
+td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.45;overflow-wrap:anywhere;word-break:normal}
+th{overflow-wrap:anywhere}
+tbody tr:hover{background:var(--paper)}
+.num{font-family:var(--mono);font-size:.83rem;white-space:nowrap;text-align:right}
+th.num{text-align:right}
+tr.tot td{background:var(--ink);color:var(--bone);border-bottom:0;font-weight:700}
+tr.tot td.num{color:var(--lime)}
+tr.sub td{background:var(--paper);font-weight:700;font-size:.82rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2)}
+caption{caption-side:bottom;text-align:left;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--muted);padding-top:11px;text-transform:uppercase}
+.name{font-weight:500;color:var(--ink)}
+td a,.card a{color:var(--violet);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+td a:hover,.card a:hover{color:var(--ink)}
+.dek a{text-decoration:underline;text-underline-offset:2px}
+span.sub{display:block;color:var(--muted);font-size:.79rem;line-height:1.35;margin-top:3px}
+
+/* ---------- badges ---------- */
+.tier{white-space:normal;text-transform:none}
+span.b{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;white-space:nowrap;display:inline-block;border:1px solid}
+span.b.now{background:var(--lime);border-color:#A9C443;color:#2C3708}
+span.b.p2{background:var(--violet-soft);border-color:#C3B2DF;color:var(--violet)}
+span.b.p3{background:var(--paper);border-color:var(--line);color:var(--muted-2)}
+span.b.no{background:#F6E9EA;border-color:#E0BFC3;color:var(--rose)}
+span.b.soon{background:#FBF3E2;border-color:#DDC48A;color:#7A5D1E}
+
+/* ---------- callouts ---------- */
+.note{border-left:2px solid var(--violet);background:var(--violet-soft);padding:18px 22px;margin:26px 0;max-width:72ch}
+.note strong{color:var(--violet)}
+.note p:last-child{margin-bottom:0}
+.soon{border-left:2px solid var(--gold);background:#FBF6EA;padding:18px 22px;margin:26px 0;max-width:72ch}
+.soon strong{color:#7A5D1E}
+.soon p:last-child{margin-bottom:0}
+.soontag{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:#FBF3E2;border:1px solid #DDC48A;color:#7A5D1E;padding:2px 6px;display:inline-block;margin-right:7px;vertical-align:1px}
+
+/* table of contents */
+.toc{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:26px 0 22px;margin:0}
+.toc h4{margin:0 0 16px}
+.toclist{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.toclist a{
+  background:#fff;padding:14px 16px;text-decoration:none;display:block;
+  color:var(--ink);transition:background .15s ease;
+}
+.toclist a:hover,.toclist a:focus-visible{background:var(--violet-soft)}
+.toclist .tnum{font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--violet);display:block;margin-bottom:5px}
+.toclist .ttl{font-weight:500;font-size:.9rem;display:block;line-height:1.3}
+.toclist .tsub{font-size:.76rem;color:var(--muted);display:block;margin-top:4px;line-height:1.35}
+
+/* ---------- cards ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin:26px 0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:26px 0}
+.card{background:#fff;padding:22px 20px}
+.card h5{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--violet);margin:0 0 10px;font-weight:700}
+.card p{font-size:.88rem;margin:0;color:var(--muted-2)}
+.card ul{margin:9px 0 0;padding-left:17px;font-size:.86rem;color:var(--muted-2)}
+.card li{margin-bottom:5px}
+.card .big{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--ink);display:block;margin:2px 0 8px;line-height:1}
+
+/* ---------- tier bars ---------- */
+.tiers{margin:30px 0 8px}
+.tier{border:1px solid var(--line);background:#fff;margin-bottom:14px;padding:20px 22px}
+.tier.t-a{border-color:var(--ink);border-left:4px solid var(--lime)}
+.tier.t-b{border-left:4px solid var(--violet)}
+.tier.t-c{border-left:4px solid var(--line)}
+.tier .th{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;margin-bottom:10px}
+.tier .tn{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.tier .tv{font-family:var(--serif);font-size:1.55rem;font-weight:700}
+.tier .tl{font-weight:700;font-size:.95rem;min-width:0;flex:1 1 200px}
+.tier .tn,.tier .tv{min-width:0;flex:0 0 auto}
+.tier p{font-size:.9rem;margin:0;color:var(--muted-2);max-width:70ch;overflow-wrap:break-word}
+.tier ul{margin:10px 0 0;padding-left:17px;font-size:.88rem;color:var(--muted-2);max-width:70ch}
+.tier li{margin-bottom:5px;overflow-wrap:break-word}
+.tier li b{color:var(--ink);font-weight:600}
+.bar{height:9px;background:var(--paper);border:1px solid var(--line);display:flex;margin:14px 0 12px}
+.bar span{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.legend i{width:9px;height:9px;display:inline-block;margin-right:5px;vertical-align:-1px}
+
+/* ---------- canvas grid ---------- */
+.bmc{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:auto auto;gap:1px;background:var(--line);border:1px solid var(--ink);margin:28px 0 10px;font-size:.79rem}
+.blk{background:#fff;padding:15px 14px}
+.blk h6{font-family:var(--mono);font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:700}
+.blk ul{margin:0;padding-left:15px;color:var(--ink-2);line-height:1.42}
+.blk li{margin-bottom:6px}
+.blk.vp{background:var(--violet);color:#fff}
+.blk.vp h6{color:rgba(255,255,255,.62)}
+.blk.vp ul{color:rgba(255,255,255,.94)}
+.blk.vp strong{color:#fff;display:block;font-size:.83rem}
+.blk.vp em{font-style:normal;color:rgba(255,255,255,.72);font-size:.76rem;display:block;line-height:1.38;margin-top:2px}
+.b-mitra{grid-column:1;grid-row:1/3}
+.b-akt{grid-column:2;grid-row:1}
+.b-vp{grid-column:3;grid-row:1/3}
+.b-hub{grid-column:4;grid-row:1}
+.b-seg{grid-column:5;grid-row:1/3}
+.b-sum{grid-column:2;grid-row:2}
+.b-sal{grid-column:4;grid-row:2}
+.bmcrow{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--ink);border-top:0;margin-bottom:10px}
+
+/* ---------- wheel ---------- */
+.wheelwrap{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;margin:30px 0 10px}
+.wheel{width:100%;height:auto;max-width:500px;display:block;margin:0 auto}
+.wheel .hub{fill:#fff;stroke:var(--line)}
+.wheel .hubtop{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;fill:var(--muted);text-anchor:middle}
+.wheel .hubmid{font-family:'Cinzel',serif;font-size:14px;font-weight:700;fill:var(--ink);text-anchor:middle;letter-spacing:.04em}
+.wheel .hubsub{font-family:'Space Mono',monospace;font-size:9px;fill:var(--muted);text-anchor:middle;letter-spacing:.1em}
+.wheel .mo{stroke:#fff;stroke-width:1}
+.wheel .mo.hot{fill:var(--violet)}
+.wheel .mo.warm{fill:#A98FD0}
+.wheel .mo.cool{fill:#D9D0BE}
+.wheel .mo:hover{fill:var(--ink)}
+.wheel .ring{fill:var(--line)}
+.wheel .mlab{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;fill:var(--muted-2);text-anchor:middle;dominant-baseline:middle}
+.wheel .mval{font-family:'Space Mono',monospace;font-size:10px;text-anchor:middle;dominant-baseline:middle;font-weight:700}
+.wheel .mval.in{fill:#fff}
+.wheel .mval.out{fill:var(--muted)}
+.seasons{margin:0}
+.season{display:grid;grid-template-columns:82px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:.86rem}
+.season:last-child{border-bottom:0}
+.season b{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--violet);padding-top:2px}
+.season span{color:var(--muted-2);line-height:1.45}
+.season span i{font-style:normal;color:var(--ink);font-weight:500}
+
+/* ---------- faq ---------- */
+details{border-bottom:1px solid var(--line);padding:0}
+details summary{
+  cursor:pointer;padding:15px 34px 15px 0;list-style:none;position:relative;
+  font-weight:500;font-size:.95rem;color:var(--ink);
+}
+details summary::-webkit-details-marker{display:none}
+details summary::after{
+  content:"+";position:absolute;right:6px;top:13px;font-family:var(--mono);
+  font-size:1.05rem;color:var(--violet);transition:transform .18s ease;
+}
+details[open] summary::after{content:"−"}
+details summary:hover{color:var(--violet)}
+details .ans{padding:0 40px 20px 0;font-size:.9rem;color:var(--muted-2);max-width:70ch}
+details .ans p{font-size:.9rem;margin-bottom:11px}
+details .ans p:last-child{margin-bottom:0}
+.qn{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--muted);margin-right:11px}
+
+/* ---------- gaps ---------- */
+.gaps{border-top:1px solid var(--ink);margin:26px 0}
+.gap{display:grid;grid-template-columns:46px 1fr;gap:18px;padding:20px 0;border-bottom:1px solid var(--line);align-items:start}
+.gap .g{font-family:var(--serif);font-size:1.35rem;font-weight:700;color:var(--violet);line-height:1}
+.gap h5{margin:0 0 6px;font-size:.97rem;font-weight:700}
+.gap p{margin:0;font-size:.88rem;color:var(--muted-2);max-width:70ch}
+
+footer{padding:44px 0 66px;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);line-height:2}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .toclist{grid-template-columns:1fr}
+  table{min-width:480px;font-size:.82rem}
+  th,td{padding:10px 9px}
+  .num{white-space:normal}
+  .figs{grid-template-columns:1fr 1fr}
+  .fig{border-bottom:1px solid var(--line)}
+  .fig:nth-child(2),.fig:nth-child(4){border-right:0}
+  .fig:nth-child(3),.fig:nth-child(4){border-bottom:0}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .wheelwrap{grid-template-columns:1fr;gap:24px}
+  .bmc{grid-template-columns:1fr;grid-template-rows:none}
+  .bmc>div{grid-column:1!important;grid-row:auto!important}
+  .bmcrow{grid-template-columns:1fr}
+  section{padding:48px 0}
+  header.mast{padding:52px 0 40px}
+  h1{max-width:none}
+  .tier .th{gap:8px}
+  .tier .tv{font-size:1.3rem}
+  .season{grid-template-columns:1fr;gap:4px}
+  .gap{grid-template-columns:34px 1fr;gap:12px}
+  nav .wrap{height:52px;gap:12px;justify-content:space-between}
+  .navlinks{display:none}
+  .navmenu{display:block}
+  .brand-full{display:none}
+  .brand-short{display:inline}
+  .brand{font-size:10px;letter-spacing:.18em}
+}
+/* ---------- stacked table cards on narrow screens ---------- */
+@media (max-width:680px){
+  .tw{overflow-x:visible;margin:22px 0 12px}
+  table{min-width:0;width:100%;display:block;background:transparent;font-size:.86rem}
+  thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  tbody{display:block}
+  tr{display:block;background:#fff;border:1px solid var(--line);margin-bottom:10px;padding:4px 0}
+  tbody tr:hover{background:#fff}
+  td{
+    display:grid;grid-template-columns:38% 1fr;gap:12px;align-items:baseline;
+    padding:8px 14px;border-bottom:1px solid var(--paper);text-align:left;
+  }
+  tr td:last-child{border-bottom:0}
+  td::before{
+    content:attr(data-l);
+    font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--muted);line-height:1.5;padding-top:2px;
+  }
+  td:not([data-l])::before{content:none}
+  td:not([data-l]){display:block}
+  td.num{text-align:left}
+  .num{white-space:normal}
+  /* first cell of each card = title bar */
+  tr td:first-child{
+    grid-template-columns:1fr;gap:2px;background:var(--paper);
+    padding:11px 14px;border-bottom:1px solid var(--line);
+  }
+  tr td:first-child::before{content:none}
+  tr td:first-child .name{font-size:.98rem;font-weight:700}
+  /* section header rows */
+  tr.sub{background:var(--ink);border-color:var(--ink);padding:0;margin-bottom:0;border-bottom:0}
+  tr.sub td{display:block;background:var(--ink);color:var(--bone);padding:10px 14px;border:0;
+    font-size:.78rem;letter-spacing:.12em}
+  tr.sub td::before{content:none}
+  /* total rows */
+  tr.tot{border-color:var(--ink);background:var(--ink);padding:2px 0}
+  tr.tot td{background:var(--ink);color:var(--bone);border-bottom-color:rgba(247,243,234,.15)}
+  tr.tot td::before{color:rgba(247,243,234,.5)}
+  tr.tot td:first-child{background:var(--ink);border-bottom-color:rgba(247,243,234,.28)}
+  caption{display:block;padding:2px 0 0}
+}
+@media (max-width:460px){
+  .wrap{padding:0 16px}
+  .fig .v{font-size:1.4rem}
+  td{grid-template-columns:42% 1fr;gap:9px;padding:8px 12px}
+  h1{font-size:2rem}
+  .toclist a{padding:12px 14px}
+  .blk,.card{padding:16px 14px}
+  .note,.soon{padding:15px 16px}
+  details summary{font-size:.92rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+@media print{
+  nav{display:none}
+  body{background:#fff;font-size:11pt}
+  section{page-break-inside:avoid;padding:24px 0}
+  .part{background:#fff;color:#000;border-bottom:2px solid #000}
+  .part h2,.part p{color:#000}
+  details{page-break-inside:avoid}
+  details[open] .ans{display:block}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="brand"><span class="brand-full">Peziarah — Strategi V2</span><span class="brand-short">Peziarah</span></span>
+    <div class="navlinks">
+      <a href="#ringkas">Ringkasan</a>
+      <a href="#pendapatan">Pendapatan</a>
+      <a href="#ziarah">Ziarah</a>
+      <a href="#modal">Modal MVP</a>
+      <a href="#canvas">Canvas</a>
+      <a href="#kalender">Kalender</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <details class="navmenu" id="navmenu">
+      <summary aria-label="Buka daftar isi">Isi</summary>
+      <div class="navpanel">
+        <a href="#ringkas"><i>Ringkasan</i>Tiga temuan utama</a>
+        <a href="#pendapatan"><i>Bagian I · 01</i>Peta pendapatan</a>
+        <a href="#ziarah"><i>Bagian I · 02</i>Layanan ziarah</a>
+        <a href="#modal"><i>Bagian II · 03</i>Modal MVP</a>
+        <a href="#pasar"><i>Bagian III · 01</i>Ukuran pasar</a>
+        <a href="#celah"><i>Bagian III · 02</i>Celah pasar</a>
+        <a href="#canvas"><i>Bagian III · 03</i>Canvas sembilan blok</a>
+        <a href="#angka"><i>Bagian III · 04</i>Angka &amp; bauran</a>
+        <a href="#risiko"><i>Bagian III · 05</i>Risiko &amp; mitigasi</a>
+        <a href="#kalender"><i>Bagian III · 06</i>Kalender liturgi</a>
+        <a href="#faq"><i>Bagian III · 07</i>Pertanyaan komunitas</a>
+      </div>
+    </details>
+  </div>
+</nav>
+
+<header class="mast">
+  <div class="wrap">
+    <p class="eyebrow">Dokumen strategi — Perlengkapan rohani Katolik</p>
+    <h1>Peta Pendapatan, Modal MVP, dan Business Model Canvas</h1>
+    <p class="byline">Disusun untuk Peziarah · <a href="https://peziarah.com">peziarah.com</a> · Agustus 2026</p>
+    <p class="lede">Peziarah melayani umat Katolik Indonesia dengan benda devosional bermutu, hampers sakramental terkurasi, dan perlengkapan rombongan ziarah. <a href="https://peziarah.com/katalog/">Katalognya</a> rosario, krusifiks, San Damiano, nis Guadalupe, <a href="https://peziarah.com/hampers/">hampers komuni</a>, dan <a href="https://peziarah.com/ziarah/">rute ziarah</a> ke Sendangsono, Ganjuran, Muntilan, serta Puhsarang.</p>
+    <p class="lede">Dokumen ini menjawab tiga hal: <em>aliran pendapatan apa saja yang mungkin di ceruk ini, berapa modal minimum untuk toko benar-benar jalan, dan seperti apa business model canvas-nya.</em></p>
+
+    <div class="figs">
+      <div class="fig"><span class="k">TAM</span><span class="v">9,1 Jt</span><span class="d">Umat Katolik Indonesia (~3,2% penduduk)</span></div>
+      <div class="fig"><span class="k">SAM</span><span class="v">3–3,5 Jt</span><span class="d">Urban, menengah–atas, aktif e-commerce</span></div>
+      <div class="fig"><span class="k">Modal MVP</span><span class="v">Rp 16,3 Jt</span><span class="d">Batas bawah untuk toko yang benar-benar jalan</span></div>
+      <div class="fig"><span class="k">Aliran</span><span class="v">36</span><span class="d">Dipetakan; 18 bisa jalan sekarang</span></div>
+    </div>
+  </div>
+  <div class="wrap toc">
+    <h4>Isi dokumen</h4>
+    <div class="toclist">
+      <a href="#ringkas"><span class="tnum">RINGKASAN</span><span class="ttl">Tiga temuan utama</span><span class="tsub">Yang menentukan urutan langkah</span></a>
+      <a href="#pendapatan"><span class="tnum">BAGIAN I · 01</span><span class="ttl">Peta pendapatan</span><span class="tsub">36 aliran, dinilai per modal &amp; margin</span></a>
+      <a href="#ziarah"><span class="tnum">BAGIAN I · 02</span><span class="ttl">Layanan ziarah</span><span class="tsub">Rincian paket, harga &amp; nilai tambah</span></a>
+      <a href="#modal"><span class="tnum">BAGIAN II · 03</span><span class="ttl">Modal MVP</span><span class="tsub">Sampel, stok, tiga tingkat &amp; momentum</span></a>
+      <a href="#pasar"><span class="tnum">BAGIAN III · 01</span><span class="ttl">Ukuran pasar</span><span class="tsub">TAM, SAM, SOM &amp; sebaran wilayah</span></a>
+      <a href="#celah"><span class="tnum">BAGIAN III · 02</span><span class="ttl">Celah pasar</span><span class="tsub">Empat kekosongan yang bisa diisi</span></a>
+      <a href="#canvas"><span class="tnum">BAGIAN III · 03</span><span class="ttl">Canvas sembilan blok</span><span class="tsub">Tata letak canvas baku</span></a>
+      <a href="#angka"><span class="tnum">BAGIAN III · 04</span><span class="ttl">Angka &amp; bauran</span><span class="tsub">Proyeksi laba rugi tiga tahun</span></a>
+      <a href="#risiko"><span class="tnum">BAGIAN III · 05</span><span class="ttl">Risiko &amp; mitigasi</span><span class="tsub">Enam risiko dan penanganannya</span></a>
+      <a href="#kalender"><span class="tnum">BAGIAN III · 06</span><span class="ttl">Kalender liturgi</span><span class="tsub">Enam puncak permintaan setahun</span></a>
+      <a href="#faq"><span class="tnum">BAGIAN III · 07</span><span class="ttl">Pertanyaan komunitas</span><span class="tsub">Sepuluh keberatan &amp; jawabannya</span></a>
+    </div>
+  </div>
+</header>
+
+<section id="ringkas">
+  <div class="wrap">
+    <p class="snum">Ringkasan — Tiga temuan yang menentukan urutan langkah</p>
+    <h2>Tiga hal yang perlu disepakati lebih dulu</h2>
+
+    <div class="grid3">
+      <div class="card">
+        <h5>Temuan 01</h5>
+        <span class="big">Pasar sempit, keranjang besar</span>
+        <p>TAM-nya 9,1 juta umat — kecil untuk ukuran Indonesia. Tapi keranjangnya besar: median katalog ~Rp 400 ribu, dan kalender sakramen menciptakan momen beli yang <strong>wajib</strong>, bukan impulsif. Baptis, komuni pertama, krisma, dan pernikahan adalah tanggal yang tidak bisa dilewati. Proyeksi Tahun 1 di kisaran Rp 200–260 juta.</p>
+      </div>
+      <div class="card">
+        <h5>Temuan 02</h5>
+        <span class="big">Enam puncak setahun</span>
+        <p>Tahun liturgi menyediakan enam musim belanja, bukan tiga: Prapaskah–Paskah, Mei (Bulan Maria &amp; komuni pertama), Juni–Juli (krisma, nikah, ziarah), <strong>Oktober (Bulan Rosario)</strong>, November (Arwah), dan Desember (Adven &amp; Natal). Oktober adalah sebulan penuh yang diabdikan pada kategori terlaris Anda — dan Oktober bersambung langsung ke Desember.</p>
+      </div>
+      <div class="card">
+        <h5>Temuan 03</h5>
+        <span class="big">Jasa &gt; barang</span>
+        <p>Aliran margin tertinggi bukan barang. Kurasi rute ziarah (85–95%), grafir &amp; personalisasi (80–90%), dan produk digital devosional (~100%) semuanya bermodal stok Rp 0 dan bisa hidup minggu depan tanpa membeli apa pun. Body art menyusul di kelas yang sama begitu studionya beroperasi.</p>
+      </div>
+    </div>
+
+    <div class="soon">
+      <p><span class="soontag">Catatan</span><strong>Body art belum beroperasi.</strong> Terang Ink masih tahap persiapan — halaman dan harganya sudah ada di situs, studionya belum menerima pesanan. Di sepanjang dokumen ini, aliran body art ditandai <span class="b soon">Segera</span> dan tetap dimasukkan ke proyeksi, karena modal stoknya nol dan kontribusinya tidak bergantung pada belanja MVP. Semua angka di Tingkat A tetap berlaku tanpa body art.</p>
+    </div>
+  </div>
+</section>
+
+<div class="part">
+  <div class="wrap">
+    <p class="snum">Bagian I</p>
+    <h2>Peta Pendapatan Ceruk Katolik</h2>
+    <p>Tiga puluh enam aliran, dikelompokkan enam keluarga. Dinilai bukan dari besarnya, tapi dari berapa modal yang dibutuhkan untuk memulai dan berapa lama sampai rupiah pertama masuk.</p>
+  </div>
+</div>
+
+<section id="pendapatan">
+  <div class="wrap">
+    <p class="snum">01 — Aliran Pendapatan yang Mungkin di Ceruk Ini</p>
+    <h2>Apa yang bisa dijual selain barang di rak</h2>
+    <p class="dek">Kolom <strong>Vonis</strong> adalah rekomendasi urutan, bukan penilaian potensi. <span class="b now">Sekarang</span> berarti infrastrukturnya sudah ada dan modal tambahannya nol atau nyaris nol. <span class="b soon">Segera</span> berarti siap secara model, tapi menunggu satu hal di luar modal.</p>
+
+    <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:26%">Aliran</th>
+          <th class="num">Modal awal</th>
+          <th class="num">Margin kotor</th>
+          <th style="width:13%">Kualitas kas</th>
+          <th style="width:27%">Catatan</th>
+          <th>Vonis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="sub"><td colspan="6">A · Barang fisik</td></tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Ritel devosional konsinyasi</span><span class="sub">Rosario, salib, patung, nis</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">30–40%</td>
+          <td data-l="Kualitas kas">Baik</td>
+          <td data-l="Catatan">Bayar perajin setelah laku. Margin tipis tapi risiko nol. Inti katalog.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Merch stok sendiri</span><span class="sub">Kaos, tote, topi bucket</span></td>
+          <td data-l="Modal awal" class="num">Rp 4,3 jt</td>
+          <td data-l="Margin kotor" class="num">70–75%</td>
+          <td data-l="Kualitas kas">Sangat baik</td>
+          <td data-l="Catatan">Margin tertinggi di antara barang. Satu-satunya kategori yang layak ditumpuk.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Wall art & poster</span><span class="sub">Risograf, ikon cukil, panel kuningan</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">55–65%</td>
+          <td data-l="Kualitas kas">Baik</td>
+          <td data-l="Catatan">Cetak setelah dipesan. Ongkir bulky — hitung ulang zona luar Jawa.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Tenun & batik tiket tinggi</span><span class="sub">Rp 385 rb – 2,45 jt</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">28–35%</td>
+          <td data-l="Kualitas kas">Sedang</td>
+          <td data-l="Catatan">Perputaran lambat, nilai tinggi. Bagus untuk kredibilitas merek, bukan untuk kas.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Lilin aroma</span><span class="sub">Batch kecil, made-to-order</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">55–60%</td>
+          <td data-l="Kualitas kas">Baik</td>
+          <td data-l="Catatan">Pengisi hampers yang sempurna — naikkan nilai kotak tanpa menambah SKU.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Buku & jurnal</span><span class="sub">Reseller + judul sendiri</span></td>
+          <td data-l="Modal awal" class="num">Rp 0–1,5 jt</td>
+          <td data-l="Margin kotor" class="num">20–30% / 60%</td>
+          <td data-l="Kualitas kas">Sedang</td>
+          <td data-l="Catatan">Reseller marginnya buruk. <em>Allegoria</em> (judul sendiri) marginnya penerbit — perlakukan berbeda.</td>
+          <td data-l="Vonis"><span class="b p2">Fase 2</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Carry goods</span><span class="sub">Dopp kit, dry bag ziarah</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">30–38%</td>
+          <td data-l="Kualitas kas">Sedang</td>
+          <td data-l="Catatan">Paling masuk akal dijual sebagai lampiran paket ziarah, bukan berdiri sendiri.</td>
+          <td data-l="Vonis"><span class="b p2">Fase 2</span></td>
+        </tr>
+
+        <tr class="sub"><td colspan="6">B · Paket & momen</td></tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Hampers sakramental siap kirim</span><span class="sub">4 SKU: Peziarah, Adven, Kalvari, Penghiburan</span></td>
+          <td data-l="Modal awal" class="num">Rp 2,1 jt<span class="sub">kemasan saja</span></td>
+          <td data-l="Margin kotor" class="num">55–65%</td>
+          <td data-l="Kualitas kas">Sangat baik</td>
+          <td data-l="Catatan">Margin per unit terbaik. Isinya diambil dari stok konsinyasi — hanya kotaknya yang perlu dibeli di muka.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Hampers custom (builder)</span><span class="sub">Pembeli menyusun isinya sendiri</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">55–65%</td>
+          <td data-l="Kualitas kas">Sangat baik</td>
+          <td data-l="Catatan">Menaikkan keranjang tanpa menambah stok. Builder-nya sudah ada di <a href="https://peziarah.com/hampers/">/hampers/</a>.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Hampers borongan paroki & sekolah</span><span class="sub">Min. 25 pcs, diskon 15%</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">42–50%</td>
+          <td data-l="Kualitas kas">Sangat baik</td>
+          <td data-l="Catatan">Dibiayai DP klien. Satu pesanan setara 15–25 order ritel.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Souvenir nikah & baptis volume</span><span class="sub">50–300 pcs per acara</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">35–45%</td>
+          <td data-l="Kualitas kas">Sangat baik</td>
+          <td data-l="Catatan">Pasar besar dan berulang di Indonesia. Butuh satu SKU murah yang dirancang khusus untuk ini.</td>
+          <td data-l="Vonis"><span class="b p2">Fase 2</span></td>
+        </tr>
+
+        <tr class="sub"><td colspan="6">C · Rombongan & lembaga (B2B)</td></tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Merch rombongan ziarah</span><span class="sub">Min. 12 pcs, nama paroki & tanggal</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">45–55%</td>
+          <td data-l="Kualitas kas">Terbaik</td>
+          <td data-l="Catatan">DP di muka, produksi setelahnya. Kas masuk sebelum kas keluar — ini aliran paling sehat yang Anda punya.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Seragam & atribut sekolah Katolik</span><span class="sub">Retret, rekoleksi, wisuda</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">40–50%</td>
+          <td data-l="Kualitas kas">Terbaik</td>
+          <td data-l="Catatan">Jaringan alumni Van Lith adalah pintu masuk langsung ke sekolah-sekolah Katolik. Aset yang tidak dimiliki pesaing.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Hadiah korporat & yayasan</span><span class="sub">Natal, rumah sakit, yayasan Katolik</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">40–50%</td>
+          <td data-l="Kualitas kas">Terbaik</td>
+          <td data-l="Catatan">Musiman keras (Oktober–Desember), butuh penawaran & faktur formal. Siapkan dokumennya di September.</td>
+          <td data-l="Vonis"><span class="b p2">Fase 2</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Perlengkapan liturgi paroki</span><span class="sub">Lilin altar, kain, panel</span></td>
+          <td data-l="Modal awal" class="num">Rp 3–8 jt</td>
+          <td data-l="Margin kotor" class="num">25–35%</td>
+          <td data-l="Kualitas kas">Buruk</td>
+          <td data-l="Catatan">Termin pembayaran paroki lama, pemasok lama sudah mengakar, dan sebagian butuh persetujuan keuskupan.</td>
+          <td data-l="Vonis"><span class="b p3">Fase 3</span></td>
+        </tr>
+
+        <tr class="sub"><td colspan="6">D · Jasa — tanpa stok, margin tertinggi</td></tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Body art — Terang Ink</span><span class="sub">Tato & henna, harga per cm</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">20–30% <span class="sub">bagi hasil rujukan</span></td>
+          <td data-l="Kualitas kas">Terbaik</td>
+          <td data-l="Catatan">Rp 1,44–2,52 jt per karya. Menjual jadwal, bukan barang — modal stok nol. <strong style="color:#7A5D1E">Studio belum beroperasi.</strong> Masuk proyeksi, belum masuk kas.</td>
+          <td data-l="Vonis"><span class="b soon">Segera</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Kurasi rute ziarah</span><span class="sub">Fee penyusunan rute custom</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">85–95%</td>
+          <td data-l="Kualitas kas">Terbaik</td>
+          <td data-l="Catatan">Enam rute sudah ditulis lengkap. Fee Rp 350–750 rb per rombongan, dan setiap rute menarik penjualan merch di belakangnya.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Grafir & personalisasi</span><span class="sub">Nama, paroki, tanggal</span></td>
+          <td data-l="Modal awal" class="num">Rp 0–1,2 jt</td>
+          <td data-l="Margin kotor" class="num">80–90%</td>
+          <td data-l="Kualitas kas">Sangat baik</td>
+          <td data-l="Catatan">Rp 35–75 rb per item, biaya hampir nol. Sekaligus mematikan retur — barang bernama tidak bisa dikembalikan.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Komisi afiliasi biro ziarah</span><span class="sub">5–10% per booking</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">100%</td>
+          <td data-l="Kualitas kas">Sedang</td>
+          <td data-l="Catatan">Uangnya nyata (paket Jawa Rp 1,5–4 jt/orang) tapi pembayaran lambat dan pelacakannya manual.</td>
+          <td data-l="Vonis"><span class="b p2">Fase 2</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Styling & kurasi acara sakramen</span><span class="sub">Baptis, komuni, krisma, nikah</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">70–80%</td>
+          <td data-l="Kualitas kas">Baik</td>
+          <td data-l="Catatan">Fee flat Rp 1,5–5 jt. Padat waktu — batasi 2 acara per bulan sampai ada admin.</td>
+          <td data-l="Vonis"><span class="b p2">Fase 2</span></td>
+        </tr>
+
+        <tr class="sub"><td colspan="6">E · Kekayaan intelektual & komunitas</td></tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Produk digital devosional</span><span class="sub">Novena PDF, kalender Adven cetak-sendiri, wallpaper</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">~100%</td>
+          <td data-l="Kualitas kas">Terbaik</td>
+          <td data-l="Catatan">Tanpa ongkir, tanpa retur, tanpa batas stok — dan menjangkau NTT/Papua tempat ongkir mematikan penjualan fisik. Aliran paling terabaikan di daftar ini.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Lisensi artwork</span><span class="sub">Line art, motif batik rohani</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">~100%</td>
+          <td data-l="Kualitas kas">Sedang</td>
+          <td data-l="Catatan">Ke penerbit Katolik, paroki, penyelenggara retret. Butuh portofolio yang dapat ditunjukkan lebih dulu.</td>
+          <td data-l="Vonis"><span class="b p2">Fase 2</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Sponsorship & konten jurnal</span><span class="sub">Penerbit, musik rohani, biro ziarah</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">~100%</td>
+          <td data-l="Kualitas kas">Sedang</td>
+          <td data-l="Catatan">Butuh trafik dulu. Baru masuk akal di atas ~15 rb kunjungan/bulan.</td>
+          <td data-l="Vonis"><span class="b p3">Fase 3</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Langganan kotak devosi</span><span class="sub">Kuartalan, mengikuti masa liturgi</span></td>
+          <td data-l="Modal awal" class="num">Rp 2–4 jt</td>
+          <td data-l="Margin kotor" class="num">45–55%</td>
+          <td data-l="Kualitas kas">Terbaik</td>
+          <td data-l="Catatan">Pendapatan berulang dan kas di muka — tapi tuntutan kurasi tiap kuartal berat. Jangan sebelum ada admin.</td>
+          <td data-l="Vonis"><span class="b p3">Fase 3</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Fee platform konsinyasi</span><span class="sub">Peziarah sebagai etalase perajin</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">Take rate 30–40%</td>
+          <td data-l="Kualitas kas">Baik</td>
+          <td data-l="Catatan">Form pendaftaran vendor sudah ada di <a href="https://peziarah.com/kontak/">/kontak/</a>. Menggeser posisi dari toko ke platform — keputusan besar, bukan keputusan MVP.</td>
+          <td data-l="Vonis"><span class="b p3">Fase 3</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Toko paroki white-label</span><span class="sub">Etalase merek paroki</span></td>
+          <td data-l="Modal awal" class="num">Rp 5 jt+</td>
+          <td data-l="Margin kotor" class="num">Biaya + langganan</td>
+          <td data-l="Kualitas kas">Baik</td>
+          <td data-l="Catatan">Butuh backend nyata. Situs sekarang di-render di browser dan checkout-nya Google Form.</td>
+          <td data-l="Vonis"><span class="b p3">Fase 3</span></td>
+        </tr>
+        <tr class="sub"><td colspan="6">F · Model yang jarang dilirik</td></tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Kotak &amp; kemasan dijual terpisah</span><span class="sub">Kotak rigid kosong, selongsong, kartu — polos atau berlabel pemesan</span></td>
+          <td data-l="Modal awal" class="num">Rp 0<span class="sub">stok MOQ sudah dibeli</span></td>
+          <td data-l="Margin kotor" class="num">45–60%</td>
+          <td data-l="Kualitas kas">Sangat baik</td>
+          <td data-l="Catatan">MOQ 50 kotak berubah dari beban jadi barang dagangan. Pembelinya: keluarga yang merangkai hadiah sendiri, panitia paroki, penjual kue &amp; bunga, dan toko rohani lain. Jual Rp 65–110 rb/kotak dari HPP Rp 32 rb.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Jasa rakit hampers, isi dari pelanggan</span><span class="sub">Mereka bawa barangnya, kami yang mengemas</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">80–90%</td>
+          <td data-l="Kualitas kas">Sangat baik</td>
+          <td data-l="Catatan">Fee Rp 75–150 rb per kotak, murni upah dan kemasan. Menangkap pembeli yang sudah punya barangnya — termasuk barang yang tidak kami jual sama sekali.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Daftar hadiah sakramen</span><span class="sub">Seperti daftar hadiah pernikahan, untuk baptis &amp; komuni</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">ikut margin produk</td>
+          <td data-l="Kualitas kas">Terbaik</td>
+          <td data-l="Catatan">Satu keluarga membuat daftar; 15–30 tamu membelinya. Mengubah satu pelanggan jadi puluhan order, tanpa biaya iklan sepeser pun. Cukup satu formulir dan tautan WhatsApp.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Reparasi &amp; rangkai ulang rosario</span><span class="sub">Rosario warisan yang putus</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">75–85%</td>
+          <td data-l="Kualitas kas">Sangat baik</td>
+          <td data-l="Catatan">Rp 85–250 rb per rosario, hampir seluruhnya upah. Barangnya bermuatan kenangan sehingga kesediaan membayar tinggi, dan pelanggannya kembali membawa milik keluarga lain. Tidak ada yang menawarkan ini secara daring.</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Suplai grosir ke kios paroki</span><span class="sub">Kios membeli, kios yang menjual</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">20–28%</td>
+          <td data-l="Kualitas kas">Sangat baik</td>
+          <td data-l="Catatan">Margin tipis, volume besar, dan mengubah pesaing terdekat jadi saluran distribusi. Bayar di muka atau tempo pendek. Menjawab langsung keberatan "kami menyaingi penggalangan dana paroki".</td>
+          <td data-l="Vonis"><span class="b now">Sekarang</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Buku kenangan ziarah</span><span class="sub">Foto rombongan, dicetak setelah pulang</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">50–60%</td>
+          <td data-l="Kualitas kas">Sangat baik</td>
+          <td data-l="Catatan">Rp 150–250 rb per eksemplar; sekitar sepertiga peserta membeli. Dijual ke rombongan yang <em>sudah</em> membayar — tanpa biaya akuisisi, dan pesanannya datang saat kenangannya masih hangat.</td>
+          <td data-l="Vonis"><span class="b p2">Fase 2</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Kelas &amp; lokakarya</span><span class="sub">Merangkai rosario, kaligrafi, cukil lino</span></td>
+          <td data-l="Modal awal" class="num">Rp 1–2 jt</td>
+          <td data-l="Margin kotor" class="num">55–70%</td>
+          <td data-l="Kualitas kas">Terbaik</td>
+          <td data-l="Catatan">Rp 250–450 rb per peserta, dibayar di muka, digelar di aula paroki atau sekolah. Menjual tiket, kit bahan, dan hasil karyanya sekaligus — sambil membangun komunitas yang tidak bisa disalin marketplace.</td>
+          <td data-l="Vonis"><span class="b p2">Fase 2</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Sewa perlengkapan sakramen</span><span class="sub">Altar rumah, kain, prie-dieu, dekor baptis</span></td>
+          <td data-l="Modal awal" class="num">Rp 2–4 jt</td>
+          <td data-l="Margin kotor" class="num">70–85%</td>
+          <td data-l="Kualitas kas">Sangat baik</td>
+          <td data-l="Catatan">Satu set disewakan 15–25 kali setahun untuk misa lingkungan, baptis rumah, dan resepsi. Modal dibeli sekali, pendapatannya berulang. Cocok sekali dengan jasa styling acara.</td>
+          <td data-l="Vonis"><span class="b p2">Fase 2</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Pre-order batch dibayar di muka</span><span class="sub">Pembeli mendanai produksi, dapat harga khusus</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">50–60%</td>
+          <td data-l="Kualitas kas">Terbaik</td>
+          <td data-l="Catatan">Diskon 15% ditukar pembayaran penuh di muka dan tunggu 3–4 minggu. Modal kerja jadi negatif: uang pembeli membiayai perajin. Cara paling murah menambah stok tanpa menambah modal.</td>
+          <td data-l="Vonis"><span class="b p2">Fase 2</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Konsinyasi benda warisan</span><span class="sub">Rosario, patung, dan ikon lawas milik umat</span></td>
+          <td data-l="Modal awal" class="num">Rp 0</td>
+          <td data-l="Margin kotor" class="num">Take rate 25–35%</td>
+          <td data-l="Kualitas kas">Baik</td>
+          <td data-l="Catatan">Keluarga sering menyimpan benda devosional yang tak lagi dipakai dan enggan membuangnya. Menyalurkannya bermargin murni jasa — tapi menuntut penilaian keaslian dan kehati-hatian. Perlu aturan main yang jelas lebih dulu.</td>
+          <td data-l="Vonis"><span class="b p3">Fase 3</span></td>
+        </tr>
+        <tr>
+          <td data-l="Aliran"><span class="name">Menjual benda yang sudah diberkati</span><span class="sub">Rosario/medali "sudah diberkati"</span></td>
+          <td data-l="Modal awal" class="num">—</td>
+          <td data-l="Margin kotor" class="num">—</td>
+          <td data-l="Kualitas kas">—</td>
+          <td data-l="Catatan">Pemberkatan wewenang imam dan tidak diperjualbelikan. Kebijakan situs Anda sudah benar — pertahankan, dan jadikan itu bagian dari cerita merek.</td>
+          <td data-l="Vonis"><span class="b no">Jangan</span></td>
+        </tr>
+      </tbody>
+      <caption>Tabel 1 — 36 aliran pendapatan. Margin adalah bagian yang tersisa untuk Peziarah setelah biaya perajin/produksi, bukan markup kotor.</caption>
+    </table>
+    </div>
+
+    <div class="note">
+      <p><strong>Pola yang muncul dari tabel.</strong> Delapan belas aliran bervonis <em>Sekarang</em>, dan enam belas di antaranya bermodal Rp 0 — hanya merch dan kotak hampers yang perlu dibeli. Modal MVP hampir seluruhnya untuk tiga hal saja: menumpuk merch bermargin 70%, membeli kotak hampers, dan membeli perhatian lewat iklan. Sisanya sudah terbangun.</p>
+      <p style="margin-top:11px">Aliran bermargin tertinggi — kurasi rute, grafir, produk digital, reparasi rosario, dan nantinya body art — semuanya jasa atau berkas, dan semuanya bermodal nol. Kalau modal mentok di kisaran Rp 16 juta, di sinilah selisihnya ditutup.</p>
+      <p style="margin-top:11px">Keluarga F layak diperhatikan tersendiri karena tidak satu pun menuntut produk baru. Kotak hampers sudah dibeli sebagai kemasan — menjualnya kosong mengubah MOQ 50 unit dari beban jadi barang dagangan bermargin 45–60%. Daftar hadiah sakramen hanya perlu satu formulir, tapi mengubah satu keluarga jadi 15–30 pembeli. Reparasi rosario tidak butuh apa pun kecuali kesediaan mengerjakannya.</p>
+    </div>
+  </div>
+</section>
+
+
+<section id="ziarah">
+  <div class="wrap">
+    <p class="snum">02 — Layanan Ziarah: Rincian Paket &amp; Harga</p>
+    <h2>Satu rombongan bisa bernilai Rp 11 juta, atau Rp 4 juta</h2>
+    <p class="dek">Enam rute sudah ditulis lengkap di <a href="https://peziarah.com/ziarah/">peziarah.com/ziarah</a>, plus penyusun rute custom. Yang belum ada adalah struktur harganya. Selama ziarah diperlakukan sebagai "jualan kaos rombongan", nilainya berhenti di seragam. Bagian ini menghitung selisihnya.</p>
+
+    <h3>Enam rute, dan bentuk rombongan yang cocok</h3>
+    <div class="tw">
+    <table>
+      <thead>
+        <tr><th style="width:24%">Rute</th><th class="num">Durasi</th><th class="num">Ukuran rombongan lazim</th><th>Karakter &amp; peluang jualannya</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-l="Rute"><span class="name"><a href="https://peziarah.com/ziarah/rute/sendangsono/">Sendangsono &amp; Bukit Sanjaya</a></span><span class="sub">Kulon Progo, DIY</span></td>
+          <td data-l="Durasi" class="num">1 hari</td><td data-l="Ukuran rombongan lazim" class="num">30–45</td>
+          <td data-l="Karakter &amp; peluang jualannya">Rute pembuka paling umum. Cocok lansia, jalan ringan. Volume tertinggi, paket paling sederhana — seragam + kartu doa.</td>
+        </tr>
+        <tr>
+          <td data-l="Rute"><span class="name"><a href="https://peziarah.com/ziarah/rute/ganjuran/">Ganjuran</a></span><span class="sub">Bantul, DIY</span></td>
+          <td data-l="Durasi" class="num">1 hari</td><td data-l="Ukuran rombongan lazim" class="num">35–60</td>
+          <td data-l="Karakter &amp; peluang jualannya">Rombongan besar, sering lintas paroki. Ukuran besar membuat harga per unit turun tapi total pesanan naik.</td>
+        </tr>
+        <tr>
+          <td data-l="Rute"><span class="name"><a href="https://peziarah.com/ziarah/rute/muntilan/">Muntilan</a></span><span class="sub">Magelang, Jateng</span></td>
+          <td data-l="Durasi" class="num">1 hari</td><td data-l="Ukuran rombongan lazim" class="num">25–40</td>
+          <td data-l="Karakter &amp; peluang jualannya">Bermuatan sejarah, menarik rombongan sekolah &amp; alumni. Peluang terbaik untuk buku kenangan dan merch bertanggal.</td>
+        </tr>
+        <tr>
+          <td data-l="Rute"><span class="name"><a href="https://peziarah.com/ziarah/rute/puhsarang/">Puhsarang</a></span><span class="sub">Kediri, Jatim</span></td>
+          <td data-l="Durasi" class="num">2 hari</td><td data-l="Ukuran rombongan lazim" class="num">30–45</td>
+          <td data-l="Karakter &amp; peluang jualannya">Menginap, jadi butuh perlengkapan bawaan: dry bag, dopp kit, tote. Keranjang per orang tertinggi.</td>
+        </tr>
+        <tr>
+          <td data-l="Rute"><span class="name"><a href="https://peziarah.com/ziarah/rute/semarang-tiga-gereja/">Semarang — Tiga Gereja</a></span><span class="sub">Semarang, Jateng</span></td>
+          <td data-l="Durasi" class="num">1 hari</td><td data-l="Ukuran rombongan lazim" class="num">25–40</td>
+          <td data-l="Karakter &amp; peluang jualannya">Urban, mudah dijangkau, cocok OMK dan rombongan kantor. Paling gampang dijual sebagai paket coba-coba.</td>
+        </tr>
+        <tr>
+          <td data-l="Rute"><span class="name"><a href="https://peziarah.com/ziarah/rute/custom/">Rute custom</a></span><span class="sub">Disusun sesuai permintaan</span></td>
+          <td data-l="Durasi" class="num">1–3 hari</td><td data-l="Ukuran rombongan lazim" class="num">bebas</td>
+          <td data-l="Karakter &amp; peluang jualannya">Satu-satunya yang layak dikenai fee kurasi penuh. Juga pintu masuk paket paling lengkap.</td>
+        </tr>
+      </tbody>
+      <caption>Tabel 2 — Enam rute yang sudah tertulis. Ukuran rombongan adalah kisaran lazim rombongan paroki dan sekolah di Jawa.</caption>
+    </table>
+    </div>
+
+    <h3>Tiga tingkat paket rombongan</h3>
+    <p class="dek">Hitungan di bawah memakai rombongan 35 orang sebagai patokan. Harga seragam adalah harga rombongan, bukan harga ritel di <a href="https://peziarah.com/katalog/">katalog</a> — kaos yang dijual Rp 299 rb satuan berharga Rp 125 rb pada pesanan 35 pcs.</p>
+
+    <div class="tw">
+    <table>
+      <thead>
+        <tr><th style="width:30%">Komponen</th><th class="num">Harga satuan</th><th class="num">Dasar</th><th class="num">Terkurasi</th><th class="num">Penuh</th></tr>
+      </thead>
+      <tbody>
+        <tr><td data-l="Komponen"><span class="name">Fee kurasi rute</span><span class="sub">Flat, per rombongan</span></td><td data-l="Harga satuan" class="num">Rp 500.000</td><td data-l="Dasar" class="num">—</td><td data-l="Terkurasi" class="num">500.000</td><td data-l="Penuh" class="num">500.000</td></tr>
+        <tr><td data-l="Komponen"><span class="name">Kaos seragam bernama paroki</span><span class="sub">35 pcs · HPP Rp 65 rb</span></td><td data-l="Harga satuan" class="num">Rp 125.000</td><td data-l="Dasar" class="num">4.375.000</td><td data-l="Terkurasi" class="num">4.375.000</td><td data-l="Penuh" class="num">4.375.000</td></tr>
+        <tr><td data-l="Komponen"><span class="name">Tag koper + kartu doa + buku panduan rute</span><span class="sub">35 set · HPP Rp 12 rb</span></td><td data-l="Harga satuan" class="num">Rp 35.000</td><td data-l="Dasar" class="num">—</td><td data-l="Terkurasi" class="num">1.225.000</td><td data-l="Penuh" class="num">1.225.000</td></tr>
+        <tr><td data-l="Komponen"><span class="name">Kenang-kenangan pendamping &amp; romo</span><span class="sub">2 hampers</span></td><td data-l="Harga satuan" class="num">Rp 690.000</td><td data-l="Dasar" class="num">—</td><td data-l="Terkurasi" class="num">1.380.000</td><td data-l="Penuh" class="num">1.380.000</td></tr>
+        <tr><td data-l="Komponen"><span class="name">Komisi biro perjalanan</span><span class="sub">7% × Rp 550 rb × 35 pax</span></td><td data-l="Harga satuan" class="num">—</td><td data-l="Dasar" class="num">—</td><td data-l="Terkurasi" class="num">1.347.500</td><td data-l="Penuh" class="num">1.347.500</td></tr>
+        <tr><td data-l="Komponen"><span class="name">Buku kenangan pasca-ziarah</span><span class="sub">12 dari 35 membeli · HPP Rp 85 rb</span></td><td data-l="Harga satuan" class="num">Rp 195.000</td><td data-l="Dasar" class="num">—</td><td data-l="Terkurasi" class="num">—</td><td data-l="Penuh" class="num">2.340.000</td></tr>
+        <tr class="tot"><td data-l="Komponen">PENDAPATAN PER ROMBONGAN</td><td data-l="Harga satuan" class="num">—</td><td data-l="Dasar" class="num">4.375.000</td><td data-l="Terkurasi" class="num">8.827.500</td><td data-l="Penuh" class="num">11.167.500</td></tr>
+        <tr><td data-l="Komponen"><span class="name">Laba kotor</span></td><td data-l="Harga satuan" class="num">—</td><td data-l="Dasar" class="num">2.100.000</td><td data-l="Terkurasi" class="num">5.461.500</td><td data-l="Penuh" class="num">6.781.500</td></tr>
+        <tr><td data-l="Komponen"><span class="name">Margin kotor</span></td><td data-l="Harga satuan" class="num">—</td><td data-l="Dasar" class="num">48,0%</td><td data-l="Terkurasi" class="num">61,9%</td><td data-l="Penuh" class="num">60,7%</td></tr>
+      </tbody>
+      <caption>Tabel 3 — Ekonomi satu rombongan 35 orang. Modal di muka untuk ketiganya: Rp 0, karena seluruhnya dibiayai DP rombongan.</caption>
+    </table>
+    </div>
+
+    <div class="note">
+      <p><strong>Selisihnya 2,6 kali, tanpa tambahan modal sepeser pun.</strong> Rombongan yang sama, rute yang sama, jumlah orang yang sama. Yang membedakan hanya apa yang ditawarkan saat mereka memesan: paket <em>Dasar</em> menghasilkan Rp 4,4 juta dengan laba Rp 2,1 juta; paket <em>Penuh</em> menghasilkan Rp 11,2 juta dengan laba Rp 6,8 juta — laba 3,2 kali lipat. Seluruh selisihnya berasal dari barang yang sudah ada di katalog, jasa yang tidak butuh stok, dan satu buku yang dicetak setelah uangnya masuk.</p>
+      <p style="margin-top:11px">Pada 9 rombongan di Tahun 1: paket <em>Dasar</em> memberi Rp 39 juta, paket <em>Penuh</em> memberi Rp 100 juta. Selisih Rp 61 juta itu hampir empat kali lipat seluruh modal MVP.</p>
+    </div>
+
+    <h3>Nilai tambah yang bisa dikenai harga</h3>
+    <p class="dek">Delapan hal yang dapat ditawarkan tanpa membeli stok. Kolom terakhir adalah tambahan pendapatan per rombongan 35 orang.</p>
+
+    <div class="tw">
+    <table>
+      <thead>
+        <tr><th style="width:26%">Nilai tambah</th><th style="width:34%">Apa yang sebenarnya dijual</th><th class="num">Harga</th><th class="num">Tambahan / rombongan</th></tr>
+      </thead>
+      <tbody>
+        <tr><td data-l="Nilai tambah"><span class="name">Rute tertulis &amp; teruji</span></td><td data-l="Apa yang sebenarnya dijual">Jadwal jam per jam, catatan medan, kejujuran soal akses kursi roda, jam paling sepi. Panitia awam tidak punya ini.</td><td data-l="Harga" class="num">Rp 350–750 rb</td><td data-l="Tambahan / rombongan" class="num">Rp 500.000</td></tr>
+        <tr><td data-l="Nilai tambah"><span class="name">Buku panduan rute cetak</span></td><td data-l="Apa yang sebenarnya dijual">Satu buku saku per peserta: peta, doa, sejarah tempat, halaman catatan. Menjadikan perjalanan terasa terencana.</td><td data-l="Harga" class="num">Rp 20–35 rb/org</td><td data-l="Tambahan / rombongan" class="num">Rp 1.050.000</td></tr>
+        <tr><td data-l="Nilai tambah"><span class="name">Tag koper &amp; identitas rombongan</span></td><td data-l="Apa yang sebenarnya dijual">Panitia paling takut kehilangan orang dan barang. Ini menjual ketenangan, bukan aksesori.</td><td data-l="Harga" class="num">Rp 12–20 rb/org</td><td data-l="Tambahan / rombongan" class="num">Rp 560.000</td></tr>
+        <tr><td data-l="Nilai tambah"><span class="name">Seragam bertanggal &amp; bernama paroki</span></td><td data-l="Apa yang sebenarnya dijual">Bukan kaos polos: nama paroki, tanggal, nama rute. Jadi kenang-kenangan, bukan seragam sekali pakai.</td><td data-l="Harga" class="num">Rp 95–135 rb/org</td><td data-l="Tambahan / rombongan" class="num">Rp 4.375.000</td></tr>
+        <tr><td data-l="Nilai tambah"><span class="name">Kenang-kenangan pendamping</span></td><td data-l="Apa yang sebenarnya dijual">Hampers untuk romo pendamping dan panitia. Selalu dibutuhkan, hampir selalu diurus mendadak.</td><td data-l="Harga" class="num">Rp 450 rb–1,65 jt</td><td data-l="Tambahan / rombongan" class="num">Rp 1.380.000</td></tr>
+        <tr><td data-l="Nilai tambah"><span class="name">Koordinasi biro perjalanan</span></td><td data-l="Apa yang sebenarnya dijual">Kami hubungkan ke biro terdaftar; komisi datang dari biro, bukan dari rombongan.</td><td data-l="Harga" class="num">Komisi 5–10%</td><td data-l="Tambahan / rombongan" class="num">Rp 1.347.500</td></tr>
+        <tr><td data-l="Nilai tambah"><span class="name">Buku kenangan pasca-ziarah</span></td><td data-l="Apa yang sebenarnya dijual">Foto rombongan dicetak jadi buku, dijual 2 minggu setelah pulang. Dijual ke orang yang sudah membayar.</td><td data-l="Harga" class="num">Rp 150–250 rb</td><td data-l="Tambahan / rombongan" class="num">Rp 2.340.000</td></tr>
+        <tr><td data-l="Nilai tambah"><span class="name">Perlengkapan bawaan rute menginap</span></td><td data-l="Apa yang sebenarnya dijual">Dry bag, tote, dopp kit untuk rute 2 hari seperti Puhsarang. Ditawarkan saat rute dipilih, bukan di halaman produk.</td><td data-l="Harga" class="num">Rp 189–785 rb</td><td data-l="Tambahan / rombongan" class="num">Rp 1.200.000<span class="sub">~20% ambil</span></td></tr>
+      </tbody>
+      <caption>Tabel 4 — Nilai tambah layanan ziarah. Tidak satu pun menuntut pembelian stok di muka.</caption>
+    </table>
+    </div>
+
+    <div class="grid3">
+      <div class="card">
+        <h5>Mengapa ziarah pantas jadi prioritas</h5>
+        <ul>
+          <li>Dibayar DP — kas masuk sebelum kas keluar</li>
+          <li>Nol risiko stok: semua dibuat setelah jumlah dan ukuran pasti</li>
+          <li>Satu rombongan setara 15–25 order ritel</li>
+          <li>Peserta hari ini adalah pembeli ritel bulan depan</li>
+          <li>Panitia yang puas memesan lagi tahun berikutnya</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h5>Yang perlu dibereskan lebih dulu</h5>
+        <ul>
+          <li>Daftar harga rombongan yang tetap — panitia butuh angka untuk diajukan ke bendahara</li>
+          <li>Tenggat pesan: 21 hari sebelum berangkat untuk seragam bernama</li>
+          <li>Syarat DP 50% dan pelunasan sebelum kirim</li>
+          <li>Satu contoh buku panduan rute yang bisa ditunjukkan</li>
+          <li>Kesepakatan komisi tertulis dengan 2–3 biro</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h5>Kapan menjualnya</h5>
+        <ul>
+          <li><b>Januari–Februari</b> — panitia menyusun anggaran tahunan paroki</li>
+          <li><b>Maret–April</b> — rombongan Mei–Juli mulai memesan</li>
+          <li><b>Agustus–September</b> — rombongan sekolah &amp; retret akhir tahun</li>
+          <li>Bulan sepi ritel justru bulan sibuk penjualan ziarah — inilah yang menutup Januari dan Agustus</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="part">
+  <div class="wrap">
+    <p class="snum">Bagian II</p>
+    <h2>Modal MVP: Apa yang Bisa Hidup Hari Ini</h2>
+    <p>Stok dibatasi pada merch (kaos, tote, topi bucket), rosario dalam jumlah terbatas, dan kemasan hampers. Segala yang lain konsinyasi atau dibuat setelah dipesan — tapi tetap disampel lebih dulu.</p>
+  </div>
+</div>
+
+<section id="modal">
+  <div class="wrap">
+    <p class="snum">03 — Tiga Tingkat Modal</p>
+    <h2>Rp 16 juta membuka toko. Rp 26 juta membuatnya layak diiklankan.</h2>
+    <p class="dek">Ketiganya adalah tingkat yang sama, bertumpuk — bukan tiga rencana berbeda. Tingkat A dijalankan lebih dulu; B dan C ditambahkan setelah ada bukti penjualan, bukan sebelum.</p>
+
+    <div class="tiers">
+      <div class="tier t-a">
+        <div class="th"><span class="tn">Tingkat A</span><span class="tv">Rp 16,28 jt</span><span class="tl">Toko yang benar-benar buka</span></div>
+        <div class="bar">
+          <span style="width:37.0%;background:var(--violet)"></span>
+          <span style="width:11.1%;background:var(--gold)"></span>
+          <span style="width:17.5%;background:#A98FD0"></span>
+          <span style="width:9.2%;background:var(--lime)"></span>
+          <span style="width:16.0%;background:var(--muted)"></span>
+          <span style="width:9.2%;background:var(--line)"></span>
+        </div>
+        <p>Mutu 4–5 workshop diverifikasi lewat sampel, stok cukup untuk ~60 order fisik, katalog 36 SKU penuh lewat konsinyasi, jasa bermargin tinggi hidup, dan iklan sekadar untuk menguji — bukan untuk menskalakan. Rinciannya di tabel di bawah.</p>
+      </div>
+      <div class="tier t-b">
+        <div class="th"><span class="tn">Tingkat B</span><span class="tv">+ Rp 10,25 jt</span><span class="tl">Layak diiklankan (total ~Rp 26,5 jt)</span></div>
+        <p>Tingkat di mana iklan mulai terbayar. Baris 1–4 tangga momentum:</p>
+        <ul>
+          <li><b>Rp 2 jt</b> — prerender landing &amp; katalog</li>
+          <li><b>Rp 2,75 jt</b> — 11 artikel jurnal diselesaikan</li>
+          <li><b>Rp 4 jt</b> — iklan naik ke Rp 6 juta</li>
+          <li><b>Rp 1,5 jt</b> — chatbot &amp; balasan otomatis, setahun</li>
+        </ul>
+      </div>
+      <div class="tier t-c">
+        <div class="th"><span class="tn">Tingkat C</span><span class="tv">+ Rp 14,4 jt</span><span class="tl">Bisa didorong (total ~Rp 40,9 jt)</span></div>
+        <p>Baris 5–7 tangga momentum — hanya setelah ada dua kuartal data penjualan:</p>
+        <ul>
+          <li><b>Rp 3 jt</b> — kedalaman ukuran &amp; warna merch</li>
+          <li><b>Rp 5,4 jt</b> — admin paruh waktu, 3 bulan</li>
+          <li><b>Rp 6 jt</b> — 5 SKU terlaris pindah ke stok sendiri, margin +15 poin</li>
+        </ul>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--violet)"></i>Stok barang</span>
+        <span><i style="background:var(--gold)"></i>Sampel &amp; uji mutu</span>
+        <span><i style="background:#A98FD0"></i>Kemasan &amp; logistik</span>
+        <span><i style="background:var(--lime)"></i>Iklan</span>
+        <span><i style="background:var(--muted)"></i>Platform, legal, foto</span>
+        <span><i style="background:var(--line)"></i>Cadangan kas</span>
+      </div>
+    </div>
+
+    <h3>Tingkat A — rincian per baris</h3>
+    <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:30%">Pos</th>
+          <th style="width:38%">Isi</th>
+          <th class="num">Biaya</th>
+          <th class="num">Nilai ritel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="sub"><td colspan="4">Sampel &amp; uji mutu — dibelanjakan lebih dulu</td></tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Sampel kerajinan konsinyasi</span><span class="sub">8 item dari 4–5 workshop</span></td>
+          <td data-l="Isi">Rosario, salib, patung, nis. Satu–dua item per perajin, bukan per SKU: yang diuji adalah kualitas <em>workshop</em>-nya, bukan barangnya.</td>
+          <td data-l="Biaya" class="num">950.000</td>
+          <td data-l="Nilai ritel" class="num">—</td>
+        </tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Sampel cetak &amp; tekstil</span><span class="sub">Wall print, swatch tenun, blank apparel</span></td>
+          <td data-l="Isi">Ketajaman cetak, ketahanan warna, gramasi kain, hasil sablon setelah 5 kali cuci.</td>
+          <td data-l="Biaya" class="num">550.000</td>
+          <td data-l="Nilai ritel" class="num">—</td>
+        </tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Lilin, buku, carry goods + ongkir</span><span class="sub">Termasuk kirim balik sampel pinjaman</span></td>
+          <td data-l="Isi">Uji bakar lilin, jahitan tas, kualitas kertas. Ongkos kirim dua arah dihitung di sini.</td>
+          <td data-l="Biaya" class="num">300.000</td>
+          <td data-l="Nilai ritel" class="num">—</td>
+        </tr>
+        <tr class="sub"><td colspan="4">Stok yang benar-benar dibeli</td></tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Kaos Katun "Peziarah"</span><span class="sub">30 pcs · 5 ukuran</span></td>
+          <td data-l="Isi">Combed 24s, sablon, batch 30. HPP ~Rp 75 rb; jual Rp 299 rb.</td>
+          <td data-l="Biaya" class="num">2.250.000</td>
+          <td data-l="Nilai ritel" class="num">8.970.000</td>
+        </tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Tote Kanvas "Peziarah"</span><span class="sub">20 pcs</span></td>
+          <td data-l="Isi">Kanvas 12oz, sablon. HPP ~Rp 55 rb; jual Rp 189 rb.</td>
+          <td data-l="Biaya" class="num">1.100.000</td>
+          <td data-l="Nilai ritel" class="num">3.780.000</td>
+        </tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Topi Bucket "Peziarah"</span><span class="sub">12 pcs</span></td>
+          <td data-l="Isi">Bordir, MOQ 12. HPP ~Rp 80 rb; jual Rp 249 rb.</td>
+          <td data-l="Biaya" class="num">960.000</td>
+          <td data-l="Nilai ritel" class="num">2.988.000</td>
+        </tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Rosario Sonokeling</span><span class="sub">8 pcs — stok terbatas</span></td>
+          <td data-l="Isi">Beli putus dari perajin (bukan konsinyasi) supaya <em>best seller</em> tidak pernah kosong.</td>
+          <td data-l="Biaya" class="num">880.000</td>
+          <td data-l="Nilai ritel" class="num">1.992.000</td>
+        </tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Rosario Saku "Via Lucis"</span><span class="sub">12 pcs</span></td>
+          <td data-l="Isi">Titik harga terendah di katalog — pengisi hampers dan pembuka keranjang.</td>
+          <td data-l="Biaya" class="num">840.000</td>
+          <td data-l="Nilai ritel" class="num">2.148.000</td>
+        </tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Patch & bandana</span><span class="sub">Dikecualikan atas permintaan</span></td>
+          <td data-l="Isi">Tetap dijual, tapi dicetak setelah ada pesanan.</td>
+          <td data-l="Biaya" class="num">0</td>
+          <td data-l="Nilai ritel" class="num">—</td>
+        </tr>
+
+        <tr class="sub"><td colspan="4">Kemasan & logistik</td></tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Kotak hampers rigid</span><span class="sub">50 unit, MOQ pemasok</span></td>
+          <td data-l="Isi">Hot stamp satu warna, ~Rp 32 rb/kotak. Melayani seluruh musim Natal.</td>
+          <td data-l="Biaya" class="num">1.600.000</td>
+          <td data-l="Nilai ritel" class="num">—</td>
+        </tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Selongsong, kain, kartu tulis tangan</span></td>
+          <td data-l="Isi">Segel lilin, kertas pengisi, kartu perawatan bernama perajin.</td>
+          <td data-l="Biaya" class="num">500.000</td>
+          <td data-l="Nilai ritel" class="num">—</td>
+        </tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Bahan kirim ~150 order</span></td>
+          <td data-l="Isi">Amplop, bubble, pelindung barang pecah, printer label termal bekas.</td>
+          <td data-l="Biaya" class="num">750.000</td>
+          <td data-l="Nilai ritel" class="num">—</td>
+        </tr>
+
+        <tr class="sub"><td colspan="4">Platform, legal, konten</td></tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Domain + hosting 1 tahun</span></td>
+          <td data-l="Isi">peziarah.com + Hostinger. Situsnya statis — biaya server nyaris nol.</td>
+          <td data-l="Biaya" class="num">800.000</td>
+          <td data-l="Nilai ritel" class="num">—</td>
+        </tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Pemasangan QRIS / gateway</span></td>
+          <td data-l="Isi">Midtrans atau Xendit. Tanpa biaya pendaftaran; ini upah pemasangan.</td>
+          <td data-l="Biaya" class="num">500.000</td>
+          <td data-l="Nilai ritel" class="num">—</td>
+        </tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Legal: kontrak konsinyasi + NIB</span></td>
+          <td data-l="Isi">Satu template bagi hasil perajin, dipakai berulang. NIB lewat OSS gratis.</td>
+          <td data-l="Biaya" class="num">500.000</td>
+          <td data-l="Nilai ritel" class="num">—</td>
+        </tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Foto batch merch baru</span></td>
+          <td data-l="Isi">Hanya SKU baru — 30-an foto produk lama sudah ada di /assets/.</td>
+          <td data-l="Biaya" class="num">800.000</td>
+          <td data-l="Nilai ritel" class="num">—</td>
+        </tr>
+
+        <tr class="sub"><td colspan="4">Pasar & cadangan</td></tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Uji iklan 4 minggu</span></td>
+          <td data-l="Isi">Meta + TikTok, ~Rp 375 rb/minggu. Untuk mencari pesan yang berhasil, bukan untuk omzet. Ditahan karena tahap sampel menggeser peluncuran ~3 minggu.</td>
+          <td data-l="Biaya" class="num">1.500.000</td>
+          <td data-l="Nilai ritel" class="num">—</td>
+        </tr>
+        <tr>
+          <td data-l="Pos"><span class="name">Cadangan kas</span></td>
+          <td data-l="Isi">Selisih waktu antara bayar perajin dan uang gateway cair.</td>
+          <td data-l="Biaya" class="num">1.500.000</td>
+          <td data-l="Nilai ritel" class="num">—</td>
+        </tr>
+        <tr class="tot">
+          <td data-l="Pos">TOTAL TINGKAT A</td>
+          <td data-l="Isi">62 unit stok sendiri + 14 sampel + katalog 36 SKU hidup</td>
+          <td data-l="Biaya" class="num">16.280.000</td>
+          <td data-l="Nilai ritel" class="num">19.878.000</td>
+        </tr>
+      </tbody>
+      <caption>Tabel 5 — HPP adalah estimasi batch kecil Yogyakarta, Agustus 2026. Nilai ritel = stok sendiri saja; barang konsinyasi tidak masuk hitungan karena tidak dimodali. Sampel tidak dinilai ritel karena sebagian akan terpakai, bukan terjual.</caption>
+    </table>
+    </div>
+
+    <div class="note">
+      <p><strong>Mengapa sampel tetap dianggarkan meski barangnya konsinyasi.</strong> Konsinyasi menghapus risiko stok, bukan risiko mutu. Nama Peziarah yang tercantum di kotak, bukan nama perajinnya — rosario yang rantainya putus tiga bulan setelah krisma menghilangkan pelanggan kami, bukan pelanggan workshop-nya.</p>
+      <p style="margin-top:11px">Tiga aturan main untuk pos ini. <em>Pertama, sampel diambil sebelum kontrak ditandatangani</em> — menolak mutu jauh lebih mudah sebelum seseorang resmi jadi mitra, apalagi di komunitas yang saling kenal. <em>Kedua, mintakan gratis atau pinjam</em>: perajin yang menginginkan tempat di etalase terkurasi sering bersedia mengirim sampel sebatas ongkos; anggarkan seolah tidak, negosiasikan seolah iya. <em>Ketiga, sampel per perajin, bukan per SKU</em> — yang diuji adalah konsistensi satu workshop, dan itu terbaca dari satu-dua benda saja.</p>
+      <p style="margin-top:11px">Sekitar separuh nilainya kembali: sampel yang lolos menjadi pengisi hampers, bahan seeding mikro-influencer, benda pegangan saat menjawab pertanyaan ukuran dan bobot di WhatsApp, dan barang yang ditunjukkan langsung saat menawarkan ke paroki atau sekolah. Biaya efektifnya mendekati Rp 900 ribu, bukan Rp 1,8 juta.</p>
+    </div>
+
+    <h3>Yang Bisa Didapat Sekarang dengan Rp 16,3 Juta</h3>
+    <div class="grid2">
+      <div class="card">
+        <h5>Produk</h5>
+        <ul>
+          <li><a href="https://peziarah.com/katalog/">Katalog 36 SKU</a> penuh — 5 SKU dari stok, 31 dari konsinyasi &amp; made-to-order</li>
+          <li><a href="https://peziarah.com/hampers/">4 hampers siap kirim</a> + builder hampers custom</li>
+          <li>Merch rombongan ziarah, minimum 12 pcs, nama paroki</li>
+          <li>Grafir &amp; personalisasi pada rosario, salib, tag koper</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h5>Jasa — modal Rp 0</h5>
+        <ul>
+          <li><a href="https://peziarah.com/ziarah/">Kurasi rute ziarah</a>: 6 rute tertulis + penyusun rute custom</li>
+          <li>Grafir &amp; personalisasi: nama, paroki, tanggal</li>
+          <li>Styling acara sakramen (batasi 2/bulan tanpa admin)</li>
+          <li>Produk digital devosional — dibuat sekali, dijual berkali-kali</li>
+          <li style="color:#7A5D1E"><span class="soontag">Segera</span>Body art Terang Ink: Rp 1,44–2,52 jt per karya, menunggu studio beroperasi</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h5>Admin — tanpa merekrut</h5>
+        <ul>
+          <li>WhatsApp Business gratis + 12 balasan cepat menutup ~60% pertanyaan</li>
+          <li><a href="https://peziarah.com/faq/">Halaman FAQ</a> sudah menjawab ongkir, retur, ukuran, perawatan, bayar</li>
+          <li>Google Form → Sheets sudah mencatat setiap pesanan</li>
+          <li><code style="font-family:var(--mono);font-size:.8rem">llms.txt</code> sudah terpasang — chatbot AI mana pun bisa menjawab tentang toko tanpa dilatih</li>
+          <li>Beban pendiri: ~2–3 jam/hari di 15–25 order per minggu</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h5>Belum aktif — Tingkat B &amp; C</h5>
+        <ul>
+          <li>Pencarian organik: landing &amp; katalog perlu di-prerender</li>
+          <li>11 dari 14 <a href="https://peziarah.com/jurnal/">artikel jurnal</a> (kartunya sudah tampil)</li>
+          <li>Chatbot situs &amp; balasan otomatis</li>
+          <li>Gateway pembayaran otomatis</li>
+          <li>Langganan kotak devosi, lisensi artwork, toko paroki</li>
+          <li style="color:#7A5D1E"><span class="soontag">Segera</span>Body art — menunggu studio, bukan menunggu modal</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <h3>Kapan menambah orang, kapan menambah bot</h3>
+    <div class="tw">
+    <table>
+      <thead>
+        <tr><th style="width:24%">Pemicu</th><th style="width:34%">Tindakan</th><th class="num">Biaya/bulan</th><th>Alasan ambang ini</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-l="Pemicu"><span class="name">&lt; 40 order/bulan</span></td>
+          <td data-l="Tindakan">Pendiri + WhatsApp Business gratis</td>
+          <td data-l="Biaya/bulan" class="num">Rp 0</td>
+          <td data-l="Alasan ambang ini">Volume di bawah ini tidak mengisi satu hari kerja pun.</td>
+        </tr>
+        <tr>
+          <td data-l="Pemicu"><span class="name">Balasan WA &gt; 4 jam</span></td>
+          <td data-l="Tindakan">Balasan otomatis + chatbot situs (API AI)</td>
+          <td data-l="Biaya/bulan" class="num">Rp 200–350 rb</td>
+          <td data-l="Alasan ambang ini">Sudah ada <code style="font-family:var(--mono);font-size:.8rem">llms.txt</code>; bot hanya perlu diarahkan ke sana. Jauh lebih murah daripada orang.</td>
+        </tr>
+        <tr>
+          <td data-l="Pemicu"><span class="name">&gt; 60 order/bulan</span></td>
+          <td data-l="Tindakan">Admin paruh waktu, 4 jam/hari</td>
+          <td data-l="Biaya/bulan" class="num">Rp 1,8–2,5 jt</td>
+          <td data-l="Alasan ambang ini">Di titik ini pendiri berhenti mendesain dan mulai membalas chat — itu kerugian, bukan penghematan.</td>
+        </tr>
+        <tr>
+          <td data-l="Pemicu"><span class="name">&gt; 3 rombongan B2B/bulan</span></td>
+          <td data-l="Tindakan">Admin penuh waktu + juru packing musiman</td>
+          <td data-l="Biaya/bulan" class="num">Rp 3,5–4,5 jt</td>
+          <td data-l="Alasan ambang ini">Pesanan rombongan padat koordinasi: ukuran, nama, tenggat, DP.</td>
+        </tr>
+      </tbody>
+      <caption>Tabel 6 — Kisaran upah Yogyakarta/Jawa Tengah, 2026. Rekrut berdasarkan pemicu, bukan berdasarkan rencana.</caption>
+    </table>
+    </div>
+
+    <h3>Momentum: apa yang dibeli setiap Rp 5 juta berikutnya</h3>
+    <p class="dek">Urutannya penting. Baris atas adalah pembuka kunci — melewatinya membuat baris di bawahnya kehilangan sebagian besar nilainya.</p>
+    <div class="tw">
+    <table>
+      <thead>
+        <tr><th class="num" style="width:9%">Urutan</th><th style="width:27%">Belanja</th><th class="num">Biaya</th><th>Yang didapat</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-l="Urutan" class="num">1</td>
+          <td data-l="Belanja"><span class="name">Prerender landing &amp; katalog</span></td>
+          <td data-l="Biaya" class="num">Rp 2 jt</td>
+          <td data-l="Yang didapat">Halaman produk sudah di-prerender; landing dan katalog belum. Ini yang membuka pintu pencarian organik.</td>
+        </tr>
+        <tr>
+          <td data-l="Urutan" class="num">2</td>
+          <td data-l="Belanja"><span class="name">Selesaikan 11 artikel jurnal</span></td>
+          <td data-l="Biaya" class="num">Rp 2,75 jt</td>
+          <td data-l="Yang didapat">Aset yang menumpuk, bukan yang habis dipakai. Kata kunci ziarah ("rute Sendangsono", "ziarah Ganjuran") bervolume tetap dan nyaris tanpa pesaing komersial.</td>
+        </tr>
+        <tr>
+          <td data-l="Urutan" class="num">3</td>
+          <td data-l="Belanja"><span class="name">Iklan naik ke Rp 6 jt</span></td>
+          <td data-l="Biaya" class="num">Rp 4 jt</td>
+          <td data-l="Yang didapat">Pada ROAS 2,5 → omzet ~Rp 15 jt → laba kotor ~Rp 7,5 jt.</td>
+        </tr>
+        <tr>
+          <td data-l="Urutan" class="num">4</td>
+          <td data-l="Belanja"><span class="name">Chatbot + balasan otomatis</span></td>
+          <td data-l="Biaya" class="num">Rp 1,5 jt<span class="sub">setahun</span></td>
+          <td data-l="Yang didapat">Menahan waktu balas di bawah satu jam saat trafik iklan masuk.</td>
+        </tr>
+        <tr>
+          <td data-l="Urutan" class="num">5</td>
+          <td data-l="Belanja"><span class="name">Tambah kedalaman merch</span></td>
+          <td data-l="Biaya" class="num">Rp 3 jt</td>
+          <td data-l="Yang didapat">Ukuran dan warna kedua. Kehabisan ukuran M adalah cara paling mahal kehilangan pembeli yang sudah dibayar.</td>
+        </tr>
+        <tr>
+          <td data-l="Urutan" class="num">6</td>
+          <td data-l="Belanja"><span class="name">Admin paruh waktu, 3 bulan</span></td>
+          <td data-l="Biaya" class="num">Rp 5,4 jt</td>
+          <td data-l="Yang didapat">Mengembalikan 60+ jam/bulan waktu pendiri ke desain, B2B, dan konten.</td>
+        </tr>
+        <tr>
+          <td data-l="Urutan" class="num">7</td>
+          <td data-l="Belanja"><span class="name">5 SKU terlaris ke stok sendiri</span></td>
+          <td data-l="Biaya" class="num">Rp 6 jt</td>
+          <td data-l="Yang didapat">Margin naik dari 30–40% ke 50–55% pada barang yang sudah terbukti laku. Baru lakukan setelah 2 kuartal data.</td>
+        </tr>
+      </tbody>
+      <caption>Tabel 7 — Tangga momentum pasca-peluncuran. Baris 1 membuka nilai baris 2; baris 3 baru masuk akal setelah keduanya selesai.</caption>
+    </table>
+    </div>
+
+    <div class="note">
+      <p><strong>Waktu peluncuran mengubah kebutuhan modal.</strong> Tahap sampel menambah ~3 minggu di depan, jadi hitung mundur dari puncaknya. Sampel diambil Juli, kontrak konsinyasi ditandatangani Agustus, stok mendarat September — tepat sebelum Bulan Rosario (Oktober) dan Adven (November–Desember), dua dari enam puncak, berurutan, di kuartal pertama. Rp 16 juta yang sama yang dibelanjakan pada Februari harus bertahan lima bulan sepi sebelum menyentuh puncak mana pun. Bulan peluncuran bernilai lebih besar daripada selisih Rp 5 juta di anggaran.</p>
+    </div>
+  </div>
+</section>
+
+<div class="part">
+  <div class="wrap">
+    <p class="snum">Bagian III</p>
+    <h2>Business Model Canvas</h2>
+    <p>Tujuh bagian: ukuran pasar, celah, sembilan blok, angka, risiko, kalender liturgi, dan pertanyaan yang kami perkirakan datang dari komunitas.</p>
+  </div>
+</div>
+
+<section id="pasar">
+  <div class="wrap">
+    <p class="snum">01 — Ukuran Pasar &amp; Demografi Sasaran</p>
+    <h2>Sembilan juta umat, terkonsentrasi di lima wilayah</h2>
+    <p>Umat Katolik Indonesia sekitar 8,9–9,1 juta jiwa (±3,2% penduduk). Yang menentukan strategi bukan angka totalnya, melainkan sebarannya: lebih dari separuh umat tinggal di wilayah yang paling mahal dikirimi barang pecah belah, sementara daya beli, kedekatan perajin, dan seluruh rute ziarah terkumpul di Jawa. Dua kenyataan itu menuntut dua pendekatan produk yang berbeda.</p>
+
+    <div class="tw">
+    <table>
+      <thead>
+        <tr><th style="width:22%">Wilayah</th><th class="num">Umat Katolik</th><th class="num">% penduduk lokal</th><th>Arti komersialnya</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-l="Wilayah"><span class="name">Nusa Tenggara Timur</span></td>
+          <td data-l="Umat Katolik" class="num">~2,9 jt</td>
+          <td data-l="% penduduk lokal" class="num">~54%</td>
+          <td data-l="Arti komersialnya">Kepadatan umat tertinggi, daya beli dan ongkir paling menantang. Sasaran utama untuk produk digital, bukan barang berat.</td>
+        </tr>
+        <tr>
+          <td data-l="Wilayah"><span class="name">Jawa (DIY, Jateng, Jatim, Jabar, DKI)</span></td>
+          <td data-l="Umat Katolik" class="num">~2,6 jt</td>
+          <td data-l="% penduduk lokal" class="num">~1,8%</td>
+          <td data-l="Arti komersialnya">Inti pendapatan. Daya beli, kedekatan perajin, seluruh rute ziarah, sekolah Katolik, dan jaringan alumni.</td>
+        </tr>
+        <tr>
+          <td data-l="Wilayah"><span class="name">Kalimantan Barat</span></td>
+          <td data-l="Umat Katolik" class="num">~1,0 jt</td>
+          <td data-l="% penduduk lokal" class="num">~21%</td>
+          <td data-l="Arti komersialnya">Basis paroki kuat. Paling efisien digarap lewat pesanan rombongan, bukan ritel satuan.</td>
+        </tr>
+        <tr>
+          <td data-l="Wilayah"><span class="name">Papua &amp; Papua Barat</span></td>
+          <td data-l="Umat Katolik" class="num">~0,9 jt</td>
+          <td data-l="% penduduk lokal" class="num">~17%</td>
+          <td data-l="Arti komersialnya">Ongkir menghapus margin barang fisik. Digital dan lisensi saja.</td>
+        </tr>
+        <tr>
+          <td data-l="Wilayah"><span class="name">Sumut, Sulut, lainnya</span></td>
+          <td data-l="Umat Katolik" class="num">~1,7 jt</td>
+          <td data-l="% penduduk lokal" class="num">—</td>
+          <td data-l="Arti komersialnya">Medan dan Manado layak diiklankan; sisanya tumbuh organik.</td>
+        </tr>
+        <tr class="tot"><td data-l="Wilayah">TOTAL (TAM)</td><td data-l="Umat Katolik" class="num">~9,1 jt</td><td data-l="% penduduk lokal" class="num">~3,2%</td><td data-l="Arti komersialnya">Inti pendapatan di Jawa; jangkauan lewat digital</td></tr>
+      </tbody>
+      <caption>Tabel 8 — Sebaran estimasi umat Katolik. Angka bersifat perkiraan nasional dan perlu diperbarui dengan data sensus terbaru sebelum dipakai di luar internal.</caption>
+    </table>
+    </div>
+
+    <div class="figs" style="margin-top:36px">
+      <div class="fig"><span class="k">TAM</span><span class="v">9,1 Jt</span><span class="d">Seluruh umat Katolik Indonesia</span></div>
+      <div class="fig"><span class="k">SAM</span><span class="v">3–3,5 Jt</span><span class="d">Urban, menengah–atas, terjangkau kirim</span></div>
+      <div class="fig"><span class="k">SOM</span><span class="v">35–70 Rb</span><span class="d">Pembeli/tahun untuk seluruh kategori</span></div>
+      <div class="fig"><span class="k">Target Th-1</span><span class="v">450–600</span><span class="d">Order Peziarah, ~1% SOM</span></div>
+    </div>
+
+    <div class="note">
+      <p><strong>Mengapa pasar sempit tetap layak digarap.</strong> Tiga hal menopang pendapatan meski TAM-nya kecil. Pertama, <em>keranjangnya besar</em>: median katalog ~Rp 400 rb, dan gratis ongkir di atas Rp 500 rb mendorong keranjang rata-rata ke Rp 450–650 rb. Kedua, <em>momennya wajib</em>: baptis, komuni pertama, krisma, dan pernikahan adalah tanggal yang tidak bisa dilewati, bukan pembelian impulsif. Ketiga, <em>bentuk produknya ditentukan</em>: rosario punya 59 manik, skapulir punya bentuknya sendiri — Gereja yang menentukan spesifikasi, sehingga risiko salah desain jauh lebih rendah daripada pada apparel bergaya bebas.</p>
+    </div>
+
+    <p style="font-size:.83rem;color:var(--muted);max-width:74ch;margin-top:26px">Istilah: DTC = penjualan langsung ke konsumen · B2B = antar-badan usaha · COGS/HPP = harga pokok penjualan · SKU = kode satuan produk · made-to-order = diproduksi setelah ada pesanan · print-on-demand = cetak satuan sesuai permintaan · drop = rilis koleksi terbatas · sakramental = benda rohani yang dipakai dalam devosi (rosario, medali, skapulir), berbeda dari sakramen.</p>
+  </div>
+</section>
+
+<section id="celah">
+  <div class="wrap">
+    <p class="snum">02 — Celah Utama di Pasar</p>
+    <h2>Empat kekosongan yang bisa diisi</h2>
+    <p class="dek">Bukan celah karena tak ada yang menjual, melainkan karena tak ada yang menjualnya dengan benar: bentuk yang tepat dengan bahan dan kemasan yang layak, dirakit untuk momen tertentu, dan sampai ke tempat yang selama ini dianggap terlalu mahal dilayani.</p>
+
+    <div class="gaps">
+      <div class="gap">
+        <div class="g">01</div>
+        <div>
+          <h5>Desain modern untuk benda yang bentuknya sudah baku</h5>
+          <p>Rosario, salib, dan patung punya bentuk yang ditentukan devosi. Yang tidak ditentukan adalah bahan, hasil akhir, kemasan, dan cara memotretnya. Di situlah sonokeling dengan korpus kuningan berjarak jauh dari resin cetakan seharga Rp 35 ribu — tanpa sedikit pun menyimpang dari bentuk yang benar.</p>
+        </div>
+      </div>
+      <div class="gap">
+        <div class="g">02</div>
+        <div>
+          <h5>Perlengkapan rombongan ziarah yang belum tergarap</h5>
+          <p>Ribuan rombongan paroki berangkat ke Sendangsono, Ganjuran, Muntilan, dan Puhsarang setiap tahun. Nyaris semuanya memesan kaos lewat percetakan spanduk setempat. Tak seorang pun menjual paket rombongan yang dikurasi — rute, seragam, tag koper, kartu doa — sebagai satu produk.</p>
+        </div>
+      </div>
+      <div class="gap">
+        <div class="g">03</div>
+        <div>
+          <h5>Hampers sakramental sebagai kategori</h5>
+          <p>Baptis, komuni pertama, krisma, pernikahan, dan duka semuanya menuntut hadiah, dan semuanya kini dilayani dengan merangkai sendiri di menit terakhir. Kotak yang dikurasi dengan kartu tulis tangan bermargin 55–65% dan berkompetisi pada rasa lega, bukan pada harga.</p>
+        </div>
+      </div>
+      <div class="gap">
+        <div class="g">04</div>
+        <div>
+          <h5>Kepadatan umat di luar jangkauan logistik</h5>
+          <p>NTT, Papua, dan Kalimantan Barat menampung lebih dari separuh umat Katolik Indonesia dan menerima porsi terkecil perdagangan devosional daring, karena ongkir menghapus margin. Barang digital — novena, kalender Adven cetak-sendiri, kartu doa, wallpaper — menjangkau umat itu dengan ongkos kirim nol. Tak satu pun pesaing melayaninya.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="canvas">
+  <div class="wrap">
+    <p class="snum">03 — Canvas Sembilan Blok</p>
+    <h2>Sembilan blok</h2>
+
+    <div class="bmc">
+      <div class="blk b-mitra">
+        <h6>Mitra Utama</h6>
+        <ul>
+          <li>Workshop perajin Muntilan, Sleman &amp; Yogyakarta</li>
+          <li>Produsen garmen &amp; penyedia sablon batch kecil</li>
+          <li>Terang Ink — studio body art <span class="soontag">Segera</span></li>
+          <li>Biro perjalanan ziarah terdaftar</li>
+          <li>Paroki &amp; sekolah Katolik</li>
+          <li>Penerbit Katolik (Kanisius, Obor)</li>
+          <li>Jaringan alumni Van Lith Angkatan 7</li>
+        </ul>
+      </div>
+      <div class="blk b-akt">
+        <h6>Aktivitas Utama</h6>
+        <ul>
+          <li>Kurasi &amp; desain produk devosional</li>
+          <li>Penyusunan rute ziarah &amp; layanan rombongan</li>
+          <li>Perakitan hampers menurut masa liturgi</li>
+          <li>Jurnal &amp; konten ziarah</li>
+          <li>Operasi e-commerce &amp; hubungan konsinyasi</li>
+        </ul>
+      </div>
+      <div class="blk b-vp vp">
+        <h6>Proposisi Nilai</h6>
+        <ul>
+          <li><strong>Devosi yang layak dipegang</strong><em>Rosario sonokeling, krusifiks korpus kuningan, nis kayu — bentuk yang benar, bahan yang jujur.</em></li>
+          <li><strong>Hampers sakramental terkurasi</strong><em>Baptis, komuni, krisma, nikah, dan duka — dengan kartu tulis tangan.</em></li>
+          <li><strong>Rombongan ziarah, satu paket</strong><em>Rute, seragam bernama paroki, tag koper, kartu doa. Minimum 12 pcs.</em></li>
+          <li><strong>Batas yang dinyatakan terbuka</strong><em>Kami tidak menjual benda yang sudah diberkati. Pemberkatan wewenang imam, bukan barang dagangan.</em></li>
+          <li><strong>Perajinnya bernama</strong><em>Setiap barang datang dengan kartu perawatan yang menyebut siapa yang mengerjakannya.</em></li>
+        </ul>
+      </div>
+      <div class="blk b-hub">
+        <h6>Hubungan Pelanggan</h6>
+        <ul>
+          <li>WhatsApp sebagai kanal utama, bukan cadangan</li>
+          <li>Jurnal ziarah &amp; catatan proses kerajinan</li>
+          <li>Personalisasi: grafir nama, paroki, tanggal</li>
+          <li>Harga khusus pelayanan paroki &amp; sekolah</li>
+          <li>Tukar 14 hari, satu kali gratis</li>
+        </ul>
+      </div>
+      <div class="blk b-seg">
+        <h6>Segmen Pelanggan</h6>
+        <ul>
+          <li>Orang tua &amp; wali baptis (pembeli hadiah sakramen)</li>
+          <li>Rombongan ziarah paroki &amp; OMK</li>
+          <li>Sekolah &amp; yayasan Katolik (retret, rekoleksi, wisuda)</li>
+          <li>Umat muda urban 20–40 yang mencari benda bermutu</li>
+          <li>Keluarga berduka (hampers penghiburan, bulan Arwah)</li>
+          <li>Pasangan menikah (souvenir &amp; hantaran)</li>
+          <li>Umat NTT/Papua/Kalbar — lewat produk digital</li>
+        </ul>
+      </div>
+      <div class="blk b-sum">
+        <h6>Sumber Daya Utama</h6>
+        <ul>
+          <li>Katalog 36 SKU + aset foto lengkap</li>
+          <li><a href="https://peziarah.com/ziarah/">6 rute ziarah</a> tertulis + penyusun rute custom</li>
+          <li>Jaringan perajin &amp; kontrak konsinyasi</li>
+          <li>Jaringan alumni Van Lith A7 — lintas provinsi &amp; profesi</li>
+          <li>Situs statis: biaya operasi nyaris nol</li>
+        </ul>
+      </div>
+      <div class="blk b-sal">
+        <h6>Saluran</h6>
+        <ul>
+          <li><a href="https://peziarah.com" style="color:#fff">peziarah.com</a> — DTC + builder hampers</li>
+          <li>WhatsApp (pesan, konfirmasi, bayar)</li>
+          <li>Tokopedia · Shopee · TikTok Shop</li>
+          <li>Instagram &amp; TikTok untuk cerita, bukan katalog</li>
+          <li>Pendekatan langsung ke paroki, sekolah, biro ziarah</li>
+          <li>Bazar Natal &amp; paskah paroki (musiman)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bmcrow">
+      <div class="blk">
+        <h6>Struktur Biaya</h6>
+        <ul>
+          <li>Bagi hasil perajin (dibayar setelah laku — bukan di muka)</li>
+          <li>Produksi merch batch kecil (satu-satunya stok yang dimodali)</li>
+          <li>Kemasan: kotak rigid, selongsong, kartu tulis tangan</li>
+          <li>Iklan berbayar (Meta, TikTok) — pos tunggal terbesar setelah stok</li>
+          <li>Ongkir &amp; penanganan barang pecah, terutama luar Jawa</li>
+          <li>Platform: domain, hosting, biaya gateway (~1% transaksi)</li>
+          <li>Admin paruh waktu — setelah 60 order/bulan, bukan sebelum</li>
+        </ul>
+      </div>
+      <div class="blk">
+        <h6>Aliran Pendapatan</h6>
+        <ul>
+          <li>Ritel devosional konsinyasi — 30–40% ke Peziarah</li>
+          <li>Merch stok sendiri — 70–75%</li>
+          <li>Hampers terkurasi &amp; custom — 55–65%</li>
+          <li>Rombongan ziarah &amp; sekolah, dibiayai DP — 45–55%</li>
+          <li>Jasa: kurasi rute, grafir, styling — 70–95%</li>
+          <li>Body art (bagi hasil rujukan) — 20–30% <span class="soontag">Segera</span></li>
+          <li>Produk digital devosional — ~100%</li>
+        </ul>
+      </div>
+    </div>
+    <p style="font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-top:12px">Gambar 1 — Sembilan blok dalam tata letak canvas baku.</p>
+  </div>
+</section>
+
+<section id="angka">
+  <div class="wrap">
+    <p class="snum">04 — Angka &amp; Bauran Pendapatan</p>
+    <h2>Bauran tahun pertama, dibangun dari harga katalog</h2>
+    <p class="dek">Bauran ilustratif, untuk digantikan data aktual setelah dua kuartal. Pesanan rombongan memberi keranjang terbesar, hampers memberi margin per unit terbaik, dan jasa menyumbang tanpa memerlukan stok sama sekali.</p>
+
+    <div class="tw">
+    <table>
+      <thead>
+        <tr><th style="width:26%">Aliran nilai</th><th class="num">Rata-rata</th><th class="num">Margin kotor</th><th class="num">Porsi pendapatan</th><th>Catatan</th></tr>
+      </thead>
+      <tbody>
+        <tr><td data-l="Aliran nilai"><span class="name">Ritel DTC</span></td><td data-l="Rata-rata" class="num">Rp 450–650 rb</td><td data-l="Margin kotor" class="num">38–48%</td><td data-l="Porsi pendapatan" class="num">~38%</td><td data-l="Catatan">Volume terbesar; keranjang naik oleh ambang gratis ongkir Rp 500 rb.</td></tr>
+        <tr><td data-l="Aliran nilai"><span class="name">Rombongan &amp; lembaga</span></td><td data-l="Rata-rata" class="num">Rp 4–20 jt</td><td data-l="Margin kotor" class="num">45–55%</td><td data-l="Porsi pendapatan" class="num">~30%</td><td data-l="Catatan">Dibiayai DP klien; kualitas kas paling sehat di seluruh bauran.</td></tr>
+        <tr><td data-l="Aliran nilai"><span class="name">Hampers terkurasi</span></td><td data-l="Rata-rata" class="num">Rp 450 rb–1,65 jt</td><td data-l="Margin kotor" class="num">55–65%</td><td data-l="Porsi pendapatan" class="num">~18%</td><td data-l="Catatan">Margin per unit terbaik; terkonsentrasi di Mei–Juli dan November–Desember.</td></tr>
+        <tr><td data-l="Aliran nilai"><span class="name">Jasa (kurasi rute, grafir, styling)</span></td><td data-l="Rata-rata" class="num">Rp 350 rb–5 jt</td><td data-l="Margin kotor" class="num">70–95%</td><td data-l="Porsi pendapatan" class="num">~8%</td><td data-l="Catatan">Modal stok nol; dibatasi jam kerja, bukan modal.</td></tr>
+        <tr><td data-l="Aliran nilai"><span class="name">Body art</span> <span class="soontag">Segera</span></td><td data-l="Rata-rata" class="num">Rp 1,44–2,52 jt</td><td data-l="Margin kotor" class="num">20–30%</td><td data-l="Porsi pendapatan" class="num">~4%</td><td data-l="Catatan">Bagi hasil rujukan. Masuk proyeksi Tahun 1; belum berkontribusi sampai studio beroperasi.</td></tr>
+        <tr><td data-l="Aliran nilai"><span class="name">Produk digital</span></td><td data-l="Rata-rata" class="num">Rp 25–95 rb</td><td data-l="Margin kotor" class="num">~100%</td><td data-l="Porsi pendapatan" class="num">~2%</td><td data-l="Catatan">Porsi kecil, jangkauan luas — cara satu-satunya melayani NTT dan Papua secara ekonomis.</td></tr>
+      </tbody>
+      <caption>Tabel 9 — Asumsi perencanaan ilustratif, bukan proyeksi.</caption>
+    </table>
+    </div>
+
+    <h3>Proyeksi tiga tahun, dari modal Rp 16,3 juta</h3>
+    <div class="tw">
+    <table>
+      <thead>
+        <tr><th style="width:34%">Metrik</th><th class="num">Tahun 1</th><th class="num">Tahun 2</th><th class="num">Tahun 3</th></tr>
+      </thead>
+      <tbody>
+        <tr><td data-l="Metrik"><span class="name">Order ritel</span></td><td data-l="Tahun 1" class="num">480</td><td data-l="Tahun 2" class="num">1.350</td><td data-l="Tahun 3" class="num">2.900</td></tr>
+        <tr><td data-l="Metrik"><span class="name">Rombongan B2B</span></td><td data-l="Tahun 1" class="num">9</td><td data-l="Tahun 2" class="num">28</td><td data-l="Tahun 3" class="num">62</td></tr>
+        <tr class="sub"><td colspan="4">Pendapatan</td></tr>
+        <tr><td data-l="Metrik">Ritel DTC</td><td data-l="Tahun 1" class="num">Rp 82.000.000</td><td data-l="Tahun 2" class="num">Rp 230.000.000</td><td data-l="Tahun 3" class="num">Rp 495.000.000</td></tr>
+        <tr><td data-l="Metrik">Rombongan &amp; lembaga</td><td data-l="Tahun 1" class="num">Rp 64.000.000</td><td data-l="Tahun 2" class="num">Rp 196.000.000</td><td data-l="Tahun 3" class="num">Rp 434.000.000</td></tr>
+        <tr><td data-l="Metrik">Hampers</td><td data-l="Tahun 1" class="num">Rp 39.000.000</td><td data-l="Tahun 2" class="num">Rp 112.000.000</td><td data-l="Tahun 3" class="num">Rp 252.000.000</td></tr>
+        <tr><td data-l="Metrik">Jasa</td><td data-l="Tahun 1" class="num">Rp 26.000.000</td><td data-l="Tahun 2" class="num">Rp 74.000.000</td><td data-l="Tahun 3" class="num">Rp 168.000.000</td></tr>
+        <tr><td data-l="Metrik">Digital</td><td data-l="Tahun 1" class="num">Rp 4.000.000</td><td data-l="Tahun 2" class="num">Rp 16.000.000</td><td data-l="Tahun 3" class="num">Rp 44.000.000</td></tr>
+        <tr class="tot"><td data-l="Metrik">GROSS REVENUE</td><td data-l="Tahun 1" class="num">Rp 215.000.000</td><td data-l="Tahun 2" class="num">Rp 628.000.000</td><td data-l="Tahun 3" class="num">Rp 1.393.000.000</td></tr>
+        <tr><td data-l="Metrik"><span class="name">HPP</span></td><td data-l="Tahun 1" class="num">Rp 122.550.000</td><td data-l="Tahun 2" class="num">Rp 345.400.000</td><td data-l="Tahun 3" class="num">Rp 710.400.000</td></tr>
+        <tr><td data-l="Metrik"><span class="name">Margin kotor rata-rata</span></td><td data-l="Tahun 1" class="num">43,0%</td><td data-l="Tahun 2" class="num">45,0%</td><td data-l="Tahun 3" class="num">49,0%</td></tr>
+        <tr><td data-l="Metrik"><span class="name">Laba kotor</span></td><td data-l="Tahun 1" class="num">Rp 92.450.000</td><td data-l="Tahun 2" class="num">Rp 282.600.000</td><td data-l="Tahun 3" class="num">Rp 682.600.000</td></tr>
+        <tr class="sub"><td colspan="4">Biaya operasional</td></tr>
+        <tr><td data-l="Metrik">Iklan berbayar</td><td data-l="Tahun 1" class="num">Rp 22.000.000</td><td data-l="Tahun 2" class="num">Rp 78.000.000</td><td data-l="Tahun 3" class="num">Rp 167.000.000</td></tr>
+        <tr><td data-l="Metrik">Kemasan &amp; logistik</td><td data-l="Tahun 1" class="num">Rp 13.000.000</td><td data-l="Tahun 2" class="num">Rp 38.000.000</td><td data-l="Tahun 3" class="num">Rp 84.000.000</td></tr>
+        <tr><td data-l="Metrik">Platform, gateway, SaaS</td><td data-l="Tahun 1" class="num">Rp 4.500.000</td><td data-l="Tahun 2" class="num">Rp 11.000.000</td><td data-l="Tahun 3" class="num">Rp 24.000.000</td></tr>
+        <tr><td data-l="Metrik">Admin &amp; tim</td><td data-l="Tahun 1" class="num">Rp 14.400.000</td><td data-l="Tahun 2" class="num">Rp 62.000.000</td><td data-l="Tahun 3" class="num">Rp 168.000.000</td></tr>
+        <tr><td data-l="Metrik">Desain, konten, foto</td><td data-l="Tahun 1" class="num">Rp 9.000.000</td><td data-l="Tahun 2" class="num">Rp 28.000.000</td><td data-l="Tahun 3" class="num">Rp 66.000.000</td></tr>
+        <tr><td data-l="Metrik"><span class="name">Total OPEX</span></td><td data-l="Tahun 1" class="num">Rp 62.900.000</td><td data-l="Tahun 2" class="num">Rp 217.000.000</td><td data-l="Tahun 3" class="num">Rp 509.000.000</td></tr>
+        <tr class="tot"><td data-l="Metrik">LABA BERSIH (EBITDA)</td><td data-l="Tahun 1" class="num">Rp 29.550.000</td><td data-l="Tahun 2" class="num">Rp 65.600.000</td><td data-l="Tahun 3" class="num">Rp 173.600.000</td></tr>
+        <tr><td data-l="Metrik"><span class="name">Margin laba bersih</span></td><td data-l="Tahun 1" class="num">13,7%</td><td data-l="Tahun 2" class="num">10,4%</td><td data-l="Tahun 3" class="num">12,5%</td></tr>
+      </tbody>
+      <caption>Tabel 10 — Proyeksi konservatif. Laba Tahun 2 turun persentasenya karena merekrut admin dan menaikkan iklan lebih dulu daripada margin membaik.</caption>
+    </table>
+    </div>
+
+    <div class="note">
+      <p><strong>Asumsi yang sengaja dibuat konservatif.</strong> Tiga hal ditahan di angka rendah supaya proyeksi ini aman dibawa ke pemberi modal. Pertama, konsinyasi hanya dihitung menyisakan 30–40% — barangnya bukan milik kita sampai laku. Kedua, biaya admin dan tim Tahun 3 dianggarkan penuh, bukan tipis. Ketiga, tidak ada asumsi biaya iklan akan turun seiring skala; di Indonesia biaya akuisisi umumnya naik. Kalau kenyataannya lebih baik, itu kabar baik — bukan revisi.</p>
+      <p style="margin-top:11px">Kontribusi body art (~4% pendapatan Tahun 1) dipertahankan di dalam proyeksi karena modal stoknya nol, tapi seluruh angka Tingkat A tetap berlaku tanpanya. Kalau studio mundur, yang hilang ~Rp 8,6 juta dari omzet Tahun 1 — bukan kelayakan modelnya.</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="risiko">
+  <div class="wrap">
+    <p class="snum">05 — Risiko &amp; Mitigasi</p>
+    <h2>Enam risiko, empat di antaranya khas Katolik</h2>
+
+    <div class="grid3">
+      <div class="card">
+        <h5>Kekeliruan liturgis pada desain</h5>
+        <p>Rosario dengan jumlah manik salah, salib tanpa korpus dijual sebagai krusifiks, warna masa liturgi tertukar. <strong style="color:var(--violet)">Mitigasi:</strong> tinjauan imam atau katekis sebelum peluncuran koleksi; setiap deskripsi produk menyebut bentuk dan penggunaannya secara tepat.</p>
+      </div>
+      <div class="card">
+        <h5>Dianggap memperjualbelikan berkat</h5>
+        <p>Risiko reputasi terbesar di ceruk ini, dan yang paling cepat menyebar. <strong style="color:var(--violet)">Mitigasi:</strong> kebijakan "kami tidak menjual benda yang sudah diberkati" ditulis di FAQ, halaman produk, dan kartu di dalam kotak — bukan disembunyikan di syarat &amp; ketentuan.</p>
+      </div>
+      <div class="card">
+        <h5>Dianggap menyaingi kios paroki</h5>
+        <p>Kios paroki sering menghidupi penggalangan dana. <strong style="color:var(--violet)">Mitigasi:</strong> harga khusus pelayanan, tawaran suplai grosir ke kios, dan tidak pernah beriklan berdasar lokasi tepat di sekitar gereja pada hari Minggu.</p>
+      </div>
+      <div class="card">
+        <h5>Kapasitas perajin habis di puncak</h5>
+        <p>Mei–Juli dan Oktober–Desember menumpuk di tahun yang sama. <strong style="color:var(--violet)">Mitigasi:</strong> dua pemasok per kategori; pesan kapasitas Adven pada Agustus dan kapasitas komuni pada Februari.</p>
+      </div>
+      <div class="card">
+        <h5>Ongkir menghapus margin luar Jawa</h5>
+        <p>Setengah umat Katolik tinggal di tempat yang paling mahal dikirimi barang pecah belah. <strong style="color:var(--violet)">Mitigasi:</strong> produk digital dan cetak lokal untuk NTT/Papua/Kalbar; batas gratis ongkir dihitung per zona, bukan nasional.</p>
+      </div>
+      <div class="card">
+        <h5>Desain ditiru penjual marketplace</h5>
+        <p>Akan terjadi, dan lebih cepat dari perkiraan. <strong style="color:var(--violet)">Mitigasi:</strong> bersaing pada kemasan, nama perajin, jasa, dan komunitas — semua hal yang tidak bisa disalin dari satu foto. Rilis dalam drop kecil bernomor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kalender">
+  <div class="wrap">
+    <p class="snum">06 — Permintaan Mengikuti Tahun Liturgi</p>
+    <h2>Enam puncak dalam setahun</h2>
+    <p class="dek">Pembelian bergerak mengikuti momen, sehingga stok dan belanja iklan direncanakan menurut kalender gereja — bukan menurut kuartal kalender biasa. Tahun liturgi memberi enam musim belanja, dan dua di antaranya jatuh berurutan di akhir tahun.</p>
+
+    <div class="wheelwrap">
+      <div><svg viewBox="0 0 500 500" role="img" aria-label="Roda permintaan menurut tahun liturgi Katolik" class="wheel">
+  <circle cx="250" cy="250" r="86" class="hub"/>
+  <text x="250" y="238" class="hubtop">INDEKS</text>
+  <text x="250" y="262" class="hubmid">PERMINTAAN</text>
+  <text x="250" y="282" class="hubsub">Des = 100</text>
+<path class="mo cool" d="M252.5,121.1 A128.9,128.9 0 0 1 312.3,137.1 L292.5,173.0 A88.0,88.0 0 0 0 251.7,162.0 Z"><title>JAN — indeks 35 — Masa Biasa</title></path>
+<path class="ring" d="M254.1,38.0 A212.0,212.0 0 0 1 352.5,64.4 L352.0,65.3 A211.0,211.0 0 0 0 254.1,39.0 Z"/>
+<text class="mlab" x="309.3" y="28.8">JAN</text>
+<text class="mval out" x="287.0" y="111.9">35</text>
+<path class="mo cool" d="M318.4,136.6 A132.5,132.5 0 0 1 363.4,181.6 L325.4,204.5 A88.0,88.0 0 0 0 295.5,174.6 Z"><title>FEB — indeks 38 — Masa Biasa</title></path>
+<path class="ring" d="M359.5,68.5 A212.0,212.0 0 0 1 431.5,140.5 L430.7,141.0 A211.0,211.0 0 0 0 359.0,69.3 Z"/>
+<text class="mlab" x="411.9" y="88.1">FEB</text>
+<text class="mval out" x="353.6" y="146.4">38</text>
+<path class="mo warm" d="M396.7,169.0 A167.6,167.6 0 0 1 417.5,246.8 L338.0,248.3 A88.0,88.0 0 0 0 327.0,207.5 Z"><title>MAR — indeks 68 — Prapaskah</title></path>
+<path class="ring" d="M435.6,147.5 A212.0,212.0 0 0 1 462.0,245.9 L461.0,245.9 A211.0,211.0 0 0 0 434.7,148.0 Z"/>
+<text class="mlab" x="471.2" y="190.7">MAR</text>
+<text class="mval in" x="398.3" y="210.3">68</text>
+<path class="mo hot" d="M424.5,253.4 A174.6,174.6 0 0 1 402.8,334.4 L327.0,292.5 A88.0,88.0 0 0 0 338.0,251.7 Z"><title>APR — indeks 74 — Paskah</title></path>
+<path class="ring" d="M462.0,254.1 A212.0,212.0 0 0 1 435.6,352.5 L434.7,352.0 A211.0,211.0 0 0 0 461.0,254.1 Z"/>
+<text class="mlab" x="471.2" y="309.3">APR</text>
+<text class="mval in" x="405.1" y="291.6">74</text>
+<path class="mo hot" d="M413.5,348.6 A191.0,191.0 0 0 1 348.6,413.5 L295.5,325.4 A88.0,88.0 0 0 0 325.4,295.5 Z"><title>MEI — indeks 88 — Maria & Komuni</title></path>
+<path class="ring" d="M431.5,359.5 A212.0,212.0 0 0 1 359.5,431.5 L359.0,430.7 A211.0,211.0 0 0 0 430.7,359.0 Z"/>
+<text class="mlab" x="411.9" y="411.9">MEI</text>
+<text class="mval in" x="375.1" y="375.1">88</text>
+<path class="mo hot" d="M338.9,411.0 A183.9,183.9 0 0 1 253.5,433.9 L251.7,338.0 A88.0,88.0 0 0 0 292.5,327.0 Z"><title>JUN — indeks 82 — Krisma & Nikah</title></path>
+<path class="ring" d="M352.5,435.6 A212.0,212.0 0 0 1 254.1,462.0 L254.1,461.0 A211.0,211.0 0 0 0 352.0,434.7 Z"/>
+<text class="mlab" x="309.3" y="471.2">JUN</text>
+<text class="mval in" x="294.0" y="414.1">82</text>
+<path class="mo hot" d="M246.7,422.2 A172.2,172.2 0 0 1 166.8,400.8 L207.5,327.0 A88.0,88.0 0 0 0 248.3,338.0 Z"><title>JUL — indeks 72 — Ziarah</title></path>
+<path class="ring" d="M245.9,462.0 A212.0,212.0 0 0 1 147.5,435.6 L148.0,434.7 A211.0,211.0 0 0 0 245.9,461.0 Z"/>
+<text class="mlab" x="190.7" y="471.2">JUL</text>
+<text class="mval in" x="209.0" y="402.8">72</text>
+<path class="mo cool" d="M176.7,371.4 A141.8,141.8 0 0 1 128.6,323.3 L174.6,295.5 A88.0,88.0 0 0 0 204.5,325.4 Z"><title>AGU — indeks 46 — Masa Biasa</title></path>
+<path class="ring" d="M140.5,431.5 A212.0,212.0 0 0 1 68.5,359.5 L69.3,359.0 A211.0,211.0 0 0 0 141.0,430.7 Z"/>
+<text class="mlab" x="88.1" y="411.9">AGU</text>
+<text class="mval out" x="139.8" y="360.2">46</text>
+<path class="mo cool" d="M129.9,316.3 A137.1,137.1 0 0 1 112.9,252.6 L162.0,251.7 A88.0,88.0 0 0 0 173.0,292.5 Z"><title>SEP — indeks 42 — Masa Biasa</title></path>
+<path class="ring" d="M64.4,352.5 A212.0,212.0 0 0 1 38.0,254.1 L39.0,254.1 A211.0,211.0 0 0 0 65.3,352.0 Z"/>
+<text class="mlab" x="28.8" y="309.3">SEP</text>
+<text class="mval out" x="104.0" y="289.1">42</text>
+<path class="mo hot" d="M69.6,246.5 A180.4,180.4 0 0 1 92.0,162.8 L173.0,207.5 A88.0,88.0 0 0 0 162.0,248.3 Z"><title>OKT — indeks 79 — Bulan Rosario</title></path>
+<path class="ring" d="M38.0,245.9 A212.0,212.0 0 0 1 64.4,147.5 L65.3,148.0 A211.0,211.0 0 0 0 39.0,245.9 Z"/>
+<text class="mlab" x="28.8" y="190.7">OKT</text>
+<text class="mval in" x="89.2" y="206.9">79</text>
+<path class="mo warm" d="M110.5,165.9 A162.9,162.9 0 0 1 165.9,110.5 L204.5,174.6 A88.0,88.0 0 0 0 174.6,204.5 Z"><title>NOV — indeks 64 — Arwah</title></path>
+<path class="ring" d="M68.5,140.5 A212.0,212.0 0 0 1 140.5,68.5 L141.0,69.3 A211.0,211.0 0 0 0 69.3,141.0 Z"/>
+<text class="mlab" x="88.1" y="88.1">NOV</text>
+<text class="mval in" x="144.7" y="144.7">64</text>
+<path class="mo hot" d="M150.9,70.5 A205.0,205.0 0 0 1 246.1,45.0 L248.3,162.0 A88.0,88.0 0 0 0 207.5,173.0 Z"><title>DES — indeks 100 — Adven & Natal</title></path>
+<path class="ring" d="M147.5,64.4 A212.0,212.0 0 0 1 245.9,38.0 L245.9,39.0 A211.0,211.0 0 0 0 148.0,65.3 Z"/>
+<text class="mlab" x="190.7" y="28.8">DES</text>
+<text class="mval in" x="200.6" y="65.5">100</text>
+</svg>
+</div>
+      <div class="seasons">
+        <div class="season"><b>Mar–Apr</b><span><i>Prapaskah &amp; Paskah.</i> Rosario, jalan salib, print devosional, merch retret. Nada gelap, ungu, tanpa perayaan.</span></div>
+        <div class="season"><b>Mei</b><span><i>Bulan Maria + komuni pertama.</i> Puncak kedua tertinggi. Segala yang bergambar Maria, plus gelombang hadiah komuni pertama.</span></div>
+        <div class="season"><b>Jun–Jul</b><span><i>Krisma, pernikahan, ziarah.</i> Hampers, seragam rombongan, souvenir. Pesanan B2B terberat sepanjang tahun.</span></div>
+        <div class="season"><b>Okt</b><span><i>Bulan Rosario.</i> Satu bulan penuh yang secara resmi diabdikan pada kategori terlaris kami. Pesan kapasitas perajin pada Juli, stok mendarat awal September.</span></div>
+        <div class="season"><b>Nov</b><span><i>Bulan Arwah.</i> Hampers penghiburan, lilin, buku doa arwah, ziarah makam. Nyaris tak ada yang menggarapnya sebagai kategori.</span></div>
+        <div class="season"><b>Des</b><span><i>Adven &amp; Natal.</i> Puncak tahun. Kandang Natal, hampers, hadiah paroki, hadiah korporat. Kirim hampers Adven akhir November.</span></div>
+      </div>
+    </div>
+    <p style="font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-top:18px">Gambar 2 — Indeks permintaan relatif per bulan, Desember = 100. Ungu tua menandai puncak (indeks ≥ 72).</p>
+
+    <div class="note">
+      <p><strong>Akibat praktisnya pada modal.</strong> Enam puncak berarti kas ditarik enam kali setahun, dan dua di antaranya (Oktober, Desember) berdekatan. Kapasitas perajin untuk Adven dipesan pada Agustus, kapasitas rosario Oktober pada Juli. Cadangan kas Rp 1,5 juta di Tingkat A cukup untuk satu puncak; kalau Anda ingin menggarap Oktober dan Desember sekaligus di tahun pertama, cadangan itu perlu dinaikkan ke Rp 3 juta.</p>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <p class="snum">07 — Pertanyaan yang Kami Perkirakan dari Komunitas</p>
+    <h2>Sepuluh keberatan dan jawabannya</h2>
+    <p class="dek">Semua pertanyaan ini wajar, dan beberapa datang dari mereka yang sudah melayani komunitas jauh lebih lama daripada kami. Klik untuk membuka jawabannya.</p>
+
+    <details>
+      <summary><span class="qn">T1</span>"Toko rohani di Kotabaru sudah menjual hampir semua barang ini."</summary>
+      <div class="ans"><p>Benar, dan kami mengarahkan orang ke sana untuk barang yang perlu dipegang dulu. Yang tidak mereka jual: rute ziarah yang tertulis lengkap, seragam rombongan bernama paroki, hampers yang dirakit menurut sakramen, dan pengiriman ke Atambua. Kami menjual perakitan dan pengantaran, bukan sekadar barangnya.</p></div>
+    </details>
+    <details>
+      <summary><span class="qn">T2</span>"Setiap paroki sudah punya kios dan vendor merch sendiri."</summary>
+      <div class="ans"><p>Kios paroki melayani hari Minggu di satu lokasi. Kami melayani rombongan yang berangkat bulan depan, keluarga di kota lain yang mengirim hadiah krisma, dan umat di kabupaten tanpa toko rohani. Kami juga menawarkan harga suplai grosir ke kios paroki — kalau kios itu bisa memesan dari kami dan menjual dengan margin, kami menambah dana penggalangannya, bukan menguranginya.</p></div>
+    </details>
+    <details>
+      <summary><span class="qn">T3</span>"Apakah pantas mengambil untung dari benda rohani?"</summary>
+      <div class="ans"><p>Perajin yang mengukir korpus perlu dibayar; begitu pula pengrajin rosario dan pengantar paket. Yang tidak pantas adalah memperjualbelikan berkat, dan kami tidak melakukannya — kami tidak menjual dan tidak menjanjikan benda yang sudah diberkati. Pemberkatan adalah wewenang imam dan gratis. Yang kami jual adalah kayu, kuningan, kerja tangan, dan waktu.</p></div>
+    </details>
+    <details>
+      <summary><span class="qn">T4</span>"Rosario di Shopee Rp 35 ribu. Anda akan kalah harga."</summary>
+      <div class="ans"><p>Kami tidak bersaing di sana dan tidak akan menang di sana. Rosario Rp 35 ribu adalah resin cetakan dengan rantai yang putus dalam setahun. Rosario Rp 249 ribu adalah sonokeling yang dirangkai tangan, dengan nama perajinnya di kartu. Keduanya adalah produk berbeda yang kebetulan punya 59 manik. Orang yang membeli untuk krisma anaknya tahu bedanya.</p></div>
+    </details>
+    <details>
+      <summary><span class="qn">T5</span>"Desain Anda akan ditiru dalam sebulan."</summary>
+      <div class="ans"><p>Ya. Yang tidak bisa ditiru dalam sebulan: hubungan dengan perajin Muntilan, enam rute ziarah yang ditulis dari perjalanan sungguhan, jaringan alumni yang membuka pintu ke sekolah Katolik, dan kepercayaan yang tumbuh dari menolak menjual berkat. Foto bisa disalin; rantai pasok dan reputasi tidak.</p></div>
+    </details>
+    <details>
+      <summary><span class="qn">T6</span>"Pasarnya terlalu sempit. Sembilan juta orang saja."</summary>
+      <div class="ans"><p>Sempit dalam jumlah orang, tidak dalam rupiah. Umat Katolik membeli benda yang bentuknya sudah ditentukan devosi — rosario, skapulir, medali, patung — pada tanggal yang tidak bisa dilewati: baptis, komuni pertama, krisma, nikah, dan kematian. Keranjangnya besar dan momennya pasti. Ceruk yang sempit tapi dalam lebih mudah dilayani dengan benar daripada pasar luas yang dikerjakan setengah-setengah.</p></div>
+    </details>
+    <details>
+      <summary><span class="qn">T7</span>"Beli rosario atau patung online berisiko — orang ingin memegangnya dulu."</summary>
+      <div class="ans"><p>Karena itu setiap produk punya foto detail, ukuran dalam sentimeter, berat, dan nama bahannya; setiap barang diperiksa satu per satu sebelum dipaketkan; dan tukar 14 hari untuk kesalahan ukuran berlaku sekali tanpa biaya. Untuk pembelian besar seperti nis atau krusifiks dinding, kami kirim foto barang persisnya lewat WhatsApp sebelum dikemas.</p></div>
+    </details>
+    <details>
+      <summary><span class="qn">T8</span>"Bagaimana Anda melayani NTT dan Papua, tempat umat Katolik paling padat?"</summary>
+      <div class="ans"><p>Jujur saja: untuk barang berat dan pecah belah, sering kali tidak ekonomis, dan kami tidak akan berpura-pura sebaliknya. Yang kami siapkan untuk wilayah itu adalah barang digital — novena, kalender Adven yang dicetak sendiri, kartu doa, panduan rute — plus lisensi motif kepada paroki setempat supaya mereka mencetak sendiri. Ongkirnya nol dan uangnya tetap berputar di sana.</p></div>
+    </details>
+    <details>
+      <summary><span class="qn">T9</span>"Bagaimana dengan bulan-bulan sepi?"</summary>
+      <div class="ans"><p>Januari–Februari dan Agustus–September memang sepi untuk ritel. Di bulan itu pendapatan bergeser ke jasa yang tidak bergantung musim: body art, kurasi rute untuk rombongan yang berangkat Juli, dan penyusunan penawaran korporat untuk Natal. Bulan sepi juga saat kapasitas perajin dipesan dan katalog difoto ulang — bukan bulan menganggur, tapi bulan menyiapkan puncak berikutnya.</p></div>
+    </details>
+    <details>
+      <summary><span class="qn">T10</span>"Bukankah merch rohani 'estetis' cuma tren anak muda kota?"</summary>
+      <div class="ans"><p>Sebagian memang tren, dan bagian itu akan lewat. Tapi tulang punggung penjualan kami bukan tren: hadiah komuni pertama, seragam rombongan ziarah, hampers duka, krusifiks untuk rumah baru. Itu semua sudah dibeli orang jauh sebelum ada Instagram dan akan terus dibeli sesudahnya. Estetika hanya menentukan dari siapa mereka membelinya.</p></div>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Business Model Canvas — <a href="https://peziarah.com">Peziarah</a> · Perlengkapan Rohani Katolik Indonesia<br>
+    Agustus 2026 · Dokumen internal<br>
+    Angka pasar bersifat estimasi dan perlu diverifikasi sebelum dipakai di luar internal.
+  </div>
+</footer>
+
+<script>
+(function(){
+  var m=document.getElementById('navmenu');
+  if(!m) return;
+  m.addEventListener('click',function(e){
+    if(e.target.closest('.navpanel a')) m.removeAttribute('open');
+  });
+  document.addEventListener('click',function(e){
+    if(m.hasAttribute('open') && !m.contains(e.target)) m.removeAttribute('open');
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape') m.removeAttribute('open');
+  });
+})();
+</script>
+</body>
+</html>
