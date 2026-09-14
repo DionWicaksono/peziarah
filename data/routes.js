@@ -452,6 +452,195 @@ export const ROUTES = [
   },
 
   {
+    id: "lourdes",
+    seoName: "Lourdes",
+    name: "Lourdes — Grotte de Massabielle",
+    short: "Lourdes",
+    region: "HAUTES-PYRÉNÉES, PRANCIS",
+    tagline: "Gua di tepi Gave de Pau tempat Bernadette Soubirous melihat “Aku adalah Yang Dikandung Tanpa Dosa”.",
+    note: "Rute internasional pertama yang sedang kami susun. Belum dibuka — kamu bisa masuk daftar tunggu.",
+    tags: ["SEGERA", "10–12 HARI", "INTERNASIONAL"],
+    soon: {
+      label: "SEGERA",
+      title: "Rute ini masih draf — belum pernah kami jalankan.",
+      body: "Semua keterangan di halaman ini adalah data tempatnya, yang bisa kamu periksa sendiri di situs resmi Sanctuaire Notre-Dame de Lourdes. Yang belum ada: harga, tanggal keberangkatan, dan mitra penyelenggara di Prancis. Kami sedang menyiapkan ketiganya, dan sampai selesai kami tidak menerima pembayaran apa pun untuk rute ini."
+    },
+    heroFull: true,
+    image: "/assets/lourdes-hero.webp",
+    heroAlt: "Lourdes — patung Bunda Maria di Grotte de Massabielle, dengan Basilika Rosario dan Basilika Immaculate Conception serta Pegunungan Pyrenees di latar",
+    h: 340,
+    durasi: "10–12 hari dari Indonesia, biasanya digabung Fatima, Nevers, atau Paris",
+    medan: "Kompleks sanctuary datar dan beraspal; jalan salib bukit berbatu dan menanjak",
+    akses: "Salah satu tempat ziarah paling ramah kursi roda yang ada: kompleks utama, tiga basilika, dan area gua bisa dilalui kursi roda, tersedia kursi dorong biru (voiturettes) dan sukarelawan pendorong. Jalan salib di bukit Espélugues tidak bisa — untuk itu ada jalan salib datar khusus peziarah sakit di dalam kompleks.",
+    tenang: "Sebelum jam tujuh pagi; dan November–Maret, saat prosesi berkurang dan kota jauh lebih lengang",
+    intro: [
+      "Antara 11 Februari dan 16 Juli 1858, seorang anak berusia empat belas tahun bernama Bernadette Soubirous melihat delapan belas kali penampakan di sebuah gua batu di tepi Sungai Gave de Pau, di pinggir kota Lourdes. Keluarganya saat itu tinggal di bekas ruang tahanan yang disebut le Cachot. Pada 25 Maret, penampakan itu menyebut dirinya dalam bahasa Oksitan setempat: “Que soy era Immaculada Councepciou” — Aku adalah Yang Dikandung Tanpa Dosa.",
+      "Yang tumbuh di tempat itu sekarang adalah kompleks ziarah terbesar di dunia Katolik Barat: gua aslinya dibiarkan apa adanya, dengan mata air yang mengalir di bawahnya, dan di atasnya berdiri tiga basilika — Basilika Immaculate Conception yang ditahbiskan 1871, Basilika Rosario yang selesai di akhir 1890-an, dan Basilika bawah tanah Santo Pius X yang dibuka pada 1958 dan menampung sekitar dua puluh lima ribu orang.",
+      "Lourdes juga satu-satunya tempat ziarah besar yang seluruh tata ruangnya disusun untuk orang sakit: ada rumah penginapan khusus peziarah sakit (Accueil Notre-Dame), lajur kursi dorong di setiap prosesi, dan sebuah kantor medis — Bureau des Constatations Médicales — yang memeriksa laporan kesembuhan dengan standar yang sengaja dibuat sangat ketat, dan yang sepanjang sejarahnya hanya mengakui tujuh puluh kasus."
+    ],
+    sorotan: [
+      { title: "Grotte de Massabielle", body: "Gua aslinya, dengan patung Bunda Maria di ceruk tempat Bernadette melihatnya. Antrean berjalan pelan menyentuh dinding batu yang sudah licin karena tangan. Tidak ada pengeras suara di sini; petugas akan meminta kamu diam kalau kamu lupa." },
+      { title: "Mata air dan gestes de l'eau", body: "Mata air yang muncul saat penampakan kesembilan masih mengalir; airnya bisa diambil gratis dari deretan keran di samping gua. Bak air (piscines) sempat lama ditutup dan kini dilayani lewat ritus air — gestes de l'eau — dengan jadwal yang berubah-ubah, jadi selalu cek jadwal harian di pintu masuk." },
+      { title: "Prosesi Sakramen Mahakudus dan prosesi lilin", body: "Setiap hari pada musim ziarah: prosesi Sakramen Mahakudus sore hari, dan prosesi Maria dengan lilin pada malam hari melintasi esplanade. Yang berjalan paling depan adalah peziarah sakit. Di luar musim, keduanya berkurang atau ditiadakan." },
+      { title: "Jejak Bernadette di kota", body: "Le Cachot tempat keluarganya tinggal, Moulin de Boly tempat ia lahir, dan desa Bartrès tempat ia menggembala. Bernadette sendiri meninggal di Nevers pada 1879 dan dikanonisasi 1933 — jasadnya ada di Nevers, bukan di Lourdes, dan banyak rombongan menambahkan satu hari ke sana." }
+    ],
+    itinerary: [
+      { day: "RANGKA SEMENTARA — 11 HARI, BELUM FINAL", items: [
+        { time: "HARI 1–2", title: "Jakarta → Paris atau Barcelona", body: "Satu kali transit, 17–20 jam terbang. Dari Paris ada TGV langsung ke Lourdes (± 5 jam); dari Barcelona ditempuh darat lewat Toulouse. Bandara terdekat Tarbes–Lourdes–Pyrénées (LDE), 10 km dari kota." },
+        { time: "HARI 3", title: "Tiba di Lourdes, gua pada malam pertama", body: "Kami menaruh kunjungan pertama ke gua pada malam hari, bukan siang — paling sepi, dan perbedaan suasananya jauh." },
+        { time: "HARI 4", title: "Misa internasional, jalan salib, mata air", body: "Misa internasional di Basilika Santo Pius X pada hari tertentu di musim ziarah; siang jalan salib; malam prosesi lilin." },
+        { time: "HARI 5", title: "Jejak Bernadette dan Bartrès", body: "Le Cachot, Moulin de Boly, Bartrès, lalu waktu bebas di gua." },
+        { time: "HARI 6–8", title: "Tambahan yang paling sering diminta", body: "Nevers (jasad Santa Bernadette), atau menyeberang ke Fatima di Portugal, atau Rue du Bac dan Ars di Prancis. Ini bagian yang paling menentukan panjang dan biaya perjalanan." },
+        { time: "HARI 9–11", title: "Paris dan pulang", body: "Dua malam untuk Notre-Dame, Rue du Bac, dan Sacré-Cœur sebelum penerbangan kembali." }
+      ] }
+    ],
+    praktis: [
+      ["Lokasi", "Lourdes, Hautes-Pyrénées, Occitanie, Prancis"],
+      ["Dari Indonesia", "17–20 jam terbang dengan satu transit, lalu kereta atau darat"],
+      ["Bandara & stasiun terdekat", "Tarbes–Lourdes–Pyrénées (LDE) 10 km; Gare de Lourdes ± 1,5 km dari sanctuary"],
+      ["Visa", "Schengen — pengurusan realistis 4–8 pekan sebelum berangkat"],
+      ["Biaya masuk", "Tidak ada, termasuk air dari mata airnya"],
+      ["Musim ziarah", "Sekitar April sampai Oktober; puncaknya 11 Februari, 15 Agustus, dan Rosary Pilgrimage awal Oktober"],
+      ["Fasilitas", "Accueil Notre-Dame untuk peziarah sakit, kursi dorong dan sukarelawan, kapel adorasi 24 jam, ruang pengakuan berbagai bahasa"],
+      ["Bahasa", "Prancis; misa dan panduan tersedia dalam banyak bahasa, tapi belum tentu Indonesia"]
+    ],
+    catatan: [
+      "Rute ini belum dibuka. Tidak ada harga, tanggal, atau uang muka yang kami terima untuk sekarang.",
+      "Visa Schengen adalah penentu jadwal, bukan tiket. Mulai dari sana, dan siapkan asuransi perjalanan sesuai syarat Schengen.",
+      "November–Maret jauh lebih sepi dan lebih murah, tapi banyak prosesi berkurang dan Pyrenees dingin — untuk rombongan lansia pertimbangkan Mei atau September.",
+      "Rombongan dengan peziarah sakit atau berkursi roda harus mendaftar ke Accueil jauh sebelumnya; ini yang paling sering terlewat.",
+      "Hitung jalan kaki 5–8 km sehari di dalam dan sekitar kompleks, meski medannya datar.",
+      "Hotel di Lourdes habis berbulan-bulan sebelumnya untuk 15 Agustus dan Rosary Pilgrimage Oktober."
+    ],
+    post: "",
+    produk: ["rosario-sonokeling", "rosario-mutiara", "kaos-peziarah"]
+  },
+
+
+  {
+    id: "jerusalem",
+    seoName: "Jerusalem",
+    name: "Yerusalem — Tanah Suci",
+    short: "Yerusalem",
+    region: "YERUSALEM, TANAH SUCI",
+    tagline: "Kota tempat peristiwanya benar-benar terjadi: Kalvari, makam kosong, dan jalan sempit di antara keduanya.",
+    note: "Rute internasional kedua yang sedang kami susun. Belum dibuka — jadwalnya bergantung pada kondisi keamanan.",
+    tags: ["SEGERA","10–14 HARI","INTERNASIONAL"],
+    soon: {"label":"SEGERA","title":"Rute ini masih draf — belum pernah kami jalankan.","body":"Semua keterangan di halaman ini adalah data tempatnya, yang bisa kamu periksa sendiri lewat Custodia Terrae Sanctae (kustodian Fransiskan di Tanah Suci). Yang belum ada: harga, tanggal keberangkatan, penyelenggara berizin, dan — yang paling menentukan — kepastian kondisi keamanan serta jalur masuk yang bisa dipakai peziarah Indonesia. Sampai keempatnya jelas kami tidak menerima pembayaran apa pun untuk rute ini."},
+    heroFull: true,
+    image: "/assets/jerusalem-hero.webp",
+    heroAlt: "Yerusalem — Basilika Makam Kudus dengan kubah batunya, Kubah Batu berlapis emas di kejauhan, dan tembok Kota Lama di antara pohon zaitun dan sipres",
+    h: 340,
+    durasi: "10–14 hari dari Indonesia, biasanya digabung Betlehem, Galilea, dan Yordania",
+    medan: "Kota Lama berundak dan berbatu; banyak tangga sempit tanpa pegangan, beberapa situs Galilea menanjak",
+    akses: "Sangat bervariasi. Basilika Makam Kudus punya undakan di beberapa titik dan Kalvari hanya bisa dicapai lewat tangga sempit; Betlehem, Gereja Kelahiran, Getsemani, dan sebagian besar situs Galilea lebih datar dan bisa dijangkau kursi roda dengan pendamping. Via Dolorosa melewati pasar berbatu yang licin — untuk peziarah lansia rencanakan versi pendeknya.",
+    tenang: "Sebelum jam tujuh pagi di Kota Lama; dan di luar Pekan Suci, Natal, serta hari raya besar Yahudi dan Islam, saat kota jauh lebih padat",
+    intro: [
+      "Yerusalem bukan tempat penampakan. Ini tempat peristiwanya: kota yang di dalamnya Yesus mengajar, diadili, disalibkan, dan dimakamkan, dengan jarak antar-titik yang jauh lebih pendek daripada yang dibayangkan sebagian besar orang — dari Getsemani ke Kalvari bisa ditempuh kaki dalam kurang dari satu jam, lewat jalan yang sekarang menjadi pasar.",
+      "Pusatnya adalah Basilika Makam Kudus, dibangun pertama kali atas perintah Kaisar Konstantinus pada abad keempat di atas dua tempat sekaligus: bukit penyaliban dan kubur batu di sebelahnya. Bangunan yang berdiri sekarang sebagian besar dari masa Tentara Salib abad kedua belas, dengan Aedicule di atas makam yang direstorasi pada 2016–2017. Gereja ini dikelola bersama oleh beberapa Gereja — Ortodoks Yunani, Fransiskan Kustodi Tanah Suci, dan Ortodoks Armenia sebagai pemegang utama — di bawah kesepakatan lama yang disebut Status Quo, sebab itu jam, jalur, dan bahkan lampu di dalamnya diatur sampai ke detail yang tampak aneh bagi pengunjung baru.",
+      "Di sekelilingnya ada rangkaian tempat yang biasanya dijalankan sebagai satu perjalanan: Bukit Zaitun dan taman Getsemani dengan pohon-pohon zaitun tuanya, Ruang Perjamuan Terakhir di Bukit Sion, Betlehem dan Gereja Kelahiran sembilan kilometer ke selatan, lalu Galilea di utara — Nazaret, Kapernaum, Tabgha, dan Bukit Sabda Bahagia — tempat sebagian besar pelayanan publik Yesus berlangsung. Jalur masuk, lintas wilayah, dan izin untuk peziarah Indonesia adalah bagian yang paling rumit, dan itu justru bagian yang masih kami kerjakan."
+    ],
+    sorotan: [
+      { title: "Basilika Makam Kudus", body: "Kalvari di lantai atas lewat tangga sempit di kanan pintu masuk, Batu Pengurapan di bawahnya, dan Aedicule di rotunda. Antrean masuk ke makam bisa satu sampai tiga jam pada musim ramai dan jauh lebih pendek sebelum jam enam pagi. Ada juga misa Fransiskan harian dan prosesi sore yang bisa diikuti rombongan." },
+      { title: "Via Dolorosa", body: "Empat belas perhentian dari daerah Benteng Antonia sampai ke dalam Basilika. Jalurnya melewati pasar yang hidup dan berjualan seperti biasa — itu bukan gangguan, itu kotanya. Prosesi bersama Fransiskan berjalan setiap Jumat sore dan itu cara terbaik menjalaninya." },
+      { title: "Getsemani dan Bukit Zaitun", body: "Gereja Segala Bangsa di atas batu tempat doa Yesus, taman zaitun di sisinya, lalu turun lewat Dominus Flevit dan Pater Noster. Untuk rombongan, ini bagian paling hening di seluruh perjalanan — jadwalkan pagi." },
+      { title: "Betlehem dan Galilea", body: "Gereja Kelahiran dengan Pintu Kerendahan Hati dan gua di bawah altarnya; lalu ke utara: Nazaret (Basilika Kabar Sukacita), Kapernaum, Tabgha, Bukit Sabda Bahagia, dan Sungai Yordan. Betlehem berada di wilayah Palestina — lintasnya perlu direncanakan, bukan diimprovisasi." }
+    ],
+    itinerary: [
+      { day: "RANGKA SEMENTARA — 12 HARI, BELUM FINAL", items: [
+        { time: "HARI 1–2", title: "Jakarta → Tanah Suci", body: "Satu kali transit lewat Doha, Dubai, atau Istanbul; 13–16 jam terbang. Jalur masuk — langsung, atau lewat Amman dan menyeberang darat — ditentukan penyelenggara berizin sesuai kondisi saat itu." },
+        { time: "HARI 3", title: "Betlehem", body: "Gereja Kelahiran, Padang Gembala, misa rombongan. Kami mulai dari kelahiran, bukan dari sengsara." },
+        { time: "HARI 4", title: "Kota Lama: Makam Kudus", body: "Masuk sebelum jam enam pagi, saat antrean makam masih pendek. Siang untuk Bukit Sion dan Ruang Perjamuan Terakhir." },
+        { time: "HARI 5", title: "Via Dolorosa dan Getsemani", body: "Jalan salib pagi di Kota Lama; sore Bukit Zaitun, Dominus Flevit, dan Getsemani." },
+        { time: "HARI 6–8", title: "Galilea", body: "Nazaret, Kana, Kapernaum, Tabgha, Bukit Sabda Bahagia, perahu di Danau Galilea, dan pembaruan janji baptis di Sungai Yordan." },
+        { time: "HARI 9–10", title: "Kembali ke Yerusalem", body: "Hari bebas untuk kembali ke Makam Kudus tanpa jadwal, ditambah Ain Karem dan Laut Mati kalau waktu memungkinkan." },
+        { time: "HARI 11–12", title: "Tambahan Yordania dan pulang", body: "Gunung Nebo, Madaba, dan Betania di seberang Yordan sebelum penerbangan kembali. Bagian ini yang paling menentukan panjang dan biaya perjalanan." }
+      ] }
+    ],
+    praktis: [
+      ["Lokasi", "Yerusalem, Betlehem, dan Galilea — Tanah Suci"],
+      ["Dari Indonesia", "13–16 jam terbang dengan satu transit; jalur masuk ditentukan penyelenggara"],
+      ["Bandara terdekat", "Ben Gurion (TLV); alternatif Queen Alia Amman (AMM) lalu darat lewat perlintasan Allenby/King Hussein"],
+      ["Izin masuk", "Indonesia tidak punya hubungan diplomatik dengan Israel, jadi peziarah Indonesia berangkat lewat penyelenggara berizin yang mengurus dokumen dan jalur masuknya. Ini bagian tersulit dari rute ini dan tidak bisa diurus sendiri."],
+      ["Keamanan", "Jadwal keberangkatan mengikuti kondisi keamanan dan imbauan resmi Kementerian Luar Negeri RI. Kalau kondisinya tidak aman, rute ini tidak jalan."],
+      ["Biaya masuk", "Gereja-gereja utama gratis; beberapa situs arkeologi dan nasional berbayar"],
+      ["Musim terbaik", "Maret–Mei dan September–November; puncaknya Pekan Suci dan Natal"],
+      ["Bahasa", "Ibrani dan Arab; pemandu berbahasa Indonesia tersedia lewat penyelenggara"]
+    ],
+    catatan: [
+      "Rute ini belum dibuka. Tidak ada harga, tanggal, atau uang muka yang kami terima untuk sekarang.",
+      "Keberangkatan ke Tanah Suci bergantung pada kondisi keamanan, bukan pada keinginan kita. Kami tidak akan menjalankan rute ini kalau imbauan resmi mengatakan sebaliknya.",
+      "Dokumen dan jalur masuk wajib lewat penyelenggara berizin. Waspadai penawaran yang menjanjikan hal ini murah dan cepat.",
+      "Kota Lama berundak dan sempit. Hitung jalan kaki 6–9 km sehari, banyak di antaranya di batu licin.",
+      "Pekan Suci adalah pengalaman yang tidak ada bandingnya dan sekaligus paling padat, paling mahal, dan paling melelahkan. Untuk rombongan lansia pertimbangkan Oktober.",
+      "Berpakaian tertutup di semua situs — bahu dan lutut. Ini berlaku untuk situs Kristen, Yahudi, dan Muslim."
+    ],
+    post: "",
+    produk: ["rosario-sonokeling","rosario-mutiara","kaos-peziarah"]
+  },
+  {
+    id: "iberia",
+    seoName: "Iberia",
+    name: "Iberia — Fátima, Santiago, Barcelona",
+    short: "Iberia",
+    region: "PORTUGAL & SPANYOL",
+    tagline: "Tiga tempat dengan tiga watak berbeda: penampakan 1917, jalan kaki seribu tahun, dan gereja yang belum selesai.",
+    note: "Rute internasional ketiga yang sedang kami susun. Belum dibuka — kamu bisa masuk daftar tunggu.",
+    tags: ["SEGERA","12–14 HARI","INTERNASIONAL"],
+    soon: {"label":"SEGERA","title":"Rute ini masih draf — belum pernah kami jalankan.","body":"Semua keterangan di halaman ini adalah data tempatnya, yang bisa kamu periksa sendiri di situs resmi Santuário de Fátima, Catedral de Santiago, dan Basílica de la Sagrada Família. Yang belum ada: harga, tanggal keberangkatan, dan mitra penyelenggara di Portugal dan Spanyol. Kami sedang menyiapkan ketiganya, dan sampai selesai kami tidak menerima pembayaran apa pun untuk rute ini."},
+    heroFull: true,
+    image: "/assets/iberia-hero.webp",
+    heroAlt: "Iberia — menara Katedral Santiago de Compostela, Basilika Fátima dengan patung Bunda Maria di depannya, dan menara Sagrada Família di Barcelona",
+    h: 340,
+    durasi: "12–14 hari dari Indonesia, tiga kota besar dalam satu perjalanan",
+    medan: "Fátima datar dan beraspal; Santiago berbukit dengan jalan batu; Barcelona kota besar dengan banyak jalan kaki dan tangga stasiun",
+    akses: "Fátima adalah yang paling ramah kursi roda dari ketiganya: esplanade datar, Kapel Penampakan dan kedua basilika bisa dijangkau. Katedral Santiago punya undakan di beberapa pintu dan Kota Lama berbatu tidak rata. Sagrada Família sendiri sepenuhnya bisa dijangkau kursi roda, kecuali menaranya yang hanya lewat lift sempit dan tangga turun.",
+    tenang: "Fátima sebelum jam delapan pagi dan di luar tanggal 12–13 setiap bulan; Santiago di luar Juli–Agustus; Sagrada Família pada slot pertama pagi",
+    intro: [
+      "Ini rute yang menggabungkan tiga hal yang biasanya dijual terpisah, dan menurut kami memang sebaiknya disatukan justru karena wataknya berbeda. Fátima adalah tempat penampakan: pada 13 Mei 1917 tiga anak gembala — Lúcia, Francisco, dan Jacinta — melihat Bunda Maria di Cova da Iria, berulang setiap tanggal 13 sampai Oktober, dan pada 13 Oktober 1917 puluhan ribu orang hadir di sana untuk peristiwa yang dikenal sebagai Mukjizat Matahari.",
+      "Santiago de Compostela adalah tempat tujuan, bukan tempat penampakan. Katedralnya dipercaya menyimpan makam Santo Yakobus Rasul, dan sejak abad kesembilan menjadi ujung jaringan jalan peziarah yang membentang melintasi Eropa — Camino. Kamu tidak harus jalan seribu kilometer untuk mendapat sertifikat Compostela: seratus kilometer terakhir sudah cukup, dan itu bisa ditempuh dalam lima hari dari Sarria. Untuk rombongan, kami merancang versi pendeknya.",
+      "Barcelona menutup perjalanan dengan hal yang lain lagi: Sagrada Família, gereja rancangan Antoni Gaudí yang mulai dibangun 1882 dan masih belum selesai, ditahbiskan sebagai basilika oleh Paus Benediktus XVI pada 2010 saat bangunannya sendiri belum berkubah penuh. Gaudí sendiri dimakamkan di kriptanya. Ini tempat ziarah yang bentuknya masih berubah — argumen paling jelas bahwa Gereja membangun untuk waktu yang lebih panjang dari satu generasi."
+    ],
+    sorotan: [
+      { title: "Cova da Iria dan Kapel Penampakan", body: "Kapel kecil di titik penampakan, berdiri di tengah esplanade yang bisa menampung ratusan ribu orang. Rosario internasional setiap hari, dan prosesi lilin malam. Tanggal 12–13 setiap bulan adalah puncaknya — luar biasa untuk dialami, sangat padat untuk dijadwalkan." },
+      { title: "Aljustrel dan Valinhos", body: "Kampung tempat ketiga anak itu tinggal, rumah aslinya masih ada, dan Valinhos tempat penampakan Agustus 1917. Makam Lúcia, Francisco, dan Jacinta ada di dalam Basilika Nossa Senhora do Rosário." },
+      { title: "Katedral Santiago dan Pórtico da Gloria", body: "Misa peziarah harian, Pórtico da Gloria karya Master Mateo dari abad kedua belas yang sudah direstorasi, dan botafumeiro — pedupaan raksasa yang diayunkan melintasi transept pada hari tertentu, bukan setiap hari. Pelukan tradisional pada arca Santo Yakobus di belakang altar tetap bisa dilakukan." },
+      { title: "Camino seratus kilometer terakhir", body: "Sarria sampai Santiago, lima hari jalan kaki, sekitar dua puluh kilometer sehari lewat Galicia yang hijau dan sering basah. Untuk peserta yang tidak berjalan, kami sediakan pendamping dan kendaraan yang bertemu di setiap titik akhir hari." },
+      { title: "Sagrada Família", body: "Masuk harus pesan tiket bertanggal jauh sebelumnya; slot pagi paling sepi dan cahaya sisi timur — Fasad Kelahiran — paling bagus saat itu. Sisakan waktu untuk kripta tempat Gaudí dimakamkan, dan untuk duduk diam sepuluh menit di nave tanpa memegang kamera." }
+    ],
+    itinerary: [
+      { day: "RANGKA SEMENTARA — 13 HARI, BELUM FINAL", items: [
+        { time: "HARI 1–2", title: "Jakarta → Lisbon", body: "Satu kali transit lewat Doha, Dubai, atau Istanbul; 17–20 jam terbang. Fátima ditempuh darat ± 1,5 jam dari bandara Lisbon." },
+        { time: "HARI 3", title: "Fátima: esplanade dan prosesi lilin", body: "Kami menaruh kunjungan pertama pada malam hari, saat prosesi lilin. Perbedaan suasananya dengan siang hari jauh." },
+        { time: "HARI 4", title: "Fátima: Aljustrel, Valinhos, jalan salib", body: "Pagi ke kampung ketiga anak gembala, siang jalan salib Hungaria, sore misa rombongan." },
+        { time: "HARI 5", title: "Lisbon dan Porto", body: "Belém dan Gereja Santo Antonius di Lisbon, lalu ke utara. Bisa juga langsung ke Porto untuk menghemat satu hari." },
+        { time: "HARI 6–10", title: "Camino: Sarria → Santiago", body: "Lima hari jalan kaki seratus kilometer terakhir, dengan pilihan ikut sebagian saja. Bagasi diangkut kendaraan antar-penginapan." },
+        { time: "HARI 11", title: "Santiago de Compostela", body: "Misa peziarah, Pórtico da Gloria, kantor peziarah untuk Compostela, dan waktu bebas di Kota Lama." },
+        { time: "HARI 12–13", title: "Barcelona dan pulang", body: "Penerbangan domestik ke Barcelona, Sagrada Família pada slot pagi, Montserrat kalau waktu memungkinkan, lalu penerbangan kembali." }
+      ] }
+    ],
+    praktis: [
+      ["Lokasi", "Fátima (Portugal); Santiago de Compostela dan Barcelona (Spanyol)"],
+      ["Dari Indonesia", "17–20 jam terbang dengan satu transit ke Lisbon, kembali dari Barcelona"],
+      ["Bandara terdekat", "Lisbon (LIS) ± 1,5 jam darat ke Fátima; Santiago (SCQ); Barcelona (BCN)"],
+      ["Visa", "Schengen — pengurusan realistis 4–8 pekan sebelum berangkat; satu visa untuk Portugal dan Spanyol"],
+      ["Biaya masuk", "Fátima dan Katedral Santiago gratis; Sagrada Família berbayar dan wajib pesan tiket bertanggal"],
+      ["Musim terbaik", "Mei–Juni dan September–Oktober; puncaknya 13 Mei dan 13 Oktober di Fátima, serta Juli–Agustus di Camino"],
+      ["Camino", "Seratus kilometer terakhir dari Sarria, lima hari, untuk memenuhi syarat Compostela; peserta boleh ikut sebagian"],
+      ["Bahasa", "Portugis dan Spanyol; misa serta panduan tersedia dalam banyak bahasa, tapi belum tentu Indonesia"]
+    ],
+    catatan: [
+      "Rute ini belum dibuka. Tidak ada harga, tanggal, atau uang muka yang kami terima untuk sekarang.",
+      "Visa Schengen adalah penentu jadwal, bukan tiket. Mulai dari sana, dan siapkan asuransi perjalanan sesuai syarat Schengen.",
+      "Tiket Sagrada Família bertanggal dan berjam — kalau jadwal rombongan bergeser, tiketnya hangus. Ini bagian yang paling kaku di seluruh perjalanan.",
+      "Bagian Camino menentukan panjang, biaya, dan tingkat kebugaran yang dibutuhkan. Versi tanpa Camino memangkas perjalanan jadi sekitar sembilan hari.",
+      "Penginapan di Fátima habis jauh sebelumnya untuk tanggal 12–13, terutama Mei dan Oktober.",
+      "Galicia sering hujan bahkan di musim panas. Untuk bagian Camino, jas hujan dan dua pasang kaus kaki jauh lebih berguna daripada sepatu baru."
+    ],
+    post: "",
+    produk: ["rosario-sonokeling","rosario-mutiara","kaos-peziarah"]
+  },
+  {
     id: "custom",
     name: "Rute rombongan kamu sendiri",
     short: "Rute custom",

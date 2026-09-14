@@ -398,4 +398,10 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <url><loc>https://peziarah.com/ziarah/rute/lourdes/</loc><lastmod>2026-09-14</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://peziarah.com/ziarah/rute/jerusalem/</loc><lastmod>2026-09-14</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://peziarah.com/ziarah/rute/iberia/</loc><lastmod>2026-09-14</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://peziarah.com/paket-paroki/</loc><lastmod>2026-09-14</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://peziarah.com/kolaborasi/</loc><lastmod>2026-09-14</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://peziarah.com/jurnal/artikel/tuka-bethlehem-bali/</loc><lastmod>2026-09-14</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>

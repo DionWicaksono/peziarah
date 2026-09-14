@@ -122,6 +122,12 @@ export const POSTS = [
     image: "/assets/shuttle-hero.webp", slot: "[ foto: shuttle bus peziarah ]" },
 
   // — Editorial —
+  { id: "tuka-bethlehem-bali", pillar: "editorial", kolom: "Catatan Editor",
+    title: "Lima menit dari rumah, dan aku tidak tahu",
+    dek: "Gereja Katolik pertama di Bali berdiri di ujung jalan yang kulewati dua kali sehari. Aku baru tahu dari internet.",
+    author: "Dion Wicaksono", date: "14 September 2026", read: 12,
+    heroRatio: "16 / 9",
+    image: "/assets/tuka-hero.webp", slot: "" },
   { id: "warna-ungu-dan-kenapa", pillar: "editorial", kolom: "Kalender Liturgi",
     title: "Ungu, dan kenapa kami memakainya sepanjang tahun",
     dek: "Warna Adven dan Prapaskah dipakai gereja hanya dua kali setahun. Kami memakainya terus — ini alasannya.",

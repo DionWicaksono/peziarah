@@ -85,6 +85,25 @@ const FORMS = {
       kembali: "entry.1815178876"
     }
   },
+  // /paket-paroki/ — parish-scale volume orders (Komuni, Krisma, lingkungan).
+  // No Google Form provisioned yet: with an empty id, submit() archives to
+  // localStorage and warns, and the page still hands off to WhatsApp.
+  paroki: {
+    id: "",
+    fields: {
+      kode: "",
+      paroki: "",
+      kota: "",
+      nama_kontak: "",
+      peran: "",
+      telepon: "",
+      sakramen: "",
+      jumlah_peserta: "",
+      tanggal_acara: "",
+      barang: "",
+      catatan: ""
+    }
+  },
   vendor: {
     id: "1FAIpQLSdeoeidNDOTr8dTvisyB1IlP6jQNQr73Ple-srOn9TmSBFMUw",
     fields: {

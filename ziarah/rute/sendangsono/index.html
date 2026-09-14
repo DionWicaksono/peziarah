@@ -111,6 +111,7 @@
       <a href="/ziarah/" style="color:#6C4BA6">Ziarah</a>
       <a href="/jurnal/">Jurnal</a>
       <a href="/hampers/">Hampers</a>
+      <a href="/bulan-rosario/">Bulan Rosario</a>
     </nav>
     <div style="{{ deskUtilStyle }}">
       <div style="{{ searchWrapStyle }}">
@@ -148,20 +149,21 @@
       <a href="/ziarah/" onClick="{{ toggleMenu }}" style="color:#6C4BA6">Ziarah</a>
       <a href="/jurnal/" onClick="{{ toggleMenu }}">Jurnal</a>
       <a href="/hampers/" onClick="{{ toggleMenu }}">Hampers</a>
+      <a href="/bulan-rosario/" onClick="{{ toggleMenu }}">Bulan Rosario</a>
     </nav>
     <div style="display:flex;gap:14px;margin-top:38px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:#8A8172">
       <a href="/keranjang/" style="white-space:nowrap">KERANJANG ({{ cartCount }})</a>
     </div>
   </div>
 
-  <section data-screen-label="Rute Hero" style="position:relative;background:#1A1712;color:#F7F3EA;min-height:clamp(400px,52vw,580px);display:flex;align-items:flex-end;overflow:hidden">
+  <section data-screen-label="Rute Hero" style="{{ heroSectionStyle }}">
     <div role="img" aria-label="{{ heroAlt }}" style="{{ heroBgStyle }}"></div>
-    <div style="position:absolute;inset:0;background:linear-gradient(8deg,rgba(26,23,18,0.8) 0%,rgba(26,23,18,0.52) 32%,rgba(26,23,18,0.34) 62%,rgba(26,23,18,0.26) 100%)"></div>
+    <div style="{{ heroScrimStyle }}"></div>
     <div style="position:relative;padding:clamp(48px,7vw,84px) 28px clamp(32px,4vw,48px);max-width:1280px;margin:0 auto;width:100%">
       <nav style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:rgba(247,243,234,0.82);text-shadow:0 1px 4px rgba(26,23,18,0.85),0 0 14px rgba(26,23,18,0.6)">
-        <a href="/" style="color:rgba(247,243,234,0.6)">BERANDA</a>
+        <a href="/" style="color:rgba(247,243,234,0.82)">BERANDA</a>
         <span>›</span>
-        <a href="/ziarah/#rute" style="color:rgba(247,243,234,0.6)">ZIARAH</a>
+        <a href="/ziarah/#rute" style="color:rgba(247,243,234,0.82)">ZIARAH</a>
         <span>›</span>
         <span style="color:#C9E45B">{{ region }}</span>
       </nav>
@@ -178,6 +180,21 @@
       </div>
     </div>
   </section>
+
+  <sc-if value="{{ soon }}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Belum Dibuka" style="background:#C9E45B;border-bottom:1px solid #A8C043">
+      <div style="max-width:1280px;margin:0 auto;padding:clamp(26px,3.4vw,44px) 28px;display:flex;flex-wrap:wrap;gap:clamp(22px,3vw,44px);align-items:flex-start">
+        <div style="flex:1 1 460px;min-width:280px">
+          <span style="display:inline-block;padding:6px 14px;border-radius:999px;background:#1A1712;color:#C9E45B;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.14em">{{ soonLabel }}</span>
+          <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(22px,3vw,34px);line-height:1.04;letter-spacing:-0.035em;margin:14px 0 0;max-width:28ch;color:#1A1712;text-wrap:balance">{{ soonTitle }}</h2>
+        </div>
+        <div style="flex:1 1 380px;min-width:280px">
+          <p style="margin:0;font-size:16px;line-height:1.62;color:#2A2A18;max-width:56ch;text-wrap:pretty">{{ soonBody }}</p>
+          <a href="/ziarah/#form-ziarah" style="display:inline-block;margin-top:20px;padding:15px 28px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px" style-hover="background:#6C4BA6">Masuk Daftar Tunggu</a>
+        </div>
+      </div>
+    </section>
+  </sc-if>
 
   <section data-screen-label="Ringkasan" style="border-bottom:1px solid #E7DFD1">
     <div style="max-width:1280px;margin:0 auto;padding:clamp(26px,3.4vw,40px) 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:26px">
@@ -221,6 +238,12 @@
       </sc-for>
     </div>
   </section>
+
+  <sc-if value="{{ isCustom }}">
+    <div style="max-width:1280px;margin:0 auto;padding:0 28px">
+      <dc-import name="GuaMariaMap" variant="ringkas" title="Pilih titiknya dari peta" eyebrow="KETUK PENANDA — JAWA &amp; BALI" dek="Ini rangka yang kami pakai waktu menyusun rute custom. Ketuk titik yang kamu incar, lalu kirim ke form permintaan — kami rangkai yang searah jadi satu perjalanan." ask-label="MASUKKAN KE PERMINTAAN RUTE" ask-href="/ziarah/#form-ziarah" hint-size="100%,760px"></dc-import>
+    </div>
+  </sc-if>
 
   <section data-screen-label="Galeri" style="{{ galeriStyle }}">
     <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:28px;border-top:1px solid #D6CBB8;padding-top:26px">
@@ -365,22 +388,69 @@
     </div>
   </section>
 
-  <footer style="background:#1A1712;color:#F7F3EA;padding:64px 28px 32px">
-    <div style="display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;margin-bottom:48px">
+  <footer style="background:#1A1712;color:#F7F3EA;padding:clamp(52px,6vw,80px) clamp(18px,4vw,44px) 30px">
+    <div style="display:flex;flex-wrap:wrap;gap:36px 44px;justify-content:space-between;margin-bottom:48px">
       <div style="flex:1 1 300px;min-width:260px">
-        <div style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(32px,5.4vw,68px);letter-spacing:0.06em;line-height:1">PEZIARAH</div>
-        <p style="margin:18px 0 0;max-width:38ch;font-size:15px;line-height:1.55;color:#A8A092">Gift shop, operator ziarah dan jurnal iman Katolik. Dibuat di, dan dikirim ke, seluruh Indonesia.</p></div><div style="flex:2 1 560px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:34px 40px;font-size:14px"><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BELANJA</span><a href="/katalog/#rosario">Rosario</a><a href="/katalog/#salib">Salib &amp; Krusifiks</a><a href="/katalog/#perhiasan">Perhiasan</a><a href="/katalog/#apparel">Tenun &amp; Batik</a><a href="/katalog/#wallart">Wall Art</a><a href="/katalog/#merch">Merch</a><a href="/hampers/">Hampers</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ZIARAH</span><a href="/ziarah/#rute">Semua Rute</a><a href="/ziarah/grup-kecil/">Grup Kecil</a><a href="/ziarah/rute/sendangsono/">Sendangsono</a><a href="/ziarah/rute/ganjuran/">Ganjuran</a><a href="/ziarah/rute/muntilan/">Muntilan</a><a href="/ziarah/rute/custom/">Susun Rute Sendiri</a><a href="/jurnal/#ziarah">Catatan Ziarah</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BANTUAN</span><a href="/faq/#pengiriman">Pengiriman</a><a href="/faq/#retur">Tukar &amp; Retur</a><a href="/faq/#produk">Ukuran &amp; Perawatan</a><a href="/tentang/">Tentang Kami</a><a href="/kontak/">Hubungi Kami</a></div><div style="display:flex;flex-direction:column;gap:11px"><span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">IKUTI</span><a href="https://instagram.com/peziarahsociety" target="_blank" rel="noopener">Instagram</a><a href="https://facebook.com/peziarahsociety" target="_blank" rel="noopener">Facebook</a><a href="https://wa.me/6281200000000" target="_blank" rel="noopener">WhatsApp</a></div></div></div>
-    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;border-top:1px solid rgba(247,243,234,0.14);padding-top:22px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#8A8172">
-      <span>© 2026 PEZIARAH</span>
+        <div style="font-family:'Cinzel',serif;font-weight:600;font-size:clamp(32px,5.2vw,66px);letter-spacing:0.06em;line-height:1">PEZIARAH</div>
+        <p style="margin:16px 0 0;max-width:38ch;font-size:15px;line-height:1.55;color:#A8A092">Operator ziarah, gift shop rohani batch kecil, dan jurnal iman Katolik. Dibuat di, dan dikirim ke, seluruh Indonesia.</p>
+        <a href="https://wa.me/6281200000000" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:14px 26px;border-radius:999px;background:#6C4BA6;color:#F7F3EA;font-weight:600;font-size:15px" style-hover="background:#C9E45B;color:#1A1712"><span style="font-family:'Space Mono',monospace;font-size:12px">WA</span>Tanya CS &#8212; balas &#60; 1 jam</a>
+        <div style="margin-top:16px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#A8A092;line-height:1.9">SENIN&#8211;SABTU 08.00&#8211;20.00 WIB<br>MUNTILAN, MAGELANG &#183; JAWA TENGAH</div>
+      </div>
+      <div style="flex:2 1 560px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:30px 40px;font-size:14px">
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BELANJA</span>
+          <a href="/katalog/#rosario">Rosario</a>
+          <a href="/katalog/#salib">Salib &amp; Krusifiks</a>
+          <a href="/katalog/#perhiasan">Perhiasan</a>
+          <a href="/katalog/#apparel">Tenun &amp; Batik</a>
+          <a href="/katalog/#wallart">Wall Art</a>
+          <a href="/katalog/#merch">Merch</a>
+          <a href="/hampers/">Hampers</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ZIARAH</span>
+          <a href="/ziarah/#rute">Semua Rute</a>
+          <a href="/ziarah/grup-kecil/">Grup Kecil</a>
+          <a href="/ziarah/#shuttle">Shuttle Harian</a>
+          <a href="/ziarah/rute/sendangsono/">Sendangsono</a>
+          <a href="/ziarah/rute/ganjuran/">Ganjuran</a>
+          <a href="/ziarah/rute/muntilan/">Muntilan</a>
+          <a href="/ziarah/rute/custom/">Susun Rute Sendiri</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BACAAN</span>
+          <a href="/jurnal/">Jurnal</a>
+          <a href="/jurnal/#ziarah">Catatan Ziarah</a>
+          <a href="/bulan-rosario/">Bulan Rosario</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">BANTUAN</span>
+          <a href="/faq/#pengiriman">Pengiriman</a>
+          <a href="/faq/#retur">Tukar &amp; Retur</a>
+          <a href="/faq/#produk">Ukuran &amp; Perawatan</a>
+          <a href="/tentang/">Tentang Kami</a>
+          <a href="/kolaborasi/">Kolaborasi</a>
+          <a href="/kontak/">Hubungi Kami</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">IKUTI</span>
+          <a href="https://instagram.com/peziarahsociety" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://facebook.com/peziarahsociety" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://wa.me/6281200000000" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;border-top:1px solid rgba(247,243,234,0.2);padding-top:20px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#8A8172">
+      <span>&#169; 2026 PEZIARAH</span>
       <span style="text-transform:uppercase">{{ verse }}</span>
-      <span><a href="/kebijakan-privasi/" style="color:inherit;text-decoration:none">KEBIJAKAN PRIVASI</a> · <a href="/syarat-ketentuan/" style="color:inherit;text-decoration:none">SYARAT &amp; KETENTUAN</a></span>
+      <span><a href="/kebijakan-privasi/" style="color:inherit;text-decoration:none">KEBIJAKAN PRIVASI</a> &#183; <a href="/syarat-ketentuan/" style="color:inherit;text-decoration:none">SYARAT &amp; KETENTUAN</a></span>
     </div>
   </footer>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;slug&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;sendangsono&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 // Route detail page. Content comes from data/routes.js; the linked note comes
-// from data/journal.js. Slug resolves from the URL hash (Rute.dc.html#ganjuran)
+// from data/journal.js. Slug resolves from the URL hash (/ziarah/rute/ganjuran)
 // or the prerendered path /ziarah/rute/<slug>/, falling back to the `slug` prop.
 let ROUTES = [];
 let POSTS = [];
@@ -482,7 +552,7 @@ class Component extends DCLogic {
         name: x.name,
         cat: (CAT_LABEL[x.cat] || "").toUpperCase(),
         price: x.price,
-        href: `/produk/${x.id}/`,
+        href: `/produk/${x.id}`,
         thumbStyle: "width:46px;height:46px;border-radius:12px;flex:none;" + (x.image
           ? `background:#EAE3D5 url("${x.image}") center/cover`
           : "background-image:repeating-linear-gradient(60deg,#DCD2C0 0 8px,#EAE3D5 8px 16px)")
@@ -495,7 +565,6 @@ class Component extends DCLogic {
   }
 
   media(src, h, radius) {
-    src = src && !/^(https?:|\/|data:)/.test(src) ? "/" + src : src;
     return `position:relative;height:${h}px;border-radius:${radius}px;overflow:hidden;` + (src
       ? `background:#EAE3D5 url("${src}") center/cover`
       : "background-image:repeating-linear-gradient(60deg,#DCD2C0 0 16px,#EAE3D5 16px 32px)");
@@ -518,7 +587,7 @@ class Component extends DCLogic {
       .map(p => ({
         name: p.name,
         price: p.price,
-        href: `/produk/${p.id}/`,
+        href: `/produk/${p.id}`,
         slot: p.image ? "" : "[ foto produk ]",
         mediaStyle: this.media(p.image, 200, 20)
       }));
@@ -532,9 +601,26 @@ class Component extends DCLogic {
       tagline: route.tagline || "",
       tags: route.tags || [],
       heroAlt: route.heroAlt || route.name || "",
-      heroBgStyle: "position:absolute;inset:0;opacity:1;" + (route.image
-        ? `background:#1A1712 url("${route.image}") 62% 46%/cover no-repeat`
-        : "background-image:repeating-linear-gradient(60deg,#2A2520 0 22px,#1F1B16 22px 44px)"),
+      // `heroFull` routes show the whole artwork instead of a cropped band:
+      // the image gets its own 16/9 block and the copy sits under it.
+      heroSectionStyle: route.heroFull
+        ? "position:relative;background:#1A1712;color:#F7F3EA;display:flex;flex-direction:column;overflow:hidden"
+        : "position:relative;background:#1A1712;color:#F7F3EA;min-height:clamp(400px,52vw,580px);display:flex;align-items:flex-end;overflow:hidden",
+      heroScrimStyle: route.heroFull
+        ? "display:none"
+        : "position:absolute;inset:0;background:linear-gradient(8deg,rgba(26,23,18,0.8) 0%,rgba(26,23,18,0.52) 32%,rgba(26,23,18,0.34) 62%,rgba(26,23,18,0.26) 100%)",
+      heroBgStyle: route.heroFull
+        ? `order:2;position:relative;width:100%;aspect-ratio:16 / 9;background:#1A1712 url("${route.image}") center/contain no-repeat`
+        : "position:absolute;inset:0;opacity:1;" + (route.image
+          ? `background:#1A1712 url("${route.image}") 62% 46%/cover no-repeat`
+          : "background-image:repeating-linear-gradient(60deg,#2A2520 0 22px,#1F1B16 22px 44px)"),
+
+      // `soon` marks a route that is drafted but not yet sellable. Everything
+      // else on the page still renders — the banner is what says "not open".
+      soon: !!route.soon,
+      soonLabel: (route.soon && route.soon.label) || "",
+      soonTitle: (route.soon && route.soon.title) || "",
+      soonBody: (route.soon && route.soon.body) || "",
 
       stats: [
         { label: "DURASI", value: route.durasi || "—" },
@@ -542,6 +628,8 @@ class Component extends DCLogic {
         { label: "AKSESIBILITAS", value: route.akses || "—" },
         { label: "WAKTU PALING TENANG", value: route.tenang || "—" }
       ],
+
+      isCustom: route.id === "custom",
 
       introTitle: route.id === "custom"
         ? "Sekilas tentang rute custom"
@@ -577,7 +665,7 @@ class Component extends DCLogic {
       ],
 
       postSectionStyle: post ? sectionPad : hide,
-      postHref: post ? `/jurnal/artikel/${post.id}/` : "/jurnal/",
+      postHref: post ? `/jurnal/artikel/${post.id}` : "/jurnal/",
       postBtnStyle: post
         ? "padding:16px 30px;border-radius:999px;border:1px solid rgba(247,243,234,0.45);font-weight:600;font-size:15px;color:#F7F3EA"
         : hide,
@@ -596,7 +684,7 @@ class Component extends DCLogic {
         name: o.name,
         region: o.region,
         durasi: o.durasi,
-        href: `/ziarah/rute/${o.id}/`,
+        href: `/ziarah/rute/${o.id}`,
         slot: o.image ? "" : `[ foto: ${o.short.toLowerCase()} ]`,
         mediaStyle: this.media(o.image, 190, 20)
       })),
