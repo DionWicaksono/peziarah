@@ -104,6 +104,18 @@ const FORMS = {
       catatan: ""
     }
   },
+  // /tanya/ — Tanya Awam, anonymous reader questions.
+  // Deliberately NOT archived to localStorage: these questions are the kind a
+  // visitor would not want found on a shared device. Callers must pass
+  // { archive: false } — see submit() below.
+  tanya: {
+    id: "1FAIpQLSf0LkAqQ-sOel0aKNowq-NEp5o4D4yLeGb1kGWANLabgflQ_Q",
+    fields: {
+      kode: "entry.1901366121",
+      pertanyaan: "entry.22320445",
+      topik: "entry.1774200180"
+    }
+  },
   vendor: {
     id: "1FAIpQLSdeoeidNDOTr8dTvisyB1IlP6jQNQr73Ple-srOn9TmSBFMUw",
     fields: {
@@ -139,15 +151,36 @@ export function getArchive() {
   } catch (e) { return []; }
 }
 
+
+// True once a Google Form endpoint is wired for this form. Pages whose only
+// record of a submission is the Sheet must gate their UI on this instead of
+// letting someone type a question that has nowhere to go.
+export function hasEndpoint(kind) {
+  return !!(FORMS[kind] && FORMS[kind].id);
+}
+
 // Fire-and-forget. Resolves true once the request was dispatched without a
-// network error — NOT a guarantee that Google accepted it.
-export function submit(kind, values) {
-  archive(kind, values);
+// network error — NOT a guarantee that Google accepted it. Resolves the string
+// "no-endpoint" when no form id is configured, which is NOT retryable.
+export function submit(kind, values, opts) {
+  // opts.archive === false skips the local copy entirely. Only Tanya Awam uses
+  // it: a question about a marriage or a lapsed child must not sit in
+  // localStorage on a phone someone else might pick up.
+  if (!opts || opts.archive !== false) archive(kind, values);
 
   const form = FORMS[kind];
   if (!form || !form.id) {
-    if (typeof console !== "undefined") console.warn("[forms] no endpoint mapped for", kind, "— archived locally only");
-    return Promise.resolve(false);
+    // Distinguish "never provisioned" from "network failed": callers cannot
+    // offer a useful retry for the former. Tanya Awam depends on this — it has
+    // no local archive and no WhatsApp fallback, so an unconfigured endpoint
+    // destroys the submission outright.
+    if (typeof console !== "undefined") {
+      console.warn("[forms] no endpoint mapped for", kind,
+        (!opts || opts.archive !== false)
+          ? "— archived locally only"
+          : "— NOT archived (archive:false) and NOT sent: this submission is lost");
+    }
+    return Promise.resolve("no-endpoint");
   }
 
   const body = new FormData();

@@ -124,7 +124,7 @@ SUDAH BERES (tidak perlu diapa-apakan lagi)
 
 GOOGLE ANALYTICS
 ----------------
-Semua 71 file HTML (70 halaman + 404.html) sudah memuat tag GA4 (G-H8J9GKJ2NT) tepat sebelum
+Semua 73 file HTML (72 halaman + 404.html) sudah memuat tag GA4 (G-H8J9GKJ2NT) tepat sebelum
 </head>. Kalau nanti ada halaman baru hasil build ulang, tag ini harus
 ditambahkan lagi — file sumber (*.dc.html) sengaja tidak memuatnya supaya
 kunjungan saat mendesain tidak ikut terhitung.
