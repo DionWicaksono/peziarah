@@ -384,6 +384,27 @@
 </div>
 
 </x-dc>
+<script>
+/* Hands the page over to the app once it has actually rendered. If the app
+   never mounts (support.js slow or blocked), the static block STAYS and the
+   raw template is hidden instead — the fallback must never be destroyed
+   while there is nothing to replace it with. */
+(function(){
+  var p=document.getElementById("__pr");if(!p)return;
+  var done=false;
+  function ready(){var r=document.getElementById("dc-root");return !!(r&&r.firstElementChild);}
+  function kill(){if(done)return;done=true;if(p&&p.parentNode)p.parentNode.removeChild(p);p=null;}
+  if(ready()){kill();return;}
+  var mo=new MutationObserver(function(){if(ready()){mo.disconnect();clearTimeout(t);kill();}});
+  mo.observe(document.body,{childList:true,subtree:true});
+  var t=setTimeout(function(){
+    if(ready()){mo.disconnect();kill();return;}
+    var s=document.createElement("style");
+    s.textContent="x-dc{display:none!important}";
+    document.head.appendChild(s);
+  },8000);
+})();
+</script>
 <script type="text/x-dc" data-dc-script data-props="{&quot;rotateQuestions&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Rubrik&quot;},&quot;showTopicPicker&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Formulir&quot;}}">
 // Rotating "overheard question" is driven by a ref, not a render hole, so the
 // first question paints with the markup and the fade survives re-renders.
