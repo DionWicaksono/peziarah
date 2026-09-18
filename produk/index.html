@@ -186,6 +186,7 @@
       </label>
 
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px">
+        <a href="{{ preorderHref }}" target="_blank" rel="noopener" style="{{ preorderStyle }}" style-hover="background:#1A1712;color:#F7F3EA">{{ preorderLabel }}</a>
         <button onClick="{{ addToCart }}" style="{{ cartStyle }}">{{ cartLabel }}</button>
         <a href="https://wa.me/6281200000000" style="padding:16px 26px;border-radius:999px;border:1px solid #1A1712;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#1A1712;color:#F7F3EA">Tanya via WA</a>
       </div>
@@ -655,17 +656,13 @@ class Component extends DCLogic {
       slot: p.image ? "" : p.slot,
       slotColor: p.tone === "light" ? "#9A9083" : "rgba(247,243,234,0.6)",
       heroStyle: this.media(this.shown(p), this.state.mobile ? 380 : 620),
-      badge: soldOut ? "SOLD OUT" : p.badge,
-      badgeStyle: (soldOut || p.badge)
-        ? `position:absolute;top:20px;left:20px;padding:7px 15px;border-radius:999px;white-space:nowrap;line-height:1;background:${
-            soldOut ? "#8A8172" : (p.badge === "BARU" || p.badge === "EDISI 150" ? "#C9E45B" : "#1A1712")};color:${
-            !soldOut && (p.badge === "BARU" || p.badge === "EDISI 150") ? "#1A1712" : "#F7F3EA"};font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em`
-        : "display:none",
+      badge: soldOut ? "SOLD OUT" : "SEGERA",
+      badgeStyle: "position:absolute;top:20px;left:20px;padding:7px 15px;border-radius:999px;white-space:nowrap;line-height:1;background:" + (soldOut ? "#8A8172" : "#6C4BA6") + ";color:#F7F3EA;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em",
       stockLabel: soldOut
         ? "Stok habis — masuk waiting list"
         : p.cat === "bodyart"
           ? `${p.stock} slot sesi tersisa bulan ini`
-          : `Sisa ${p.stock} pcs`,
+          : "Pre-order — batch kecil, 10–14 hari kerja",
       desc: p.cat === "bodyart"
         ? `${p.name} dikerjakan di studio kami oleh Gilang “Bara” Prawira — satu sesi, garis tangan, tanpa stensil massal. Harga mengikuti dimensi terpanjang (Rp 180K/cm, min. Rp 900K) dan sudah termasuk konsultasi desain, sesi tato, serta salep perawatan. Sketsa final selalu kami setujui bersama sebelum tinta pertama.`
         : this.blurb(p),
@@ -720,6 +717,12 @@ class Component extends DCLogic {
         clearTimeout(this._addT);
         this._addT = setTimeout(() => this.setState({ added: false }), 2200);
       },
+      preorderLabel: "Pre-order via WA",
+      preorderStyle: p.cat === "bodyart"
+        ? "display:none"
+        : "padding:16px 30px;border-radius:999px;background:#C9E45B;color:#1A1712;font-weight:600;font-size:15px;white-space:nowrap",
+      preorderHref: "https://wa.me/6281200000000?text=" + encodeURIComponent(
+        "Halo Peziarah, saya mau pre-order " + p.name + " (" + opt.label.toLowerCase() + ": " + (opt.values[this.state.opt] || "-") + "). Kapan batch berikutnya dibuka, dan bagaimana cara pesannya?"),
       cartCount: this.state.cartCount,
       assurances: p.cat === "bodyart" ? [
         { mark: "01", title: cc.line.title, sub: cc.line.sub },
