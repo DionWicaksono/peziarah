@@ -30,14 +30,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Cinzel:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap">
-<link rel="preload" as="image" href="/assets/hero-rosario-crop.png" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/hero-rosario-crop.webp" fetchpriority="high">
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/products.js">
 <link rel="modulepreload" href="/data/routes.js">
 <link rel="modulepreload" href="/data/hampers.js">
 <link rel="modulepreload" href="/data/journal.js">
 <link rel="modulepreload" href="/data/cart.js">
-<script src="/support.js" onerror="var s=document.createElement('script');s.src='support.js';document.head.appendChild(s)"></script>
+<script defer src="/support.js" onerror="var s=document.createElement('script');s.src='support.js';document.head.appendChild(s)"></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8J9GKJ2NT"></script>
 <script>
@@ -103,7 +103,7 @@
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
-<link rel="preload" as="image" href="/assets/hero-rosario-crop.png" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/hero-rosario-crop.webp" fetchpriority="high">
 </helmet>
 
 <div style="overflow-x:clip;position:relative">
@@ -353,7 +353,7 @@
 
   <section id="katalog" data-screen-label="Katalog" style="background:#F7F3EA">
     <div style="position:relative;min-height:clamp(430px,64dvh,760px);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#1A1712;color:#F7F3EA">
-      <img src="/assets/salib-sonokeling-crop.png" alt="Salib sonokeling dengan korpus kuningan, buatan tangan" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%" />
+      <img src="/assets/salib-sonokeling-crop.webp" alt="Salib sonokeling dengan korpus kuningan, buatan tangan" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%" />
       <div style="position:absolute;inset:0;background:linear-gradient(188deg,rgba(26,23,18,0.3) 0%,rgba(26,23,18,0.08) 34%,rgba(26,23,18,0.28) 100%)"></div>
       <div style="position:relative;margin-bottom:auto;display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:clamp(22px,3.2vw,40px) clamp(18px,4vw,44px) 16px;border-bottom:1px solid rgba(247,243,234,0.45);background:linear-gradient(180deg,rgba(26,23,18,0.72) 0%,rgba(26,23,18,0.5) 55%,rgba(26,23,18,0) 100%)">
         <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.16em;color:#C9E45B">02 &#8212; KATALOG</span>
@@ -774,7 +774,7 @@ class Component extends DCLogic {
   static SLIDES = [
     // This beat is centred, not bottom-set, so its scrim has to stay dark
     // through the middle band where the others are deliberately light.
-    { image: "/assets/hero-rosario-crop.png", pos: "center 50%",
+    { image: "/assets/hero-rosario-crop.webp", pos: "center 50%",
       scrimCss: "linear-gradient(180deg,rgba(26,23,18,0.66) 0%,rgba(26,23,18,0.6) 30%,rgba(26,23,18,0.72) 58%,rgba(26,23,18,0.9) 100%)",
       alt: "Rosario kayu sonokeling Peziarah" },
     { image: "/assets/sendangsono-hero.webp", pos: "center 54%", alt: "Jalan menuju Gua Maria Sendangsono di antara pohon sono" },
