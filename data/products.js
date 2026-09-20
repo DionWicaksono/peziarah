@@ -31,7 +31,7 @@ export const CATEGORIES = [
   { id: "salib",     name: "Salib & Krusifiks",    count: 29, slot: "[ krusifiks dinding ]", image: "/assets/salib-sonokeling-kuningan.webp" },
   // `fit: "contain"` mats a product-on-white shot instead of cropping it.
   { id: "perhiasan", name: "Perhiasan & Aksesori", count: 41, slot: "[ cincin, gelang, kalung ]", image: "/assets/ichthys-kalung.webp", fit: "contain" },
-  { id: "apparel",   name: "Tenun & Batik", count: 36, slot: "[ batik tulis & tenun ]", image: "/assets/batik-kenaikan.webp" },
+  { id: "apparel",   name: "Tenun & Batik", count: 36, slot: "[ batik print & tenun ]", image: "/assets/batik-kenaikan.webp" },
   { id: "wallart",   name: "Wall Art",             count: 23, slot: "[ ikon & poster dinding ]", image: "/assets/wallart-maria-line.webp" },
   { id: "merch",     name: "Merch",                count: 43, slot: "[ kaos grafis & tote ]", image: "/assets/tote-peziarah-2.webp" },
   { id: "lilin",     name: "Lilin Aroma",          count: 12, slot: "[ lilin kedelai beraroma ]", image: "/assets/lilin-vespers.webp", fit: "contain" },
@@ -141,14 +141,41 @@ export const CATEGORY_COPY = {
 // Resident artist for the crucifixion pieces: Gilang “Bara” Prawira.
 export const BODYART_RATE = { perCm: 180000, min: 900000 };
 
-// Batik sold as kain (as-is) or made up; surcharge added on top of `base`.
+// Batik designs ship as a full cloth or as a pashmina; surcharge added on top of `base`.
+const FORMAT = { label: "FORMAT", values: ["Kain print 150×200 cm", "Pashmina viscose 70×180 cm"], add: [0, 100000], note: "Pashmina viscose 70×180 cm — dicetak batch kecil di Klaten, 10–14 hari kerja." };
+
 export const SEWING = { kemeja: 450000, dress: 650000 };
 
 // Products without photography are kept in the source data but not published.
 const ALL_PRODUCTS = [
-  { id: "batik-kenaikan", name: "Batik Tulis “Kenaikan” — Kain 170×100 cm", cat: "apparel", price: "Rp 2.450K", base: 2450000,
-    opt: { label: "BENTUK", values: ["Kain 170×100 cm", "Dijahit kemeja", "Dijahit dress"], add: [0, SEWING.kemeja, SEWING.dress] },
-    badge: "HANDMADE", image: "/assets/batik-kenaikan.webp", shots: ["/assets/batik-kenaikan-full.webp"], slot: "[ batik tulis kenaikan ]", h: 480, tone: "light", rot: -0.7, stock: 6 },
+  { id: "batik-kenaikan", name: "Batik Print “Kenaikan”", cat: "apparel", price: "mulai Rp 150K", base: 150000,
+    opt: FORMAT,
+    desc: "Kristus naik ke surga dalam bahasa rupa Jawa: awan mega mendung menyangga tubuh-Nya, para rasul berkain dan berkerudung menengadah dari bawah, parang klasik mengunci kaki kain. Dicetak di Klaten dalam batch kecil, dari desain yang digambar khusus untuk Peziarah. Ambil sebagai kain utuh 150×200 cm, atau sebagai pashmina viscose yang jatuh lembut di bahu.",
+    specs: [{ k: "Bahan", v: "Kain — katun Toyobo · Pashmina — viscose" }, { k: "Ukuran", v: "Kain 150×200 cm · Pashmina 70×180 cm" }, { k: "Teknik", v: "Cetak batik, batch kecil di Klaten" }, { k: "Desain", v: "Digambar khusus untuk Peziarah, bukan motif pasaran" }, { k: "Kemasan", v: "Dilipat kertas asam-netral + kotak kado" }],
+    care: "Cuci tangan dengan sabun cair lembut bersuhu dingin, terpisah dari pakaian lain pada dua-tiga cucian pertama. Jangan direndam lama, jangan disikat, jangan diperas kencang. Jemur balik di tempat teduh — sinar matahari langsung memudarkan warna cetak. Setrika suhu sedang dari sisi dalam; pashmina viscose cukup disetrika selagi agak lembap.",
+    rite: { title: "Sebelum kain dilipat", body: "Setiap lembar diperiksa di bawah cahaya siang — ketajaman cetak, warna, dan jahitan tepinya — lalu dilipat dengan kertas asam-netral dan disertai kartu keterangan motif. Tanpa plastik sekali pakai." },
+    badge: "SEGERA", hero: "/assets/batik-kenaikan-pashmina.webp", image: "/assets/batik-kenaikan.webp", shots: ["/assets/batik-kenaikan-full.webp", "/assets/batik-kenaikan-pashmina.webp"], slot: "[ batik print kenaikan ]", h: 480, tone: "light", rot: -0.7, stock: 6 },
+  { id: "batik-nativity", name: "Batik Print “Nativity”", cat: "apparel", price: "mulai Rp 150K", base: 150000,
+    opt: FORMAT,
+    desc: "Malam Natal dengan kandang beratap joglo: bintang timur pecah jadi sinar di tengah kain, dua malaikat melayang di awan, tiga raja datang dari kiri membawa pundi-pundi, unta dan lembu menunggu di tepi. Nila tua dengan emas gading — warna yang sama tenangnya dipakai ke misa malam atau disampirkan di meja Natal.",
+    specs: [{ k: "Bahan", v: "Kain — katun Toyobo · Pashmina — viscose" }, { k: "Ukuran", v: "Kain 150×200 cm · Pashmina 70×180 cm" }, { k: "Teknik", v: "Cetak batik, batch kecil di Klaten" }, { k: "Desain", v: "Digambar khusus untuk Peziarah, bukan motif pasaran" }, { k: "Kemasan", v: "Dilipat kertas asam-netral + kotak kado" }],
+    care: "Cuci tangan dengan sabun cair lembut bersuhu dingin, terpisah dari pakaian lain pada dua-tiga cucian pertama. Jangan direndam lama, jangan disikat, jangan diperas kencang. Jemur balik di tempat teduh — sinar matahari langsung memudarkan warna cetak. Setrika suhu sedang dari sisi dalam; pashmina viscose cukup disetrika selagi agak lembap.",
+    rite: { title: "Sebelum kain dilipat", body: "Setiap lembar diperiksa di bawah cahaya siang — ketajaman cetak, warna, dan jahitan tepinya — lalu dilipat dengan kertas asam-netral dan disertai kartu keterangan motif. Tanpa plastik sekali pakai." },
+    badge: "SEGERA", hero: "/assets/batik-nativity-model.webp", image: "/assets/batik-nativity.webp", shots: ["/assets/batik-nativity-model.webp"], slot: "[ batik print nativity ]", h: 440, tone: "dark", rot: 0.6, stock: 6 },
+  { id: "batik-calvary", name: "Batik Print “Calvary”", cat: "apparel", price: "mulai Rp 150K", base: 150000,
+    opt: FORMAT,
+    desc: "Golgota di antara tembok Yerusalem: Kristus di salib dengan INRI di atas kepala, Bunda Maria dan Yohanes berdiri mengapit, merpati dan awan mengisi langit, sulur bunga menutup seluruh latar sampai ke pinggir kain. Cokelat soga tua — kain Jumat Agung, tapi cukup tenang untuk dipakai sepanjang tahun.",
+    specs: [{ k: "Bahan", v: "Kain — katun Toyobo · Pashmina — viscose" }, { k: "Ukuran", v: "Kain 150×200 cm · Pashmina 70×180 cm" }, { k: "Teknik", v: "Cetak batik, batch kecil di Klaten" }, { k: "Desain", v: "Digambar khusus untuk Peziarah, bukan motif pasaran" }, { k: "Kemasan", v: "Dilipat kertas asam-netral + kotak kado" }],
+    care: "Cuci tangan dengan sabun cair lembut bersuhu dingin, terpisah dari pakaian lain pada dua-tiga cucian pertama. Jangan direndam lama, jangan disikat, jangan diperas kencang. Jemur balik di tempat teduh — sinar matahari langsung memudarkan warna cetak. Setrika suhu sedang dari sisi dalam; pashmina viscose cukup disetrika selagi agak lembap.",
+    rite: { title: "Sebelum kain dilipat", body: "Setiap lembar diperiksa di bawah cahaya siang — ketajaman cetak, warna, dan jahitan tepinya — lalu dilipat dengan kertas asam-netral dan disertai kartu keterangan motif. Tanpa plastik sekali pakai." },
+    badge: "SEGERA", hero: "/assets/batik-calvary-model.webp", image: "/assets/batik-calvary.webp", shots: ["/assets/batik-calvary-pashmina.webp", "/assets/batik-calvary-model.webp"], slot: "[ batik print calvary ]", h: 400, tone: "light", rot: -0.4, stock: 6 },
+  { id: "batik-marian", name: "Batik Print “Marian”", cat: "apparel", price: "mulai Rp 150K", base: 150000,
+    opt: FORMAT,
+    desc: "Bunda Maria berdiri di atas bulan sabit, diapit dua malaikat pembawa lili, dengan gunung, danau, dan siluet menara gereja Jawa di kedua sisi. Nila tua dengan emas — panel memanjang yang jatuh persis di sepanjang pashmina, dan terbaca utuh ketika kainnya dibentangkan.",
+    specs: [{ k: "Bahan", v: "Kain — katun Toyobo · Pashmina — viscose" }, { k: "Ukuran", v: "Kain 150×200 cm · Pashmina 70×180 cm" }, { k: "Teknik", v: "Cetak batik, batch kecil di Klaten" }, { k: "Desain", v: "Digambar khusus untuk Peziarah, bukan motif pasaran" }, { k: "Kemasan", v: "Dilipat kertas asam-netral + kotak kado" }],
+    care: "Cuci tangan dengan sabun cair lembut bersuhu dingin, terpisah dari pakaian lain pada dua-tiga cucian pertama. Jangan direndam lama, jangan disikat, jangan diperas kencang. Jemur balik di tempat teduh — sinar matahari langsung memudarkan warna cetak. Setrika suhu sedang dari sisi dalam; pashmina viscose cukup disetrika selagi agak lembap.",
+    rite: { title: "Sebelum kain dilipat", body: "Setiap lembar diperiksa di bawah cahaya siang — ketajaman cetak, warna, dan jahitan tepinya — lalu dilipat dengan kertas asam-netral dan disertai kartu keterangan motif. Tanpa plastik sekali pakai." },
+    badge: "SEGERA", hero: "/assets/batik-marian-model.webp", image: "/assets/batik-marian.webp", shots: ["/assets/batik-marian-model.webp"], slot: "[ batik print marian ]", h: 360, tone: "dark", rot: 0, stock: 6 },
   { id: "rosario-sonokeling", name: "Rosario Kayu Sonokeling", cat: "rosario", price: "Rp 249K", badge: "BEST SELLER", image: "/assets/hero-rosario.webp", shots: ["/assets/hero-rosario-full.webp"], slot: "[ rosario sonokeling ]", h: 420, tone: "light", rot: -1.2, stock: 12 },
   { id: "rosario-mutiara", name: "Rosario Mutiara Air Tawar", cat: "rosario", price: "Rp 389K", badge: "BARU",
     desc: "Mutiara air tawar bulat-tak-sempurna, satu per satu dirangkai kawat perak dan dipuntir tangan — bukan diikat benang, jadi tidak akan putus berhamburan. Bapa-nya bermanik filigri, medali Regina sine labe originali concepta, dan krusifiks perak berjuntai di ujungnya. Untuk yang dipakai seumur hidup, bukan disimpan di laci.",
