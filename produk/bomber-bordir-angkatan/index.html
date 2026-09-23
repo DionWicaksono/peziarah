@@ -159,6 +159,9 @@
     <div style="flex:1 1 380px;min-width:300px;position:sticky;top:88px">
       <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#6C4BA6">{{ catName }}</span>
       <h1 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(32px,4.6vw,58px);line-height:0.94;letter-spacing:-0.04em;margin:14px 0 16px">{{ name }}</h1>
+      <sc-if value="{{ hasArtist }}" hint-placeholder-val="{{ false }}">
+        <a href="{{ artistHref }}" target="_blank" rel="noopener" style="display:inline-flex;gap:8px;align-items:baseline;margin:-4px 0 22px;font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:clamp(19px,2vw,23px);letter-spacing:0.04em;color:#6C4BA6;text-decoration:none" style-hover="color:#1A1712">oleh {{ artistName }} <span style="font-family:'Space Mono',monospace;font-size:14px">↗</span></a>
+      </sc-if>
       <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:22px">
         <span style="font-family:'Archivo',sans-serif;font-weight:700;font-size:30px;letter-spacing:-0.02em">{{ price }}</span>
         <span style="font-family:'Space Mono',monospace;font-size:12px;color:#8A8172">{{ stockLabel }}</span>
@@ -213,7 +216,7 @@
         <sc-for list="{{ specs }}" as="s" hint-placeholder-count="5">
           <div style="display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid #DFD6C4;font-size:14px">
             <span style="color:#8A8172">{{ s.k }}</span>
-            <span style="text-align:right">{{ s.v }}</span>
+            <a href="{{ s.href }}" target="_blank" rel="noopener" style="text-align:right;color:inherit;text-decoration:none" style-hover="color:#6C4BA6">{{ s.v }}</a>
           </div>
         </sc-for>
       </div>
@@ -652,7 +655,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const p = this.state.p;
-    if (!p) return { ...this.chrome(), ...this.search(), cartCount: this.state.cartCount, name: "Memuat…", heroVideo: null, hasQuote: false, quoteLines: [], thumbs: [], options: [], specs: [], related: [], assurances: [] };
+    if (!p) return { ...this.chrome(), ...this.search(), cartCount: this.state.cartCount, name: "Memuat…", heroVideo: null, hasQuote: false, quoteLines: [], hasArtist: false, thumbs: [], options: [], specs: [], related: [], assurances: [] };
 
     const cat = CATS.find(c => c.id === p.cat) || { name: "", id: "" };
     const cc = this.copy(p);
@@ -691,6 +694,9 @@ class Component extends DCLogic {
         : p.cat === "bodyart"
           ? `${p.stock} slot sesi tersisa bulan ini`
           : "Pre-order — batch kecil, 10–14 hari kerja",
+      hasArtist: !!p.artist,
+      artistName: p.artist ? p.artist.name : "",
+      artistHref: p.artist ? p.artist.href : "",
       hasQuote: !!p.quote,
       quoteLines: (p.quote && p.quote.lines) || [],
       quoteCite: (p.quote && p.quote.cite) || "",
