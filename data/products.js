@@ -109,8 +109,8 @@ export const CATEGORY_COPY = {
   },
   wallart: {
     care: "Gantung jauh dari sinar matahari langsung agar tinta tidak pudar. Bersihkan dengan kuas lembut atau kain microfiber kering — jangan cairan pembersih. Untuk keping logam, sesekali lap tipis dengan minyak mineral.",
-    rite: { title: "Sebelum masuk tabung", body: "Sudut dilapis pelindung, lalu dikirim dalam tabung kaku atau papan datar tergantung ukuran. Kartu edisi bernomor dan tanda tangan pencetaknya ikut di dalam." },
-    line: { title: "Dikirim dalam tabung kaku.", sub: "Sudut dilapis, kartu edisi ikut." }
+    rite: { title: "Sebelum masuk kotak", body: "Sudut dilapis pelindung, lalu dikirim dalam kotak kaku yang pas dengan ukurannya. Kartu edisi bernomor dan tanda tangan pencetaknya ikut di dalam." },
+    line: { title: "Dikirim dalam kotak kaku.", sub: "Sudut dilapis, kartu edisi ikut." }
   },
   carry: {
     care: "Lap debu dengan kain kering; untuk kulit, kondisikan dua kali setahun dengan krim netral. Dry bag cukup dibilas air tawar dan dikeringkan terbuka. Jangan disimpan tergulung rapat dalam keadaan lembap.",
@@ -241,10 +241,10 @@ const ALL_PRODUCTS = [
     artist: { name: "Castella Natalia", href: "https://www.threads.com/@castellanatalia" },
     opt: { label: "EDISI", values: ["Karya asli — 60×60 cm"] },
     quote: { lines: ["Though I walk through the valley","of the shadow of death,","I will fear no evil:","for thou art with me."], cite: "Psalm 23:4" },
-    desc: "Gembala yang baik menuruni lembah dengan seekor domba di pundak-Nya — Mazmur 23 dalam bahasa tekstur. Castella Natalia membangun permukaannya lapis demi lapis dengan pasta tekstur dan media campuran, lalu melukis di atasnya: tebing biru-hijau yang gelap dan retak di kedua sisi, dan cahaya yang terbuka di ujung jalan setapak. Karya asli, hanya satu keping — dibingkai kayu dan disertai Certificate of Authenticity yang ditandatangani senimannya.",
-    specs: [{ k: "Seniman", v: "Castella Natalia ↗", href: "https://www.threads.com/@castellanatalia" }, { k: "Media", v: "Mixed media di atas kanvas" }, { k: "Teknik", v: "Lukisan tekstur, pasta & cat berlapis" }, { k: "Ukuran", v: "60×60 cm" }, { k: "Edisi", v: "Karya asli, satu keping" }, { k: "Bingkai", v: "Bingkai kayu, siap gantung" }, { k: "Sertifikat", v: "Certificate of Authenticity, ditandatangani seniman" }],
+    desc: "Gembala yang baik menuruni lembah dengan seekor domba di pundak-Nya — Mazmur 23 dalam bahasa tekstur. Castella Natalia membangun permukaannya lapis demi lapis dengan pasta tekstur dan media campuran, lalu melukis di atasnya: tebing biru-hijau yang gelap dan retak di kedua sisi, dan cahaya yang terbuka di ujung jalan setapak. Karya asli, hanya satu keping, disertai Certificate of Authenticity yang ditandatangani senimannya. Dijual tanpa bingkai — bingkai pada foto hanya ilustrasi.",
+    specs: [{ k: "Seniman", v: "Castella Natalia ↗", href: "https://www.threads.com/@castellanatalia" }, { k: "Media", v: "Mixed media di atas kanvas" }, { k: "Teknik", v: "Lukisan tekstur, pasta & cat berlapis" }, { k: "Ukuran", v: "60×60 cm" }, { k: "Edisi", v: "Karya asli, satu keping" }, { k: "Bingkai", v: "Tidak termasuk — bingkai di foto hanya ilustrasi" }, { k: "Sertifikat", v: "Certificate of Authenticity, ditandatangani seniman" }],
     care: "Gantung jauh dari sinar matahari langsung dan dinding yang lembap. Bersihkan debu di sela tekstur dengan kuas lembut yang kering — jangan dilap basah atau diberi cairan pembersih. Angkat dari sisi bingkai, jangan menekan permukaan kanvas.",
-    rite: { title: "Sebelum lukisan berangkat", body: "Permukaan tekstur dilapis kertas glassine agar tidak tergores, sudut dilindungi, lalu karya dikemas kaku dan dikirim berasuransi. Certificate of Authenticity bertanda tangan Castella Natalia ikut di dalam. Kondisi lukisan kami foto sebelum berangkat dan kami kirimkan kepadamu." },
+    rite: { title: "Sebelum lukisan berangkat", body: "Permukaan tekstur dilapis kertas glassine agar tidak tergores, sudut dilindungi, lalu lukisan dikemas dalam kotak kardus tebal berlapis dan dikirim berasuransi. Certificate of Authenticity bertanda tangan Castella Natalia ikut di dalam. Kondisi lukisan kami foto sebelum berangkat dan kami kirimkan kepadamu." },
     stockNote: "Karya asli — hanya satu keping",
     hero: "/assets/lukisan-mazmur-23-ruang.webp", image: "/assets/lukisan-mazmur-23.webp", shots: ["/assets/lukisan-mazmur-23-ruang.webp", "/assets/lukisan-mazmur-23-detail.webp"], slot: "[ lukisan mazmur 23 ]", h: 460, tone: "dark", rot: -0.6, stock: 1 },
   { id: "panel-ayat-kuningan", name: "Panel Ayat Kuningan", cat: "wallart", price: "Rp 590K", badge: "", image: "", slot: "[ panel kuningan ayat ]", h: 360, tone: "dark", rot: 0, stock: 6 },
