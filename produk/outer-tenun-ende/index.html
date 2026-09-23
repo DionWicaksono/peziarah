@@ -158,6 +158,15 @@
         <span style="font-family:'Space Mono',monospace;font-size:12px;color:#8A8172">{{ stockLabel }}</span>
       </div>
       <p style="{{ priceNoteStyle }}">{{ priceNote }}</p>
+      <sc-if value="{{ hasQuote }}" hint-placeholder-val="{{ false }}">
+        <figure style="margin:0 0 24px;padding:22px 0 20px;border-top:1px solid #D6CBB8;border-bottom:1px solid #D6CBB8;max-width:44ch">
+          <span style="display:block;font-family:'Cinzel',Georgia,serif;font-size:56px;line-height:0.5;height:26px;color:#6C4BA6">“</span>
+          <blockquote style="margin:0;font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:19px;line-height:1.55;letter-spacing:0.02em;color:#1A1712">
+            <sc-for list="{{ quoteLines }}" as="ql" hint-placeholder-count="4"><span style="display:block">{{ ql }}</span></sc-for>
+          </blockquote>
+          <figcaption style="margin-top:14px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#8A8172">— {{ quoteCite }}</figcaption>
+        </figure>
+      </sc-if>
       <p style="margin:0 0 28px;font-size:16px;line-height:1.6;color:#5B5347;max-width:48ch;text-wrap:pretty">{{ desc }}</p>
 
       <div style="margin-bottom:22px">
@@ -637,7 +646,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const p = this.state.p;
-    if (!p) return { ...this.chrome(), ...this.search(), cartCount: this.state.cartCount, name: "Memuat…", heroVideo: null, thumbs: [], options: [], specs: [], related: [], assurances: [] };
+    if (!p) return { ...this.chrome(), ...this.search(), cartCount: this.state.cartCount, name: "Memuat…", heroVideo: null, hasQuote: false, quoteLines: [], thumbs: [], options: [], specs: [], related: [], assurances: [] };
 
     const cat = CATS.find(c => c.id === p.cat) || { name: "", id: "" };
     const cc = this.copy(p);
@@ -669,13 +678,16 @@ class Component extends DCLogic {
       slotColor: p.tone === "light" ? "#9A9083" : "rgba(247,243,234,0.6)",
       heroStyle: this.media(this.shown(p), this.state.mobile ? 380 : 620),
       heroVideo: this.heroVideo(p),
-      badge: soldOut ? "SOLD OUT" : "SEGERA",
+      badge: soldOut ? "SOLD OUT" : (p.status || "SEGERA"),
       badgeStyle: "position:absolute;top:20px;left:20px;padding:7px 15px;border-radius:999px;white-space:nowrap;line-height:1;background:" + (soldOut ? "#8A8172" : "#6C4BA6") + ";color:#F7F3EA;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em",
-      stockLabel: soldOut
+      stockLabel: (p.stockNote && !soldOut) ? p.stockNote : soldOut
         ? "Stok habis — masuk waiting list"
         : p.cat === "bodyart"
           ? `${p.stock} slot sesi tersisa bulan ini`
           : "Pre-order — batch kecil, 10–14 hari kerja",
+      hasQuote: !!p.quote,
+      quoteLines: (p.quote && p.quote.lines) || [],
+      quoteCite: (p.quote && p.quote.cite) || "",
       desc: p.cat === "bodyart"
         ? `${p.name} dikerjakan di studio kami oleh Gilang “Bara” Prawira — satu sesi, garis tangan, tanpa stensil massal. Harga mengikuti dimensi terpanjang (Rp 180K/cm, min. Rp 900K) dan sudah termasuk konsultasi desain, sesi tato, serta salep perawatan. Sketsa final selalu kami setujui bersama sebelum tinta pertama.`
         : this.blurb(p),

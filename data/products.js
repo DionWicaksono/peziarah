@@ -21,6 +21,9 @@
 //   tone    "light" | "dark" | "violet"   placeholder background treatment
 //   rot     number   card rotation in deg (keep within -1.4..1.4)
 //   stock   number   0 = SOLD OUT badge overrides `badge`
+//   status  string   optional; replaces the "SEGERA" status pill (e.g. "AVAILABLE")
+//   stockNote string optional; replaces the PDP pre-order line (e.g. one-off originals)
+//   quote   object   optional; { lines[], cite } scripture pull-quote shown above desc
 //   base    number   optional; price in rupiah, used when `opt.add` recomputes price
 //   opt     object   optional per-product variant selector that overrides the PDP's
 //                    category default: { label, values[], add[] } where add[] is the
@@ -234,6 +237,15 @@ const ALL_PRODUCTS = [
     desc: "Mahkota duri dibentuk tangan dari kawat berduri yang sengaja dibiarkan berkarat, lalu dipasang mengapung di dalam kotak bayangan berpelat kuningan. Satu keping butuh dua hari kerja: memotong, memutar, menua, menyegel. Setiap mahkota berbeda bentuk — tidak bisa diulang.",
     specs: [{ k: "Bahan", v: "Kawat berduri berkarat, pelat kuningan" }, { k: "Bingkai", v: "Kotak bayangan kayu, 60×45 cm" }, { k: "Finishing", v: "Disegel matte, siap gantung" }, { k: "Kemasan", v: "Peti kayu, kirim berasuransi" }],
     image: "/assets/wallart-crown-of-thorn.webp", shots: ["/assets/wallart-crown-of-thorn-full.webp"], slot: "[ crown of thorn — kawat berduri ]", h: 360, tone: "light", rot: 0.5, stock: 4 },
+  { id: "lukisan-mazmur-23", name: "Lukisan “Mazmur 23” — Castella Natalia", cat: "wallart", price: "Rp 8.000K", badge: "KARYA ASLI", status: "AVAILABLE",
+    opt: { label: "EDISI", values: ["Karya asli — 60×60 cm"] },
+    quote: { lines: ["Though I walk through the valley","of the shadow of death,","I will fear no evil:","for thou art with me."], cite: "Psalm 23:4" },
+    desc: "Gembala yang baik menuruni lembah dengan seekor domba di pundak-Nya — Mazmur 23 dalam bahasa tekstur. Castella Natalia membangun permukaannya lapis demi lapis dengan pasta tekstur dan media campuran, lalu melukis di atasnya: tebing biru-hijau yang gelap dan retak di kedua sisi, dan cahaya yang terbuka di ujung jalan setapak. Karya asli, hanya satu keping — dibingkai kayu dan disertai Certificate of Authenticity yang ditandatangani senimannya.",
+    specs: [{ k: "Seniman", v: "Castella Natalia" }, { k: "Media", v: "Mixed media di atas kanvas" }, { k: "Teknik", v: "Lukisan tekstur, pasta & cat berlapis" }, { k: "Ukuran", v: "60×60 cm" }, { k: "Edisi", v: "Karya asli, satu keping" }, { k: "Bingkai", v: "Bingkai kayu, siap gantung" }, { k: "Sertifikat", v: "Certificate of Authenticity, ditandatangani seniman" }],
+    care: "Gantung jauh dari sinar matahari langsung dan dinding yang lembap. Bersihkan debu di sela tekstur dengan kuas lembut yang kering — jangan dilap basah atau diberi cairan pembersih. Angkat dari sisi bingkai, jangan menekan permukaan kanvas.",
+    rite: { title: "Sebelum lukisan berangkat", body: "Permukaan tekstur dilapis kertas glassine agar tidak tergores, sudut dilindungi, lalu karya dikemas kaku dan dikirim berasuransi. Certificate of Authenticity bertanda tangan Castella Natalia ikut di dalam. Kondisi lukisan kami foto sebelum berangkat dan kami kirimkan kepadamu." },
+    stockNote: "Karya asli — hanya satu keping",
+    hero: "/assets/lukisan-mazmur-23-ruang.webp", image: "/assets/lukisan-mazmur-23.webp", shots: ["/assets/lukisan-mazmur-23-ruang.webp", "/assets/lukisan-mazmur-23-detail.webp"], slot: "[ lukisan mazmur 23 ]", h: 460, tone: "dark", rot: -0.6, stock: 1 },
   { id: "panel-ayat-kuningan", name: "Panel Ayat Kuningan", cat: "wallart", price: "Rp 590K", badge: "", image: "", slot: "[ panel kuningan ayat ]", h: 360, tone: "dark", rot: 0, stock: 6 },
   { id: "guadalupe-nis", name: "Bunda Guadalupe dalam Nis Kayu", cat: "altar", price: "Rp 1.650K", badge: "BARU",
     desc: "Nis lipat tiga daun dari kayu mahoni, dibubut utuh dari satu blok sehingga urat kayunya menyambung dari kubah ke alas — bukan potongan yang disatukan. Dua daun sampingnya berengsel kuningan dan menutup rapat jadi bentuk peluru; dibuka, keduanya jadi dinding pemantul cahaya buat figurnya. Di dalamnya Bunda Guadalupe dicetak 3D low poly lalu dicat tangan satu per satu: mantel biru berbintang, gaun mawar, sinar keemasan di belakangnya, dan malaikat di kakinya. Bidang-bidang datar low poly-nya sengaja dibiarkan terbaca — cara baru menggambar ikon yang umurnya sudah lima abad. Cukup kecil untuk meja samping tempat tidur, cukup tertutup untuk dibawa pindah kos.",
