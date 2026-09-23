@@ -333,7 +333,7 @@ export const ROUTES = [
       "Sejak awal jangan menjanjikan bahwa semua peserta harus sampai perhentian keempat belas."
     ],
     post: "puhsarang-batu-tanpa-semen",
-    produk: ["rosario-via-lucis", "salib-sonokeling-kuningan", "dry-bag-20l"]
+    produk: ["rosario-regina-lucis", "salib-sonokeling-kuningan", "dry-bag-20l"]
   },
 
   {

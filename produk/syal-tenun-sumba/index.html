@@ -138,6 +138,7 @@
     <div style="flex:1 1 440px;min-width:300px;display:flex;flex-direction:column;gap:16px">
       <div style="{{ heroStyle }}">
         <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.12em;color:{{ slotColor }}">{{ slot }}</div>
+        {{ heroVideo }}
         <span style="{{ badgeStyle }}">{{ badge }}</span>
       </div>
       <div style="display:flex;gap:14px;flex-wrap:wrap">
@@ -539,8 +540,13 @@ class Component extends DCLogic {
     return `Rp ${(total / 1000).toLocaleString("id-ID")}K`;
   }
 
-  // All photos of a product: main image first, then any `shots`.
-  gallery(p) { return [p.image, ...(p.shots || [])].filter(Boolean); }
+  // All photos of a product. `hero` leads on the detail page only — catalog
+  // cards keep using `image`, so a styled model shot can front the page
+  // without changing how the product reads in a grid.
+  gallery(p) {
+    const all = [p.hero, p.image, ...(p.shots || [])].filter(Boolean);
+    return all.filter((src, i) => all.indexOf(src) === i);
+  }
 
   // Natural aspect ratio of a photo, measured once and cached, so the hero box
   // can take the image's own shape — no letterbox padding, no forced crop, and it
@@ -558,6 +564,24 @@ class Component extends DCLogic {
     im.onerror = () => { this._ar[src] = 0; };
     im.src = src;
     return null;
+  }
+
+  // Optional looping clip over the hero. Only on the first gallery slot; the
+  // poster (`hero`) paints first and stays if autoplay is refused or the
+  // visitor prefers reduced motion. Catalog cards never see `video`.
+  heroVideo(p) {
+    if (!p.video || (this.state.shot || 0) !== 0) return null;
+    const still = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // `video` is one URL or a list; the browser plays the first it can decode.
+    const srcs = [].concat(p.video);
+    const type = u => /\.webm(\?|$)/i.test(u) ? "video/webm" : "video/mp4";
+    return React.createElement("video", {
+      key: srcs.join("|"), poster: p.hero || p.image,
+      autoPlay: !still, loop: true, muted: true, playsInline: true, preload: "metadata",
+      "aria-label": p.name,
+      ref: el => { if (el && !still) { el.muted = true; const r = el.play && el.play(); if (r && r.catch) r.catch(() => {}); } },
+      style: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }
+    }, srcs.map(u => React.createElement("source", { key: u, src: u, type: type(u) })));
   }
 
   // The product as currently displayed — same object with the picked photo.
@@ -613,7 +637,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const p = this.state.p;
-    if (!p) return { ...this.chrome(), ...this.search(), cartCount: this.state.cartCount, name: "Memuat…", thumbs: [], options: [], specs: [], related: [], assurances: [] };
+    if (!p) return { ...this.chrome(), ...this.search(), cartCount: this.state.cartCount, name: "Memuat…", heroVideo: null, thumbs: [], options: [], specs: [], related: [], assurances: [] };
 
     const cat = CATS.find(c => c.id === p.cat) || { name: "", id: "" };
     const cc = this.copy(p);
@@ -644,6 +668,7 @@ class Component extends DCLogic {
       slot: p.image ? "" : p.slot,
       slotColor: p.tone === "light" ? "#9A9083" : "rgba(247,243,234,0.6)",
       heroStyle: this.media(this.shown(p), this.state.mobile ? 380 : 620),
+      heroVideo: this.heroVideo(p),
       badge: soldOut ? "SOLD OUT" : "SEGERA",
       badgeStyle: "position:absolute;top:20px;left:20px;padding:7px 15px;border-radius:999px;white-space:nowrap;line-height:1;background:" + (soldOut ? "#8A8172" : "#6C4BA6") + ";color:#F7F3EA;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em",
       stockLabel: soldOut
@@ -656,7 +681,7 @@ class Component extends DCLogic {
         : this.blurb(p),
       thumbs: this.gallery(p).length > 1
         ? this.gallery(p).map((src, i) => ({
-            label: "",
+            label: (p.video && i === 0) ? "VIDEO" : "",
             pick: () => this.setState({ shot: i }),
             style: `position:relative;flex:1 1 90px;min-width:80px;height:96px;border-radius:16px;overflow:hidden;cursor:pointer;background:#EAE3D5 url("${src}") center/cover;box-shadow:${
               (this.state.shot || 0) === i ? "0 0 0 2px #1A1712" : "0 0 0 1px #D6CBB8"}`
