@@ -150,6 +150,10 @@ const FORMAT = { label: "FORMAT", values: ["Kain print 150×200 cm", "Pashmina v
 export const SEWING = { kemeja: 450000, dress: 650000 };
 
 // Products without photography are kept in the source data but not published.
+// Products that belong to a Peziarah Essentials set carry `kit`; the product page
+// shows a "Bagian dari …" link back to the set.
+export const ESSENTIALS_KIT = { name: "Peziarah Essentials", href: "/essentials/" };
+
 const ALL_PRODUCTS = [
   { id: "batik-kenaikan", name: "Batik Print “Kenaikan”", cat: "apparel", price: "mulai Rp 150K", base: 150000,
     opt: FORMAT,
@@ -172,7 +176,7 @@ const ALL_PRODUCTS = [
     care: "Cuci tangan dengan sabun cair lembut bersuhu dingin, terpisah dari pakaian lain pada dua-tiga cucian pertama. Jangan direndam lama, jangan disikat, jangan diperas kencang. Jemur balik di tempat teduh — sinar matahari langsung memudarkan warna cetak. Setrika suhu sedang dari sisi dalam; pashmina viscose cukup disetrika selagi agak lembap.",
     rite: { title: "Sebelum kain dilipat", body: "Setiap lembar diperiksa di bawah cahaya siang — ketajaman cetak, warna, dan jahitan tepinya — lalu dilipat dengan kertas asam-netral dan disertai kartu keterangan motif. Tanpa plastik sekali pakai." },
     badge: "SEGERA", hero: "/assets/batik-calvary-model.webp", image: "/assets/batik-calvary.webp", shots: ["/assets/batik-calvary-pashmina.webp", "/assets/batik-calvary-model.webp"], slot: "[ batik print calvary ]", h: 400, tone: "light", rot: -0.4, stock: 6 },
-  { id: "batik-marian", name: "Batik Print “Marian”", cat: "apparel", price: "mulai Rp 150K", base: 150000,
+  { id: "batik-marian", kit: ESSENTIALS_KIT, name: "Batik Print “Marian”", cat: "apparel", price: "mulai Rp 150K", base: 150000,
     opt: FORMAT,
     desc: "Bunda Maria berdiri di atas bulan sabit, diapit dua malaikat pembawa lili, dengan gunung, danau, dan siluet menara gereja Jawa di kedua sisi. Nila tua dengan emas — panel memanjang yang jatuh persis di sepanjang pashmina, dan terbaca utuh ketika kainnya dibentangkan.",
     specs: [{ k: "Bahan", v: "Kain — katun Toyobo · Pashmina — viscose" }, { k: "Ukuran", v: "Kain 150×200 cm · Pashmina 70×180 cm" }, { k: "Teknik", v: "Cetak batik, batch kecil di Klaten" }, { k: "Desain", v: "Digambar khusus untuk Peziarah, bukan motif pasaran" }, { k: "Kemasan", v: "Dilipat kertas asam-netral + kotak kado" }],
@@ -180,7 +184,7 @@ const ALL_PRODUCTS = [
     rite: { title: "Sebelum kain dilipat", body: "Setiap lembar diperiksa di bawah cahaya siang — ketajaman cetak, warna, dan jahitan tepinya — lalu dilipat dengan kertas asam-netral dan disertai kartu keterangan motif. Tanpa plastik sekali pakai." },
     badge: "SEGERA", hero: "/assets/batik-marian-model.webp", image: "/assets/batik-marian.webp", shots: ["/assets/batik-marian-model.webp"], slot: "[ batik print marian ]", h: 360, tone: "dark", rot: 0, stock: 6 },
   { id: "rosario-sonokeling", name: "Rosario Kayu Sonokeling", cat: "rosario", price: "Rp 249K", badge: "BEST SELLER", image: "/assets/hero-rosario.webp", shots: ["/assets/hero-rosario-full.webp"], slot: "[ rosario sonokeling ]", h: 420, tone: "light", rot: -1.2, stock: 12 },
-  { id: "rosario-mutiara", name: "Rosario Mutiara Air Tawar", cat: "rosario", price: "Rp 389K", badge: "BARU",
+  { id: "rosario-mutiara", kit: ESSENTIALS_KIT, name: "Rosario Mutiara Air Tawar", cat: "rosario", price: "Rp 389K", badge: "BARU",
     desc: "Mutiara air tawar bulat-tak-sempurna, satu per satu dirangkai kawat perak dan dipuntir tangan — bukan diikat benang, jadi tidak akan putus berhamburan. Bapa-nya bermanik filigri, medali Regina sine labe originali concepta, dan krusifiks perak berjuntai di ujungnya. Untuk yang dipakai seumur hidup, bukan disimpan di laci.",
     specs: [{ k: "Manik", v: "Mutiara air tawar 7–8 mm, putih" }, { k: "Rangka", v: "Kawat perak 925, puntir tangan" }, { k: "Medali", v: "Regina sine labe, oval 22 mm" }, { k: "Panjang", v: "±58 cm termasuk krusifiks" }],
     fit: "contain", image: "/assets/rosario-mutiara.webp", slot: "[ rosario mutiara ]", h: 340, tone: "violet", rot: 0, stock: 8 },
@@ -188,6 +192,13 @@ const ALL_PRODUCTS = [
     desc: "Rosario untuk Ratu Cahaya. Mutiara air tawar berwarna persik dirangkai dengan penghubung zirkonia premium berbentuk hati, berpusat pada zirkonia berbentuk mawar. Kilau zirkonia dan lembutnya mutiara — dua cahaya yang berbeda, untuk satu Ratu yang sama.",
     specs: [{ k: "Manik", v: "Mutiara air tawar, warna persik" }, { k: "Penghubung", v: "Zirkonia premium bentuk hati" }, { k: "Pusat", v: "Zirkonia bentuk mawar" }, { k: "Salib", v: "Berhias zirkonia" }],
     video: ["https://res.cloudinary.com/bq8bgkqr/video/upload/so_11,eo_19,ac_none,w_720,c_scale,vc_vp9,q_auto:good/v1790137672/WhatsApp_Video_2026-09-22_at_4.52.06_PM.webm", "https://res.cloudinary.com/bq8bgkqr/video/upload/so_11,eo_19,ac_none,w_720,c_scale,vc_h264:main,q_auto:good/v1790137672/WhatsApp_Video_2026-09-22_at_4.52.06_PM.mp4"], hero: "/assets/regina-lucis-poster.webp", image: "/assets/regina-lucis.webp", slot: "[ rosario regina lucis ]", h: 460, tone: "light", rot: 1.1, stock: 10 },
+  { id: "kartu-rosario", kit: ESSENTIALS_KIT, name: "Kartu Rosario Stainless", cat: "rosario", price: "Rp 50K", base: 50000, badge: "BARU",
+    opt: { label: "FINISHING", values: ["Stainless steel hairline"] },
+    desc: "Rosario yang muat di dompet. Selembar stainless steel seukuran kartu ATM dengan finishing hairline, dilubangi mengikuti urutan doa: salib, lima lubang pembuka, lalu sepuluh lubang untuk satu dekade Salam Maria. Ujung jari menelusuri lubang satu per satu — di kereta, di ruang tunggu, di jalan ziarah — tanpa manik yang berbunyi atau tali yang kusut. Bagian dari Peziarah Essential: barang bawaan harian seorang peziarah.",
+    specs: [{ k: "Bahan", v: "Stainless steel, finishing hairline" }, { k: "Ukuran", v: "Seukuran kartu ATM / kartu kredit (85,6 × 54 mm)" }, { k: "Pola", v: "Salib, 1 + 3 + 1 lubang pembuka, satu dekade (10 lubang)" }, { k: "Muat di", v: "Slot kartu dompet atau card holder" }],
+    care: "Stainless steel tidak berkarat dan tidak perlu perawatan khusus. Lap dengan kain kering bila berbekas sidik jari — goresan halus akan menyatu dengan serat hairline seiring pemakaian.",
+    rite: { title: "Sebelum masuk amplop", body: "Setiap kartu diraba tepinya satu per satu — tidak boleh ada sisi yang tajam di saku atau dompet — lalu dilap bersih dan dikemas dalam amplop kertas kaku, tanpa plastik sekali pakai." },
+    image: "/assets/kartu-rosario.webp", shots: ["/assets/kartu-rosario-edc.webp", "/assets/kartu-rosario-essential.webp"], slot: "[ kartu rosario ]", h: 380, tone: "light", rot: 0, stock: 50 },
   { id: "salib-sonokeling-kuningan", name: "Salib Dinding Sonokeling — Korpus Kuningan", cat: "salib", price: "Rp 685K", badge: "BEST SELLER", image: "/assets/salib-sonokeling-kuningan.webp", shots: ["/assets/salib-sonokeling-kuningan-full.webp"], slot: "[ salib sonokeling kuningan ]", h: 400, tone: "light", rot: -1, stock: 16 },
   { id: "krusifiks-jati", name: "Krusifiks Dinding Jati", cat: "salib", price: "Rp 545K", badge: "", image: "", slot: "[ krusifiks jati ]", h: 460, tone: "light", rot: 0.8, stock: 5 },
   { id: "krusifiks-dayak", name: "Krusifiks Ukir Dayak — Sulur Enggang", cat: "salib", price: "Rp 2.450K", base: 2450000,
@@ -265,7 +276,7 @@ const ALL_PRODUCTS = [
     specs: [{ k: "Bahan", v: "Satin poliester berlapis, rib knit kerah & manset" }, { k: "Bordir", v: "Timbul (puff) satu warna — dada, punggung, lengan" }, { k: "Patch", v: "Bordir penuh, dijahit (bukan lem panas)" }, { k: "Warna", v: "Hijau botol, hitam, maroon, navy" }, { k: "Minimum", v: "12 pcs per pesanan" }, { k: "Produksi", v: "10–14 hari kerja setelah approval mockup" }, { k: "Perawatan", v: "Cuci dingin, balik badan, jangan disetrika di atas bordir" }],
     badge: "CUSTOM", image: "/assets/bomber-vanlith-detail.webp", shots: ["/assets/bomber-vanlith.webp", "/assets/bomber-vanlith-sleeve.webp"], slot: "[ bomber bordir angkatan ]", h: 460, tone: "dark", rot: -0.6, stock: 12 },
   { id: "tote-peziarah", name: "Tote Kanvas “Peziarah”", cat: "merch", price: "Rp 189K", badge: "", image: "/assets/tote-peziarah-2.webp", shots: ["/assets/tote-peziarah.webp", "/assets/tote-peziarah-detail.webp"], slot: "[ tote peziarah ]", h: 470, tone: "light", rot: -1.3, stock: 47 },
-  { id: "tote-sendangsono", name: "Tote Kanvas Ziarah — Sendangsono", cat: "merch", price: "Rp 219K", base: 219000,
+  { id: "tote-sendangsono", kit: ESSENTIALS_KIT, name: "Tote Kanvas Ziarah — Sendangsono", cat: "merch", price: "Rp 219K", base: 219000,
     desc: "Gua Sendangsono digambar dari sisi yang biasanya luput: bukan wajah Bunda, tapi rimbun bugenvil yang menutup batu andesitnya dan barisan lilin yang tidak pernah benar-benar mati. Ilustrasi tinta dan cat air, dicetak di kanvas katun 12 oz warna natural — mata air pertama Katolik Jawa, dibawa pulang sebagai tas yang dipakai tiap hari.",
     specs: [{ k: "Bahan", v: "Kanvas katun 12 oz, warna natural" }, { k: "Ukuran", v: "38 × 42 cm · tinggi tali 30 cm" }, { k: "Cetak", v: "DTG, tinta berbasis air — tidak kaku di kanvas" }, { k: "Ilustrasi", v: "Sendangsono — tinta & cat air, digambar tangan" }, { k: "Daya angkut", v: "Sampai 8 kg, jahitan tali diperkuat silang" }, { k: "Perawatan", v: "Cuci tangan air dingin, jangan disetrika di atas cetakan" }],
     badge: "BARU", image: "/assets/tote-sendangsono.webp", shots: ["/assets/tote-sendangsono-wall.webp"], slot: "[ tote ziarah sendangsono ]", h: 470, tone: "light", rot: 0, stock: 24 },
@@ -299,7 +310,7 @@ const ALL_PRODUCTS = [
     specs: [{ k: "Aroma", v: "Rose of Sharon, Fig Leaf, Vanilla Bean" }, { k: "Lilin", v: "Kedelai 100%, sumbu katun tanpa timbal" }, { k: "Bakar", v: "±45 jam (220 g)" }, { k: "Wadah", v: "Gelas bening, label cetak letterpress" }],
     fit: "contain", badge: "BARU", image: "/assets/lilin-vespers.webp", slot: "[ lilin vespers ]", h: 400, tone: "light", rot: -0.8, stock: 30 },
   { id: "lilin-hortus", name: "Lilin Aroma “Hortus” — 220 g", cat: "lilin", price: "Rp 285K", badge: "", image: "", slot: "[ lilin hortus — cedar & myrrh ]", h: 320, tone: "light", rot: 0, stock: 24 },
-  { id: "dopp-kit-kulit", name: "Dopp Kit Kulit — Travel Kit", cat: "carry", price: "Rp 785K",
+  { id: "dopp-kit-kulit", kit: ESSENTIALS_KIT, name: "Dopp Kit Kulit — Travel Kit", cat: "carry", price: "Rp 785K",
     desc: "Kulit sapi nabati tebal yang dijahit tangan, dibiarkan tanpa lapisan sintetis supaya warnanya menua sendiri — makin sering dibawa, makin gelap dan makin kamu. Ritsleting kuningan antik, ikat tangan di sisi, dan dasar rata supaya bisa berdiri sendiri di wastafel penginapan. Cukup untuk perlengkapan mandi tiga hari perjalanan.",
     specs: [{ k: "Bahan", v: "Kulit sapi samak nabati 2,0 mm" }, { k: "Ritsleting", v: "Kuningan antik, tarikan kulit" }, { k: "Ukuran", v: "24 × 12 × 11 cm" }, { k: "Lapis dalam", v: "Kanvas katun tahan air, bisa dilap" }],
     fit: "contain", badge: "BARU", image: "/assets/dopp-kit-kulit.webp", slot: "[ dopp kit kulit ]", h: 380, tone: "light", rot: -0.8, stock: 14 },

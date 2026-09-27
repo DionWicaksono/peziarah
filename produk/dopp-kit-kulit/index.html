@@ -50,6 +50,7 @@
 <p style="margin:0 0 26px"><a href="https://wa.me/6281200000000?text=Halo%20Peziarah%2C%20saya%20mau%20pre-order%20Dopp%20Kit%20Kulit%20%E2%80%94%20Travel%20Kit.%20Kapan%20batch%20berikutnya%20dibuka%3F" target="_blank" rel="noopener" style="display:inline-block;padding:13px 24px;border-radius:999px;background:#C9E45B;color:#1A1712;font-weight:600;font-size:15px;text-decoration:none">Pre-order via WhatsApp →</a></p>
 <img src="/assets/dopp-kit-kulit.webp" alt="Dopp Kit Kulit — Travel Kit" loading="eager" style="width:100%;height:auto;border-radius:22px;display:block;margin:0 0 26px">
 <p style="font-size:17px;line-height:1.68;color:#3A342B;max-width:64ch;margin:0 0 18px">Kulit sapi nabati tebal yang dijahit tangan, dibiarkan tanpa lapisan sintetis supaya warnanya menua sendiri — makin sering dibawa, makin gelap dan makin kamu. Ritsleting kuningan antik, ikat tangan di sisi, dan dasar rata supaya bisa berdiri sendiri di wastafel penginapan. Cukup untuk perlengkapan mandi tiga hari perjalanan.</p>
+<p style="margin:0 0 18px"><a href="/essentials/" style="color:#6C4BA6">Bagian dari Peziarah Essentials →</a></p>
 <h2 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(22px,3vw,32px);letter-spacing:-0.03em;margin:44px 0 16px">Spesifikasi</h2>
 <dl style="margin:0 0 24px;max-width:64ch"><div style="display:flex;flex-wrap:wrap;gap:6px 20px;border-top:1px solid #E0D8C8;padding:11px 0"><dt style="flex:0 0 190px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#8A8172">Bahan</dt><dd style="flex:1 1 240px;margin:0;font-size:16px;line-height:1.55;color:#3A342B">Kulit sapi samak nabati 2,0 mm</dd></div><div style="display:flex;flex-wrap:wrap;gap:6px 20px;border-top:1px solid #E0D8C8;padding:11px 0"><dt style="flex:0 0 190px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#8A8172">Ritsleting</dt><dd style="flex:1 1 240px;margin:0;font-size:16px;line-height:1.55;color:#3A342B">Kuningan antik, tarikan kulit</dd></div><div style="display:flex;flex-wrap:wrap;gap:6px 20px;border-top:1px solid #E0D8C8;padding:11px 0"><dt style="flex:0 0 190px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#8A8172">Ukuran</dt><dd style="flex:1 1 240px;margin:0;font-size:16px;line-height:1.55;color:#3A342B">24 × 12 × 11 cm</dd></div><div style="display:flex;flex-wrap:wrap;gap:6px 20px;border-top:1px solid #E0D8C8;padding:11px 0"><dt style="flex:0 0 190px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#8A8172">Lapis dalam</dt><dd style="flex:1 1 240px;margin:0;font-size:16px;line-height:1.55;color:#3A342B">Kanvas katun tahan air, bisa dilap</dd></div><div style="display:flex;flex-wrap:wrap;gap:6px 20px;border-top:1px solid #E0D8C8;padding:11px 0"><dt style="flex:0 0 190px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#8A8172">Kategori</dt><dd style="flex:1 1 240px;margin:0;font-size:16px;line-height:1.55;color:#3A342B">Carry Goods</dd></div><div style="display:flex;flex-wrap:wrap;gap:6px 20px;border-top:1px solid #E0D8C8;padding:11px 0"><dt style="flex:0 0 190px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#8A8172">Kode produk</dt><dd style="flex:1 1 240px;margin:0;font-size:16px;line-height:1.55;color:#3A342B">DOPP-KIT-KULIT</dd></div></dl>
 <h2 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(22px,3vw,32px);letter-spacing:-0.03em;margin:44px 0 16px">Cara merawat</h2>
@@ -162,6 +163,7 @@
         <span style="font-family:'Space Mono',monospace;font-size:12px;color:#8A8172">{{ stockLabel }}</span>
       </div>
       <p style="{{ priceNoteStyle }}">{{ priceNote }}</p>
+      <a href="{{ kitHref }}" style="{{ kitStyle }}">{{ kitLabel }}</a>
       <sc-if value="{{ hasQuote }}" hint-placeholder-val="{{ false }}">
         <figure style="margin:0 0 24px;padding:22px 0 20px;border-top:1px solid #D6CBB8;border-bottom:1px solid #D6CBB8;max-width:44ch">
           <span style="display:block;font-family:'Cinzel',Georgia,serif;font-size:56px;line-height:0.5;height:26px;color:#6C4BA6">“</span>
@@ -264,6 +266,7 @@
           <a href="/katalog/#wallart">Wall Art</a>
           <a href="/katalog/#merch">Merch</a>
           <a href="/hampers/">Hampers</a>
+          <a href="/essentials/">Peziarah Essentials</a>
         </div>
         <div style="display:flex;flex-direction:column;gap:11px">
           <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ZIARAH</span>
@@ -495,7 +498,9 @@ class Component extends DCLogic {
       CCOPY = m.CATEGORY_COPY || {};
       const p = PRODUCTS.find(x => x.id === id) || PRODUCTS[0];
       // Bodyart: preselect the dimension the product is named/priced for.
-      let opt = 0;
+      // ?opt=<index> preselects a variant (e.g. the pashmina from Peziarah Essentials).
+      const want = parseInt(new URLSearchParams(location.search).get("opt"), 10);
+      let opt = (p.opt && want >= 0 && want < p.opt.values.length) ? want : 0;
       if (p.cat === "bodyart") {
         const cm = (p.name.match(/(\d+)\s*cm/) || [])[1];
         const i = (OPTIONS.bodyart.values || []).indexOf(`${cm} cm`);
@@ -636,7 +641,7 @@ class Component extends DCLogic {
   }
 
   copy(p) {
-    const c = CCOPY[p.cat] || {};
+    const c = { ...(CCOPY[p.cat] || {}), ...(p.care ? { care: p.care } : {}), ...(p.rite ? { rite: p.rite } : {}) };
     const rite = c.rite;
     const line = c.line;
     return {
@@ -650,7 +655,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const p = this.state.p;
-    if (!p) return { ...this.chrome(), ...this.search(), cartCount: this.state.cartCount, name: "Memuat…", heroVideo: null, hasQuote: false, quoteLines: [], hasArtist: false, thumbs: [], options: [], specs: [], related: [], assurances: [] };
+    if (!p) return { ...this.chrome(), ...this.search(), cartCount: this.state.cartCount, name: "Memuat…", heroVideo: null, hasQuote: false, quoteLines: [], hasArtist: false, kitStyle: "display:none", thumbs: [], options: [], specs: [], related: [], assurances: [] };
 
     const cat = CATS.find(c => c.id === p.cat) || { name: "", id: "" };
     const cc = this.copy(p);
@@ -689,6 +694,9 @@ class Component extends DCLogic {
         : p.cat === "bodyart"
           ? `${p.stock} slot sesi tersisa bulan ini`
           : "Pre-order — batch kecil, 10–14 hari kerja",
+      kitHref: p.kit ? p.kit.href : "",
+      kitLabel: p.kit ? `Bagian dari ${p.kit.name} →` : "",
+      kitStyle: p.kit ? "display:inline-flex;margin:0 0 22px;padding:9px 16px;border-radius:999px;border:1px solid #D6CBB8;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#6C4BA6;text-decoration:none" : "display:none",
       hasArtist: !!p.artist,
       artistName: p.artist ? p.artist.name : "",
       artistHref: p.artist ? p.artist.href : "",

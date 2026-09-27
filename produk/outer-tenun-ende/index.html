@@ -161,6 +161,7 @@
         <span style="font-family:'Space Mono',monospace;font-size:12px;color:#8A8172">{{ stockLabel }}</span>
       </div>
       <p style="{{ priceNoteStyle }}">{{ priceNote }}</p>
+      <a href="{{ kitHref }}" style="{{ kitStyle }}">{{ kitLabel }}</a>
       <sc-if value="{{ hasQuote }}" hint-placeholder-val="{{ false }}">
         <figure style="margin:0 0 24px;padding:22px 0 20px;border-top:1px solid #D6CBB8;border-bottom:1px solid #D6CBB8;max-width:44ch">
           <span style="display:block;font-family:'Cinzel',Georgia,serif;font-size:56px;line-height:0.5;height:26px;color:#6C4BA6">“</span>
@@ -263,6 +264,7 @@
           <a href="/katalog/#wallart">Wall Art</a>
           <a href="/katalog/#merch">Merch</a>
           <a href="/hampers/">Hampers</a>
+          <a href="/essentials/">Peziarah Essentials</a>
         </div>
         <div style="display:flex;flex-direction:column;gap:11px">
           <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ZIARAH</span>
@@ -494,7 +496,9 @@ class Component extends DCLogic {
       CCOPY = m.CATEGORY_COPY || {};
       const p = PRODUCTS.find(x => x.id === id) || PRODUCTS[0];
       // Bodyart: preselect the dimension the product is named/priced for.
-      let opt = 0;
+      // ?opt=<index> preselects a variant (e.g. the pashmina from Peziarah Essentials).
+      const want = parseInt(new URLSearchParams(location.search).get("opt"), 10);
+      let opt = (p.opt && want >= 0 && want < p.opt.values.length) ? want : 0;
       if (p.cat === "bodyart") {
         const cm = (p.name.match(/(\d+)\s*cm/) || [])[1];
         const i = (OPTIONS.bodyart.values || []).indexOf(`${cm} cm`);
@@ -635,7 +639,7 @@ class Component extends DCLogic {
   }
 
   copy(p) {
-    const c = CCOPY[p.cat] || {};
+    const c = { ...(CCOPY[p.cat] || {}), ...(p.care ? { care: p.care } : {}), ...(p.rite ? { rite: p.rite } : {}) };
     const rite = c.rite;
     const line = c.line;
     return {
@@ -649,7 +653,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const p = this.state.p;
-    if (!p) return { ...this.chrome(), ...this.search(), cartCount: this.state.cartCount, name: "Memuat…", heroVideo: null, hasQuote: false, quoteLines: [], hasArtist: false, thumbs: [], options: [], specs: [], related: [], assurances: [] };
+    if (!p) return { ...this.chrome(), ...this.search(), cartCount: this.state.cartCount, name: "Memuat…", heroVideo: null, hasQuote: false, quoteLines: [], hasArtist: false, kitStyle: "display:none", thumbs: [], options: [], specs: [], related: [], assurances: [] };
 
     const cat = CATS.find(c => c.id === p.cat) || { name: "", id: "" };
     const cc = this.copy(p);
@@ -688,6 +692,9 @@ class Component extends DCLogic {
         : p.cat === "bodyart"
           ? `${p.stock} slot sesi tersisa bulan ini`
           : "Pre-order — batch kecil, 10–14 hari kerja",
+      kitHref: p.kit ? p.kit.href : "",
+      kitLabel: p.kit ? `Bagian dari ${p.kit.name} →` : "",
+      kitStyle: p.kit ? "display:inline-flex;margin:0 0 22px;padding:9px 16px;border-radius:999px;border:1px solid #D6CBB8;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#6C4BA6;text-decoration:none" : "display:none",
       hasArtist: !!p.artist,
       artistName: p.artist ? p.artist.name : "",
       artistHref: p.artist ? p.artist.href : "",

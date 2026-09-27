@@ -26,12 +26,15 @@ export const OCCASIONS = [
 ];
 
 export const HAMPERS = [
-  { id: "hampers-peziarah", name: "Hampers “Peziarah”", price: "Rp 850K", base: 850000, pieces: 5,
+  // Peziarah Essentials: the card adds the core set as one line; the shoppable
+  // photo (hotspots, optional nis) lives on its own page, /essentials/.
+  { id: "peziarah-essentials", name: "Peziarah Essentials", price: "Rp 1.500K", base: 1500000, pieces: 5,
     badge: "PALING DIPILIH",
-    blurb: "Satu set untuk orang yang baru mulai — atau baru kembali. Isinya bisa dipakai setiap hari, bukan disimpan di lemari.",
-    contents: ["Rosario kayu sonokeling", "Tote kanvas “Peziarah”", "Jurnal perjalanan kecil", "Buku doa saku", "Lilin kedelai aroma kemenyan", "Kartu tulis tangan"],
+    blurb: "Yang dibawa setiap kali berangkat ziarah — bukan disimpan di lemari. Ketuk tiap barang di fotonya untuk melihat detail atau membeli satuan.",
+    contents: ["Tote kanvas ziarah — Sendangsono", "Batik print “Marian” — pashmina", "Dopp kit kulit", "Rosario mutiara air tawar", "Kartu rosario stainless"],
     occasions: ["natal", "baptis", "komuni"],
-    image: "/assets/hampers-peziarah-set.webp", slot: "[ hampers peziarah ]", tone: "light", h: 460 },
+    page: "/essentials/", pageLabel: "LIHAT FOTO & BELI SATUAN →",
+    image: "/assets/peziarah-essentials.webp", slot: "[ peziarah essentials ]", tone: "light", h: 460, ratio: "4 / 5" },
 
   { id: "hampers-adven", name: "Hampers Adven", price: "Rp 450K", base: 450000, pieces: 4,
     badge: "",

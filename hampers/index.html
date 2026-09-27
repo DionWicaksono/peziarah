@@ -47,9 +47,8 @@
 <h1 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(32px,5.6vw,58px);line-height:0.95;letter-spacing:-0.04em;margin:0 0 18px;max-width:22ch">Hampers rohani siap kirim</h1>
 <p style="font-size:17px;line-height:1.68;color:#3A342B;max-width:64ch;margin:0 0 18px">Paket kado untuk Komuni Pertama, Krisma, baptis, pernikahan, Natal, dan rumah yang sedang berkabung. Isi bisa disesuaikan, dikemas kertas dan kain tanpa plastik sekali pakai, dan dikemas tangan di Jakarta.</p>
 <h2 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(22px,3vw,32px);letter-spacing:-0.03em;margin:44px 0 16px">Set siap kirim</h2>
-<h3 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:700;font-size:18px;letter-spacing:-0.024em;margin:26px 0 10px">Hampers “Peziarah” — Rp 850K</h3>
-<p style="font-size:17px;line-height:1.68;color:#3A342B;max-width:64ch;margin:0 0 18px">Satu set untuk orang yang baru mulai — atau baru kembali. Isinya bisa dipakai setiap hari, bukan disimpan di lemari.</p>
-<ul style="margin:0 0 22px;padding-left:20px;max-width:64ch"><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px">Rosario kayu sonokeling</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px">Tote kanvas “Peziarah”</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px">Jurnal perjalanan kecil</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px">Buku doa saku</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px">Lilin kedelai aroma kemenyan</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px">Kartu tulis tangan</li></ul>
+<h3 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:700;font-size:18px;letter-spacing:-0.024em;margin:26px 0 10px"><a href="/essentials/" style="color:inherit">Peziarah Essentials — Rp 1.500K</a></h3>
+<p style="font-size:17px;line-height:1.68;color:#3A342B;max-width:64ch;margin:0 0 18px">Yang dibawa setiap kali berangkat ziarah: tote Sendangsono, pashmina batik Marian, dopp kit kulit, rosario mutiara, dan kartu rosario stainless. <a href="/essentials/" style="color:#6C4BA6">Lihat foto &amp; beli satuan →</a></p>
 <h3 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:700;font-size:18px;letter-spacing:-0.024em;margin:26px 0 10px">Hampers Adven — Rp 450K</h3>
 <p style="font-size:17px;line-height:1.68;color:#3A342B;max-width:64ch;margin:0 0 18px">Kotak kecil untuk empat minggu menunggu. Dikirim akhir November supaya sampai sebelum minggu pertama.</p>
 <ul style="margin:0 0 22px;padding-left:20px;max-width:64ch"><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px">Lilin Adven 4 batang</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px">Buku renungan harian</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px">Rosario saku “Via Lucis”</li><li style="font-size:16px;line-height:1.6;color:#3A342B;margin-bottom:10px">Kartu tulis tangan</li></ul>
@@ -190,7 +189,7 @@
               </sc-for>
             </ul>
             <button type="button" onClick="{{ h.add }}" style="{{ h.btnStyle }}">{{ h.btnLabel }}</button>
-            <a href="{{ h.page }}" style="{{ h.pageStyle }}">LIHAT DETAIL &amp; UKIR NAMA →</a>
+            <a href="{{ h.page }}" style="{{ h.pageStyle }}">{{ h.pageLabel }}</a>
           </div>
         </div>
       </sc-for>
@@ -268,6 +267,7 @@
           <a href="/katalog/#wallart">Wall Art</a>
           <a href="/katalog/#merch">Merch</a>
           <a href="/hampers/">Hampers</a>
+          <a href="/essentials/">Peziarah Essentials</a>
         </div>
         <div style="display:flex;flex-direction:column;gap:11px">
           <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ZIARAH</span>
@@ -481,6 +481,7 @@ class Component extends DCLogic {
         btnStyle: `margin-top:22px;width:100%;padding:15px 22px;border-radius:999px;border:none;font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:15px;background:${
           this.state.added === h.id ? "#6C4BA6" : "#1A1712"};color:#F7F3EA`,
         // Only hampers with a detail page get the link; the rest stay list-only.
+        pageLabel: h.pageLabel || "LIHAT DETAIL & UKIR NAMA →",
         pageStyle: h.page
           ? "display:block;margin-top:14px;text-align:center;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#6C4BA6"
           : "display:none"
