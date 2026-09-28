@@ -14,14 +14,14 @@
 <meta property="og:title" content="Batik Print “Marian” — mulai Rp 150K">
 <meta property="og:description" content="Batik Print “Marian” — mulai Rp 150K. Batik print katun Toyobo 150×200 cm atau pashmina viscose 70×180 cm. Dicetak batch kecil di Klaten.">
 <meta property="og:url" content="https://peziarah.com/produk/batik-marian/">
-<meta property="og:image" content="https://peziarah.com/assets/og/batik-marian.jpg">
+<meta property="og:image" content="https://peziarah.com/assets/og/batik-marian-model.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Batik Print “Marian”">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Batik Print “Marian” — mulai Rp 150K">
 <meta name="twitter:description" content="Batik Print “Marian” — mulai Rp 150K. Batik print katun Toyobo 150×200 cm atau pashmina viscose 70×180 cm. Dicetak batch kecil di Klaten.">
-<meta name="twitter:image" content="https://peziarah.com/assets/og/batik-marian.jpg">
+<meta name="twitter:image" content="https://peziarah.com/assets/og/batik-marian-model.jpg">
 <meta name="theme-color" content="#F7F3EA">
 <link rel="icon" href="/assets/favicon.png" type="image/png">
 <script type="application/ld+json" data-product>{"@context":"https://schema.org","@type":"Product","name":"Batik Print “Marian”","description":"Batik Print “Marian” — mulai Rp 150K. Batik print katun Toyobo 150×200 cm atau pashmina viscose 70×180 cm. Dicetak batch kecil di Klaten.","sku":"batik-marian","category":"Tenun & Batik","brand":{"@type":"Brand","name":"Peziarah"},"offers":{"@type":"Offer","url":"https://peziarah.com/produk/batik-marian/","priceCurrency":"IDR","availability":"https://schema.org/PreOrder","seller":{"@type":"Organization","name":"Peziarah"},"price":150000},"image":["https://peziarah.com/assets/batik-marian.webp","https://peziarah.com/assets/batik-marian-model.webp"]}</script>
@@ -674,7 +674,7 @@ class Component extends DCLogic {
           ? this.rp(p.base + (opt.add[this.state.opt] || 0))
           : p.price,
       priceNote: (p.base && opt.add && opt.add[this.state.opt])
-        ? `Termasuk biaya jahit ${this.rp(opt.add[this.state.opt])} — 10–14 hari kerja.`
+        ? (opt.note || `Termasuk biaya jahit ${this.rp(opt.add[this.state.opt])} — 10–14 hari kerja.`)
         : "",
       priceNoteStyle: (p.base && opt.add && opt.add[this.state.opt])
         ? "font-size:13px;color:#8A8172;margin:8px 0 0"
@@ -800,7 +800,7 @@ class Component extends DCLogic {
         { k: "Kategori", v: cat.name },
         { k: "Kode produk", v: p.id.toUpperCase() }
       ]),
-      related: PRODUCTS.filter(x => x.id !== p.id && x.cat !== p.cat).slice(0, 4).map(x => ({
+      related: [...(p.pair || []).map(id => PRODUCTS.find(x => x.id === id)).filter(Boolean), ...PRODUCTS.filter(x => x.id !== p.id && x.cat !== p.cat && !(p.pair || []).includes(x.id))].slice(0, 4).map(x => ({
         ...x,
         href: `/produk/${x.id}/`,
         slot: x.image ? "" : x.slot,

@@ -27,7 +27,7 @@ export const ESSENTIALS = [
       { product: "dopp-kit-kulit", x: 85, y: 44, role: "core" },
       { product: "rosario-mutiara", x: 56, y: 85, role: "core" },
       { product: "kartu-rosario", x: 48, y: 76, role: "core" },
-      { product: "card-holder-peziarah", x: 22, y: 76, role: "core" },
+      { product: "card-holder-peziarah", x: 22, y: 77, role: "optional" },
       { product: "guadalupe-nis", x: 78, y: 18, role: "optional" },
       { label: "Puji Syukur", x: 63, y: 60, role: "own", note: "Tidak dijual di sini — setiap peziarah membawa miliknya sendiri." }
     ] }
