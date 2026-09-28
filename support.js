@@ -1714,7 +1714,9 @@
   }
 
   // src/runtime.ts
-  var COMPONENT_DIR = ".";
+  // Root-absolute: pages live in subfolders, and a "." base made <dc-import>
+  // fetch /ziarah/rute/custom/GuaMariaMap.dc.html (404, empty map section).
+  var COMPONENT_DIR = "";
   function createRuntime(doc = document) {
     const registry = createRegistry();
     const pseudoClass = createPseudoSheet(doc);
