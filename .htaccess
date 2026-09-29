@@ -18,6 +18,7 @@ ErrorDocument 403 /404.html
   AddType image/webp .webp
   AddType application/javascript .js
   AddType application/manifest+json .webmanifest
+  AddType "text/csv; charset=utf-8" .csv
 </IfModule>
 
 # --- Compression ---
