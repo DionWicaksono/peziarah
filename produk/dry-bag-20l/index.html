@@ -549,6 +549,12 @@ class Component extends DCLogic {
     document.head.appendChild(ld);
   }
 
+  pnote(p, opt) {
+    const i = this.state.opt;
+    if (Array.isArray(opt.note)) return opt.note[i] || "";
+    return (p.base && opt.add && opt.add[i]) ? (opt.note || `Termasuk biaya jahit ${this.rp(opt.add[i])} — 10–14 hari kerja.`) : "";
+  }
+
   rp(n) { return `Rp ${(n / 1000).toLocaleString("id-ID")}K`; }
 
   // Rp 180K/cm of longest dimension, min. Rp 900K — see BODYART_RATE.
@@ -671,12 +677,8 @@ class Component extends DCLogic {
         : (p.base && opt.add)
           ? this.rp(p.base + (opt.add[this.state.opt] || 0))
           : p.price,
-      priceNote: (p.base && opt.add && opt.add[this.state.opt])
-        ? (opt.note || `Termasuk biaya jahit ${this.rp(opt.add[this.state.opt])} — 10–14 hari kerja.`)
-        : "",
-      priceNoteStyle: (p.base && opt.add && opt.add[this.state.opt])
-        ? "font-size:13px;color:#8A8172;margin:8px 0 0"
-        : "display:none",
+      priceNote: this.pnote(p, opt),
+      priceNoteStyle: this.pnote(p, opt) ? "font-size:13px;color:#8A8172;margin:8px 0 0" : "display:none",
       careTitle: cc.careTitle,
       careBody: cc.careBody,
       riteTitle: cc.riteTitle,
@@ -798,7 +800,7 @@ class Component extends DCLogic {
         { k: "Kategori", v: cat.name },
         { k: "Kode produk", v: p.id.toUpperCase() }
       ]),
-      related: [...(p.pair || []).map(id => PRODUCTS.find(x => x.id === id)).filter(Boolean), ...PRODUCTS.filter(x => x.id !== p.id && x.cat !== p.cat && !(p.pair || []).includes(x.id))].slice(0, 4).map(x => ({
+      related: [...(p.pair || []).map(id => PRODUCTS.find(x => x.id === id)).filter(Boolean), ...(this._rel && this._rel.id === p.id ? this._rel.list : (this._rel = { id: p.id, list: PRODUCTS.filter(x => x.id !== p.id && x.cat !== p.cat && !(p.pair || []).includes(x.id)).map(x => [Math.random(), x]).sort((a, b) => a[0] - b[0]).map(a => a[1]) }).list)].slice(0, 4).map(x => ({
         ...x,
         href: `/produk/${x.id}/`,
         slot: x.image ? "" : x.slot,

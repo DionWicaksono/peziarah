@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /keranjang/
 
 # AI crawlers — konten boleh dibaca untuk menjawab pertanyaan tentang toko ini
 User-agent: GPTBot
