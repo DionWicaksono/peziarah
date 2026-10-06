@@ -102,7 +102,7 @@ teks lama di <head> dan <noscript>-nya. Minta build ulang lalu upload lagi
 folder produk/ setiap kali ada perubahan harga atau copy produk.
 
 MASIH PLACEHOLDER — GANTI SEBELUM DIIKLANKAN
-- Nomor WhatsApp (wa.me/6281200000000) di semua halaman, termasuk link WA
+- Nomor WhatsApp (wa.me/6281542615445) di semua halaman, termasuk link WA
   di footer.
 - Rekening bank di /keranjang/ dan /faq/.
 - Nama badan usaha & alamat terdaftar di /kebijakan-privasi/ dan
