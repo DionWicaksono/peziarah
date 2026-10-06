@@ -3,6 +3,8 @@
 // same store. Swap the read/write pair for API calls when a backend lands:
 // `read()` -> GET /api/cart, `write()` -> PUT /api/cart. Nothing else changes.
 
+import { track } from "./track.js";
+
 const KEY = "peziarah.cart.v1";
 const EVT = "peziarah:cart";
 
@@ -65,6 +67,13 @@ export function add(item, qty = 1) {
     gift: !!item.gift,
     note: item.note || "",
     qty
+  });
+  track("add_to_cart", {
+    value: (item.unit || 0) * qty,
+    items: [{
+      item_id: item.id, item_name: item.name, item_category: item.cat || undefined,
+      item_variant: item.variant || undefined, price: item.unit || 0, quantity: qty
+    }]
   });
   return write(items);
 }

@@ -46,3 +46,15 @@ ErrorDocument 403 /404.html
 
 # --- Directory listing off ---
 Options -Indexes
+
+# --- Repo-only files: deployed by Git but never served ---
+# Tracking setup notes, GTM import file and the Meta CAPI Apps Script live in
+# the repo for safekeeping; visitors get the 404 page instead.
+<FilesMatch "^(README-TRACKING\.md|gtm-container-peziarah\.json|meta-capi-apps-script\.gs)$">
+  Require all denied
+</FilesMatch>
+
+# Git metadata, in case the deploy leaves a .git folder in public_html.
+<IfModule mod_rewrite.c>
+  RewriteRule (^|/)\.git(/|$) - [F,L]
+</IfModule>

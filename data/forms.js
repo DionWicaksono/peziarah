@@ -10,10 +10,18 @@
 //
 // Replacing this with a real backend later means rewriting `submit()` only.
 
+import { trackSubmit } from "./track.js";
+
 const FORMS = {
   pesanan: {
     id: "1FAIpQLSfupmYSyyj7ZoRfUu1bdvyHUTo7Ywx1l8JH_qIRuAQT2OXFXw",
     fields: {
+      // Meta Conversions API matching (see README-TRACKING.md). Fill in the
+      // entry IDs of the hidden _ua/_fbp/_fbc/_url questions; empty = not sent.
+      _ua: "",
+      _fbp: "",
+      _fbc: "",
+      _url: "",
       kode_pesanan: "entry.338213574",
       nama: "entry.1225691919",
       telepon: "entry.1614373824",
@@ -30,6 +38,12 @@ const FORMS = {
   ziarah: {
     id: "1FAIpQLSfbu1EGuCCr06ZgNSSvXQzYFmMYXA5GezBiqT-gUjHOGI-Ttw",
     fields: {
+      // Meta Conversions API matching (see README-TRACKING.md). Fill in the
+      // entry IDs of the hidden _ua/_fbp/_fbc/_url questions; empty = not sent.
+      _ua: "",
+      _fbp: "",
+      _fbc: "",
+      _url: "",
       kode: "entry.648078294",
       rombongan: "entry.153381432",
       nama_kontak: "entry.1277617868",
@@ -45,6 +59,12 @@ const FORMS = {
   "ziarah-susun-sendiri": {
     id: "1FAIpQLSepbQvqoJt0wh-1A1JsxkmAkDF2ymI2PPGIN2OUv2FO9Fp-CA",
     fields: {
+      // Meta Conversions API matching (see README-TRACKING.md). Fill in the
+      // entry IDs of the hidden _ua/_fbp/_fbc/_url questions; empty = not sent.
+      _ua: "",
+      _fbp: "",
+      _fbc: "",
+      _url: "",
       kode: "entry.703849438",
       nama_kontak: "entry.816256591",
       telepon: "entry.403766276",
@@ -61,6 +81,12 @@ const FORMS = {
   concierge: {
     id: "1FAIpQLSfkUvh1ZxrtD5iwbTXDM2-QV9kxiM3xxFe2UYs07zi2MwU9tA",
     fields: {
+      // Meta Conversions API matching (see README-TRACKING.md). Fill in the
+      // entry IDs of the hidden _ua/_fbp/_fbc/_url questions; empty = not sent.
+      _ua: "",
+      _fbp: "",
+      _fbc: "",
+      _url: "",
       kode: "entry.171551440",
       nama_kontak: "entry.1590764818",
       telepon: "entry.812654982",
@@ -76,6 +102,12 @@ const FORMS = {
   shuttle: {
     id: "1FAIpQLScXaIE6faz3KBrdQAOKvOcsmEP0H03MKfPA36zE0qOqFENxXA",
     fields: {
+      // Meta Conversions API matching (see README-TRACKING.md). Fill in the
+      // entry IDs of the hidden _ua/_fbp/_fbc/_url questions; empty = not sent.
+      _ua: "",
+      _fbp: "",
+      _fbc: "",
+      _url: "",
       kode: "entry.745457333",
       nama: "entry.861171670",
       telepon: "entry.998831788",
@@ -91,6 +123,12 @@ const FORMS = {
   paroki: {
     id: "",
     fields: {
+      // Meta Conversions API matching (see README-TRACKING.md). Fill in the
+      // entry IDs of the hidden _ua/_fbp/_fbc/_url questions; empty = not sent.
+      _ua: "",
+      _fbp: "",
+      _fbc: "",
+      _url: "",
       kode: "",
       paroki: "",
       kota: "",
@@ -135,6 +173,36 @@ const FORMS = {
 const ARCHIVE_KEY = "peziarah.submissions.v1";
 
 // Local copy of everything submitted, newest last, capped at 50 entries.
+// Browser context for Meta Conversions API matching. Sent only on forms that
+// have the hidden _ua/_fbp/_fbc/_url questions mapped above, and never on
+// tanya or vendor. The Apps Script reads these from the response and forwards
+// them to Meta; GA never sees them.
+const META_KINDS = ["pesanan", "ziarah", "ziarah-susun-sendiri", "concierge", "shuttle", "paroki"];
+
+function cookie(name) {
+  try {
+    const m = document.cookie.match(new RegExp("(?:^|; )" + name + "=([^;]*)"));
+    return m ? decodeURIComponent(m[1]) : "";
+  } catch (e) { return ""; }
+}
+
+function metaContext() {
+  let fbc = cookie("_fbc");
+  if (!fbc) {
+    // Pixel normally sets _fbc itself; build it from ?fbclid= if it hasn't yet.
+    try {
+      const id = new URLSearchParams(location.search).get("fbclid");
+      if (id) fbc = "fb.1." + Date.now() + "." + id;
+    } catch (e) {}
+  }
+  return {
+    _ua: (typeof navigator !== "undefined" && navigator.userAgent) || "",
+    _fbp: cookie("_fbp"),
+    _fbc: fbc,
+    _url: (typeof location !== "undefined" && location.href.split("#")[0]) || ""
+  };
+}
+
 function archive(kind, values) {
   try {
     const raw = localStorage.getItem(ARCHIVE_KEY);
@@ -168,6 +236,10 @@ export function submit(kind, values, opts) {
   // localStorage on a phone someone else might pick up.
   if (!opts || opts.archive !== false) archive(kind, values);
 
+  // Conversion event fires on the attempt, not on Google's reply (which no-cors
+  // cannot read). Wrapped so a tracking error can never block an order.
+  try { trackSubmit(kind, values); } catch (e) {}
+
   const form = FORMS[kind];
   if (!form || !form.id) {
     // Distinguish "never provisioned" from "network failed": callers cannot
@@ -182,6 +254,8 @@ export function submit(kind, values, opts) {
     }
     return Promise.resolve("no-endpoint");
   }
+
+  if (META_KINDS.indexOf(kind) !== -1) values = Object.assign({}, values, metaContext());
 
   const body = new FormData();
   Object.keys(values).forEach(k => {
