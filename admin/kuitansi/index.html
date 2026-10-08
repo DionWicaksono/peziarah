@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kuitansi | Peziarah Admin</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#F7F3EA">
+<link rel="icon" href="/assets/favicon.png" type="image/png">
+<script defer src="/support.js"></script>
+<style>x-dc{display:none}</style>
+</head>
+<body>
+<div id="__pr" style="font-family:'Hanken Grotesk',Helvetica,Arial,sans-serif;background:#F7F3EA;color:#1A1712;padding:28px;max-width:880px;margin:0 auto;min-height:60vh">
+<span style="font-family:'Cinzel',Georgia,serif;font-weight:600;font-size:19px;letter-spacing:0.16em;display:block;margin-bottom:26px">PEZIARAH</span>
+<p style="font-size:16px;color:#5B5347;margin:0">Memuat…</p>
+</div>
+<script>
+(function(){
+  var p=document.getElementById("__pr");if(!p)return;
+  var done=false;
+  function ready(){var r=document.getElementById("dc-root");return !!(r&&r.firstElementChild);}
+  function kill(){if(done)return;done=true;if(p&&p.parentNode)p.parentNode.removeChild(p);p=null;}
+  if(ready()){kill();return;}
+  var mo=new MutationObserver(function(){if(ready()){mo.disconnect();clearTimeout(t);kill();}});
+  mo.observe(document.body,{childList:true,subtree:true});
+  var t=setTimeout(function(){if(ready()){mo.disconnect();kill();}},8000);
+})();
+</script>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Cinzel:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F3EA;color:#1A1712;font-family:'Hanken Grotesk',Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#6C4BA6;text-decoration:none}
+  a:hover{color:#1A1712}
+  button{font-family:'Space Mono',monospace;cursor:pointer}
+  input,textarea,select{font-family:'Hanken Grotesk',Helvetica,sans-serif}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:#6C4BA6 !important}
+  ::selection{background:#6C4BA6;color:#F7F3EA}
+</style>
+</helmet>
+<div style="max-width:880px;margin:0 auto;padding:28px 24px 80px;display:flex;flex-direction:column;gap:28px">
+  <header style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap">
+    <span style="font-family:'Cinzel',Georgia,serif;font-weight:600;font-size:19px;letter-spacing:0.16em">PEZIARAH</span>
+    <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ADMIN · JANGAN DIBAGIKAN</span>
+  </header>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <h1 style="font-family:'Archivo',Helvetica,sans-serif;font-weight:800;font-size:clamp(32px,5vw,52px);line-height:0.95;letter-spacing:-0.035em;margin:0">Kuitansi lunas</h1>
+    <p style="font-size:16px;line-height:1.6;color:#5B5347;max-width:56ch;margin:0;text-wrap:pretty">Terbitkan setelah transfer masuk ke rekening. Tempel baris pesanan dari Google Sheet, periksa isinya, lalu unduh PDF dan kirim lewat WhatsApp.</p>
+  </div>
+
+  <section style="display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:18px;background:#EFE8DA">
+    <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5B5347">01 · TEMPEL BARIS DARI SHEET</span>
+    <textarea value="{{ s.raw }}" onInput="{{ on.raw }}" rows="3" placeholder="Di Google Sheet: klik nomor baris pesanan, salin (Ctrl/Cmd+C), lalu tempel di sini." style="width:100%;padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:14px;line-height:1.5;resize:vertical;color:#1A1712"></textarea>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <button type="button" onClick="{{ parse }}" style="padding:11px 18px;border-radius:999px;border:1px solid #1A1712;background:transparent;color:#1A1712;font-size:12px;letter-spacing:0.1em">ISI OTOMATIS</button>
+      <span style="font-size:14px;color:#5B5347">{{ parseMsg }}</span>
+    </div>
+    <details style="border-top:1px solid #D6CBB8;padding-top:12px">
+      <summary style="cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5B5347">JUDUL KOLOM SHEET · {{ hdrStatus }}</summary>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+        <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">Sekali saja: di tab pesanan, klik angka <strong>1</strong> (baris judul), salin, tempel di sini. Tersimpan di perangkat ini. Kalau kolom Sheet berubah, tempel ulang.</p>
+        <textarea value="{{ s.hdr }}" onInput="{{ on.hdr }}" rows="2" style="width:100%;padding:10px 12px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:13px;line-height:1.5;resize:vertical;color:#1A1712;font-family:'Space Mono',monospace"></textarea>
+      </div>
+    </details>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5B5347">02 · PESANAN</span>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
+      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Kode pesanan<input value="{{ s.code }}" onInput="{{ on.code }}" placeholder="PZ-XXXXX" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712;font-family:'Space Mono',monospace"></label>
+      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Nama pembeli<input value="{{ s.name }}" onInput="{{ on.name }}" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712"></label>
+      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">WhatsApp<input value="{{ s.phone }}" onInput="{{ on.phone }}" inputmode="tel" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712"></label>
+      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Email<input value="{{ s.email }}" onInput="{{ on.email }}" inputmode="email" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712"></label>
+    </div>
+    <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Alamat<textarea value="{{ s.addr }}" onInput="{{ on.addr }}" rows="2" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;line-height:1.5;color:#1A1712;resize:vertical"></textarea></label>
+    <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Rincian barang · satu baris per barang<textarea value="{{ s.items }}" onInput="{{ on.items }}" rows="4" placeholder="Rosario Mutiara Air Tawar (Putih) × 1 — Rp 700.000" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:14px;line-height:1.6;color:#1A1712;resize:vertical;font-family:'Space Mono',monospace"></textarea></label>
+    <span style="font-size:13px;color:#8A3B2E">{{ itemErr }}</span>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
+      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Zona pengiriman<input value="{{ s.zone }}" onInput="{{ on.zone }}" placeholder="Pulau Jawa" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712"></label>
+      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Ongkir (Rp, 0 = gratis)<input value="{{ s.ship }}" onInput="{{ on.ship }}" inputmode="numeric" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712;font-family:'Space Mono',monospace"></label>
+    </div>
+    <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Catatan di kuitansi (opsional)<input value="{{ s.note }}" onInput="{{ on.note }}" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712"></label>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5B5347">03 · PEMBAYARAN DITERIMA</span>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
+      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Tanggal masuk rekening<input type="date" value="{{ s.payDate }}" onInput="{{ on.payDate }}" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712"></label>
+      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Nama di rekening pengirim<input value="{{ s.from }}" onInput="{{ on.from }}" placeholder="{{ fromHint }}" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712"></label>
+      <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Jumlah diterima (Rp)<input value="{{ s.amount }}" onInput="{{ on.amount }}" placeholder="{{ totalPlain }}" inputmode="numeric" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712;font-family:'Space Mono',monospace"></label>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:16px;padding:22px;border-radius:18px;border:1px solid #1A1712">
+    <div style="display:grid;grid-template-columns:1fr auto;gap:8px 20px;font-size:15px">
+      <span style="color:#5B5347">Subtotal</span><span style="font-family:'Space Mono',monospace;text-align:right">{{ subLabel }}</span>
+      <span style="color:#5B5347">Ongkir</span><span style="font-family:'Space Mono',monospace;text-align:right">{{ shipLabel }}</span>
+      <span style="font-weight:600">Total</span><span style="font-family:'Space Mono',monospace;font-weight:700;text-align:right">{{ totalLabel }}</span>
+      <span style="color:#2E6A40;font-weight:600">{{ paidLine }}</span><span style="font-family:'Space Mono',monospace;color:#2E6A40;font-weight:700;text-align:right">{{ paidLabel }}</span>
+    </div>
+    <label style="display:flex;gap:10px;align-items:center;font-size:14px;color:#5B5347"><input type="checkbox" checked="{{ s.log }}" onChange="{{ on.log }}" style="width:18px;height:18px;accent-color:#6C4BA6">Catat ke Google Sheet sebagai [LUNAS]</label>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <button type="button" onClick="{{ download }}" style="{{ btnStyle }}">{{ btnLabel }}</button>
+      <sc-if value="{{ s.done }}" hint-placeholder-val="{{ false }}">
+        <a href="{{ waHref }}" target="_blank" rel="noopener" style="padding:14px 20px;border-radius:999px;border:1px solid #2E6A40;color:#2E6A40;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em">KIRIM KE WHATSAPP PEMBELI →</a>
+      </sc-if>
+    </div>
+    <span style="font-size:13px;color:#8A3B2E">{{ s.err }}</span>
+    <sc-if value="{{ s.done }}" hint-placeholder-val="{{ false }}">
+      <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">PDF tersimpan di folder unduhan. WhatsApp tidak bisa melampirkan file otomatis — lampirkan PDF-nya sendiri di chat.</p>
+    </sc-if>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+// Admin-only paid receipt. Never linked from the site; noindex + robots Disallow.
+// Real safeguard is the channel: a kuitansi counts only when it comes from the
+// official WhatsApp (printed on the PDF).
+const BANK_ENC = "==Qfi8mbvN3ahNWaXBibvlGRgMXdulGblNmch1kI6IiclRGbvhmIsIiMtQzMxMTN3ATLwATL3MTMiojIyVmYtVnbiwiIpJXak5WYNByauFmQiojIl1WYuJye";
+const bank = () => JSON.parse(atob(BANK_ENC.split("").reverse().join("")));
+const ZONES = [{ name: "Jabodetabek", cost: 20000 }, { name: "Pulau Jawa", cost: 30000 }, { name: "Luar Jawa", cost: 45000 }];
+const DATA = "/data/";
+const num = v => parseInt(String(v || "").replace(/[^\d]/g, ""), 10) || 0;
+const rp = n => "Rp " + Math.round(n).toLocaleString("id-ID");
+const today = () => { const d = new Date(); return new Date(d - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10); };
+
+// Google Sheets copies rows as TSV; multi-line cells come quoted.
+function tsvRows(text) {
+  const rows = []; let row = [], cur = "", q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) { if (c === '"' && text[i + 1] === '"') { cur += '"'; i++; } else if (c === '"') q = false; else cur += c; }
+    else if (c === '"' && cur === "") q = true;
+    else if (c === "\t") { row.push(cur); cur = ""; }
+    else if (c === "\r") {}
+    else if (c === "\n") { row.push(cur); rows.push(row); row = []; cur = ""; }
+    else cur += c;
+  }
+  row.push(cur); rows.push(row);
+  return rows.map(r => r.map(s => s.trim())).filter(r => r.some(Boolean));
+}
+
+// Column headers -> field, matched on the Sheet's header row (= form question titles).
+const HEAD = [
+  ["code", /kode/i], ["email", /e-?mail/i], ["phone", /telepon|whats ?app|^wa\b|no\.? ?hp|nomor/i],
+  ["zone", /zona|tujuan/i], ["sub", /sub ?total/i], ["ship", /ongkir|ongkos/i], ["total", /^total/i],
+  ["items", /rincian|barang/i], ["note", /catatan/i], ["addr", /alamat/i], ["name", /nama/i]
+];
+const HDR_KEY = "peziarah.kuitansi.headers";
+// Current header row of the pesanan tab (2026-10-07). Overridable on the page if the Sheet changes.
+const DEFAULT_HDR = "Timestamp\tkode_pesanan\tnama\ttelepon\temail\talamat\tzona_pengiriman\tsubtotal\tongkir\ttotal\trincian_barang\tcatatan";
+const loadHdr = () => { try { return localStorage.getItem(HDR_KEY) || DEFAULT_HDR; } catch (e) { return DEFAULT_HDR; } };
+const isHeader = r => r.some(c => /kode/i.test(c)) && !r.some(c => /^PZ-/i.test(c));
+function mapByHeader(hdr, row) {
+  const f = {};
+  hdr.forEach((h, i) => { const m = HEAD.find(([, re]) => re.test(h)); if (m && f[m[0]] === undefined && row[i] != null) f[m[0]] = row[i]; });
+  return f;
+}
+const money = v => /gratis/i.test(String(v)) ? 0 : num(v);
+
+function parseItems(text) {
+  const items = [], bad = [];
+  String(text || "").split("\n").map(l => l.replace(/^[•\-\s]+/, "").trim()).filter(Boolean).forEach(l => {
+    const m = l.match(/^(.+?)\s*[×x]\s*(\d+)\s*[—–-]\s*Rp\s?([\d.,]+)$/);
+    if (!m) { bad.push(l); return; }
+    let name = m[1].trim(), detail = [];
+    if (/\[kado\]$/.test(name)) { name = name.replace(/\s*\[kado\]$/, ""); detail.push("Kado"); }
+    const v = name.match(/^(.*)\s\(([^()]+)\)$/);
+    if (v) { name = v[1]; detail.unshift(v[2]); }
+    const qty = +m[2], line = num(m[3]);
+    items.push({ name, detail: detail.join(" - "), qty, unit: line / qty });
+  });
+  return { items, bad };
+}
+
+class Component extends DCLogic {
+  state = { raw: "", code: "", name: "", phone: "", email: "", addr: "", items: "", zone: "", ship: "", note: "",
+    payDate: today(), from: "", amount: "", log: true, busy: false, done: false, err: "", parseMsg: "", hdr: loadHdr() };
+
+  parse() {
+    const rows = tsvRows(this.state.raw);
+    let hdr = null, row = null;
+    if (rows.length >= 2 && isHeader(rows[0])) { hdr = rows[0]; row = rows[1]; this.saveHdr(rows[0].join("\t")); }
+    else { row = rows[0]; const saved = tsvRows(this.state.hdr)[0]; if (saved && isHeader(saved)) hdr = saved; }
+    if (!row || row.length < 3) return this.setState({ parseMsg: "Tidak terbaca sebagai baris Sheet. Isi manual di bawah." });
+    if (!hdr) return this.setState({ parseMsg: "Isi dulu \"Judul kolom Sheet\" di bawah (sekali saja), lalu klik lagi." });
+    const f = mapByHeader(hdr, row);
+    const code = String(f.code || "").toUpperCase();
+    this.setState({
+      code, name: f.name || "", phone: f.phone || "", email: f.email || "", addr: f.addr || "",
+      items: f.items || "", zone: f.zone || "", note: String(f.note || "").replace(/^\[INVOICE PDF\]\s*/, ""),
+      ship: f.ship != null && f.ship !== "" ? String(money(f.ship)) : "", amount: "", done: false, err: "",
+      parseMsg: code ? `Terbaca ${code}. Periksa lagi sebelum unduh.` : "Kode pesanan kosong di baris ini. Periksa isian."
+    });
+  }
+
+  saveHdr(v) {
+    this.setState({ hdr: v });
+    try { localStorage.setItem(HDR_KEY, v); } catch (e) {}
+  }
+
+  totals() {
+    const { items, bad } = parseItems(this.state.items);
+    const sub = items.reduce((s, i) => s + i.unit * i.qty, 0);
+    const ship = num(this.state.ship);
+    const total = sub + ship;
+    const amt = this.state.amount.trim() ? num(this.state.amount) : total;
+    return { items, bad, sub, ship, total, amt };
+  }
+
+  async download() {
+    const s = this.state, t = this.totals();
+    if (!/^PZ-/i.test(s.code.trim())) return this.setState({ err: "Isi kode pesanan (PZ-XXXXX)." });
+    if (!t.items.length || t.bad.length) return this.setState({ err: "Periksa rincian barang." });
+    if (!t.amt) return this.setState({ err: "Isi jumlah diterima." });
+    this.setState({ busy: true, err: "" });
+    try {
+      const inv = await import(DATA + "invoice.js");
+      const date = new Date(s.payDate + "T12:00:00").toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+      const code = s.code.trim().toUpperCase();
+      await inv.downloadInvoice({
+        no: code, items: t.items,
+        buyer: { name: s.name, phone: s.phone, email: s.email, addr: s.addr },
+        note: s.note, shipping: { zone: s.zone, cost: t.ship }, bank: bank(),
+        paid: { date, from: s.from || s.name, amount: t.amt }
+      });
+      if (s.log) {
+        const forms = await import(DATA + "forms.js");
+        forms.submit("kuitansi", {
+          kode_pesanan: code, nama: s.name, telepon: s.phone, email: s.email, alamat: s.addr,
+          zona_pengiriman: s.zone, subtotal: rp(t.sub), ongkir: t.ship ? rp(t.ship) : "Gratis", total: rp(t.total),
+          rincian_barang: s.items.trim(),
+          catatan: `[LUNAS] ${rp(t.amt)} diterima ${date} dari ${s.from || s.name}${t.amt < t.total ? " · sisa " + rp(t.total - t.amt) : ""}`
+        });
+      }
+      this.setState({ busy: false, done: true });
+    } catch (e) {
+      this.setState({ busy: false, err: "Gagal membuat PDF. Cek koneksi lalu coba lagi." });
+    }
+  }
+
+  renderVals() {
+    const s = this.state, t = this.totals();
+    const on = {};
+    ["raw", "code", "name", "phone", "email", "addr", "items", "zone", "ship", "note", "payDate", "from", "amount"]
+      .forEach(k => { on[k] = e => this.setState({ [k]: e.target.value, done: false }); });
+    on.log = e => this.setState({ log: e.target.checked });
+    on.hdr = e => this.saveHdr(e.target.value);
+    const ready = t.items.length && !t.bad.length && /^PZ-/i.test(s.code.trim());
+    const wa = (s.phone || "").replace(/[^\d]/g, "").replace(/^0/, "62");
+    const partial = t.amt < t.total;
+    const msg = `Halo ${s.name || "Kak"}, pembayaran pesanan ${s.code.trim().toUpperCase()} sebesar ${rp(t.amt)} sudah kami terima.${partial ? ` Sisa tagihan ${rp(t.total - t.amt)}.` : " Status: LUNAS."} Kuitansinya kami lampirkan di chat ini. Terima kasih, Tuhan memberkati. — Peziarah`;
+    return {
+      s, on,
+      parse: () => this.parse(),
+      hdrStatus: isHeader(tsvRows(s.hdr)[0] || []) ? "TERSIMPAN" : "BELUM DIISI",
+      parseMsg: s.parseMsg,
+      itemErr: t.bad.length ? `Baris tidak terbaca: ${t.bad.join(" / ")}` : "",
+      fromHint: s.name || "Sama dengan pembeli",
+      totalPlain: t.total ? String(t.total) : "",
+      subLabel: rp(t.sub),
+      shipLabel: t.ship ? rp(t.ship) : "Gratis",
+      totalLabel: rp(t.total),
+      paidLine: t.total ? (partial ? "Diterima · sisa " + rp(t.total - t.amt) : "Diterima · LUNAS") : "",
+      paidLabel: t.total ? rp(t.amt) : "",
+      download: () => this.download(),
+      btnLabel: s.busy ? "MEMBUAT PDF…" : "UNDUH KUITANSI (PDF)",
+      btnStyle: `padding:14px 22px;border-radius:999px;border:none;font-size:12px;letter-spacing:0.1em;background:${ready ? "#1A1712" : "#B9AF9E"};color:#F7F3EA;cursor:${ready ? "pointer" : "not-allowed"}`,
+      waHref: wa ? `https://wa.me/${wa}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`
+    };
+  }
+}
+</script>
+</body>
+</html>

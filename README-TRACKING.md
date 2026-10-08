@@ -46,6 +46,7 @@ Shortcut without GTM: open any page with `?track_debug=1` and every event logs t
 | `pz_view_cart` | view_cart | `/keranjang/` opens | ecommerce |
 | `pz_begin_checkout` | begin_checkout | First checkout field touched | ecommerce |
 | `pz_purchase` | purchase | Checkout form submitted | ecommerce: transaction_id (order code), value, shipping, items |
+| `pz_invoice_download` | invoice_download (+ Meta custom `InvoiceDownload`) | "Unduh Invoice (PDF)" on /keranjang/ | ecommerce: transaction_id (invoice no.), value, items |
 | `pz_generate_lead` | generate_lead | Any other form | form_type, lead_id, route, group_size, style, pace, duration, sacrament, city, category |
 | `pz_whatsapp_click` / `pz_phone_click` / `pz_email_click` | same | wa.me / tel: / mailto: click | link_text, page_type |
 

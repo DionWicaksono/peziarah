@@ -2,7 +2,7 @@
 //
 // Where events come from:
 //   data/cart.js   add()     -> add_to_cart
-//   data/forms.js  submit()  -> purchase (checkout) / generate_lead (every other form)
+//   data/forms.js  submit()  -> purchase (checkout) / invoice_download (invoice PDF) / generate_lead (every other form)
 //   this file, automatically on load:
 //     /produk/<id>/           -> view_item
 //     /keranjang/             -> view_cart, then begin_checkout on first form field touched
@@ -108,6 +108,16 @@ const LEAD_PARAMS = {
 
 export function trackSubmit(kind, values) {
   values = values || {};
+  if (kind === "kuitansi") return; // admin receipt, never a conversion
+  if (kind === "invoice") {
+    const items = cartItems();
+    track("invoice_download", {
+      transaction_id: values.kode_pesanan,
+      value: toNumber(values.total),
+      items: items.length ? items : undefined
+    });
+    return;
+  }
   if (kind === "pesanan") {
     const items = cartItems();
     track("purchase", {

@@ -26,6 +26,12 @@
  *   Fill in PAID.sheetUrl with the orders spreadsheet. When the status column
  *   is changed to one of PAID.values, a "PaidOrder" custom event is sent
  *   (create a Custom Conversion on it in Events Manager to optimise for it).
+ *
+ *   With sheetUrl filled in, receipts issued at /admin/kuitansi/ no longer
+ *   leave an extra row: the script writes "Ya" (or "DP · sisa …") in a
+ *   "Lunas" column on the ORIGINAL order row and deletes the receipt row.
+ *   The "Lunas" column is created at the far right if it doesn't exist.
+ *   Run `cleanupLunasRows` once to fold receipts made before this change.
  */
 
 const PIXEL_ID = "1005932122517702";
@@ -35,7 +41,7 @@ const SITE = "https://peziarah.com";
 // kind: matches data/forms.js on the site. event: Meta event name.
 // page: fallback event_source_url when the hidden _url field is empty.
 const FORMS = [
-  { kind: "pesanan",              event: "Purchase", page: "/keranjang/",          editUrl: "PASTE_EDIT_LINK" },
+  { kind: "pesanan",              event: "Purchase", page: "/keranjang/",          editUrl: "https://docs.google.com/forms/d/1VWa_Z5CAhBTgWw982v0baTiTfZIJi8P6m-TVtiqGqbo/edit" },
   { kind: "ziarah",               event: "Lead",     page: "/ziarah/",             editUrl: "PASTE_EDIT_LINK" },
   { kind: "ziarah-susun-sendiri", event: "Lead",     page: "/ziarah/",             editUrl: "PASTE_EDIT_LINK" },
   { kind: "concierge",            event: "Lead",     page: "/ziarah/grup-kecil/",  editUrl: "PASTE_EDIT_LINK" },
@@ -45,7 +51,7 @@ const FORMS = [
 
 // Optional paid-order event. Leave sheetUrl empty to switch it off.
 const PAID = {
-  sheetUrl: "",
+  sheetUrl: "https://docs.google.com/spreadsheets/d/1YS8--5RpLPafhfv1k0MC3D4VFO3RPAADbi1vlNNPP34/edit",
   statusHeader: /status/i,               // header of the column you update
   values: ["lunas", "paid", "dibayar"]   // any of these (case-insensitive) = paid
 };
@@ -58,6 +64,7 @@ const MATCH = {
   email: /e-?mail/i,
   name:  /nama/i,
   total: /^total/i,
+  note:  /catatan/i,
   ua:    /^_ua$/,
   fbp:   /^_fbp$/,
   fbc:   /^_fbc$/,
@@ -101,6 +108,12 @@ function onFormSubmitCapi(e) {
     if (!cfg) return;
 
     const a = answers(e.response.getItemResponses().map(r => [r.getItem().getTitle(), r.getResponse()]));
+    // Invoice PDF downloads and paid receipts share the pesanan form; they are not new orders.
+    if (kind === "pesanan" && /^\[LUNAS\]/.test(String(a.note || ""))) {
+      if (PAID.sheetUrl) { Utilities.sleep(4000); cleanupLunasRows(); }
+      return;
+    }
+    if (kind === "pesanan" && /^\[INVOICE PDF\]/.test(String(a.note || ""))) return;
     const ts = Math.floor(e.response.getTimestamp().getTime() / 1000);
 
     const custom = { currency: "IDR" };
@@ -143,6 +156,64 @@ function onPaidEdit(e) {
     });
   } catch (err) {
     logError("onPaidEdit", err);
+  }
+}
+
+// Folds every "[LUNAS]" receipt row into its original order row, then deletes it.
+// Runs automatically after each receipt; safe to run by hand any time.
+function cleanupLunasRows() {
+  if (!PAID.sheetUrl) throw new Error("Fill in PAID.sheetUrl first.");
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    SpreadsheetApp.openByUrl(PAID.sheetUrl).getSheets().forEach(sh => {
+      if (sh.getLastRow() < 2) return;
+      let headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].map(String);
+      const codeCol = headers.findIndex(h => /^kode_pesanan$|^kode/i.test(h.trim()));
+      const noteCol = headers.findIndex(h => MATCH.note.test(h));
+      if (codeCol < 0 || noteCol < 0) return;
+      const data = sh.getRange(2, 1, sh.getLastRow() - 1, headers.length).getValues();
+      if (!data.some(r => /^\[LUNAS\]/.test(String(r[noteCol])))) return;
+
+      let lunasCol = headers.findIndex(h => /^(lunas|paid)$/i.test(h.trim()));
+      if (lunasCol < 0) {
+        lunasCol = sh.getLastColumn();
+        sh.getRange(1, lunasCol + 1).setValue("Lunas");
+      }
+
+      const toDelete = [];
+      data.forEach((r, i) => {
+        const note = String(r[noteCol]);
+        if (!/^\[LUNAS\]/.test(note)) return;
+        const norm = v => String(v).toUpperCase().replace(/\s+/g, "");
+        const code = norm(r[codeCol]);
+        let found = false;
+        const m = note.match(/sisa (Rp[\s\d.,]+)/);
+        const mark = m ? "DP · sisa " + m[1].trim() : "Ya";
+        // newest checkout row with the same code above this receipt; else the newest invoice-PDF row
+        let target = -1, fallback = -1;
+        for (let j = i - 1; j >= 0; j--) {
+          if (norm(data[j][codeCol]) !== code) continue;
+          const n = String(data[j][noteCol]);
+          if (/^\[LUNAS\]/.test(n)) continue;
+          if (/^\[INVOICE PDF\]/.test(n)) { if (fallback < 0) fallback = j; continue; }
+          target = j; break;
+        }
+        if (target < 0) target = fallback;
+        if (target >= 0) {
+          sh.getRange(target + 2, lunasCol + 1).setValue(mark);
+          Logger.log("Row " + (target + 2) + " (" + code + ") -> " + mark);
+          toDelete.push(i + 2);
+          found = true;
+        }
+        if (!found) Logger.log("Kept row " + (i + 2) + ": no order row above it with code \"" + code + "\" (column " + headers[codeCol] + ")");
+        // no matching order row: keep the receipt row so nothing is lost
+      });
+      toDelete.reverse().forEach(row => sh.deleteRow(row));
+      Logger.log(sh.getName() + ": folded " + toDelete.length + " receipt row(s)");
+    });
+  } finally {
+    lock.releaseLock();
   }
 }
 

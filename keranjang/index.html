@@ -278,6 +278,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </sc-if>
             </div>
           </sc-if>
+          <div style="border-top:1px solid #DCD2C0;margin-top:22px;padding-top:18px;display:flex;flex-direction:column;gap:10px">
+            <button type="button" onClick="{{ downloadInvoice }}" style="padding:15px 24px;border-radius:999px;border:1px solid #1A1712;background:transparent;color:#1A1712;font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:15px" style-hover="background:#1A1712;color:#F7F3EA">{{ invoiceLabel }}</button>
+            <p style="margin:0;font-family:'Space Mono',monospace;font-size:10px;line-height:1.6;letter-spacing:0.06em;color:#8A8172">{{ invoiceHint }}</p>
+          </div>
         </aside>
       </div>
     </sc-if>
@@ -375,7 +379,7 @@ class Component extends DCLogic {
     q: "", searchOpen: false,
     zone: "jabodetabek", tab: "wa", note: "",
     name: "", phone: "", email: "", addr: "",
-    ordered: false, orderCode: ""
+    ordered: false, orderCode: "", pdf: ""
   };
 
   componentDidMount() {
@@ -619,8 +623,56 @@ class Component extends DCLogic {
       bankName: bank().name,
       bankNumber: bank().number,
       bankHolder: bank().holder,
-      proofHref: `https://wa.me/${WA}?text=${encodeURIComponent(this.orderMessage(this.state.orderCode))}`
+      proofHref: `https://wa.me/${WA}?text=${encodeURIComponent(this.orderMessage(this.state.orderCode))}`,
+
+      invoiceLabel: this.state.pdf === "busy" ? "Menyiapkan PDF…" : "Unduh Invoice (PDF)",
+      invoiceHint: this.state.pdf === "error"
+        ? "PDF GAGAL DIBUAT — COBA LAGI, ATAU KIRIM PESANAN VIA WHATSAPP"
+        : (this.state.name.trim() ? "INVOICE BERISI TOTAL + ONGKIR SESUAI TUJUAN DI ATAS DAN REKENING TRANSFER" : "ISI DATA DI TAB TRANSFER AGAR NAMA & ALAMAT IKUT TERCETAK"),
+      downloadInvoice: () => this.downloadInvoice()
     };
+  }
+
+  // One invoice number per cart + buyer snapshot: tapping twice re-downloads the
+  // same invoice instead of logging a second row to the sheet.
+  async downloadInvoice() {
+    if (this.state.pdf === "busy" || !this.state.items.length) return;
+    this.setState({ pdf: "busy" });
+    try {
+      const mod = await import("/data/invoice.js");
+      const s = this.state;
+      const sig = JSON.stringify([s.items, s.zone, s.name, s.phone, s.email, s.addr, s.note]);
+      if (!this._inv || this._inv.sig !== sig) this._inv = { sig, no: mod.invoiceNumber(), logged: false };
+      const sub = this.subtotalValue();
+      const ship = this.shipValue();
+      const zone = ZONES.find(z => z.id === s.zone) || ZONES[0];
+      await mod.downloadInvoice({
+        no: this._inv.no,
+        items: s.items.map(i => ({
+          name: i.name, qty: i.qty, unit: i.unit,
+          detail: [i.variant && `${i.variantLabel || "Pilihan"}: ${i.variant}`, i.gift && "Kotak kado + kartu doa"].filter(Boolean).join(" · ")
+        })),
+        buyer: { name: s.name, phone: s.phone, email: s.email, addr: s.addr },
+        note: s.note,
+        shipping: { zone: zone.name, cost: ship },
+        bank: bank()
+      });
+      if (!this._inv.logged && FORMS) {
+        this._inv.logged = true;
+        FORMS.submit("invoice", {
+          kode_pesanan: this._inv.no,
+          nama: s.name, telepon: s.phone, email: s.email, alamat: s.addr,
+          zona_pengiriman: zone.name,
+          subtotal: this.rp(sub), ongkir: ship === 0 ? "Gratis" : this.rp(ship), total: this.rp(sub + ship),
+          rincian_barang: this.itemLines(),
+          catatan: ("[INVOICE PDF] " + s.note).trim()
+        });
+      }
+      this.setState({ pdf: "" });
+    } catch (e) {
+      if (typeof console !== "undefined") console.error("[invoice]", e);
+      this.setState({ pdf: "error" });
+    }
   }
 }
 

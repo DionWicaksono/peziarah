@@ -170,6 +170,15 @@ const FORMS = {
   }
 };
 
+// Invoice PDF downloads from /keranjang/ log into the same order sheet as
+// checkout ("pesanan"), with the same PZ-XXXXX code shape, marked by an
+// "[INVOICE PDF]" note. The Apps Script skips that note so Meta never counts
+// them as Purchase.
+FORMS.invoice = { id: FORMS.pesanan.id, fields: FORMS.pesanan.fields };
+// Paid receipts issued from /admin/kuitansi/ — same sheet, note starts "[LUNAS]".
+// Not in META_KINDS and not tracked: an admin action, not a visitor conversion.
+FORMS.kuitansi = { id: FORMS.pesanan.id, fields: FORMS.pesanan.fields };
+
 const ARCHIVE_KEY = "peziarah.submissions.v1";
 
 // Local copy of everything submitted, newest last, capped at 50 entries.
@@ -177,7 +186,7 @@ const ARCHIVE_KEY = "peziarah.submissions.v1";
 // have the hidden _ua/_fbp/_fbc/_url questions mapped above, and never on
 // tanya or vendor. The Apps Script reads these from the response and forwards
 // them to Meta; GA never sees them.
-const META_KINDS = ["pesanan", "ziarah", "ziarah-susun-sendiri", "concierge", "shuttle", "paroki"];
+const META_KINDS = ["pesanan", "invoice", "ziarah", "ziarah-susun-sendiri", "concierge", "shuttle", "paroki"];
 
 function cookie(name) {
   try {
