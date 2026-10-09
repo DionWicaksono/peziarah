@@ -257,7 +257,7 @@ class Component extends DCLogic {
     const ready = t.items.length && !t.bad.length && /^PZ-/i.test(s.code.trim());
     const wa = (s.phone || "").replace(/[^\d]/g, "").replace(/^0/, "62");
     const partial = t.amt < t.total;
-    const msg = `Halo ${s.name || "Kak"}, pembayaran pesanan ${s.code.trim().toUpperCase()} sebesar ${rp(t.amt)} sudah kami terima.${partial ? ` Sisa tagihan ${rp(t.total - t.amt)}.` : " Status: LUNAS."} Kuitansinya kami lampirkan di chat ini. Terima kasih, Tuhan memberkati. — Peziarah`;
+    const msg = `Halo ${s.name || "Kak"}, pembayaran pesanan ${s.code.trim().toUpperCase()} sebesar ${rp(t.amt)} sudah kami terima.${partial ? ` Sisa tagihan ${rp(t.total - t.amt)}.` : " Status: LUNAS."} Kuitansinya kami lampirkan di chat ini. Terima kasih, Berkah Dalem. — Peziarah`;
     return {
       s, on,
       parse: () => this.parse(),

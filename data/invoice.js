@@ -188,7 +188,7 @@ export async function downloadInvoice(data) {
       .forEach((l, k) => doc.text(l, ix, y + 14.5 + k * 4.3));
   }
   y += 46;
-  font("helvetica", "italic", 9); col(MUTED); doc.text("Terima kasih telah berbelanja di Peziarah. Tuhan memberkati.", M, y);
+  font("helvetica", "italic", 9); col(MUTED); doc.text("Terima kasih telah berbelanja di Peziarah. Berkah Dalem.", M, y);
   if (paid) { y += 5; font("helvetica", "normal", 8); doc.text("Kuitansi ini sah bila diterima langsung dari WhatsApp resmi Peziarah, +62 815-4261-5445.", M, y); }
 
   // Footer on every page

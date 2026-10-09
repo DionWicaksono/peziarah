@@ -658,7 +658,7 @@ class Component extends DCLogic {
   copy(p) {
     const c = { ...(CCOPY[p.cat] || {}), ...(p.care ? { care: p.care } : {}), ...(p.rite ? { rite: p.rite } : {}) };
     const rite = c.rite;
-    const line = c.line;
+    const line = p.line || c.line;
     return {
       careTitle: c.careTitle || "Cara merawat",
       careBody: c.care || "",
