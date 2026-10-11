@@ -266,7 +266,9 @@ export function submit(kind, values, opts) {
 
   if (META_KINDS.indexOf(kind) !== -1) values = Object.assign({}, values, metaContext());
 
-  const body = new FormData();
+  // URL-encoded, not multipart: a simpler request that mobile Safari and in-app
+  // browsers (Instagram, WhatsApp) deliver reliably with keepalive.
+  const body = new URLSearchParams();
   Object.keys(values).forEach(k => {
     const entry = form.fields[k];
     const v = values[k];

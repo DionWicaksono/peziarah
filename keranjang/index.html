@@ -646,6 +646,19 @@ class Component extends DCLogic {
       const sub = this.subtotalValue();
       const ship = this.shipValue();
       const zone = ZONES.find(z => z.id === s.zone) || ZONES[0];
+      // Log BEFORE saving: on mobile the PDF often opens in this tab and unloads the page.
+      if (!FORMS) { try { FORMS = await import("/data/forms.js"); } catch (e) {} }
+      if (!this._inv.logged && FORMS) {
+        this._inv.logged = true;
+        await Promise.race([FORMS.submit("invoice", {
+          kode_pesanan: this._inv.no,
+          nama: s.name, telepon: s.phone, email: s.email, alamat: s.addr,
+          zona_pengiriman: zone.name,
+          subtotal: this.rp(sub), ongkir: ship === 0 ? "Gratis" : this.rp(ship), total: this.rp(sub + ship),
+          rincian_barang: this.itemLines(),
+          catatan: ("[INVOICE PDF] " + s.note).trim()
+        }), new Promise(r => setTimeout(r, 1500))]);
+      }
       await mod.downloadInvoice({
         no: this._inv.no,
         items: s.items.map(i => ({
@@ -657,17 +670,6 @@ class Component extends DCLogic {
         shipping: { zone: zone.name, cost: ship },
         bank: bank()
       });
-      if (!this._inv.logged && FORMS) {
-        this._inv.logged = true;
-        FORMS.submit("invoice", {
-          kode_pesanan: this._inv.no,
-          nama: s.name, telepon: s.phone, email: s.email, alamat: s.addr,
-          zona_pengiriman: zone.name,
-          subtotal: this.rp(sub), ongkir: ship === 0 ? "Gratis" : this.rp(ship), total: this.rp(sub + ship),
-          rincian_barang: this.itemLines(),
-          catatan: ("[INVOICE PDF] " + s.note).trim()
-        });
-      }
       this.setState({ pdf: "" });
     } catch (e) {
       if (typeof console !== "undefined") console.error("[invoice]", e);
