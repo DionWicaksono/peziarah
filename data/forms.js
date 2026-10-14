@@ -178,6 +178,9 @@ FORMS.invoice = { id: FORMS.pesanan.id, fields: FORMS.pesanan.fields };
 // Paid receipts issued from /admin/kuitansi/ — same sheet, note starts "[LUNAS]".
 // Not in META_KINDS and not tracked: an admin action, not a visitor conversion.
 FORMS.kuitansi = { id: FORMS.pesanan.id, fields: FORMS.pesanan.fields };
+// Shipping marks from /admin/resi/ — same sheet, note starts "[DIKIRIM]". The Apps
+// Script folds them into a "Dikirim" column on the order row. Not tracked.
+FORMS.resi = { id: FORMS.pesanan.id, fields: FORMS.pesanan.fields };
 
 const ARCHIVE_KEY = "peziarah.submissions.v1";
 

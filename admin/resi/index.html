@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Label Pengiriman | Peziarah Admin</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#F7F3EA">
+<link rel="icon" href="/assets/favicon.png" type="image/png">
+<script defer src="/support.js"></script>
+<style>x-dc{display:none}</style>
+</head>
+<body>
+<div id="__pr" style="font-family:'Hanken Grotesk',Helvetica,Arial,sans-serif;background:#F7F3EA;color:#1A1712;padding:28px;max-width:880px;margin:0 auto;min-height:60vh">
+<span style="font-family:'Cinzel',Georgia,serif;font-weight:600;font-size:19px;letter-spacing:0.16em;display:block;margin-bottom:26px">PEZIARAH</span>
+<p style="font-size:16px;color:#5B5347;margin:0">Memuat…</p>
+</div>
+<script>
+(function(){
+  var p=document.getElementById("__pr");if(!p)return;
+  var done=false;
+  function ready(){var r=document.getElementById("dc-root");return !!(r&&r.firstElementChild);}
+  function kill(){if(done)return;done=true;if(p&&p.parentNode)p.parentNode.removeChild(p);p=null;}
+  if(ready()){kill();return;}
+  var mo=new MutationObserver(function(){if(ready()){mo.disconnect();clearTimeout(t);kill();}});
+  mo.observe(document.body,{childList:true,subtree:true});
+  var t=setTimeout(function(){if(ready()){mo.disconnect();kill();}},8000);
+})();
+</script>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Cinzel:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F3EA;color:#1A1712;font-family:'Hanken Grotesk',Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#6C4BA6;text-decoration:none}
+  a:hover{color:#1A1712}
+  button{font-family:'Space Mono',monospace;cursor:pointer}
+  input,textarea,select{font-family:'Hanken Grotesk',Helvetica,sans-serif}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:#6C4BA6 !important}
+  ::selection{background:#6C4BA6;color:#F7F3EA}
+</style>
+</helmet>
+<div style="max-width:1120px;margin:0 auto;padding:28px 24px 80px;display:flex;flex-direction:column;gap:28px">
+  <header style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap">
+    <span style="font-family:'Cinzel',Georgia,serif;font-weight:600;font-size:19px;letter-spacing:0.16em">PEZIARAH</span>
+    <div style="display:flex;gap:18px;align-items:baseline;flex-wrap:wrap">
+      <a href="/admin/kuitansi/" style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em">KUITANSI</a>
+      <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ADMIN · JANGAN DIBAGIKAN</span>
+    </div>
+  </header>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <h1 style="font-family:'Archivo',Helvetica,sans-serif;font-weight:800;font-size:clamp(32px,5vw,52px);line-height:0.95;letter-spacing:-0.035em;margin:0">Label pengiriman</h1>
+    <p style="font-size:16px;line-height:1.6;color:#5B5347;max-width:60ch;margin:0;text-wrap:pretty">Tempel satu atau beberapa baris pesanan dari Google Sheet. Perbaiki data bila pembeli salah tulis, pilih barang yang ikut di paket ini, lalu cetak atau unduh labelnya.</p>
+  </div>
+
+  <section style="display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:18px;background:#EFE8DA">
+    <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5B5347">01 · TEMPEL BARIS DARI SHEET</span>
+    <textarea value="{{ s.raw }}" onInput="{{ on.raw }}" rows="3" placeholder="Di Google Sheet: pilih satu atau beberapa nomor baris pesanan, salin (Ctrl/Cmd+C), lalu tempel di sini." style="width:100%;padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:14px;line-height:1.5;resize:vertical;color:#1A1712"></textarea>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <button type="button" onClick="{{ parse }}" style="padding:11px 18px;border-radius:999px;border:1px solid #1A1712;background:transparent;color:#1A1712;font-size:12px;letter-spacing:0.1em">TAMBAHKAN KE DAFTAR</button>
+      <button type="button" onClick="{{ addManual }}" style="padding:11px 18px;border-radius:999px;border:1px solid #D6CBB8;background:transparent;color:#5B5347;font-size:12px;letter-spacing:0.1em">+ ISI MANUAL</button>
+      <span style="font-size:14px;color:#5B5347">{{ s.parseMsg }}</span>
+    </div>
+    <details style="border-top:1px solid #D6CBB8;padding-top:12px">
+      <summary style="cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5B5347">JUDUL KOLOM SHEET · {{ hdrStatus }}</summary>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+        <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">Dipakai bersama halaman kuitansi. Kalau kolom <strong>Dikirim</strong> sudah ada di Sheet, salin ulang baris judul (angka <strong>1</strong>) dan tempel di sini, agar kiriman sebelumnya terbaca.</p>
+        <textarea value="{{ s.hdr }}" onInput="{{ on.hdr }}" rows="2" style="width:100%;padding:10px 12px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:13px;line-height:1.5;resize:vertical;color:#1A1712;font-family:'Space Mono',monospace"></textarea>
+      </div>
+    </details>
+  </section>
+
+  <sc-if value="{{ hasOrders }}" hint-placeholder-val="{{ false }}">
+    <section style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
+        <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5B5347">02 · DAFTAR PAKET · {{ countLabel }}</span>
+        <button type="button" onClick="{{ clearAll }}" style="padding:6px 0;border:none;background:transparent;color:#8A3B2E;font-size:11px;letter-spacing:0.1em">KOSONGKAN DAFTAR</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <sc-for list="{{ orderList }}" as="o" hint-placeholder-count="2">
+          <div style="{{ o.chipStyle }}">
+            <input type="checkbox" checked="{{ o.on }}" onChange="{{ o.toggle }}" title="Ikut dicetak" style="width:17px;height:17px;accent-color:#6C4BA6;margin:0">
+            <button type="button" onClick="{{ o.select }}" style="border:none;background:transparent;padding:0;display:flex;flex-direction:column;align-items:flex-start;gap:2px;color:#1A1712;text-align:left">
+              <span style="font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:0.04em">{{ o.code }}</span>
+              <span style="font-family:'Hanken Grotesk',Helvetica,sans-serif;font-size:13px;color:#5B5347">{{ o.sub }}</span>
+            </button>
+            <button type="button" onClick="{{ o.remove }}" title="Hapus dari daftar" style="border:none;background:transparent;padding:4px;color:#8A8172;font-size:14px">×</button>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ hasCur }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+      <div style="flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:28px">
+        <section style="display:flex;flex-direction:column;gap:14px">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5B5347">03 · PENERIMA · {{ cur.code }}</span>
+          <sc-if value="{{ cur.hasSent }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:0;padding:12px 14px;border-radius:12px;background:#E6EFE4;color:#2E6A40;font-size:14px;line-height:1.5">Sudah dikirim: {{ cur.sent }}</p>
+          </sc-if>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Kode pesanan<input value="{{ cur.code }}" onInput="{{ on.code }}" placeholder="PZ-XXXXX" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712;font-family:'Space Mono',monospace"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Nama penerima<input value="{{ cur.name }}" onInput="{{ on.name }}" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Telepon / WhatsApp<input value="{{ cur.phone }}" onInput="{{ on.phone }}" inputmode="tel" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Zona pengiriman<input value="{{ cur.zone }}" onInput="{{ on.zone }}" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712"></label>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Alamat lengkap<textarea value="{{ cur.addr }}" onInput="{{ on.addr }}" rows="3" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;line-height:1.5;color:#1A1712;resize:vertical"></textarea></label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Catatan di label (opsional)<input value="{{ cur.note }}" onInput="{{ on.note }}" placeholder="Mis. titip satpam, kado untuk Ibu Maria" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712"></label>
+          <label style="display:flex;gap:10px;align-items:center;font-size:14px;color:#5B5347"><input type="checkbox" checked="{{ cur.kado }}" onChange="{{ on.kado }}" style="width:18px;height:18px;accent-color:#6C4BA6">Paket kado (label diberi tanda, tanpa harga)</label>
+        </section>
+
+        <section style="display:flex;flex-direction:column;gap:12px">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5B5347">04 · ISI PAKET INI</span>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">Hilangkan centang untuk barang yang menyusul. Jumlah bisa dikurangi bila hanya sebagian yang dikirim sekarang.</p>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ cur.items }}" as="it" hint-placeholder-count="2">
+              <div style="{{ it.rowStyle }}">
+                <input type="checkbox" checked="{{ it.send }}" onChange="{{ it.toggle }}" style="width:18px;height:18px;accent-color:#6C4BA6;margin:0;flex:none">
+                <input value="{{ it.label }}" onInput="{{ it.setLabel }}" style="flex:1 1 220px;min-width:0;padding:9px 10px;border:1px solid #D6CBB8;border-radius:10px;background:#FBF8F2;font-size:14px;color:#1A1712">
+                <div style="display:flex;align-items:center;gap:6px;flex:none">
+                  <input value="{{ it.n }}" onInput="{{ it.setN }}" inputmode="numeric" style="width:52px;padding:9px 8px;border:1px solid #D6CBB8;border-radius:10px;background:#FBF8F2;font-size:14px;color:#1A1712;font-family:'Space Mono',monospace;text-align:center">
+                  <span style="font-size:13px;color:#8A8172;white-space:nowrap">{{ it.ofLabel }}</span>
+                  <button type="button" onClick="{{ it.remove }}" title="Hapus barang" style="border:none;background:transparent;padding:4px 6px;color:#8A8172;font-size:15px">×</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+            <button type="button" onClick="{{ addItem }}" style="align-self:flex-start;padding:9px 16px;border-radius:999px;border:1px solid #D6CBB8;background:transparent;color:#5B5347;font-size:11px;letter-spacing:0.1em">+ BARANG</button>
+            <span style="font-size:13px;color:#8A3B2E">{{ cur.warn }}</span>
+          </div>
+        </section>
+
+        <section style="display:flex;flex-direction:column;gap:14px">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5B5347">05 · KURIR</span>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Kurir
+              <select value="{{ cur.courier }}" onChange="{{ on.courier }}" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712">
+                <option value="">Pilih kurir</option>
+                <option value="JNE">JNE</option>
+                <option value="J&amp;T">J&amp;T</option>
+                <option value="SiCepat">SiCepat</option>
+                <option value="AnterAja">AnterAja</option>
+                <option value="Pos Indonesia">Pos Indonesia</option>
+                <option value="GoSend">GoSend</option>
+                <option value="GrabExpress">GrabExpress</option>
+                <option value="Antar langsung">Antar langsung</option>
+              </select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">No. resi (boleh diisi nanti)<input value="{{ cur.resi }}" onInput="{{ on.resi }}" style="padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712;font-family:'Space Mono',monospace"></label>
+          </div>
+        </section>
+      </div>
+
+      <aside style="flex:0 1 340px;min-width:280px;display:flex;flex-direction:column;gap:12px;position:sticky;top:20px">
+        <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5B5347">PRATINJAU · {{ previewSize }}</span>
+        <div style="width:100%;max-width:330px;aspect-ratio:100/150;background:#FFFFFF;border:1px solid #D6CBB8;border-radius:6px;box-shadow:0 10px 30px rgba(26,23,18,0.08);padding:16px;display:flex;flex-direction:column;gap:8px;overflow:hidden;color:#1A1712">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+            <img src="/assets/peziarah-wordmark-ink.png" alt="Peziarah" style="width:96px;height:auto;display:block">
+            <div style="text-align:right;font-size:9px;line-height:1.3;color:#1A1712"><div style="font-size:7px;letter-spacing:0.08em;color:#5B5347">PENGIRIM</div>Peziarah.com<br>SW Building Bali<br>WA +62 815-4261-5445</div>
+          </div>
+          <div style="border-top:2px solid #1A1712"></div>
+          <div style="font-size:7px;letter-spacing:0.08em;color:#5B5347">PENERIMA</div>
+          <div style="font-family:'Archivo',Helvetica,sans-serif;font-weight:800;font-size:17px;line-height:1.1">{{ cur.nameP }}</div>
+          <div style="font-family:'Space Mono',monospace;font-weight:700;font-size:12px">{{ cur.phoneP }}</div>
+          <div style="font-size:11px;line-height:1.35;white-space:pre-line">{{ cur.addrP }}</div>
+          <div style="font-size:8px;letter-spacing:0.06em;color:#5B5347">{{ cur.zoneUp }}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;border:1px solid #1A1712">
+            <div style="padding:4px 6px;border-right:1px solid #1A1712"><div style="font-size:6.5px;color:#5B5347">KURIR</div><div style="font-weight:700;font-size:10px">{{ cur.courierP }}</div></div>
+            <div style="padding:4px 6px"><div style="font-size:6.5px;color:#5B5347">NO. PESANAN</div><div style="font-family:'Space Mono',monospace;font-weight:700;font-size:10px">{{ cur.codeP }}</div></div>
+          </div>
+          <div style="display:flex;justify-content:center;height:34px;flex:none">
+            <sc-for list="{{ cur.bars }}" as="b" hint-placeholder-count="0"><div style="height:100%;width:{{ b.w }}px;background:{{ b.c }}"></div></sc-for>
+          </div>
+          <div style="border-top:1px solid #1A1712;padding-top:4px;font-size:7px;letter-spacing:0.08em;color:#5B5347">ISI PAKET</div>
+          <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-height:0;overflow:hidden">
+            <sc-for list="{{ cur.sendList }}" as="p" hint-placeholder-count="2">
+              <div style="display:flex;gap:6px;align-items:flex-start;font-size:9.5px;line-height:1.25"><span style="width:9px;height:9px;border:1px solid #1A1712;flex:none;margin-top:1px"></span><span style="flex:1">{{ p.label }}</span><span style="font-family:'Space Mono',monospace;font-weight:700">×{{ p.qty }}</span></div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ cur.hasTag }}" hint-placeholder-val="{{ false }}">
+            <div style="border:1px solid #1A1712;padding:4px 6px;font-size:8px;line-height:1.35"><div style="font-weight:700">{{ cur.tagText }}</div><div>{{ cur.note }}</div></div>
+          </sc-if>
+          <div style="display:flex;justify-content:space-between;font-size:7px;color:#5B5347"><span>Terima kasih — Berkah Dalem.</span><span>peziarah.com</span></div>
+        </div>
+      </aside>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ hasOrders }}" hint-placeholder-val="{{ false }}">
+    <section style="display:flex;flex-direction:column;gap:16px;padding:22px;border-radius:18px;border:1px solid #1A1712">
+      <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5B5347">06 · CETAK · {{ printCount }}</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button type="button" onClick="{{ sizeThermal }}" style="{{ thermalStyle }}">THERMAL 100 × 150 MM</button>
+        <button type="button" onClick="{{ sizeCompact }}" style="{{ compactStyle }}">RINGKAS 70 × 100 MM</button>
+        <button type="button" onClick="{{ sizeA4 }}" style="{{ a4Style }}">KERTAS A4 · 4 LABEL</button>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+        <button type="button" onClick="{{ print }}" style="{{ btnStyle }}">{{ printLabel }}</button>
+        <button type="button" onClick="{{ download }}" style="white-space:nowrap;flex:none;padding:14px 22px;border-radius:999px;border:1px solid #1A1712;background:transparent;color:#1A1712;font-size:12px;letter-spacing:0.1em">UNDUH PDF</button>
+      </div>
+      <span style="font-size:13px;color:#8A3B2E">{{ s.err }}</span>
+      <div style="border-top:1px solid #D6CBB8;padding-top:16px;display:flex;flex-direction:column;gap:12px">
+        <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5B5347">07 · TANDAI DIKIRIM DI SHEET</span>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347;max-width:62ch">Klik setelah paket diserahkan ke kurir. Tanggal, kurir, resi dan isi paket ditulis di kolom <strong>Dikirim</strong> pada baris pesanan. Kiriman berikutnya ditambahkan, tidak menimpa.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347">Tanggal kirim<input type="date" value="{{ s.date }}" onInput="{{ on.date }}" style="padding:11px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712"></label>
+          <button type="button" onClick="{{ markSent }}" style="padding:13px 20px;border-radius:999px;border:1px solid #2E6A40;background:transparent;color:#2E6A40;font-size:12px;letter-spacing:0.1em">{{ markLabel }}</button>
+        </div>
+        <span style="font-size:13px;color:#2E6A40">{{ s.sentMsg }}</span>
+      </div>
+    </section>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+// Admin-only shipping labels. Never linked from the site; noindex + robots Disallow /admin/.
+const DATA = "/data/";
+const today = () => { const d = new Date(); return new Date(d - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10); };
+const STORE = "peziarah.resi.batch.v1";
+
+function tsvRows(text) {
+  const rows = []; let row = [], cur = "", q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) { if (c === '"' && text[i + 1] === '"') { cur += '"'; i++; } else if (c === '"') q = false; else cur += c; }
+    else if (c === '"' && cur === "") q = true;
+    else if (c === "\t") { row.push(cur); cur = ""; }
+    else if (c === "\r") {}
+    else if (c === "\n") { row.push(cur); rows.push(row); row = []; cur = ""; }
+    else cur += c;
+  }
+  row.push(cur); rows.push(row);
+  return rows.map(r => r.map(s => s.trim())).filter(r => r.some(Boolean));
+}
+const HEAD = [
+  ["sent", /dikirim/i], ["code", /kode/i], ["email", /e-?mail/i], ["phone", /telepon|whats ?app|^wa\b|no\.? ?hp|nomor/i],
+  ["zone", /zona|tujuan/i], ["sub", /sub ?total/i], ["ship", /ongkir|ongkos/i], ["total", /^total/i],
+  ["items", /rincian|barang/i], ["note", /catatan/i], ["addr", /alamat/i], ["paid", /^lunas$/i], ["name", /nama/i]
+];
+const HDR_KEY = "peziarah.kuitansi.headers";
+const DEFAULT_HDR = "Timestamp\tkode_pesanan\tnama\ttelepon\temail\talamat\tzona_pengiriman\tsubtotal\tongkir\ttotal\trincian_barang\tcatatan\tLunas\tDikirim";
+const loadHdr = () => { try { return localStorage.getItem(HDR_KEY) || DEFAULT_HDR; } catch (e) { return DEFAULT_HDR; } };
+const isHeader = r => r.some(c => /kode/i.test(c)) && !r.some(c => /^PZ-/i.test(c));
+function mapByHeader(hdr, row) {
+  const f = {};
+  hdr.forEach((h, i) => { const m = HEAD.find(([, re]) => re.test(h)); if (m && f[m[0]] === undefined && row[i] != null) f[m[0]] = row[i]; });
+  return f;
+}
+
+// "Name (variant) [kado] × 2 — Rp 300.000" -> { label, qty, kado }
+function parseLines(text) {
+  return String(text || "").split("\n").map(l => l.replace(/^[•\-\s]+/, "").trim()).filter(Boolean).map(l => {
+    const m = l.match(/^(.+?)\s*[×x]\s*(\d+)\s*(?:[—–-]\s*Rp.*)?$/);
+    let label = m ? m[1] : l, qty = m ? +m[2] : 1;
+    const kado = /\[kado\]/i.test(label);
+    label = label.replace(/\s*\[kado\]\s*/i, " ").trim();
+    return { label, qty, kado };
+  });
+}
+// Dikirim cell: "13 Okt · JNE · resi X · isi: A ×1; B ×2 | 20 Okt · … · lengkap"
+function shipped(text) {
+  const map = {}; let full = false;
+  String(text || "").split("|").forEach(seg => {
+    if (/lengkap/i.test(seg) || /^\s*ya\s*$/i.test(seg)) full = true;
+    const m = seg.match(/isi:\s*(.+?)(?:\s*·\s*lengkap)?\s*$/i);
+    if (m) m[1].split(";").forEach(p => { const x = p.trim().match(/^(.+?)\s*[×x]\s*(\d+)$/); if (x) map[x[1].trim()] = (map[x[1].trim()] || 0) + +x[2]; });
+  });
+  return { map, full };
+}
+function makeOrder(f) {
+  const prior = shipped(f.sent);
+  const lines = parseLines(f.items);
+  const items = lines.map(l => {
+    const done = prior.full ? 0 : Math.min(l.qty, prior.map[l.label] || 0);
+    const rem = l.qty - done;
+    return { label: l.label, qty: l.qty, done, send: prior.full || rem > 0, n: String(prior.full ? l.qty : (rem || l.qty)) };
+  });
+  return {
+    code: String(f.code || "").toUpperCase(), name: f.name || "", phone: f.phone || "", addr: f.addr || "", zone: f.zone || "",
+    note: String(f.note || "").replace(/^\[(INVOICE PDF|LUNAS|DIKIRIM)\][^\n]*?(\s|$)/, "").trim(),
+    kado: lines.some(l => l.kado), courier: "", resi: "", sent: f.sent || "", on: true, items
+  };
+}
+const nOf = it => Math.max(0, parseInt(it.n, 10) || 0);
+function sendItems(o) { return o.items.filter(it => it.send && nOf(it) > 0 && it.label.trim()).map(it => ({ label: it.label.trim(), qty: nOf(it) })); }
+function isPartial(o) { return o.items.some(it => it.qty - it.done - (it.send ? nOf(it) : 0) > 0); }
+function toLabel(o) {
+  return { code: o.code.trim().toUpperCase(), name: o.name, phone: o.phone, addr: o.addr, zone: o.zone, note: o.note,
+    kado: o.kado, courier: o.courier, resi: o.resi, partial: isPartial(o), items: sendItems(o) };
+}
+
+class Component extends DCLogic {
+  state = (() => {
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem(STORE) || "{}"); } catch (e) {}
+    return { raw: "", hdr: loadHdr(), orders: saved.orders || [], sel: saved.sel || 0, size: saved.size || "thermal",
+      date: today(), busy: false, err: "", parseMsg: "", sentMsg: "", logging: false };
+  })();
+
+  persist() { try { localStorage.setItem(STORE, JSON.stringify({ orders: this.state.orders, sel: this.state.sel, size: this.state.size })); } catch (e) {} }
+  componentDidUpdate() { this.persist(); }
+  setOrders(fn, extra) { this.setState(s => ({ orders: fn(s.orders.slice()), err: "", sentMsg: "", ...(extra || {}) })); }
+  editCur(patch) { this.setOrders(os => { os[this.state.sel] = { ...os[this.state.sel], ...patch }; return os; }); }
+  editItem(i, patch) {
+    this.setOrders(os => { const o = os[this.state.sel]; const items = o.items.slice(); items[i] = { ...items[i], ...patch }; os[this.state.sel] = { ...o, items }; return os; });
+  }
+
+  parse() {
+    const rows = tsvRows(this.state.raw);
+    if (!rows.length) return this.setState({ parseMsg: "Belum ada yang ditempel." });
+    let hdr = null, data = rows;
+    if (isHeader(rows[0])) { hdr = rows[0]; data = rows.slice(1); this.saveHdr(rows[0].join("\t")); }
+    else { const saved = tsvRows(this.state.hdr)[0]; if (saved && isHeader(saved)) hdr = saved; }
+    if (!hdr) return this.setState({ parseMsg: "Isi dulu \"Judul kolom Sheet\" di bawah, lalu klik lagi." });
+    const fresh = data.filter(r => r.length >= 3).map(r => makeOrder(mapByHeader(hdr, r))).filter(o => o.code || o.name);
+    if (!fresh.length) return this.setState({ parseMsg: "Tidak terbaca sebagai baris Sheet. Coba + Isi manual." });
+    const skipped = fresh.filter(o => this.state.orders.some(x => x.code && x.code === o.code)).length;
+    const add = fresh.filter(o => !this.state.orders.some(x => x.code && x.code === o.code));
+    const first = this.state.orders.length;
+    this.setOrders(os => os.concat(add), {
+      raw: "", sel: add.length ? first : this.state.sel,
+      parseMsg: `${add.length} pesanan ditambahkan${skipped ? `, ${skipped} sudah ada di daftar` : ""}. Periksa datanya.`
+    });
+  }
+  addManual() {
+    const first = this.state.orders.length;
+    this.setOrders(os => os.concat([makeOrder({ items: "" })]), { sel: first, parseMsg: "" });
+    setTimeout(() => this.addItem(), 0);
+  }
+  addItem() { this.setOrders(os => { const o = os[this.state.sel]; os[this.state.sel] = { ...o, items: o.items.concat([{ label: "", qty: 1, done: 0, send: true, n: "1" }]) }; return os; }); }
+  saveHdr(v) { this.setState({ hdr: v }); try { localStorage.setItem(HDR_KEY, v); } catch (e) {} }
+
+  batch() { return this.state.orders.filter(o => o.on); }
+  check(list) {
+    if (!list.length) return "Centang minimal satu paket di daftar.";
+    const bad = list.find(o => !o.name.trim() || !o.addr.trim());
+    if (bad) return `${bad.code || "Pesanan"}: nama dan alamat wajib diisi.`;
+    const empty = list.find(o => !sendItems(o).length);
+    if (empty) return `${empty.code || "Pesanan"}: tidak ada barang yang dicentang.`;
+    return "";
+  }
+  async output(mode) {
+    const list = this.batch(), err = this.check(list);
+    if (err) return this.setState({ err });
+    const win = mode === "print" ? window.open("", "_blank") : null;
+    this.setState({ busy: true, err: "" });
+    try {
+      const lab = await import(DATA + "label.js");
+      const labels = list.map(toLabel);
+      if (mode === "print") await lab.printLabels(labels, this.state.size, win);
+      else await lab.downloadLabels(labels, this.state.size);
+      this.setState({ busy: false });
+    } catch (e) {
+      if (win) try { win.close(); } catch (x) {}
+      this.setState({ busy: false, err: "Gagal membuat label. Cek koneksi lalu coba lagi." });
+    }
+  }
+  async markSent() {
+    const list = this.batch(), err = this.check(list);
+    if (err) return this.setState({ err });
+    const noCode = list.find(o => !/^PZ-/i.test(o.code.trim()));
+    if (noCode) return this.setState({ err: "Setiap paket butuh kode pesanan PZ-… agar bisa dicatat di Sheet." });
+    this.setState({ logging: true, err: "" });
+    try {
+      const forms = await import(DATA + "forms.js");
+      const date = new Date(this.state.date + "T12:00:00").toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" });
+      const segs = {};
+      await Promise.all(list.map(o => {
+        const items = sendItems(o);
+        const seg = [date, o.courier, o.resi ? "resi " + o.resi.trim() : "", "isi: " + items.map(i => `${i.label} ×${i.qty}`).join("; ")].filter(Boolean).join(" · ") + (isPartial(o) ? "" : " · lengkap");
+        segs[o.code] = seg;
+        return forms.submit("resi", {
+          kode_pesanan: o.code.trim().toUpperCase(), nama: o.name, telepon: o.phone, alamat: o.addr, zona_pengiriman: o.zone,
+          rincian_barang: items.map(i => `${i.label} × ${i.qty}`).join("\n"), catatan: "[DIKIRIM] " + seg
+        });
+      }));
+      this.setOrders(os => os.map(o => {
+        if (!o.on || !segs[o.code]) return o;
+        const items = o.items.map(it => ({ ...it, done: it.done + (it.send ? Math.min(nOf(it), it.qty - it.done) : 0) }));
+        return { ...o, items, sent: (o.sent ? o.sent + " | " : "") + segs[o.code] };
+      }), { logging: false, sentMsg: `${list.length} paket dicatat. Kolom Dikirim di Sheet terisi dalam ±1 menit.` });
+    } catch (e) {
+      this.setState({ logging: false, err: "Gagal mencatat ke Sheet. Cek koneksi lalu coba lagi." });
+    }
+  }
+
+  renderVals() {
+    const s = this.state;
+    const sel = Math.min(s.sel, Math.max(0, s.orders.length - 1));
+    const o = s.orders[sel];
+    const on = {
+      raw: e => this.setState({ raw: e.target.value }),
+      hdr: e => this.saveHdr(e.target.value),
+      date: e => this.setState({ date: e.target.value, sentMsg: "" }),
+      kado: e => this.editCur({ kado: e.target.checked })
+    };
+    ["code", "name", "phone", "addr", "zone", "note", "courier", "resi"].forEach(k => { on[k] = e => this.editCur({ [k]: e.target.value }); });
+
+    const orderList = s.orders.map((x, i) => ({
+      code: x.code || "TANPA KODE", sub: x.name || "Belum ada nama", on: x.on,
+      chipStyle: `display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;border:1px solid ${i === sel ? "#1A1712" : "#D6CBB8"};background:${i === sel ? "#FBF8F2" : "transparent"};opacity:${x.on ? 1 : 0.55}`,
+      toggle: e => this.setOrders(os => { os[i] = { ...os[i], on: e.target.checked }; return os; }),
+      select: () => this.setState({ sel: i }),
+      remove: () => this.setOrders(os => { os.splice(i, 1); return os; }, { sel: Math.max(0, i <= sel ? sel - 1 : sel) })
+    }));
+
+    let cur = null;
+    if (o) {
+      const L = toLabel(o);
+      const mods = L.code ? code128(L.code) : [];
+      const total = mods.reduce((a, b) => a + b, 0), mw = total ? Math.min(2, 260 / total) : 0;
+      const tags = [o.kado ? "KADO — JANGAN SERTAKAN HARGA" : "", L.partial ? "KIRIMAN SEBAGIAN — SISA MENYUSUL" : ""].filter(Boolean);
+      const over = o.items.find(it => it.send && it.done + nOf(it) > it.qty);
+      cur = {
+        ...o, hasSent: !!o.sent,
+        items: o.items.map((it, i) => ({
+          label: it.label, n: it.n, send: it.send,
+          ofLabel: it.done ? `dari ${it.qty} · ${it.done} terkirim` : `dari ${it.qty}`,
+          rowStyle: `display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;background:${it.send ? "#EFE8DA" : "transparent"};border:1px solid ${it.send ? "#EFE8DA" : "#D6CBB8"};opacity:${it.send ? 1 : 0.6}`,
+          toggle: e => this.editItem(i, { send: e.target.checked }),
+          setLabel: e => this.editItem(i, { label: e.target.value }),
+          setN: e => this.editItem(i, { n: e.target.value.replace(/[^\d]/g, "") }),
+          remove: () => this.setOrders(os => { const oo = os[sel]; os[sel] = { ...oo, items: oo.items.filter((_, j) => j !== i) }; return os; })
+        })),
+        warn: over ? `${over.label}: jumlah melebihi sisa pesanan.` : (!L.items.length ? "Belum ada barang dicentang." : ""),
+        nameP: o.name || "Nama penerima", phoneP: o.phone || "—", addrP: o.addr || "Alamat lengkap", zoneUp: (o.zone || "").toUpperCase(),
+        courierP: [o.courier, o.resi].filter(Boolean).join("  ") || "—", codeP: L.code || "—",
+        bars: mods.map((m, i) => ({ w: +(m * mw).toFixed(2), c: i % 2 ? "transparent" : "#1A1712" })),
+        sendList: L.items, hasTag: !!(tags.length || o.note), tagText: tags.join(" · ")
+      };
+    }
+    const n = this.batch().length;
+    const seg = active => `padding:10px 16px;border-radius:999px;font-size:11px;letter-spacing:0.1em;border:1px solid ${active ? "#1A1712" : "#D6CBB8"};background:${active ? "#1A1712" : "transparent"};color:${active ? "#F7F3EA" : "#5B5347"}`;
+    return {
+      s, on, orderList, cur,
+      hasOrders: s.orders.length > 0, hasCur: !!cur,
+      countLabel: `${s.orders.length} PESANAN`,
+      printCount: n === 1 ? "1 LABEL" : `${n} LABEL`,
+      hdrStatus: isHeader(tsvRows(s.hdr)[0] || []) ? "TERSIMPAN" : "BELUM DIISI",
+      parse: () => this.parse(), addManual: () => this.addManual(), addItem: () => this.addItem(),
+      clearAll: () => { if (confirm("Kosongkan semua paket di daftar?")) this.setOrders(() => [], { sel: 0, parseMsg: "" }); },
+      sizeThermal: () => this.setState({ size: "thermal" }), sizeCompact: () => this.setState({ size: "compact" }), sizeA4: () => this.setState({ size: "a4" }),
+      thermalStyle: seg(s.size === "thermal"), compactStyle: seg(s.size === "compact"), a4Style: seg(s.size === "a4"),
+      previewSize: s.size === "compact" ? "70 × 100 MM" : s.size === "a4" ? "A6 · 4 PER A4" : "100 × 150 MM",
+      print: () => this.output("print"), download: () => this.output("download"),
+      printLabel: s.busy ? "MEMBUAT LABEL…" : "CETAK LABEL",
+      btnStyle: `padding:14px 22px;border-radius:999px;border:none;font-size:12px;letter-spacing:0.1em;white-space:nowrap;flex:none;background:${n ? "#1A1712" : "#B9AF9E"};color:#F7F3EA`,
+      markSent: () => this.markSent(),
+      markLabel: s.logging ? "MENCATAT…" : `TANDAI ${n} PAKET DIKIRIM`
+    };
+  }
+}
+
+// Code 128-B, same table as data/label.js (preview only; the PDF draws its own).
+const C128 = "212222 222122 222221 121223 121322 131222 122213 122312 132212 221213 221312 231212 112232 122132 122231 113222 123122 123221 223211 221132 221231 213212 223112 312131 311222 321122 321221 312212 322112 322211 212123 212321 232121 111323 131123 131321 112313 132113 132311 211313 231113 231311 112133 112331 132131 113123 113321 133121 313121 211331 231131 213113 213311 213131 311123 311321 331121 312113 312311 332111 314111 221411 431111 111224 111422 121124 121421 141122 141221 112214 112412 122114 122411 142112 142211 241211 221114 413111 241112 134111 111242 121142 121241 114212 124112 124211 411212 421112 421211 212141 214121 412121 111143 111341 131141 114113 114311 411113 411311 113141 114131 311141 411131 211412 211214 211232 2331112".split(" ");
+function code128(text) {
+  const vals = [104];
+  for (const ch of String(text)) { const v = ch.charCodeAt(0) - 32; if (v >= 0 && v < 95) vals.push(v); }
+  let sum = vals[0];
+  for (let i = 1; i < vals.length; i++) sum += vals[i] * i;
+  vals.push(sum % 103, 106);
+  return vals.map(v => C128[v]).join("").split("").map(Number);
+}
+</script>
+</body>
+</html>

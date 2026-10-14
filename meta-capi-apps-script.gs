@@ -109,7 +109,7 @@ function onFormSubmitCapi(e) {
 
     const a = answers(e.response.getItemResponses().map(r => [r.getItem().getTitle(), r.getResponse()]));
     // Invoice PDF downloads and paid receipts share the pesanan form; they are not new orders.
-    if (kind === "pesanan" && /^\[LUNAS\]/.test(String(a.note || ""))) {
+    if (kind === "pesanan" && /^\[(LUNAS|DIKIRIM)\]/.test(String(a.note || ""))) {
       if (PAID.sheetUrl) { Utilities.sleep(4000); cleanupLunasRows(); }
       return;
     }
@@ -159,7 +159,8 @@ function onPaidEdit(e) {
   }
 }
 
-// Folds every "[LUNAS]" receipt row into its original order row, then deletes it.
+// Folds every "[LUNAS]" receipt row and "[DIKIRIM]" shipping row (from /admin/resi/)
+// into its original order row ("Lunas" / "Dikirim" column), then deletes it.
 // Runs automatically after each receipt; safe to run by hand any time.
 function cleanupLunasRows() {
   if (!PAID.sheetUrl) throw new Error("Fill in PAID.sheetUrl first.");
@@ -173,35 +174,47 @@ function cleanupLunasRows() {
       const noteCol = headers.findIndex(h => MATCH.note.test(h));
       if (codeCol < 0 || noteCol < 0) return;
       const data = sh.getRange(2, 1, sh.getLastRow() - 1, headers.length).getValues();
-      if (!data.some(r => /^\[LUNAS\]/.test(String(r[noteCol])))) return;
+      const TAG = /^\[(LUNAS|DIKIRIM)\]/;
+      if (!data.some(r => TAG.test(String(r[noteCol])))) return;
 
-      let lunasCol = headers.findIndex(h => /^(lunas|paid)$/i.test(h.trim()));
-      if (lunasCol < 0) {
-        lunasCol = sh.getLastColumn();
-        sh.getRange(1, lunasCol + 1).setValue("Lunas");
-      }
+      const colFor = name => {
+        let c = headers.findIndex(h => h.trim().toLowerCase() === name.toLowerCase() || (name === "Lunas" && /^paid$/i.test(h.trim())));
+        if (c < 0) { c = sh.getLastColumn(); sh.getRange(1, c + 1).setValue(name); headers = headers.concat([name]); }
+        return c;
+      };
+      const needsLunas = data.some(r => /^\[LUNAS\]/.test(String(r[noteCol])));
+      const needsSent = data.some(r => /^\[DIKIRIM\]/.test(String(r[noteCol])));
+      const lunasCol = needsLunas ? colFor("Lunas") : -1;
+      const sentCol = needsSent ? colFor("Dikirim") : -1;
 
       const toDelete = [];
       data.forEach((r, i) => {
         const note = String(r[noteCol]);
-        if (!/^\[LUNAS\]/.test(note)) return;
+        if (!TAG.test(note)) return;
+        const isSent = /^\[DIKIRIM\]/.test(note);
         const norm = v => String(v).toUpperCase().replace(/\s+/g, "");
         const code = norm(r[codeCol]);
         let found = false;
         const m = note.match(/sisa (Rp[\s\d.,]+)/);
-        const mark = m ? "DP · sisa " + m[1].trim() : "Ya";
+        const mark = isSent ? note.replace(/^\[DIKIRIM\]\s*/, "") : (m ? "DP · sisa " + m[1].trim() : "Ya");
         // newest checkout row with the same code above this receipt; else the newest invoice-PDF row
         let target = -1, fallback = -1;
         for (let j = i - 1; j >= 0; j--) {
           if (norm(data[j][codeCol]) !== code) continue;
           const n = String(data[j][noteCol]);
-          if (/^\[LUNAS\]/.test(n)) continue;
+          if (TAG.test(n)) continue;
           if (/^\[INVOICE PDF\]/.test(n)) { if (fallback < 0) fallback = j; continue; }
           target = j; break;
         }
         if (target < 0) target = fallback;
         if (target >= 0) {
-          sh.getRange(target + 2, lunasCol + 1).setValue(mark);
+          if (isSent) {
+            // Shipments accumulate: "13 Okt · JNE · isi: … | 20 Okt · … · lengkap"
+            const cell = sh.getRange(target + 2, sentCol + 1), prev = String(cell.getValue() || "").trim();
+            cell.setValue(prev ? prev + " | " + mark : mark);
+          } else {
+            sh.getRange(target + 2, lunasCol + 1).setValue(mark);
+          }
           Logger.log("Row " + (target + 2) + " (" + code + ") -> " + mark);
           toDelete.push(i + 2);
           found = true;
