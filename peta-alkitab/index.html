@@ -28,7 +28,8 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://peziarah.com/"},{"@type":"ListItem","position":2,"name":"Peta Alkitab","item":"https://peziarah.com/peta-alkitab/"}]}</script>
 <link rel="modulepreload" href="/data/arcs.js">
 <link rel="modulepreload" href="/data/bible.js">
-<link rel="modulepreload" href="/data/xrefs.js">
+<link rel="modulepreload" href="/data/xrefs-core.js">
+<link rel="prefetch" href="/data/xrefs-more.js">
 <link rel="modulepreload" href="/data/cart.js">
 <script defer src="/support.js"></script>
 <!-- Google Tag Manager -->
@@ -274,7 +275,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#A8A092">MULAI RP 350K · DENGAN AYAT PILIHANMU</span>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,56px);align-items:flex-start">
-      <div style="flex:3 1 560px;min-width:290px;position:sticky;top:96px">
+      <div style="flex:3 1 560px;min-width:290px;position:{{ previewPos }};top:{{ previewTop }}">
         <div style="background:#24201A;border-radius:28px;padding:clamp(20px,4vw,56px);display:flex;align-items:center;justify-content:center">
           <div ref="{{ posterWrapRef }}" style="{{ frameStyle }}">
             <canvas ref="{{ posterRef }}" style="display:block;width:100%;height:auto"></canvas>
@@ -512,15 +513,24 @@ class Component extends DCLogic {
     if (P.has("kutipan")) init.pQuote = P.get("kutipan");
     if (P.has("ukuran")) init.size = Math.max(0, ["A2", "A1", "PANO"].indexOf(P.get("ukuran")));
     if (P.get("warna") === "jarak") init.pMode = "jarak";
-    if (window.innerWidth < 760) init.tier = 1;
+    init.tier = 1;
     this.setState(init);
 
-    Promise.all([import("/data/arcs.js"), import("/data/bible.js"), import("/data/xrefs.js")]).then(([a, b, x]) => {
+    Promise.all([import("/data/arcs.js"), import("/data/bible.js"), import("/data/xrefs-core.js")]).then(([a, b, x]) => {
       A = a; BOOKS = b.BOOKS; TIERS = x.TIERS;
       L = A.layout(BOOKS); LINKS = A.decode(x.XREFS_B64);
       DEG = new Uint16Array(L.n);
       for (let i = 0; i < LINKS.length; i++) DEG[LINKS[i]]++;
-      this.setState({ loading: false }, () => { this.layoutCanvas(); this.drawPosterSoon(); requestAnimationFrame(() => this.layoutCanvas()); });
+      this.setState({ loading: false }, () => { this.layoutCanvas(); requestAnimationFrame(() => this.layoutCanvas()); });
+      // Remaining links arrive after first paint; the poster waits for them.
+      setTimeout(() => import("/data/xrefs-more.js").then(m => {
+        const more = A.decode(m.XREFS_B64), all = new Uint16Array(LINKS.length + more.length);
+        all.set(LINKS); all.set(more, LINKS.length); LINKS = all;
+        DEG = new Uint16Array(L.n);
+        for (let i = 0; i < LINKS.length; i++) DEG[LINKS[i]]++;
+        this.full = true; this.bookCache = {}; this._artKey = null;
+        this.renderBase(); this.paint(); this.drawPoster(); this.forceUpdate();
+      }), 300);
       let tries = 0;
       this._net = setInterval(() => {
         const c = this._canvas;
@@ -543,8 +553,9 @@ class Component extends DCLogic {
       this._offCart = m.subscribe(items => this.setState({ cartCount: items.reduce((n, i) => n + i.qty, 0) }));
     });
     this._sync = () => {
-      const mobile = window.innerWidth < 860;
+      const mobile = window.innerWidth < 860, wide = window.innerWidth >= 1100;
       if (mobile !== this.state.mobile) this.setState({ mobile, menu: false });
+      if (wide !== this.state.wide) this.setState({ wide });
       clearTimeout(this._rz);
       this._rz = setTimeout(() => { this.layoutCanvas(); this.drawPosterSoon(); }, 120);
     };
@@ -575,7 +586,7 @@ class Component extends DCLogic {
   componentDidUpdate() { this.syncDraw(); }
 
   // ---------- explorer canvas ----------
-  count() { return TIERS ? TIERS[this.state.tier].count : 0; }
+  count() { return TIERS && LINKS ? Math.min(TIERS[this.state.tier].count, LINKS.length / 2) : 0; }
 
   layoutCanvas() {
     const wrap = this.wrapRef.current, c = this._canvas;
@@ -711,18 +722,29 @@ class Component extends DCLogic {
 
   drawPoster() {
     const c = this.posterRef.current, wrap = this.posterWrapRef.current;
-    if (!c || !wrap || !L) return;
+    if (!c || !wrap || !L || !this.full) return;
     const z = A.PRINT_SIZES[this.state.size];
     if (wrap.clientWidth < 10) { this.drawPosterSoon(); return; }
     // Fixed internal resolution: below ~1600px the per-stroke alpha falls under
     // 8-bit precision and dense regions flatten to grey. CSS scales it down.
     const PW = 2000;
-    c.width = PW; c.height = Math.round(PW * z.cm[1] / z.cm[0]);
-    try { A.drawPoster(c.getContext("2d"), L, LINKS, c.width, c.height, this.posterOpts()); } catch (e) { console.warn("poster", e); }
+    const W = PW, H = Math.round(PW * z.cm[1] / z.cm[0]), o = this.posterOpts();
+    // The 110k-arc layer only changes with size / colour / verse; quote and dedication reuse it.
+    const key = [this.state.size, o.mode, o.focus].join("|");
+    try {
+      if (this._artKey !== key) {
+        const art = this._art || (this._art = document.createElement("canvas"));
+        art.width = W; art.height = H;
+        A.drawPoster(art.getContext("2d"), L, LINKS, W, H, { ...o, artOnly: true });
+        this._artKey = key;
+      }
+      if (c.width !== W || c.height !== H) { c.width = W; c.height = H; }
+      A.drawPoster(c.getContext("2d"), L, LINKS, W, H, { ...o, art: this._art });
+    } catch (e) { console.warn("poster", e); }
   }
 
   exportPrint = () => {
-    if (!L || this.state.exporting) return;
+    if (!L || !this.full || this.state.exporting) return;
     this.setState({ exporting: true });
     setTimeout(() => {
       const z = A.PRINT_SIZES[this.state.size];
@@ -787,7 +809,7 @@ class Component extends DCLogic {
     const tierLabels = ["19 rb", "48 rb", "111 rb", "140 rb"];
     const out = {
       ...this.chrome(),
-      loading: s.loading, canvasH: s.canvasH,
+      loading: s.loading, canvasH: s.canvasH, previewPos: s.wide ? "sticky" : "static", previewTop: s.wide ? "96px" : "auto",
       canvasRef: this.canvasRef, wrapRef: this.wrapRef, tipRef: this.tipRef, scrollRef: this.scrollRef,
       posterRef: this.posterRef, posterWrapRef: this.posterWrapRef,
       onMove: this.onMove, onLeave: this.onLeave, onPick: this.onPick,

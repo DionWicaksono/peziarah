@@ -161,8 +161,11 @@ export function drawPoster(ctx, L, links, W, H, o) {
   const u = Math.min(W / 1000, H / 560);
   const m = Math.round(W * 0.045);
   ctx.save();
-  ctx.fillStyle = BG; ctx.fillRect(0, 0, W, H);
   ctx.textBaseline = "alphabetic";
+  // o.artOnly: draw everything above the footer (cacheable); o.art: reuse that layer.
+  if (o.art) ctx.drawImage(o.art, 0, 0, W, H);
+  else {
+  ctx.fillStyle = BG; ctx.fillRect(0, 0, W, H);
 
   // header
   ctx.fillStyle = LIME;
@@ -228,6 +231,8 @@ export function drawPoster(ctx, L, links, W, H, o) {
     spaced(ctx, t, tx, y - g.up - 2 * u + 9 * u, 0.1 * 7.5 * u);
   }
 
+  }
+  if (o.artOnly) { ctx.restore(); return; }
   // footer: quote left, dedication right
   const fy = H - m;
   ctx.fillStyle = "rgba(247,243,234,0.18)";
