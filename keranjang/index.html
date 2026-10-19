@@ -599,8 +599,8 @@ class Component extends DCLogic {
       submitStyle: `padding:16px 24px;border-radius:999px;border:none;font-weight:600;font-size:15px;background:${filled ? "#1A1712" : "#C3B9A6"};color:#F7F3EA;margin-top:6px`,
       submit: () => {
         if (!filled) return;
-        // Front-end order id. A real backend issues this.
-        const code = "PZ-" + Date.now().toString(36).slice(-5).toUpperCase();
+        // Front-end order id, shared with the invoice PDF (see orderId).
+        const inv = this.orderId(), code = inv.no;
         const zone = ZONES.find(z => z.id === this.state.zone) || ZONES[0];
         if (FORMS) FORMS.submit("pesanan", {
           kode_pesanan: code,
@@ -615,7 +615,11 @@ class Component extends DCLogic {
           rincian_barang: this.itemLines(),
           catatan: this.state.note
         });
+        inv.logged = true; // order row exists; a later invoice download must not add another
         this.setState({ ordered: true, orderCode: code });
+        // Admin copy: the same PDF the buyer would download, straight to Drive, no download here.
+        const data = this.invoiceData(code);
+        setTimeout(() => import("/data/invoice.js").then(m => m.downloadInvoice(data, { upload: true, save: false })).catch(() => {}), 2500);
       },
       showForm: !this.state.ordered,
       ordered: this.state.ordered,
@@ -633,16 +637,36 @@ class Component extends DCLogic {
     };
   }
 
-  // One invoice number per cart + buyer snapshot: tapping twice re-downloads the
-  // same invoice instead of logging a second row to the sheet.
+  // ONE code per cart + buyer snapshot, used by checkout AND the invoice PDF:
+  // invoice-then-order, order-then-invoice or two taps all carry the same PZ-code.
+  orderId() {
+    const s = this.state, sig = JSON.stringify([s.items, s.zone, s.name, s.phone, s.email, s.addr, s.note]);
+    if (!this._inv || this._inv.sig !== sig) this._inv = { sig, no: "PZ-" + Date.now().toString(36).slice(-5).toUpperCase(), logged: false };
+    return this._inv;
+  }
+
+  invoiceData(no) {
+    const s = this.state, ship = this.shipValue(), zone = ZONES.find(z => z.id === s.zone) || ZONES[0];
+    return {
+      no,
+      items: s.items.map(i => ({
+        name: i.name, qty: i.qty, unit: i.unit,
+        detail: [i.variant && `${i.variantLabel || "Pilihan"}: ${i.variant}`, i.gift && "Kotak kado + kartu doa"].filter(Boolean).join(" · ")
+      })),
+      buyer: { name: s.name, phone: s.phone, email: s.email, addr: s.addr },
+      note: s.note,
+      shipping: { zone: zone.name, cost: ship },
+      bank: bank()
+    };
+  }
+
   async downloadInvoice() {
     if (this.state.pdf === "busy" || !this.state.items.length) return;
     this.setState({ pdf: "busy" });
     try {
       const mod = await import("/data/invoice.js");
       const s = this.state;
-      const sig = JSON.stringify([s.items, s.zone, s.name, s.phone, s.email, s.addr, s.note]);
-      if (!this._inv || this._inv.sig !== sig) this._inv = { sig, no: mod.invoiceNumber(), logged: false };
+      this.orderId();
       const sub = this.subtotalValue();
       const ship = this.shipValue();
       const zone = ZONES.find(z => z.id === s.zone) || ZONES[0];
@@ -659,17 +683,7 @@ class Component extends DCLogic {
           catatan: ("[INVOICE PDF] " + s.note).trim()
         }), new Promise(r => setTimeout(r, 1500))]);
       }
-      await mod.downloadInvoice({
-        no: this._inv.no,
-        items: s.items.map(i => ({
-          name: i.name, qty: i.qty, unit: i.unit,
-          detail: [i.variant && `${i.variantLabel || "Pilihan"}: ${i.variant}`, i.gift && "Kotak kado + kartu doa"].filter(Boolean).join(" · ")
-        })),
-        buyer: { name: s.name, phone: s.phone, email: s.email, addr: s.addr },
-        note: s.note,
-        shipping: { zone: zone.name, cost: ship },
-        bank: bank()
-      });
+      await mod.downloadInvoice(this.invoiceData(this._inv.no), { upload: true });
       this.setState({ pdf: "" });
     } catch (e) {
       if (typeof console !== "undefined") console.error("[invoice]", e);

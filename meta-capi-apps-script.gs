@@ -32,6 +32,20 @@
  *   "Lunas" column on the ORIGINAL order row and deletes the receipt row.
  *   The "Lunas" column is created at the far right if it doesn't exist.
  *   Run `cleanupLunasRows` once to fold receipts made before this change.
+ *
+ * Invoice / kuitansi PDF in Drive (admin copy)
+ *   The site uploads the EXACT PDF it generates (same file the buyer gets) to
+ *   this script, which files it in Drive as
+ *   "Invoice Peziarah/<yyyy-MM>/Invoice-PZ-XXXXX.pdf" (or Kuitansi-…) and writes
+ *   the link into an "Invoice" / "Kuitansi" column on every row with that code.
+ *   Happens on checkout (silently), on the buyer's invoice download, and on
+ *   both buttons in /admin/kuitansi/. Nothing is sent to the buyer.
+ *   Only codes that already exist in the order sheet are accepted.
+ *   Setup: run `setup` once more (grants Drive), then Deploy > New deployment >
+ *   type Web app > Execute as: Me > Who has access: Anyone > Deploy. Paste the
+ *   Web app URL into DRIVE_URL in data/invoice.js (both copies) and upload it.
+ *   After later edits to this script: Deploy > Manage deployments > edit >
+ *   Version: New version (the URL stays the same).
  */
 
 const PIXEL_ID = "1005932122517702";
@@ -55,6 +69,9 @@ const PAID = {
   statusHeader: /status/i,               // header of the column you update
   values: ["lunas", "paid", "dibayar"]   // any of these (case-insensitive) = paid
 };
+
+// Drive folder for invoice / kuitansi PDFs uploaded by the site.
+const INVOICE = { folder: "Invoice Peziarah" };
 
 // How question titles are recognised (case-insensitive). Adjust if
 // showLastResponses() shows a title that isn't picked up.
@@ -114,6 +131,14 @@ function onFormSubmitCapi(e) {
       return;
     }
     if (kind === "pesanan" && /^\[INVOICE PDF\]/.test(String(a.note || ""))) return;
+    sendPurchase(cfg, a, e);
+  } catch (err) {
+    logError("onFormSubmitCapi", err);
+  }
+}
+
+function sendPurchase(cfg, a, e) {
+  {
     const ts = Math.floor(e.response.getTimestamp().getTime() / 1000);
 
     const custom = { currency: "IDR" };
@@ -128,8 +153,6 @@ function onFormSubmitCapi(e) {
       user_data: userData(a),
       custom_data: custom
     });
-  } catch (err) {
-    logError("onFormSubmitCapi", err);
   }
 }
 
@@ -224,6 +247,76 @@ function cleanupLunasRows() {
       });
       toDelete.reverse().forEach(row => sh.deleteRow(row));
       Logger.log(sh.getName() + ": folded " + toDelete.length + " receipt row(s)");
+    });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// --- invoice / kuitansi PDF from the site --------------------------------
+
+const TAGGED = /^\[(LUNAS|DIKIRIM)\]/;
+const normCode = v => String(v).toUpperCase().replace(/\s+/g, "");
+
+// Web app endpoint. Body (text/plain JSON): { code, kind: "invoice"|"kuitansi", pdf: base64 }
+function doPost(e) {
+  const reply = t => ContentService.createTextOutput(t);
+  try {
+    const p = JSON.parse(e.postData.contents);
+    const code = normCode(p.code || "");
+    if (!/^PZ-[A-Z0-9]{4,8}$/.test(code)) return reply("bad code");
+    const label = p.kind === "kuitansi" ? "Kuitansi" : "Invoice";
+    const bytes = Utilities.base64Decode(String(p.pdf || ""));
+    if (bytes.length < 1000 || bytes.length > 4e6 || bytes[0] !== 37 || bytes[1] !== 80 || bytes[2] !== 68 || bytes[3] !== 70) return reply("bad pdf");
+    if (!PAID.sheetUrl) return reply("no sheet");
+    // The order row can land a few seconds after the upload; only known codes are filed.
+    let rows = 0;
+    for (let i = 0; i < 5 && !(rows = codeRows(code).length); i++) Utilities.sleep(4000);
+    if (!rows) return reply("unknown code");
+    const name = label + "-" + code + ".pdf";
+    const folder = invoiceFolder(new Date());
+    const old = folder.getFilesByName(name);
+    while (old.hasNext()) old.next().setTrashed(true);
+    const url = folder.createFile(Utilities.newBlob(bytes, "application/pdf", name)).getUrl();
+    writeLink(code, url, label);
+    if (label === "Kuitansi") { Utilities.sleep(8000); writeLink(code, url, label); } // after the [LUNAS] row is folded
+    Logger.log(name + " -> " + url);
+    return reply("ok");
+  } catch (err) {
+    logError("doPost", err);
+    return reply("error");
+  }
+}
+
+function invoiceFolder(d) {
+  const sub = (p, n) => { const it = p.getFoldersByName(n); return it.hasNext() ? it.next() : p.createFolder(n); };
+  return sub(sub(DriveApp.getRootFolder(), INVOICE.folder), Utilities.formatDate(d, "Asia/Jakarta", "yyyy-MM"));
+}
+
+// [{sheet, row, headers}] for every non-receipt row carrying this code.
+function codeRows(code) {
+  const out = [];
+  SpreadsheetApp.openByUrl(PAID.sheetUrl).getSheets().forEach(sh => {
+    if (sh.getLastRow() < 2) return;
+    const headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].map(String);
+    const codeCol = headers.findIndex(h => /^kode_pesanan$|^kode/i.test(h.trim()));
+    const noteCol = headers.findIndex(h => MATCH.note.test(h));
+    if (codeCol < 0) return;
+    sh.getRange(2, 1, sh.getLastRow() - 1, headers.length).getValues().forEach((r, i) => {
+      if (normCode(r[codeCol]) === code && !(noteCol >= 0 && TAGGED.test(String(r[noteCol])))) out.push({ sh, row: i + 2, headers });
+    });
+  });
+  return out;
+}
+
+function writeLink(code, url, label) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    codeRows(code).forEach(({ sh, row, headers }) => {
+      let c = headers.findIndex(h => h.trim().toLowerCase() === label.toLowerCase());
+      if (c < 0) { c = sh.getLastColumn(); sh.getRange(1, c + 1).setValue(label); headers.push(label); }
+      sh.getRange(row, c + 1).setValue(url);
     });
   } finally {
     lock.releaseLock();

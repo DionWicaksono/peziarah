@@ -3,6 +3,10 @@
 // Identical file in data/ and publish/data/: the logo resolves relative to this
 // module, so it works from both the project root and the domain root.
 
+// Admin copy in Google Drive: the Apps Script web-app URL (Deploy > Web app).
+// Empty = no upload. Same value in data/ and publish/data/.
+export const DRIVE_URL = "https://script.google.com/macros/s/AKfycbz474HXL5w7I1GEFZ2TVjtV__c9vG3bqQOGpjnVumi11iWRM-APA86stbhCDvtPxl0i/exec";
+
 const JSPDF_URL = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
 const LOGO_URL = new URL("../assets/peziarah-wordmark-ink.png", import.meta.url).href;
 
@@ -49,7 +53,9 @@ export function invoiceNumber() {
 // data: { no, items:[{name, detail, qty, unit}], buyer:{name,phone,email,addr}, note,
 //         shipping:{zone, cost}, bank:{name,number,holder},
 //         paid?:{date, from, amount} }  <- set = receipt (KUITANSI), issued by admin only
-export async function downloadInvoice(data) {
+// opts: { upload: true } also sends this exact PDF to Drive; { save: false } skips the download.
+export async function downloadInvoice(data, opts) {
+  opts = opts || {};
   const paid = data.paid || null;
   const GREEN = [46, 106, 64];
   const [JsPDF, logo] = await Promise.all([loadLib(), loadLogo()]);
@@ -201,6 +207,15 @@ export async function downloadInvoice(data) {
     doc.text(`${data.no}  -  ${i}/${pages}`, R, 289, { align: "right" });
   }
 
-  doc.save(`${paid ? "Kuitansi" : "Invoice"}-${data.no}.pdf`);
+  // Upload BEFORE saving: on mobile the PDF often opens in this tab and unloads the page.
+  if (opts.upload && DRIVE_URL) {
+    const pdf = doc.output("datauristring").split(",")[1];
+    await Promise.race([
+      fetch(DRIVE_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ code: data.no, kind: paid ? "kuitansi" : "invoice", pdf }) }).catch(() => {}),
+      new Promise(r => setTimeout(r, opts.save === false ? 15000 : 2500))
+    ]);
+  }
+  if (opts.save !== false) doc.save(`${paid ? "Kuitansi" : "Invoice"}-${data.no}.pdf`);
   return { no: data.no, subtotal };
 }
