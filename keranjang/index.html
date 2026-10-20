@@ -507,6 +507,23 @@ class Component extends DCLogic {
 
   subtotalValue() { return this.state.items.reduce((n, i) => n + i.unit * i.qty, 0); }
 
+  // Poster lines added before printUrl existed: rebuild the link from the variant text.
+  printLink(i) {
+    if (i.printUrl) return i.printUrl;
+    if (i.id !== "poster-peta-alkitab" || !i.variant) return "";
+    const v = i.variant, g = re => { const m = v.match(re); return m ? m[1] : ""; };
+    const size = v.split(" · ")[0];
+    const p = new URLSearchParams({ cetak: "1", ukuran: size === "Panorama" ? "PANO" : size });
+    p.set("ref", g(/· Sorot (.+?)(?: · |$)/));
+    const fr = /Bingkai kayu white wash/.test(v) ? 2 : /Bingkai kayu hitam/.test(v) ? 1 : 0;
+    if (fr) p.set("bingkai", String(fr));
+    const ded = g(/Dedikasi “(.*?)”(?: · |$)/), q = g(/Kutipan “(.*?)”(?: · |$)/);
+    if (ded) p.set("ded", ded);
+    if (q) p.set("kutipan", q);
+    if (/· Warna jarak$/.test(v)) p.set("warna", "jarak");
+    return "https://peziarah.com/peta-alkitab/?" + p + "#poster";
+  }
+
   // Cart as one text block for the order log (one line per item).
   itemLines() {
     return this.state.items.map(i => {
@@ -514,9 +531,10 @@ class Component extends DCLogic {
       const g = i.gift ? " [kado]" : "";
       const line = `${i.name}${v}${g} × ${i.qty} — ${this.rp(i.unit * i.qty)}`;
       // Personalised prints carry the admin link to regenerate the 300-dpi file.
-      if (!i.printUrl) return line;
+      const url = this.printLink(i);
+      if (!url) return line;
       const kode = (this._inv && this._inv.no) || "";
-      return `${line}\n↳ File cetak: ${i.printUrl.replace("#", "&kode=" + encodeURIComponent(kode) + "#")}`;
+      return `${line}\n↳ File cetak: ${url.replace("#", "&kode=" + encodeURIComponent(kode) + "#")}`;
     }).join("\n");
   }
 
