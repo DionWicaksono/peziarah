@@ -5,7 +5,7 @@
 
 // Admin copy in Google Drive: the Apps Script web-app URL (Deploy > Web app).
 // Empty = no upload. Same value in data/ and publish/data/.
-export const DRIVE_URL = "https://script.google.com/macros/s/AKfycbz474HXL5w7I1GEFZ2TVjtV__c9vG3bqQOGpjnVumi11iWRM-APA86stbhCDvtPxl0i/exec";
+export const DRIVE_URL = "https://script.google.com/macros/s/AKfycbwsv5HJvIljg_GChYzn79PUtUovtB1ZHFvsYddkSNkwHjDnJpReOh-jwN4cegS6fzY/exec";
 
 // GA4 browser ids, so the server-side purchase (sent by the Apps Script when the
 // order is marked LUNAS) is credited to the buyer's own visit and traffic source.
