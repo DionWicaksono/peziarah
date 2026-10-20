@@ -350,6 +350,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <a href="/keranjang/" style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#C9E45B">MASUK KERANJANG ✓ — LIHAT KERANJANG →</a>
         </sc-if>
         <sc-if value="{{ admin }}" hint-placeholder-val="{{ false }}">
+          <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#C9E45B">{{ adminCode }}</span>
           <button type="button" onClick="{{ exportPrint }}" style="padding:14px 22px;border-radius:999px;border:1px dashed #C9E45B;background:none;color:#C9E45B;font-size:11px;letter-spacing:0.1em">{{ exportLabel }}</button>
         </sc-if>
 
@@ -513,6 +514,8 @@ class Component extends DCLogic {
     if (P.has("kutipan")) init.pQuote = P.get("kutipan");
     if (P.has("ukuran")) init.size = Math.max(0, ["A2", "A1", "PANO"].indexOf(P.get("ukuran")));
     if (P.get("warna") === "jarak") init.pMode = "jarak";
+    if (P.has("bingkai")) init.frame = Math.max(0, +P.get("bingkai") || 0);
+    if (P.has("kode")) init.kode = P.get("kode");
     init.tier = 1;
     this.setState(init);
 
@@ -755,12 +758,23 @@ class Component extends DCLogic {
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
         const ref = (this.state.pRef || "tanpa-sorotan").replace(/[^\w]+/g, "-");
-        a.download = `peta-alkitab-${z.id}-${ref}-300dpi.png`;
+        a.download = `${this.state.kode ? this.state.kode + "-" : ""}peta-alkitab-${z.id}-${ref}-300dpi.png`;
         a.click();
         this.setState({ exporting: false });
       }, "image/png");
     }, 50);
   };
+
+  // Link the admin opens to rebuild this exact poster at 300 dpi (travels with the order).
+  printUrl() {
+    const s = this.state, p = new URLSearchParams({ cetak: "1", ukuran: A.PRINT_SIZES[s.size].id });
+    p.set("ref", this.posterFocus() >= 0 ? s.pRef.trim() : "");
+    if (s.frame) p.set("bingkai", String(s.frame));
+    if (s.pDed.trim()) p.set("ded", s.pDed.trim());
+    if (s.pQuote.trim()) p.set("kutipan", s.pQuote.trim());
+    if (s.pMode === "jarak") p.set("warna", "jarak");
+    return "https://peziarah.com/peta-alkitab/?" + p + "#poster";
+  }
 
   variant() {
     const s = this.state, z = A.PRINT_SIZES[s.size], fr = FRAMES[s.frame];
@@ -893,10 +907,11 @@ class Component extends DCLogic {
       addStyle: `height:54px;padding:0 28px;border-radius:999px;border:none;font-size:12px;letter-spacing:0.1em;${pf === -2 ? "background:#3A342B;color:#8A8172;cursor:not-allowed" : "background:#C9E45B;color:#1A1712"}`,
       addToCart: () => {
         if (!this.cart || !L || pf === -2) return;
-        this.cart.add({ id: PRODUCT_ID, name: PRODUCT_NAME, cat: "wallart", variant: this.variant(), variantLabel: "PILIHAN", unit: this.unit(), image: PRODUCT_IMAGE });
+        this.cart.add({ id: PRODUCT_ID, name: PRODUCT_NAME, cat: "wallart", variant: this.variant(), variantLabel: "PILIHAN", unit: this.unit(), image: PRODUCT_IMAGE, printUrl: this.printUrl() });
         this.setState({ added: true });
       },
       admin: s.admin, exportPrint: this.exportPrint,
+      adminCode: s.kode ? `MODE CETAK · PESANAN ${s.kode}` : "MODE CETAK · ADMIN",
       exportLabel: s.exporting ? "MENYIAPKAN FILE…" : `UNDUH FILE CETAK 300 DPI (${z.id || "A2"})`,
       specs: [
         { k: "CETAK", v: "Giclée, tinta pigmen arsip — tahan pudar puluhan tahun di dalam ruangan" },

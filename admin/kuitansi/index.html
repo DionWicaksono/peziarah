@@ -173,7 +173,7 @@ const money = v => /gratis/i.test(String(v)) ? 0 : num(v);
 
 function parseItems(text) {
   const items = [], bad = [];
-  String(text || "").split("\n").map(l => l.replace(/^[•\-\s]+/, "").trim()).filter(Boolean).forEach(l => {
+  String(text || "").split("\n").map(l => l.replace(/^[•\-\s]+/, "").trim()).filter(l => l && !/^↳/.test(l)).forEach(l => {
     const m = l.match(/^(.+?)\s*[×x]\s*(\d+)\s*[—–-]\s*Rp\s?([\d.,]+)$/);
     if (!m) { bad.push(l); return; }
     let name = m[1].trim(), detail = [];

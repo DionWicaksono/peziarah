@@ -512,7 +512,11 @@ class Component extends DCLogic {
     return this.state.items.map(i => {
       const v = i.variant ? ` (${i.variant})` : "";
       const g = i.gift ? " [kado]" : "";
-      return `${i.name}${v}${g} × ${i.qty} — ${this.rp(i.unit * i.qty)}`;
+      const line = `${i.name}${v}${g} × ${i.qty} — ${this.rp(i.unit * i.qty)}`;
+      // Personalised prints carry the admin link to regenerate the 300-dpi file.
+      if (!i.printUrl) return line;
+      const kode = (this._inv && this._inv.no) || "";
+      return `${line}\n↳ File cetak: ${i.printUrl.replace("#", "&kode=" + encodeURIComponent(kode) + "#")}`;
     }).join("\n");
   }
 

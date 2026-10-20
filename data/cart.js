@@ -64,6 +64,7 @@ export function add(item, qty = 1) {
     variantLabel: item.variantLabel || "",
     unit: item.unit || 0,
     image: item.image || "",
+    printUrl: item.printUrl || "",
     gift: !!item.gift,
     note: item.note || "",
     qty
