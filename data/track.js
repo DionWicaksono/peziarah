@@ -119,8 +119,10 @@ export function trackSubmit(kind, values) {
     return;
   }
   if (kind === "pesanan") {
+    // Not "purchase": GA4 purchase is sent server-side by the Apps Script when the
+    // order is marked LUNAS (money received). This is the unpaid order.
     const items = cartItems();
-    track("purchase", {
+    track("place_order", {
       transaction_id: values.kode_pesanan,
       value: toNumber(values.total),
       shipping: toNumber(values.ongkir),

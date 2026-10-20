@@ -638,6 +638,7 @@ class Component extends DCLogic {
           catatan: this.state.note
         });
         inv.logged = true; // order row exists; a later invoice download must not add another
+        import("/data/invoice.js").then(m => m.sendGa(code)).catch(() => {});
         this.setState({ ordered: true, orderCode: code });
         // Admin copy: the same PDF the buyer would download, straight to Drive, no download here.
         const data = this.invoiceData(code);

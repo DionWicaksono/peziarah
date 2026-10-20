@@ -73,6 +73,12 @@ const PAID = {
 // Drive folder for invoice / kuitansi PDFs uploaded by the site.
 const INVOICE = { folder: "Invoice Peziarah" };
 
+// GA4 purchase, sent when an order is first marked LUNAS (Measurement Protocol).
+// apiSecret: GA4 Admin > Data streams > peziarah.com > Measurement Protocol API
+// secrets > Create. Best kept out of this file: Apps Script > Project Settings >
+// Script Properties > GA_API_SECRET. Neither set = off.
+const GA = { measurementId: "G-H8J9GKJ2NT", apiSecret: "" };
+
 // How question titles are recognised (case-insensitive). Adjust if
 // showLastResponses() shows a title that isn't picked up.
 const MATCH = {
@@ -130,7 +136,8 @@ function onFormSubmitCapi(e) {
       if (PAID.sheetUrl) { Utilities.sleep(4000); cleanupLunasRows(); }
       return;
     }
-    if (kind === "pesanan" && /^\[INVOICE PDF\]/.test(String(a.note || ""))) return;
+    // Orders (checkout or invoice) are unpaid: Purchase is sent at LUNAS, see sendMetaPurchase.
+    if (kind === "pesanan") return;
     sendPurchase(cfg, a, e);
   } catch (err) {
     logError("onFormSubmitCapi", err);
@@ -236,7 +243,9 @@ function cleanupLunasRows() {
             const cell = sh.getRange(target + 2, sentCol + 1), prev = String(cell.getValue() || "").trim();
             cell.setValue(prev ? prev + " | " + mark : mark);
           } else {
-            sh.getRange(target + 2, lunasCol + 1).setValue(mark);
+            const cell = sh.getRange(target + 2, lunasCol + 1), first = !String(cell.getValue() || "").trim();
+            cell.setValue(mark);
+            if (first) { sendGaPurchase(headers, data[target], code); sendMetaPurchase(headers, data[target], code); }
           }
           Logger.log("Row " + (target + 2) + " (" + code + ") -> " + mark);
           toDelete.push(i + 2);
@@ -265,6 +274,13 @@ function doPost(e) {
     const p = JSON.parse(e.postData.contents);
     const code = normCode(p.code || "");
     if (!/^PZ-[A-Z0-9]{4,8}$/.test(code)) return reply("bad code");
+    const ga = p.ga && /^[\d.]{6,40}$/.test(String(p.ga.cid)) ? p.ga.cid + "|" + (/^\d{1,12}$/.test(String(p.ga.sid)) ? p.ga.sid : "") : "";
+    if (p.kind === "ga") {
+      if (!ga || !PAID.sheetUrl) return reply("skip");
+      for (let i = 0; i < 5 && !codeRows(code).length; i++) Utilities.sleep(4000);
+      writeLink(code, ga, "GA");
+      return reply("ok");
+    }
     const label = p.kind === "kuitansi" ? "Kuitansi" : "Invoice";
     const bytes = Utilities.base64Decode(String(p.pdf || ""));
     if (bytes.length < 1000 || bytes.length > 4e6 || bytes[0] !== 37 || bytes[1] !== 80 || bytes[2] !== 68 || bytes[3] !== 70) return reply("bad pdf");
@@ -279,6 +295,8 @@ function doPost(e) {
     while (old.hasNext()) old.next().setTrashed(true);
     const url = folder.createFile(Utilities.newBlob(bytes, "application/pdf", name)).getUrl();
     writeLink(code, url, label);
+    if (label === "Invoice") writePrintLinks(code);
+    if (label === "Invoice" && ga) writeLink(code, ga, "GA");
     if (label === "Kuitansi") { Utilities.sleep(8000); writeLink(code, url, label); } // after the [LUNAS] row is folded
     Logger.log(name + " -> " + url);
     return reply("ok");
@@ -309,6 +327,32 @@ function codeRows(code) {
   return out;
 }
 
+// Poster orders: copy each "↳ File cetak: <url>" from rincian_barang into a
+// clickable "File Cetak" column (URLs inside multi-line text don't auto-link).
+function writePrintLinks(code) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    codeRows(code).forEach(({ sh, row, headers }) => {
+      const ic = headers.findIndex(h => /rincian|barang/i.test(h));
+      if (ic < 0) return;
+      const urls = String(sh.getRange(row, ic + 1).getValue()).match(/https:\/\/peziarah\.com\/peta-alkitab\/\S+/g);
+      if (!urls) return;
+      let c = headers.findIndex(h => h.trim().toLowerCase() === "file cetak");
+      if (c < 0) { c = sh.getLastColumn(); sh.getRange(1, c + 1).setValue("File Cetak"); headers.push("File Cetak"); }
+      const cell = sh.getRange(row, c + 1);
+      if (urls.length === 1) { cell.setValue(urls[0]); return; }
+      const text = urls.map((u, i) => "Poster " + (i + 1)).join("\n");
+      const rt = SpreadsheetApp.newRichTextValue().setText(text);
+      let at = 0;
+      urls.forEach((u, i) => { const s = "Poster " + (i + 1); rt.setLinkUrl(at, at + s.length, u); at += s.length + 1; });
+      cell.setRichTextValue(rt.build());
+    });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
 function writeLink(code, url, label) {
   const lock = LockService.getScriptLock();
   lock.waitLock(20000);
@@ -320,6 +364,62 @@ function writeLink(code, url, label) {
     });
   } finally {
     lock.releaseLock();
+  }
+}
+
+// --- GA4 purchase on payment ------------------------------------------------
+
+// Once per order: the first [LUNAS] (full or DP) counts the whole order total.
+function sendGaPurchase(headers, row, code) {
+  const secret = GA.apiSecret || PropertiesService.getScriptProperties().getProperty("GA_API_SECRET");
+  if (!secret) return;
+  try {
+    const col = re => headers.findIndex(h => re.test(String(h).trim()));
+    const get = re => { const c = col(re); return c < 0 ? "" : String(row[c] == null ? "" : row[c]); };
+    const [cid, sid] = get(/^ga$/i).split("|");
+    const items = [];
+    get(/rincian|barang/i).split("\n").map(l => l.replace(/^[•\-\s]+/, "").trim()).filter(l => l && !/^↳/.test(l)).forEach(l => {
+      const m = l.match(/^(.+?)\s*[×x]\s*(\d+)\s*[—–-]\s*Rp\s?([\d.,]+)$/);
+      if (!m) return;
+      let name = m[1].replace(/\s*\[kado\]$/, "").trim(), variant = "";
+      const v = name.match(/^(.*)\s\(([^()]+)\)$/);
+      if (v) { name = v[1]; variant = v[2]; }
+      const qty = +m[2];
+      items.push({ item_name: name.slice(0, 100), item_variant: variant.slice(0, 100) || undefined, quantity: qty, price: toNumber(m[3]) / qty });
+    });
+    const params = {
+      transaction_id: code, currency: "IDR",
+      value: toNumber(get(/^total$/i)), shipping: toNumber(get(/ongkir|ongkos/i)),
+      shipping_tier: get(/zona|tujuan/i) || undefined, payment_type: "transfer_manual",
+      items, engagement_time_msec: 1
+    };
+    if (sid) params.session_id = sid;
+    const res = UrlFetchApp.fetch("https://www.google-analytics.com/mp/collect?measurement_id=" + GA.measurementId + "&api_secret=" + secret, {
+      method: "post", contentType: "application/json", muteHttpExceptions: true,
+      // No GA id (checkout before this update, or cookies blocked): still counted, source unknown.
+      payload: JSON.stringify({ client_id: cid || ("pz." + code), events: [{ name: "purchase", params }] })
+    });
+    Logger.log("GA purchase " + code + " " + params.value + " -> " + res.getResponseCode());
+  } catch (err) {
+    logError("sendGaPurchase", err);
+  }
+}
+
+// Meta Purchase at payment, once per order. event_id = order code (same as before),
+// user_data from the order row: hashed phone/email/name, plus _ua/_fbp/_fbc when mapped.
+function sendMetaPurchase(headers, row, code) {
+  try {
+    const a = answers(headers.map((h, i) => [h, row[i]]));
+    send({
+      event_name: "Purchase",
+      event_time: Math.floor(Date.now() / 1000),
+      event_id: code,
+      event_source_url: a.url || (SITE + "/keranjang/"),
+      user_data: userData(a),
+      custom_data: { currency: "IDR", value: toNumber(a.total), order_id: code }
+    });
+  } catch (err) {
+    logError("sendMetaPurchase", err);
   }
 }
 

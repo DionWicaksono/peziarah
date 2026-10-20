@@ -7,6 +7,24 @@
 // Empty = no upload. Same value in data/ and publish/data/.
 export const DRIVE_URL = "https://script.google.com/macros/s/AKfycbz474HXL5w7I1GEFZ2TVjtV__c9vG3bqQOGpjnVumi11iWRM-APA86stbhCDvtPxl0i/exec";
 
+// GA4 browser ids, so the server-side purchase (sent by the Apps Script when the
+// order is marked LUNAS) is credited to the buyer's own visit and traffic source.
+export function gaContext() {
+  const c = n => { try { const m = document.cookie.match(new RegExp("(?:^|; )" + n + "=([^;]*)")); return m ? decodeURIComponent(m[1]) : ""; } catch (e) { return ""; } };
+  const cid = (c("_ga").match(/^GA\d\.\d\.(.+)$/) || [])[1] || "";
+  const s = c("_ga_H8J9GKJ2NT");
+  const sid = (s.match(/^GS2\.\d\.s(\d+)/) || s.match(/^GS1\.\d\.(\d+)/) || [])[1] || "";
+  return cid ? { cid, sid } : null;
+}
+
+// Checkout without an invoice: hand the GA ids to the Apps Script on their own.
+export function sendGa(code) {
+  const ga = gaContext();
+  if (!DRIVE_URL || !ga || !code) return;
+  fetch(DRIVE_URL, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({ code, kind: "ga", ga }) }).catch(() => {});
+}
+
 const JSPDF_URL = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
 const LOGO_URL = new URL("../assets/peziarah-wordmark-ink.png", import.meta.url).href;
 
@@ -212,7 +230,7 @@ export async function downloadInvoice(data, opts) {
     const pdf = doc.output("datauristring").split(",")[1];
     await Promise.race([
       fetch(DRIVE_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify({ code: data.no, kind: paid ? "kuitansi" : "invoice", pdf }) }).catch(() => {}),
+        body: JSON.stringify({ code: data.no, kind: paid ? "kuitansi" : "invoice", pdf, ga: paid ? undefined : gaContext() }) }).catch(() => {}),
       new Promise(r => setTimeout(r, opts.save === false ? 15000 : 2500))
     ]);
   }
