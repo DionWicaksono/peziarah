@@ -243,6 +243,16 @@ function cleanupLunasRows() {
             const cell = sh.getRange(target + 2, sentCol + 1), prev = String(cell.getValue() || "").trim();
             cell.setValue(prev ? prev + " | " + mark : mark);
           } else {
+            // The kuitansi is the final word: copy its (possibly discounted / re-addressed)
+            // values onto the order row before the receipt row is deleted.
+            const KEEP = /^(nama|telepon|email|alamat|zona_pengiriman|subtotal|ongkir|total|rincian_barang)$/i;
+            headers.forEach((h, c) => {
+              if (c >= r.length || !KEEP.test(h.trim())) return;
+              const v = r[c];
+              if (v === "" || v == null || String(v) === String(data[target][c])) return;
+              sh.getRange(target + 2, c + 1).setValue(v);
+              data[target][c] = v;
+            });
             const cell = sh.getRange(target + 2, lunasCol + 1), first = !String(cell.getValue() || "").trim();
             cell.setValue(mark);
             if (first) { sendGaPurchase(headers, data[target], code); sendMetaPurchase(headers, data[target], code); }

@@ -186,6 +186,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
 
+      <sc-if value="{{ hasChart }}" hint-placeholder-val="{{ false }}">
+        <details style="margin:0 0 22px;border:1px solid #D6CBB8;border-radius:18px;padding:4px 16px">
+          <summary style="cursor:pointer;padding:12px 0;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#1A1712">TABEL UKURAN (CM)</summary>
+          <div style="display:flex;flex-direction:column;padding:0 0 14px">
+            <div style="display:flex;align-items:center;gap:4px;border-bottom:1px solid #DFD6C4;padding-bottom:6px">
+              <span style="flex:0 0 112px"></span>
+              <sc-for list="{{ chartCols }}" as="c" hint-placeholder-count="5"><span style="{{ c.style }}">{{ c.label }}</span></sc-for>
+            </div>
+            <sc-for list="{{ chartRows }}" as="r" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:4px;border-bottom:1px solid #EFE8DA">
+                <span style="flex:0 0 112px;font-size:13px;color:#8A8172">{{ r.k }}</span>
+                <sc-for list="{{ r.cells }}" as="x" hint-placeholder-count="5"><span style="{{ x.style }}">{{ x.v }}</span></sc-for>
+              </div>
+            </sc-for>
+            <p style="margin:12px 0 0;font-size:13px;line-height:1.5;color:#8A8172">{{ chartNote }}</p>
+          </div>
+        </details>
+      </sc-if>
+
       <label style="{{ giftStyle }}">
         <input type="checkbox" checked="{{ gift }}" onChange="{{ toggleGift }}" style="margin-top:3px;accent-color:#6C4BA6;width:17px;height:17px" />
         <span style="font-size:14px;line-height:1.4">Bungkus kado + kartu doa tulis tangan<br><span style="color:#8A8172">Gratis. Tulis pesanmu saat checkout.</span></span>
@@ -498,7 +517,7 @@ class Component extends DCLogic {
       CATS = m.CATEGORIES;
       RATE = m.BODYART_RATE;
       CCOPY = m.CATEGORY_COPY || {};
-      const p = PRODUCTS.find(x => x.id === id) || PRODUCTS[0];
+      const p = PRODUCTS.find(x => x.id === id) || PRODUCTS.find(x => (x.aliases || []).includes(id)) || PRODUCTS[0];
       // Bodyart: preselect the dimension the product is named/priced for.
       // ?opt=<index> preselects a variant (e.g. the pashmina from Peziarah Essentials).
       const want = parseInt(new URLSearchParams(location.search).get("opt"), 10);
@@ -508,7 +527,8 @@ class Component extends DCLogic {
         const i = (OPTIONS.bodyart.values || []).indexOf(`${cm} cm`);
         if (i > -1) opt = i;
       }
-      this.setState({ p, opt, shot: 0 });
+      const g0 = this.gallery(p).indexOf((p.opt && p.opt.shots && want >= 0) ? p.opt.shots[opt] : "");
+      this.setState({ p, opt, shot: g0 > -1 ? g0 : 0 });
       this.seo(p);
     });
   }
@@ -726,9 +746,16 @@ class Component extends DCLogic {
             style: "position:relative;flex:1 1 90px;min-width:80px;height:96px;border-radius:16px;overflow:hidden;background-image:repeating-linear-gradient(60deg,#DCD2C0 0 14px,#EAE3D5 14px 28px)"
           })),
       optionLabel: opt.label,
+      hasChart: !!p.sizeChart,
+      chartCols: p.sizeChart ? p.sizeChart.cols.map((c, i) => ({ label: c, style: `flex:1 1 0;min-width:0;text-align:center;padding:9px 4px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.06em;${opt.values[this.state.opt] === c ? "background:#1A1712;color:#F7F3EA;border-radius:10px" : "color:#8A8172"}` })) : [],
+      chartRows: p.sizeChart ? p.sizeChart.rows.map(r => ({ k: r.k, cells: r.v.map((v, i) => ({ v, style: `flex:1 1 0;min-width:0;text-align:center;padding:10px 4px;font-size:14px;${opt.values[this.state.opt] === p.sizeChart.cols[i] ? "font-weight:700;color:#1A1712" : "color:#5B5347"}` })) })) : [],
+      chartNote: p.sizeChart ? p.sizeChart.note || "" : "",
       options: opt.values.map((v, i) => ({
         label: v,
-        pick: () => this.setState({ opt: i }),
+        pick: () => {
+          const g = opt.shots ? this.gallery(p).indexOf(opt.shots[i]) : -1;
+          this.setState(g > -1 ? { opt: i, shot: g } : { opt: i });
+        },
         style: `padding:12px 20px;border-radius:999px;font-size:14px;border:1px solid ${
           this.state.opt === i ? "#1A1712" : "#D6CBB8"};background:${this.state.opt === i ? "#1A1712" : "transparent"};color:${
           this.state.opt === i ? "#F7F3EA" : "#1A1712"};white-space:nowrap`
