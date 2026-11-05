@@ -1,0 +1,13 @@
+{
+  "name": "salve-regina",
+  "private": true,
+  "scripts": {
+    "build": "esbuild src/main.ts --bundle --minify --format=iife --target=es2019 --legal-comments=none --outfile=../../salve-regina/salve-regina.js && cd ../.. && python3 _src/salve-regina/page.py ."
+  },
+  "devDependencies": {
+    "esbuild": "0.24.0",
+    "three": "0.169.0",
+    "gsap": "3.12.5",
+    "lenis": "1.1.13"
+  }
+}

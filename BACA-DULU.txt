@@ -1,48 +1,68 @@
-# Upload — 6 September 2026
+# Upload — 5 November 2026
 
-Folder ini mengikuti struktur situs. Timpa file dengan nama yang sama di server.
+Folder ini adalah SELURUH situs, sudah disinkronkan dengan repo terbaru
+(commit b6433ba) plus perubahan di bawah. Timpa semua isi repo / public_html
+dengan isi folder ini.
 
 ## Yang berubah
 
-**Halaman baru: `/ziarah/grup-kecil/`**
-Layanan ziarah pribadi untuk 2–8 orang. Punya hero image sendiri
-(`assets/grup-kecil-hero.webp` + versi 900px) dan form pengajuan
-yang tersambung ke Google Form.
+**Halaman baru: `/salve-regina/`**
+Gambar Bunda Maria (karya Peziarah) yang setiap garisnya diisi ayat Kitab Suci,
+terjemahan Katolik Douay-Rheims (domain publik). Pengunjung menggulir: dari
+gambar utuh ke wajah, menyusuri kerudung, lalu gambar terbuka penuh dan
+"Salve Regina." muncul. Setelah itu halaman lanjut ke bagian navigasi:
+cara berdoa rosario, Gua Maria Sendangsono, tulisan Jurnal "Devosi bukan
+estetika", dan rosario buatan tangan. Tiga rangkaian ayat bisa dipilih:
+Maria, Magnificat, Sengsara (37 ayat). Teks antifon Latin dan daftar semua
+ayat ada di halaman.
 
-**`/concierge/` → redirect**
-URL lama dipindah ke `/ziarah/grup-kecil/`. File redirect-nya tetap harus
-diupload supaya tautan lama tidak mati.
+Isi folder `salve-regina/`:
+- `index.html` — sudah di-prerender: semua teks, ayat, SEO, footer.
+- `salve-regina.js` — gambar bergerak (WebGL). ±250 KB setelah dikompres,
+  hanya dimuat di halaman ini.
+- `maria.jpg` — gambar sumber untuk WebGL. `maria.webp` — gambar diam untuk
+  browser tanpa WebGL / tanpa JavaScript.
 
-**`/ziarah/`**
-- Tombol hero jadi tiga: Rombongan · Grup Kecil · Lihat Rute
-- Form dapat kolom **Intensi** ("Apa yang kamu bawa dalam ziarah ini?")
-- Tab baru **Susun Sendiri** — enam pertanyaan, kartu ringkasan, lalu kirim
-- Ada bagian pengantar ke Grup Kecil sebelum form
+**Aset baru:** `assets/og-salve-regina.jpg` (gambar share 1200×630).
 
-**`data/forms.js`**
-Tiga form Google sudah terpasang penuh: ziarah, susun-sendiri, grup-kecil.
-Submission juga tersimpan di localStorage pengunjung sebagai cadangan.
+**Footer semua halaman (96 file)**
+Satu tautan baru di kolom BACAAN: **Salve Regina**, di bawah Bulan Rosario.
 
-**Semua halaman lain**
-Hanya satu perubahan: tautan **Grup Kecil** di footer, kolom ZIARAH.
+**`/bulan-rosario/`**
+Langkah 10 urutan doa (Salam Ya Ratu) sekarang menautkan ke /salve-regina/.
 
-**`sitemap.xml`**
-`/concierge/` diganti `/ziarah/grup-kecil/`.
+**`_src/salve-regina/`** (baru, tidak disajikan ke pengunjung)
+Sumber halaman Salve Regina: ayat, kode gambar, dan skrip build. Untuk
+mengubah ayat atau teks, edit di sini lalu build ulang — lihat README.md
+di folder itu.
 
-## Jumlah file
+**`.htaccess`**
+Satu aturan baru: folder `_src/` diblokir (pengunjung dapat halaman 404).
+
+**`sitemap.xml`** — tambah /salve-regina/; lastmod /bulan-rosario/ diperbarui.
+**`llms.txt`** — tambah ringkasan halaman Salve Regina.
+**`README.txt`** — struktur folder dan catatan halaman Salve Regina.
+
+## Jumlah file berubah
 
 | Bagian | File |
 |---|---|
-| Halaman utama & kebijakan | 17 |
-| Produk | 33 |
-| Artikel jurnal | 15 |
-| Rute ziarah | 8 |
-| Hampers pernikahan | 1 |
-| Aset gambar | 2 |
+| Halaman baru salve-regina/ | 4 |
+| Sumber _src/salve-regina/ | 8 |
+| Footer: produk | 49 |
+| Footer: jurnal | 17 |
+| Footer: ziarah & rute | 13 |
+| Footer: halaman lain, hampers, tanya (termasuk bulan-rosario) | 17 |
+| sitemap, llms.txt, README.txt, .htaccess, BACA-DULU.txt | 5 |
+| Aset gambar | 1 |
 
 ## Setelah upload
 
-1. Buka `/ziarah/grup-kecil/` — hero image harus tampil, bukan kotak krem.
-2. Buka `/concierge/` — harus langsung melompat ke URL baru.
-3. Isi form Susun Sendiri sekali; cek barisnya masuk ke Google Sheet.
-4. Submit ulang sitemap di Google Search Console.
+1. Buka `/salve-regina/` di HP dan laptop. Gambar menulis dirinya sendiri,
+   lalu gulir sampai "Salve Regina." dan kartu navigasi muncul di bawahnya.
+2. Cek huruf: judul harus Archivo (tebal, rapat), bukan huruf bawaan.
+3. Buka `/_src/salve-regina/README.md` — harus muncul halaman 404.
+4. Cek footer halaman mana saja: kolom BACAAN ada "Salve Regina".
+5. Tes tampilan share di WhatsApp dan Facebook Sharing Debugger:
+   gambar Maria dengan tulisan "Salve Regina." harus muncul.
+6. Submit ulang sitemap di Google Search Console.

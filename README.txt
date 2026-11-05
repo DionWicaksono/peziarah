@@ -26,6 +26,9 @@ Isi folder ini sudah siap di-upload apa adanya ke web root Hostinger
     .htaccess                 -> routing 404, redirect HTTPS, MIME WebP,
                                  cache header, security header
     faq/index.html            -> /faq/
+    salve-regina/             -> /salve-regina/  (Maria digambar dengan ayat; WebGL)
+    _src/                     <- sumber halaman yang di-build (tidak disajikan,
+                                 diblokir .htaccess)
     support.js
     robots.txt                -> /robots.txt
     sitemap.xml               -> /sitemap.xml
@@ -128,3 +131,11 @@ Semua 73 file HTML (72 halaman + 404.html) sudah memuat tag GA4 (G-H8J9GKJ2NT) t
 </head>. Kalau nanti ada halaman baru hasil build ulang, tag ini harus
 ditambahkan lagi — file sumber (*.dc.html) sengaja tidak memuatnya supaya
 kunjungan saat mendesain tidak ikut terhitung.
+
+HALAMAN /salve-regina/
+Gambar Maria (karya Peziarah) yang garisnya diisi ayat Douay-Rheims, digerakkan
+dengan WebGL. index.html sudah di-prerender (teks, semua ayat, SEO), jadi tetap
+terbaca tanpa JavaScript; tanpa WebGL pengunjung melihat gambar diamnya.
+salve-regina.js dan index.html adalah HASIL BUILD dari _src/salve-regina/ —
+ubah ayat atau teks di sana, lalu build ulang (lihat _src/salve-regina/README.md).
+

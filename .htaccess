@@ -58,3 +58,8 @@ Options -Indexes
 <IfModule mod_rewrite.c>
   RewriteRule (^|/)\.git(/|$) - [F,L]
 </IfModule>
+
+# Page sources (_src/): kept in the repo so pages can be rebuilt, never served.
+<IfModule mod_rewrite.c>
+  RewriteRule ^_src(/|$) - [F,L]
+</IfModule>
