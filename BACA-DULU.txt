@@ -46,6 +46,18 @@ jadi "Lunas" setelah pelunasan. Kolom Total dan tautan PDF juga terisi.
 Perjalanan dari WhatsApp (tanpa formulir) otomatis dibuatkan barisnya.
 Tidak ada yang masuk ke Sheet pesanan produk.
 
+**Penawaran dan rencana perjalanan**
+- Tombol baru "Unduh penawaran": PDF PENAWARAN (nomor ZR-XXXXX-Q) berisi
+  rincian biaya, jadwal termin, ketentuan pembatalan, berlaku sampai
+  (bawaan 7 hari), dan kotak konfirmasi tanpa rekening. Baris permintaan
+  ditandai Status "Penawaran" (lalu "Order" setelah invoice) dan punya kolom
+  tautan Penawaran.
+- Bagian baru "04 · Rencana perjalanan": tempel tabel itinerary langsung dari
+  Google Sheets/Excel (Hari, Waktu, Kegiatan & Rute, Catatan; sel gabungan
+  terbaca), lalu ubah per hari dan per baris. Judul kolom catatan bisa
+  diganti (mis. "Catatan Khusus Lansia"). Tercetak di halaman tersendiri
+  pada penawaran, invoice, dan kuitansi.
+
 **`data/ziarah-tarif.js`** (baru) — satu tempat untuk daftar tujuan, pos
 biaya, harga, dan rumus per peserta. Harga masih kosong (null): isi di sini
 dan harga itu terisi sendiri di halaman admin. Ada slot `formula()` untuk

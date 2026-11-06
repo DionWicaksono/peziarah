@@ -173,4 +173,6 @@ proposal per pos, jadi dokumen diterbitkan admin dan dikirim lewat WhatsApp.
   di halaman. Naikkan TARIF_JS ?v= di admin/ziarah/index.html setelah edit.
 - Kode perjalanan dan nomor peserta dibuat otomatis; jumlah pos dihitung
   dari peserta/hari/malam/kamar/kendaraan.
+- Penawaran (ZR-XXXXX-Q) dan rencana perjalanan: itinerary ditempel dari
+  Sheets/Excel, tercetak di halaman tersendiri pada penawaran/invoice/kuitansi.
 - Pratinjau di Claude: _src/admin-ziarah-preview/build.py (lihat README di sana).

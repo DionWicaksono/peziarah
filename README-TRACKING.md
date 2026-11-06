@@ -97,11 +97,11 @@ No extra form or sheet. Each invoice / kuitansi PDF from `/admin/ziarah/` is sen
 
 | Column | Filled with |
 |---|---|
-| Status | `Order` from the first invoice, `Lunas` once nothing is left |
+| Status | `Penawaran` after a quote (`ZR-XXXXX-Q`), `Order` from the first invoice, `Lunas` once nothing is left |
 | Total | trip total |
 | Bayar | e.g. `uang muka diterima · sisa Rp 16.674.000`, then `Lunas` |
 | Riwayat | one line per invoice/receipt, incl. per-participant ones (P03 …) |
-| Invoice / Kuitansi | link to the latest group PDF |
+| Penawaran / Invoice / Kuitansi | link to the latest group PDF |
 
 A trip booked over WhatsApp (no request row) gets a new row in the tab for its kind. The first kuitansi of a trip (or of one participant) sends GA4 `purchase` and Meta `Purchase` once, for that total; nothing is sent at invoice time and nothing goes to the shop order sheet.
 

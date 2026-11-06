@@ -147,17 +147,19 @@ function kit(JsPDF, logo) {
   // Upload BEFORE saving: on mobile the PDF often opens in this tab and unloads the page.
   // opts.ga === false: issued by admin, so the admin's own GA ids must not be attached.
   // opts.trip: ziarah details the Apps Script writes onto the request row.
+  // opts.kind: "penawaran" for a trip quote; otherwise invoice / kuitansi by `paid`.
   k.finish = async (no, paid, opts) => {
+    const kind = opts.kind || (paid ? "kuitansi" : "invoice");
     if (opts.upload && DRIVE_URL) {
       const pdf = doc.output("datauristring").split(",")[1];
       const ga = paid || opts.ga === false ? undefined : gaContext();
       await Promise.race([
         fetch(DRIVE_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" },
-          body: JSON.stringify({ code: no, kind: paid ? "kuitansi" : "invoice", pdf, ga, trip: opts.trip }) }).catch(() => {}),
+          body: JSON.stringify({ code: no, kind, pdf, ga, trip: opts.trip }) }).catch(() => {}),
         new Promise(r => setTimeout(r, opts.save === false ? 15000 : 2500))
       ]);
     }
-    if (opts.save !== false) doc.save(`${paid ? "Kuitansi" : "Invoice"}-${no}.pdf`);
+    if (opts.save !== false) doc.save(`${{ kuitansi: "Kuitansi", invoice: "Invoice", penawaran: "Penawaran" }[kind]}-${no}.pdf`);
   };
   return k;
 }
@@ -368,11 +370,15 @@ export function tripTotals(data) {
 //   tax?: { label: "PPN 11%", rate: 0.11 }
 //   paidBefore: number           received before this document
 //   paid?: { date, from, amount }  set = KUITANSI
+//   quote?: { validUntil: "2026-11-13" }  set = PENAWARAN (quote before confirmation)
+//   itinerary?: { noteTitle: "Catatan", days: [{ day: "Hari 1", date: "29 Nov",
+//                 note, rows: [{ time: "06.00 - 13.00", activity }] }] }
 //   note, bank
 // }
 export async function downloadTripInvoice(data, opts) {
   opts = opts || {};
   const paid = data.paid || null;
+  const quote = !paid && data.quote ? data.quote : null;
   const [JsPDF, logo] = await Promise.all([loadLib(), loadLogo()]);
   const k = kit(JsPDF, logo);
   const { doc, col, font, label, hr } = k;
@@ -385,11 +391,11 @@ export async function downloadTripInvoice(data, opts) {
   const received = paid ? Math.round(paid.amount || cur.amount) : 0;
   const bill = paid ? received : Math.max(0, Math.min(cur.amount, t.total - before));
   const after = Math.max(0, t.total - before - bill);
-  const stageTitle = (cur.label + (data.single ? "" : ` ${cur.pct}%`)).toUpperCase();
+  const stageTitle = quote ? "PENAWARAN" : (cur.label + (data.single ? "" : ` ${cur.pct}%`)).toUpperCase();
   const issueDate = data.issue ? fmtDate(data.issue) : today();
   const ensure = h => { if (y + h > BOTTOM) { doc.addPage(); y = M; return true; } return false; };
 
-  let y = k.header(paid ? "KUITANSI" : "INVOICE", data.no, "ZIARAH - " + stageTitle);
+  let y = k.header(quote ? "PENAWARAN" : paid ? "KUITANSI" : "INVOICE", data.no, quote ? "ZIARAH - RINCIAN BIAYA & RENCANA PERJALANAN" : "ZIARAH - " + stageTitle);
 
   // Parties
   y += 8;
@@ -417,9 +423,10 @@ export async function downloadTripInvoice(data, opts) {
   if (safe(b.npwp)) put("NPWP " + safe(b.npwp));
 
   font("helvetica", "normal", 9.5); col(INK); doc.text(paid ? safe(paid.date) : issueDate, cx[2], y + 6, { align: "right" });
-  label(paid ? "STATUS" : "JATUH TEMPO", cx[2], y + 15, "right");
+  label(quote ? "BERLAKU SAMPAI" : paid ? "STATUS" : "JATUH TEMPO", cx[2], y + 15, "right");
   font("helvetica", "bold", 9.5);
-  if (paid) { col(GREEN); doc.text(after ? `${cur.label} diterima` : "LUNAS", cx[2], y + 21, { align: "right" }); }
+  if (quote) { col(ACC); doc.text(quote.validUntil ? fmtDate(quote.validUntil) : "-", cx[2], y + 21, { align: "right" }); }
+  else if (paid) { col(GREEN); doc.text(after ? `${cur.label} diterima` : "LUNAS", cx[2], y + 21, { align: "right" }); }
   else { col(ACC); doc.text(cur.dueLabel, cx[2], y + 21, { align: "right" }); }
   y = Math.max(ys, yb, y + 24) + 5;
 
@@ -462,7 +469,7 @@ export async function downloadTripInvoice(data, opts) {
   let cum = 0;
   plan.forEach((s, i) => {
     cum += s.amount;
-    const isCur = i === curIdx;
+    const isCur = !quote && i === curIdx;
     const done = i < curIdx ? before >= cum - 1 : (isCur && paid);
     if (isCur) { doc.setFillColor(247, 243, 234); doc.setDrawColor(...ACC); doc.setLineWidth(0.4); doc.rect(M, y, R - M, 7.5, "FD"); }
     const ty = y + 5;
@@ -470,7 +477,7 @@ export async function downloadTripInvoice(data, opts) {
     font("helvetica", isCur ? "bold" : "normal", 9.5); col(INK); doc.text(s.label, SX.name, ty);
     const tx = SX.name + doc.getTextWidth(s.label) + 2.5;
     font("helvetica", "normal", 9); col(BODY); doc.text(safe(s.whenLabel), SX.when, ty);
-    doc.text(safe(s.dueLabel), SX.due, ty);
+    doc.text(quote && s.days == null ? `${DP_DAYS} hari setelah konfirmasi` : safe(s.dueLabel), SX.due, ty);
     font("courier", "normal", 9); col(INK); doc.text(String(s.pct) + "%", SX.pct, ty, { align: "right" });
     font("courier", isCur ? "bold" : "normal", 9.5); doc.text(rp(s.amount), SX.sum, ty, { align: "right" });
     if (done) { font("courier", "bold", 6.5); col(GREEN); doc.text("DIBAYAR", tx, ty - 0.3, { charSpace: 0.3 }); }
@@ -481,14 +488,19 @@ export async function downloadTripInvoice(data, opts) {
   y += 5;
   const yStamp = y;
   y += 6;
-  row("Total perjalanan", rp(t.total)); y += 6;
-  if (before) { row("Sudah dibayar sebelumnya", rp(before)); y += 6; }
-  y -= 2; doc.setDrawColor(...INK); doc.setLineWidth(0.4); doc.line(TL, y, R, y); y += 7;
-  if (paid) row("Diterima", rp(received), true, GREEN);
-  else row("Tagihan ini", rp(bill), true, ACC);
-  y += 7;
-  row(after ? (paid ? "Sisa tagihan" : "Sisa setelah termin ini") : "Sisa", after ? rp(after) : "Rp 0"); y += 6;
-  if (paid) { k.stamp(M + 4, yStamp + 2, after ? "DIBAYAR" : "LUNAS", paid.date); y = Math.max(y, yStamp + 28); }
+  if (quote) {
+    row("Total perjalanan", rp(t.total), true); y += 7;
+    row("Uang muka saat konfirmasi", rp(plan[0].amount)); y += 6;
+  } else {
+    row("Total perjalanan", rp(t.total)); y += 6;
+    if (before) { row("Sudah dibayar sebelumnya", rp(before)); y += 6; }
+    y -= 2; doc.setDrawColor(...INK); doc.setLineWidth(0.4); doc.line(TL, y, R, y); y += 7;
+    if (paid) row("Diterima", rp(received), true, GREEN);
+    else row("Tagihan ini", rp(bill), true, ACC);
+    y += 7;
+    row(after ? (paid ? "Sisa tagihan" : "Sisa setelah termin ini") : "Sisa", after ? rp(after) : "Rp 0"); y += 6;
+    if (paid) { k.stamp(M + 4, yStamp + 2, after ? "DIBAYAR" : "LUNAS", paid.date); y = Math.max(y, yStamp + 28); }
+  }
   y += 5;
 
   // Note
@@ -501,8 +513,17 @@ export async function downloadTripInvoice(data, opts) {
     y += 5;
   }
 
-  // Payment
+  // Payment (a quote gets a confirmation box instead of the bank box)
   ensure(40);
+  if (quote) {
+    font("helvetica", "normal", 9.5);
+    const msg = doc.splitTextToSize(`Penawaran ini berlaku sampai ${quote.validUntil ? fmtDate(quote.validUntil) : "-"}. Untuk mengonfirmasi, balas WhatsApp ${WA_LINE} dengan menyebut nomor ${data.code}. Setelah itu kami kirim invoice uang muka ${plan[0].pct}% (${rp(plan[0].amount)}); kursi, kamar, dan kendaraan kami kunci setelah uang muka masuk.`, R - M - 14);
+    const bh = 12 + msg.length * 4.6;
+    doc.setFillColor(...PAPER); doc.roundedRect(M, y, R - M, bh, 4, 4, "F");
+    label("KONFIRMASI", M + 7, y + 8);
+    font("helvetica", "normal", 9.5); col(INK); msg.forEach((l, i) => doc.text(l, M + 7, y + 14.5 + i * 4.6));
+    y += bh + 6;
+  } else
   y = k.bank(y, data.bank, paid, payer, `Transfer ${rp(bill)} paling lambat ${cur.dueLabel === "Segera" ? "segera" : cur.dueLabel}, lalu kirim bukti transfer ke WhatsApp ${WA_LINE} dengan menyebut nomor ${data.no}.`);
   y += 6;
   if (paid) { font("helvetica", "normal", 8); col(MUTED); doc.text(`Kuitansi ini sah bila diterima langsung dari WhatsApp resmi Peziarah, ${WA_LINE}.`, M, y); y += 6; }
@@ -601,9 +622,53 @@ export async function downloadTripInvoice(data, opts) {
   cy += 1.5;
   font("helvetica", "normal", 8.5); col(BODY); noteLines.forEach(l => { doc.text(l, M + 7, cy); cy += 3.9; });
   y += cH + 8;
+
+  // Itinerary, from its own page
+  const it = data.itinerary;
+  if (it && (it.days || []).some(d => (d.rows || []).length || safe(d.note))) {
+    doc.addPage(); y = M;
+    label("RENCANA PERJALANAN", M, y); y += 3;
+    font("helvetica", "bold", 11); col(INK);
+    doc.splitTextToSize(safe(trip.route), R - M).forEach(l => { y += 5; doc.text(l, M, y); });
+    y += 5;
+    const IX = { day: M + 2, time: M + 21, act: M + 50, note: M + 121 };
+    const W_ACT = IX.note - IX.act - 4, W_NOTE = R - IX.note - 2, W_TIME = IX.act - IX.time - 3;
+    const ihead = () => {
+      doc.setFillColor(...PAPER); doc.rect(M, y, R - M, 8, "F");
+      [["HARI", IX.day], ["WAKTU", IX.time], ["KEGIATAN & RUTE", IX.act], [safe(it.noteTitle || "CATATAN").toUpperCase(), IX.note]]
+        .forEach(([tt, x]) => label(tt, x, y + 5.3));
+      y += 8;
+    };
+    ihead();
+    it.days.forEach(d => {
+      font("helvetica", "normal", 9);
+      const rows = (d.rows || []).filter(r => safe(r.time) || safe(r.activity)).map(r => {
+        font("helvetica", "normal", 9); const a = doc.splitTextToSize(safe(r.activity), W_ACT);
+        font("courier", "normal", 8.5); const tm = doc.splitTextToSize(safe(r.time), W_TIME);
+        return { a, tm, h: Math.max(a.length, tm.length) * 4.2 + 1.6 };
+      });
+      font("helvetica", "normal", 8.5);
+      const noteLines = safe(d.note) ? String(d.note).split(/\n/).flatMap(p => doc.splitTextToSize(safe(p), W_NOTE)) : [];
+      const h = Math.max(rows.reduce((a, r) => a + r.h, 0), noteLines.length * 3.9, 10) + 4;
+      if (y + h > BOTTOM) { doc.addPage(); y = M; ihead(); }
+      const top = y + 5;
+      font("helvetica", "bold", 9.5); col(INK); doc.text(safe(d.day), IX.day, top);
+      if (safe(d.date)) { font("helvetica", "normal", 8.5); col(BODY); doc.text(safe(d.date), IX.day, top + 4.2); }
+      let ry = top;
+      rows.forEach(r => {
+        font("courier", "normal", 8.5); col(BODY); r.tm.forEach((l, i) => doc.text(l, IX.time, ry + i * 4.2));
+        font("helvetica", "normal", 9); col(INK); r.a.forEach((l, i) => doc.text(l, IX.act, ry + i * 4.2));
+        ry += r.h;
+      });
+      font("helvetica", "normal", 8.5); col(BODY); noteLines.forEach((l, i) => doc.text(l, IX.note, top + i * 3.9));
+      y += h; hr(y);
+    });
+    y += 8;
+  }
+  if (y + 6 > BOTTOM) { doc.addPage(); y = M; }
   font("helvetica", "italic", 9); col(MUTED); doc.text("Terima kasih telah mempercayakan perjalanan ini kepada Peziarah. Berkah Dalem.", M, y);
 
   k.footer(data.no);
-  await k.finish(data.no, paid, { ...opts, ga: false });
+  await k.finish(data.no, paid, { ...opts, ga: false, kind: quote ? "penawaran" : undefined });
   return { no: data.no, total: t.total, bill, after };
 }

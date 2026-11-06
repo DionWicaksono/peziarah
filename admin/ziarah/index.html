@@ -257,7 +257,45 @@
   </section>
 
   <section style="display:flex;flex-direction:column;gap:16px">
-    <span class="cap">04 · TERMIN</span>
+    <span class="cap">04 · RENCANA PERJALANAN</span>
+    <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">Tercetak di halaman tersendiri pada penawaran, invoice, dan kuitansi. Cara cepat: blok tabel itinerary di Google Sheets atau Excel (kolom Hari, Waktu, Kegiatan, Catatan, boleh dengan judulnya), salin, lalu tempel di kotak ini. Sel gabungan terbaca otomatis. Setelah itu tiap baris tetap bisa diubah.</p>
+    <textarea value="{{ s.itinPaste }}" onInput="{{ on.itinPaste }}" rows="4" placeholder="Tempel tabel itinerary di sini" style="width:100%;padding:10px 12px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:14px;line-height:1.5;resize:vertical;color:#1A1712;font-family:'Space Mono',monospace;font-size:12px"></textarea>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <button type="button" onClick="{{ itinImport }}" class="ghost">AMBIL DARI TEMPELAN</button>
+      <span style="font-size:13px;color:#5B5347">{{ itinMsg }}</span>
+    </div>
+    <div class="grid">
+      <label class="f">Judul kolom catatan<input value="{{ s.itinNoteTitle }}" onInput="{{ on.itinNoteTitle }}" placeholder="Catatan"></label>
+    </div>
+    <sc-for list="{{ itinDays }}" as="d" hint-placeholder-count="0">
+      <div class="ln" style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid #D6CBB8;border-radius:16px;background:#FBF8F2">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <input value="{{ d.day }}" onInput="{{ d.setDay }}" placeholder="Hari 1" style="width:110px;font-weight:700">
+          <input value="{{ d.date }}" onInput="{{ d.setDate }}" placeholder="29 Nov" style="width:120px">
+          <span style="flex:1"></span>
+          <button type="button" onClick="{{ d.up }}" title="Naikkan" style="border:none;background:transparent;padding:4px 7px;color:#5B5347;font-size:15px">↑</button>
+          <button type="button" onClick="{{ d.down }}" title="Turunkan" style="border:none;background:transparent;padding:4px 7px;color:#5B5347;font-size:15px">↓</button>
+          <button type="button" onClick="{{ d.remove }}" title="Hapus hari" style="border:none;background:transparent;padding:4px 7px;color:#8A8172;font-size:17px">×</button>
+        </div>
+        <sc-for list="{{ d.rows }}" as="r" hint-placeholder-count="2">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <input value="{{ r.time }}" onInput="{{ r.setTime }}" placeholder="08.00 - 10.00" style="width:140px;font-family:'Space Mono',monospace">
+            <input value="{{ r.activity }}" onInput="{{ r.setActivity }}" placeholder="Kegiatan & rute" style="flex:1 1 260px">
+            <button type="button" onClick="{{ r.remove }}" title="Hapus baris" style="border:none;background:transparent;padding:4px 7px;color:#8A8172;font-size:17px">×</button>
+          </div>
+        </sc-for>
+        <button type="button" onClick="{{ d.addRow }}" style="align-self:flex-start;border:none;background:transparent;padding:2px 0;color:#6C4BA6;font-size:13px;cursor:pointer">+ baris kegiatan</button>
+        <textarea value="{{ d.note }}" onInput="{{ d.setNote }}" rows="2" placeholder="Catatan untuk hari ini (opsional)" style="width:100%;padding:10px 12px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:14px;line-height:1.5;resize:vertical;color:#1A1712"></textarea>
+      </div>
+    </sc-for>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+      <button type="button" onClick="{{ itinAddDay }}" class="ghost">+ HARI</button>
+      <label style="display:flex;gap:8px;align-items:center;font-size:14px;color:#5B5347"><input type="checkbox" checked="{{ s.itinOn }}" onChange="{{ on.itinOn }}" style="width:18px;height:18px;accent-color:#6C4BA6">Sertakan di PDF</label>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <span class="cap">05 · TERMIN</span>
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
       <sc-for list="{{ stageBtns }}" as="b" hint-placeholder-count="3">
         <button type="button" onClick="{{ b.pick }}" style="{{ b.style }}">{{ b.label }}</button>
@@ -284,7 +322,7 @@
   </section>
 
   <section style="display:flex;flex-direction:column;gap:16px">
-    <span class="cap">05 · PEMBAYARAN DITERIMA · UNTUK KUITANSI</span>
+    <span class="cap">06 · PEMBAYARAN DITERIMA · UNTUK KUITANSI</span>
     <div class="grid">
       <label class="f">Tanggal masuk rekening<input type="date" value="{{ s.payDate }}" onInput="{{ on.payDate }}"></label>
       <label class="f">Nama di rekening pengirim<input value="{{ s.from }}" onInput="{{ on.from }}" placeholder="{{ fromHint }}"></label>
@@ -293,6 +331,17 @@
   </section>
 
   <section style="display:flex;flex-direction:column;gap:16px;padding:22px;border-radius:18px;border:1px solid #1A1712">
+    <div style="display:flex;flex-direction:column;gap:12px;padding-bottom:16px;border-bottom:1px solid #D6CBB8">
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline">
+        <span class="cap">PENAWARAN · SEBELUM KONFIRMASI</span>
+        <span class="mono" style="font-weight:700;color:#6C4BA6">{{ quoteNo }}</span>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+        <label class="f" style="flex:0 1 220px">Berlaku sampai<input type="date" value="{{ validUntilVal }}" onInput="{{ on.validUntil }}"></label>
+        <button type="button" onClick="{{ quote }}" style="{{ quoteStyle }}">{{ quoteLabel }}</button>
+      </div>
+      <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">Penawaran berisi rincian biaya, jadwal termin, ketentuan pembatalan, dan rencana perjalanan, tanpa rekening. Baris permintaan ditandai <strong>Penawaran</strong>; setelah rombongan setuju, buat invoice uang muka di bawah.</p>
+    </div>
     <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline">
       <span class="cap">NOMOR DOKUMEN</span>
       <span class="mono" style="font-weight:700;color:#6C4BA6">{{ docNo }}</span>
@@ -316,7 +365,7 @@
       </sc-if>
     </div>
     <span style="font-size:13px;color:#8A3B2E">{{ s.err }}</span>
-    <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">Tidak ada Sheet tambahan. Setiap invoice menandai baris permintaan perjalanan ini (di Sheet formulir Rombongan, Grup kecil, atau Susun sendiri, dicari dari kodenya) sebagai <strong>Order</strong>; setiap kuitansi mengisi kolom Bayar dan Riwayat, dan baris jadi <strong>Lunas</strong> setelah pelunasan. Perjalanan tanpa formulir (dari WhatsApp) otomatis dibuatkan barisnya. Salinan PDF masuk folder Drive "Invoice Peziarah". Pembayaran pertama dihitung sekali sebagai purchase di GA4 dan Meta.</p>
+    <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">Tidak ada Sheet tambahan. Penawaran menandai baris permintaan perjalanan ini sebagai <strong>Penawaran</strong>, dan setiap invoice (di Sheet formulir Rombongan, Grup kecil, atau Susun sendiri, dicari dari kodenya) menandainya <strong>Order</strong>; setiap kuitansi mengisi kolom Bayar dan Riwayat, dan baris jadi <strong>Lunas</strong> setelah pelunasan. Perjalanan tanpa formulir (dari WhatsApp) otomatis dibuatkan barisnya. Salinan PDF masuk folder Drive "Invoice Peziarah". Pembayaran pertama dihitung sekali sebagai purchase di GA4 dan Meta.</p>
     <sc-if value="{{ s.doneKind }}" hint-placeholder-val="{{ false }}">
       <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">PDF tersimpan di folder unduhan. WhatsApp tidak bisa melampirkan file otomatis — lampirkan PDF-nya sendiri di chat.</p>
     </sc-if>
@@ -330,7 +379,7 @@
 const BANK_ENC = "==Qfi8mbvN3ahNWaXBibvlGRgMXdulGblNmch1kI6IiclRGbvhmIsIiMtQzMxMTN3ATLwATL3MTMiojIyVmYtVnbiwiIpJXak5WYNByauFmQiojIl1WYuJye";
 const bank = () => JSON.parse(atob(BANK_ENC.split("").reverse().join("")));
 // Versioned: .htaccess caches JS for 7 days. Bump when either file changes.
-const INVOICE_JS = "/data/invoice.js?v=20261106b";
+const INVOICE_JS = "/data/invoice.js?v=20261106c";
 const TARIF_JS = "/data/ziarah-tarif.js?v=20261106";
 const DATA = "/data/";
 const DRAFTS_KEY = "peziarah.ziarah.drafts.v1";
@@ -354,17 +403,62 @@ const BLANK = {
   pName: "", pId: "", pCost: "", pTitipan: "",
   lines: [], titipan: [], taxOn: false, taxLabel: "PPN", taxRate: "11",
   stage: "DP", single: false, issue: "", paidBefore: "", note: "",
-  payDate: "", from: "", amount: ""
+  payDate: "", from: "", amount: "",
+  itin: [], itinNoteTitle: "Catatan", itinOn: true, validUntil: ""
 };
 const KEEP = Object.keys(BLANK);
 let uid = 0;
 const id = () => "l" + Date.now().toString(36) + (uid++);
 
+// Tab-separated text as copied from Google Sheets / Excel. Quoted cells may hold
+// newlines and "" escapes (that is how merged and multi-line cells arrive).
+function parseTSV(text) {
+  const rows = []; let row = [], cell = "", q = false;
+  const t = String(text || "").replace(/\r\n?/g, "\n");
+  for (let i = 0; i < t.length; i++) {
+    const ch = t[i];
+    if (q) {
+      if (ch === '"' && t[i + 1] === '"') { cell += '"'; i++; }
+      else if (ch === '"') q = false;
+      else cell += ch;
+    } else if (ch === '"' && cell === "") q = true;
+    else if (ch === "\t") { row.push(cell); cell = ""; }
+    else if (ch === "\n") { row.push(cell); rows.push(row); row = []; cell = ""; }
+    else cell += ch;
+  }
+  if (cell !== "" || row.length) { row.push(cell); rows.push(row); }
+  return rows.filter(r => r.some(c => String(c).trim()));
+}
+// Columns: Hari | Waktu | Kegiatan & Rute | Catatan. A filled Hari cell starts a
+// new day ("Hari 1 (29 Nov)" or "Hari 1" + newline + "(29 Nov)"); merged cells
+// arrive filled only on their first row.
+function parseItinerary(text) {
+  const rows = parseTSV(text);
+  if (!rows.length) return null;
+  let title = "";
+  if (/^hari$/i.test(String(rows[0][0]).trim())) { title = String(rows[0][3] || "").trim(); rows.shift(); }
+  const days = [];
+  rows.forEach(r => {
+    const [c0 = "", c1 = "", c2 = "", c3 = ""] = r.map(c => String(c).trim());
+    if (c0 || !days.length) {
+      const flat = c0.replace(/\s*\n\s*/g, " ");
+      const m = flat.match(/^(.*?)\s*\(([^)]*)\)\s*$/);
+      days.push({ id: id(), day: m ? m[1] : (flat || `Hari ${days.length + 1}`), date: m ? m[2] : "", note: "", rows: [] });
+    }
+    const d = days[days.length - 1];
+    if (c1 || c2) d.rows.push({ id: id(), time: c1.replace(/\s*\n\s*/g, " "), activity: c2.replace(/\s*\n\s*/g, " ") });
+    if (c3) d.note = d.note ? d.note + "\n" + c3 : c3;
+  });
+  return { title, days };
+}
+const shortDate = (iso, add) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + add); return d.toLocaleDateString("id-ID", { day: "numeric", month: "short" }).replace(".", ""); };
+const plusDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+
 function loadDrafts() { try { return JSON.parse(localStorage.getItem(DRAFTS_KEY) || "{}"); } catch (e) { return {}; } }
 function saveDrafts(d) { try { localStorage.setItem(DRAFTS_KEY, JSON.stringify(d)); } catch (e) {} }
 
 class Component extends DCLogic {
-  state = { ...BLANK, code: genCode("ZR"), issue: today(), payDate: today(), busy: false, doneKind: "", err: "", xfer: "", draftMsg: "", customStop: "", mod: null, tarif: null, drafts: loadDrafts() };
+  state = { ...BLANK, code: genCode("ZR"), issue: today(), payDate: today(), busy: false, doneKind: "", err: "", xfer: "", draftMsg: "", customStop: "", itinPaste: "", itinMsg: "", mod: null, tarif: null, drafts: loadDrafts() };
 
   componentDidMount() {
     import(INVOICE_JS).then(m => this.setState({ mod: m })).catch(() => this.setState({ err: "Modul invoice gagal dimuat. Cek koneksi lalu muat ulang halaman." }));
@@ -480,6 +574,8 @@ class Component extends DCLogic {
       trip: { route, start: s.start, end: s.end, pax: num(s.pax), paxNote: s.paxNote, stops: s.stops.map(t => t.name) },
       buyer: { org: s.org, name: s.name, phone: s.phone, email: s.email, addr: s.addr, npwp: s.npwp },
       participant, lines, titipan, tax, note: s.note, bank: bank(),
+      itinerary: s.itinOn && s.itin.length ? { noteTitle: s.itinNoteTitle || "Catatan", days: s.itin.map(x => ({ day: x.day, date: x.date, note: x.note, rows: x.rows })) } : null,
+      validUntil: s.validUntil || plusDays(s.issue || today(), 7),
       groupT, fx
     };
   }
@@ -512,6 +608,7 @@ class Component extends DCLogic {
     const unpriced = this.priceLines().filter(x => !x.price).map(x => x.l.name);
     if (unpriced.length) return `Pos belum ada harga: ${unpriced.join(", ")}. Isi harganya atau hapus posnya.`;
     if (kind === "receipt" && !c.received) return "Isi jumlah diterima.";
+    if (kind === "quote" && !d.validUntil) return "Isi tanggal berlaku penawaran.";
     if (kind === "invoice" && !c.bill) return "Termin ini sudah terbayar penuh menurut angka \"sudah dibayar\".";
     return "";
   }
@@ -519,20 +616,20 @@ class Component extends DCLogic {
   // --- request row ---------------------------------------------------------------
   // Sent with the PDF to the Apps Script, which writes it onto the trip's request
   // row (Status, Total, Bayar, Riwayat, PDF links). See meta-capi-apps-script.gs.
-  tripMeta(d, c, paid) {
+  tripMeta(d, c, paid, quote) {
     const dates = d.trip.end && d.trip.end !== d.trip.start ? `${d.trip.start} s.d. ${d.trip.end}` : d.trip.start;
     const received = paid ? c.received : 0;
     const items = d.participant
       ? [{ name: "Biaya ziarah per peserta", qty: 1, price: d.participant.cost }]
       : d.lines.map(l => ({ name: l.name, qty: l.qty, price: l.price }));
     const meta = {
-      stage: c.cur.label.toLowerCase(), total: c.t.total, bill: c.bill, received,
-      after: Math.max(0, c.t.total - c.before - (paid ? received : c.bill)),
+      stage: quote ? "penawaran" : c.cur.label.toLowerCase(), total: c.t.total, bill: quote ? c.t.total : c.bill, received,
+      after: quote ? c.t.total : Math.max(0, c.t.total - c.before - (paid ? received : c.bill)),
       paidDate: paid ? paid.date : "", from: paid ? paid.from : "",
       org: d.buyer.org, name: d.buyer.name, phone: d.buyer.phone, email: d.buyer.email,
       route: d.trip.route, dates, pax: d.trip.pax, participant: d.participant ? d.participant.name : "", items
     };
-    try { if (window.__pzPreviewLog) window.__pzPreviewLog("ziarah", { nomor: d.no, dokumen: paid ? "Kuitansi" : "Invoice", ...meta, items: items.map(i => `${i.name} × ${i.qty} @ ${rp(i.price)}`).join("\n") }); } catch (e) {}
+    try { if (window.__pzPreviewLog) window.__pzPreviewLog("ziarah", { nomor: quote ? d.base + "-Q" : d.no, dokumen: quote ? "Penawaran" : paid ? "Kuitansi" : "Invoice", ...meta, items: items.map(i => `${i.name} × ${i.qty} @ ${rp(i.price)}`).join("\n") }); } catch (e) {}
     return meta;
   }
 
@@ -548,6 +645,23 @@ class Component extends DCLogic {
       this.setState({ busy: false, err: "Gagal membuat PDF. Cek koneksi lalu coba lagi." });
     }
   }
+
+  async quote() {
+    const err = this.problems("quote");
+    if (err) return this.setState({ err });
+    const s = this.state, c = this.calc(), d = c.d;
+    this.setState({ busy: true, err: "" });
+    try {
+      await s.mod.downloadTripInvoice({ ...d, no: `${d.base}-Q`, paidBefore: 0, quote: { validUntil: d.validUntil } }, { upload: true, trip: this.tripMeta(d, c, null, true) });
+      this.setState({ busy: false, doneKind: "quote" });
+    } catch (e) {
+      this.setState({ busy: false, err: "Gagal membuat PDF. Cek koneksi lalu coba lagi." });
+    }
+  }
+
+  // --- itinerary -----------------------------------------------------------------
+  editDay(did, patch) { this.set(st => ({ itin: st.itin.map(x => x.id === did ? { ...x, ...patch } : x) })); }
+  editRow(did, rid, patch) { this.set(st => ({ itin: st.itin.map(x => x.id !== did ? x : { ...x, rows: x.rows.map(r => r.id === rid ? { ...r, ...patch } : r) }) })); }
 
   async receipt() {
     const err = this.problems("receipt");
@@ -622,6 +736,10 @@ class Component extends DCLogic {
     on.single = e => this.set({ single: e.target.checked, paidBefore: "", amount: "" });
     on.log = e => this.setState({ log: e.target.checked });
     on.xfer = e => this.setState({ xfer: e.target.value });
+    on.itinPaste = e => this.setState({ itinPaste: e.target.value });
+    on.itinNoteTitle = e => this.set({ itinNoteTitle: e.target.value });
+    on.itinOn = e => this.set({ itinOn: e.target.checked });
+    on.validUntil = e => this.set({ validUntil: e.target.value });
 
     const pill = active => `padding:10px 16px;border-radius:999px;font-family:'Hanken Grotesk',sans-serif;font-size:14px;border:1px solid ${active ? "#1A1712" : "#D6CBB8"};background:${active ? "#1A1712" : "transparent"};color:${active ? "#F7F3EA" : "#1A1712"}`;
     const codes = Object.keys(s.drafts).sort((a, b) => String(s.drafts[b].savedAt).localeCompare(String(s.drafts[a].savedAt)));
@@ -707,7 +825,9 @@ class Component extends DCLogic {
     const route = d.trip.route;
     const who = d.participant ? (d.participant.name || "Kak") : (s.name || s.org || "Kak");
     const next = c.ok ? c.plan[c.ci + 1] : null;
-    const waMsg = s.doneKind === "receipt"
+    const waMsg = s.doneKind === "quote"
+      ? `Halo ${who}, berikut penawaran perjalanan ${route} (${d.base}-Q): total ${rp(c.t.total)} untuk ${num(s.pax)} peserta, berlaku sampai ${longDate(d.validUntil)}. Rincian biaya, jadwal pembayaran, ketentuan pembatalan, dan rencana perjalanan ada di PDF terlampir. Kalau sudah cocok, balas pesan ini dan kami kirim invoice uang muka. Terima kasih, Berkah Dalem. — Peziarah`
+      : s.doneKind === "receipt"
       ? `Halo ${who}, pembayaran ${c.cur ? c.cur.label.toLowerCase() : ""} ${d.no} untuk perjalanan ${route} sebesar ${rp(c.received)} sudah kami terima.${after ? ` Sisa ${rp(after)}${next ? `, termin berikutnya ${next.label.toLowerCase()} ${rp(next.amount)} jatuh tempo ${next.dueLabel}` : ""}.` : " Perjalanan ini sudah LUNAS."} Kuitansinya kami lampirkan di chat ini. Terima kasih, Berkah Dalem. — Peziarah`
       : `Halo ${who}, berikut invoice ${c.cur ? c.cur.label.toLowerCase() : ""} untuk perjalanan ${route} (${d.no}): ${rp(c.bill)}, paling lambat ${c.cur ? c.cur.dueLabel : ""}. Rekening, jadwal termin, dan ketentuan pembatalan ada di PDF terlampir. Terima kasih, Berkah Dalem. — Peziarah`;
     const wa = (s.phone || "").replace(/[^\d]/g, "").replace(/^0/, "62");
@@ -715,8 +835,40 @@ class Component extends DCLogic {
     const groupTotal = groupT.cost + (d.tax ? Math.round(groupT.cost * d.tax.rate) : 0) + groupT.titipan;
     const perPaxAll = groupTotal ? Math.round(groupTotal / pax) : 0;
 
+    const itinDays = s.itin.map((x, i) => ({
+      day: x.day, date: x.date, note: x.note,
+      setDay: e => this.editDay(x.id, { day: e.target.value }),
+      setDate: e => this.editDay(x.id, { date: e.target.value }),
+      setNote: e => this.editDay(x.id, { note: e.target.value }),
+      up: () => this.set(st => { const a = st.itin.slice(); if (i > 0) [a[i - 1], a[i]] = [a[i], a[i - 1]]; return { itin: a }; }),
+      down: () => this.set(st => { const a = st.itin.slice(); if (i < a.length - 1) [a[i + 1], a[i]] = [a[i], a[i + 1]]; return { itin: a }; }),
+      remove: () => this.set(st => ({ itin: st.itin.filter(y => y.id !== x.id) })),
+      addRow: () => this.editDay(x.id, { rows: x.rows.concat({ id: id(), time: "", activity: "" }) }),
+      rows: x.rows.map(r => ({
+        time: r.time, activity: r.activity,
+        setTime: e => this.editRow(x.id, r.id, { time: e.target.value }),
+        setActivity: e => this.editRow(x.id, r.id, { activity: e.target.value }),
+        remove: () => this.editDay(x.id, { rows: x.rows.filter(y => y.id !== r.id) })
+      }))
+    }));
+    const readyQ = c.ok && !this.problems("quote");
+
     return {
-      s, on,
+      s, on, itinDays,
+      itinMsg: s.itinMsg,
+      itinImport: () => {
+        const r = parseItinerary(s.itinPaste);
+        if (!r || !r.days.length) return this.setState({ itinMsg: "Tidak ada tabel yang terbaca. Salin sel dari Sheets/Excel, bukan dari PDF atau gambar." });
+        const n = r.days.reduce((a, x) => a + x.rows.length, 0);
+        this.set({ itin: r.days, itinNoteTitle: r.title || s.itinNoteTitle, itinOn: true });
+        this.setState({ itinPaste: "", itinMsg: `${r.days.length} hari, ${n} kegiatan terbaca.` });
+      },
+      itinAddDay: () => this.set(st => ({ itin: st.itin.concat({ id: id(), day: `Hari ${st.itin.length + 1}`, date: st.start ? shortDate(st.start, st.itin.length) : "", note: "", rows: [{ id: id(), time: "", activity: "" }] }) })),
+      quoteNo: CODE_RE.test(d.code) ? `${d.base}-Q` : "—",
+      validUntilVal: d.validUntil,
+      quote: () => this.quote(),
+      quoteLabel: s.busy ? "MEMBUAT PDF…" : "UNDUH PENAWARAN (PDF)",
+      quoteStyle: btn(readyQ).replace("background:#1A1712", "background:#6C4BA6"),
       drafts: codes.map(k => ({
         label: `${k}${s.drafts[k].route || (s.drafts[k].stops || []).length ? " · " + String(s.drafts[k].route || (s.drafts[k].stops || []).map(t => t.short).join(" - ")).slice(0, 28) : ""}`,
         open: () => this.open(k),

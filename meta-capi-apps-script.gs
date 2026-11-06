@@ -303,7 +303,7 @@ function doPost(e) {
     if (TRIP_DOC.test(docCode)) {
       const bytes = pdfBytes();
       if (!bytes || !p.trip) return reply("bad trip");
-      const label = p.kind === "kuitansi" ? "Kuitansi" : "Invoice";
+      const label = p.kind === "kuitansi" ? "Kuitansi" : p.kind === "penawaran" ? "Penawaran" : "Invoice";
       return reply(markTrip(docCode, label, fileInvoice(label + "-" + docCode + ".pdf", bytes), p.trip));
     }
     if (!/^PZ-[A-Z0-9]{4,8}$/.test(docCode)) return reply("bad code");
@@ -411,11 +411,11 @@ function writeLink(code, url, label) {
 // No separate billing sheet. Every invoice or kuitansi made at /admin/ziarah/
 // finds the trip's REQUEST row (the row its request form created, matched on the
 // "kode" column) and writes, in columns added at the far right:
-//   Status    Order (from the first invoice) -> Lunas (when nothing is left)
+//   Status    Penawaran (quote sent) -> Order (first invoice) -> Lunas (nothing left)
 //   Total     trip total
 //   Bayar     what was last received and what is left
 //   Riwayat   one line per document, newest last (participants included)
-//   Invoice / Kuitansi   link to the latest group PDF in Drive
+//   Penawaran / Invoice / Kuitansi   link to the latest group PDF in Drive
 // A trip with no request row (booked over WhatsApp) gets a new row in the
 // request tab for its kind. The first kuitansi of a trip (or of one participant)
 // sends GA4 purchase + Meta Purchase once, for that total.
@@ -429,8 +429,8 @@ const ZIARAH = {
   CG: { sheetUrl: "https://docs.google.com/spreadsheets/d/1pwJhzh36SUSNmgr42dosuNK3Tu3wGcI7OCQuUwbKjpE/edit", tab: "" },   // Grup kecil     (form "concierge")
   BY: { sheetUrl: "https://docs.google.com/spreadsheets/d/146VDhI72KvxakWfgJYtAjt1ShJOKDKvZ5B5DMmpxEEE/edit", tab: "" }    // Susun sendiri  (form "ziarah-susun-sendiri")
 };
-const TRIP_DOC = /^((ZR|BY|CG)-[A-Z0-9]{4,8})(-(P[A-Z0-9]{1,6}))?-(DP|T2|LN)$/;
-const TRIP_COLS = ["Status", "Total", "Bayar", "Riwayat", "Invoice", "Kuitansi"];
+const TRIP_DOC = /^((ZR|BY|CG)-[A-Z0-9]{4,8})(-(P[A-Z0-9]{1,6}))?-(DP|T2|LN|Q)$/;
+const TRIP_COLS = ["Status", "Total", "Bayar", "Riwayat", "Penawaran", "Invoice", "Kuitansi"];
 
 function tripTabs() {
   const seen = {}, out = [];
@@ -507,7 +507,10 @@ function markTrip(docCode, label, pdfUrl, m) {
     const status = cell("Status"), now = Utilities.formatDate(new Date(), "Asia/Jakarta", "d MMM yyyy");
     const who = pid ? pid + " " + (m.participant || "") + " · " : "";
     let line;
-    if (label === "Invoice") {
+    if (label === "Penawaran") {
+      if (!String(status.getValue()).trim()) status.setValue("Penawaran");
+      line = `${now} · ${who}Penawaran total ${rp(m.total)}`;
+    } else if (label === "Invoice") {
       if (String(status.getValue()) !== "Lunas") status.setValue("Order");
       line = `${now} · ${who}Invoice ${m.stage} ${rp(m.bill)}`;
     } else {
