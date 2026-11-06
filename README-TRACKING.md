@@ -91,6 +91,22 @@ If an event is missing, run **showLastResponses**: it prints each form's questio
 
 In the script set `PAID.sheetUrl` to the orders spreadsheet (the one with a Status column) and run **setup** again. Changing Status to `lunas` / `paid` / `dibayar` sends a `PaidOrder` event with the order value. In Events Manager create a **Custom Conversion** on `PaidOrder` to optimise ads for paying customers.
 
+### D. Ziarah invoices and receipts (`/admin/ziarah/`)
+
+No extra form or sheet. Each invoice / kuitansi PDF from `/admin/ziarah/` is sent to the same Apps Script web app as shop invoices, together with the trip details. The script files the PDF in Drive "Invoice Peziarah/<yyyy-MM>/" and marks the trip's **request row** — the row its request form (`ziarah` = Rombongan ZR-, `concierge` = Grup kecil CG-, `ziarah-susun-sendiri` = Susun sendiri BY-) created, matched on its `kode` column. Columns added at the far right of that tab:
+
+| Column | Filled with |
+|---|---|
+| Status | `Order` from the first invoice, `Lunas` once nothing is left |
+| Total | trip total |
+| Bayar | e.g. `uang muka diterima · sisa Rp 16.674.000`, then `Lunas` |
+| Riwayat | one line per invoice/receipt, incl. per-participant ones (P03 …) |
+| Invoice / Kuitansi | link to the latest group PDF |
+
+A trip booked over WhatsApp (no request row) gets a new row in the tab for its kind. The first kuitansi of a trip (or of one participant) sends GA4 `purchase` and Meta `Purchase` once, for that total; nothing is sent at invoice time and nothing goes to the shop order sheet.
+
+**Setup (once):** `ZIARAH` already holds the three request sheets (Permintaan Ziarah, Grup Kecil, Susun Sendiri, filled in 6 Nov 2026); the Google account that owns the Apps Script must be able to edit them. To change one: put in the spreadsheet URL that request form saves to (open the form → Responses → the green Sheets icon → copy the URL from the address bar). If all three forms save into one spreadsheet, use the same URL three times and set `tab` to each form's response tab name. Save → Deploy → Manage deployments → edit → Version: **New version**. Test: make a test invoice for an existing request code → its row shows `Order`; a test kuitansi → `Bayar` and `Riwayat` fill in. Clear those cells afterwards (the test payment also sent one purchase to GA4/Meta).
+
 ## Pages without tracking
 
 `/concierge/`, `/strategi/`, `/brandkit/`, `/businessmodelcanvas/`, `/empat/`, `GuaMariaMap.dc.html` have no GTM. They look internal; if any is public, add the GTM snippets + `<script type="module" src="/data/track.js"></script>`, or remove it from the live site.

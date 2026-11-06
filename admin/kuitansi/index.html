@@ -51,6 +51,7 @@
     <span style="font-family:'Cinzel',Georgia,serif;font-weight:600;font-size:19px;letter-spacing:0.16em">PEZIARAH</span>
     <div style="display:flex;gap:18px;align-items:baseline;flex-wrap:wrap">
       <a href="/admin/resi/" style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em">LABEL PENGIRIMAN</a>
+      <a href="/admin/ziarah/" style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em">TAGIHAN ZIARAH</a>
       <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172">ADMIN · JANGAN DIBAGIKAN</span>
     </div>
   </header>
@@ -228,7 +229,7 @@ class Component extends DCLogic {
     if (!t.amt) return this.setState({ err: "Isi jumlah diterima." });
     this.setState({ busy: true, err: "" });
     try {
-      const inv = await import(DATA + "invoice.js");
+      const inv = await import(DATA + "invoice.js?v=20261106b");
       const date = new Date(s.payDate + "T12:00:00").toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
       const code = s.code.trim().toUpperCase();
       await inv.downloadInvoice({
@@ -259,12 +260,12 @@ class Component extends DCLogic {
     if (!t.items.length || t.bad.length) return this.setState({ err: "Periksa rincian barang." });
     this.setState({ busy: true, err: "" });
     try {
-      const inv = await import(DATA + "invoice.js");
+      const inv = await import(DATA + "invoice.js?v=20261106b");
       await inv.downloadInvoice({
         no: s.code.trim().toUpperCase(), items: t.items,
         buyer: { name: s.name, phone: s.phone, email: s.email, addr: s.addr },
         note: s.note, shipping: { zone: s.zone, cost: t.ship }, bank: bank()
-      }, { upload: true });
+      }, { upload: true, ga: false });
       this.setState({ busy: false });
     } catch (e) {
       this.setState({ busy: false, err: "Gagal membuat PDF. Cek koneksi lalu coba lagi." });

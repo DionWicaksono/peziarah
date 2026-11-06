@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tagihan Ziarah | Peziarah Admin</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#F7F3EA">
+<link rel="icon" href="/assets/favicon.png" type="image/png">
+<script defer src="/support.js"></script>
+<style>x-dc{display:none}</style>
+</head>
+<body>
+<div id="__pr" style="font-family:'Hanken Grotesk',Helvetica,Arial,sans-serif;background:#F7F3EA;color:#1A1712;padding:28px;max-width:960px;margin:0 auto;min-height:60vh">
+<span style="font-family:'Cinzel',Georgia,serif;font-weight:600;font-size:19px;letter-spacing:0.16em;display:block;margin-bottom:26px">PEZIARAH</span>
+<p style="font-size:16px;color:#5B5347;margin:0">Memuat…</p>
+</div>
+<script>
+(function(){
+  var p=document.getElementById("__pr");if(!p)return;
+  var done=false;
+  function ready(){var r=document.getElementById("dc-root");return !!(r&&r.firstElementChild);}
+  function kill(){if(done)return;done=true;if(p&&p.parentNode)p.parentNode.removeChild(p);p=null;}
+  if(ready()){kill();return;}
+  var mo=new MutationObserver(function(){if(ready()){mo.disconnect();clearTimeout(t);kill();}});
+  mo.observe(document.body,{childList:true,subtree:true});
+  var t=setTimeout(function(){if(ready()){mo.disconnect();kill();}},8000);
+})();
+</script>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Cinzel:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F7F3EA;color:#1A1712;font-family:'Hanken Grotesk',Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#6C4BA6;text-decoration:none}
+  a:hover{color:#1A1712}
+  button{font-family:'Space Mono',monospace;cursor:pointer}
+  input,textarea,select{font-family:'Hanken Grotesk',Helvetica,sans-serif}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:#6C4BA6 !important}
+  ::selection{background:#6C4BA6;color:#F7F3EA}
+  .f{display:flex;flex-direction:column;gap:6px;font-size:13px;color:#5B5347}
+  .f input,.f textarea{padding:12px 14px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:15px;color:#1A1712}
+  .mono{font-family:'Space Mono',monospace}
+  .cap{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5B5347}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+  .ln input{padding:9px 10px;border:1px solid #D6CBB8;border-radius:10px;background:#FBF8F2;font-size:14px;color:#1A1712;min-width:0}
+  .chip{padding:8px 13px;border-radius:999px;border:1px solid #D6CBB8;background:transparent;color:#1A1712;font-family:'Hanken Grotesk',sans-serif;font-size:13px;line-height:1.2}
+  .chip:hover{border-color:#1A1712}
+  .ghost{padding:11px 18px;border-radius:999px;border:1px solid #1A1712;background:transparent;color:#1A1712;font-size:12px;letter-spacing:0.1em}
+</style>
+</helmet>
+<datalist id="satuan">
+  <option value="per orang"></option><option value="per orang per hari"></option><option value="per orang per makan"></option>
+  <option value="per orang per malam"></option><option value="per kamar per malam"></option><option value="per hari"></option>
+  <option value="per malam"></option><option value="per unit"></option><option value="paket"></option>
+</datalist>
+<div style="max-width:960px;margin:0 auto;padding:28px 24px 80px;display:flex;flex-direction:column;gap:30px">
+  <header style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap">
+    <span style="font-family:'Cinzel',Georgia,serif;font-weight:600;font-size:19px;letter-spacing:0.16em">PEZIARAH</span>
+    <div style="display:flex;gap:18px;align-items:baseline;flex-wrap:wrap">
+      <a href="/admin/kuitansi/" class="cap" style="color:#6C4BA6">KUITANSI TOKO</a>
+      <a href="/admin/resi/" class="cap" style="color:#6C4BA6">LABEL PENGIRIMAN</a>
+      <span class="cap" style="color:#8A8172">ADMIN · JANGAN DIBAGIKAN</span>
+    </div>
+  </header>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <h1 style="font-family:'Archivo',Helvetica,sans-serif;font-weight:800;font-size:clamp(32px,5vw,52px);line-height:0.95;letter-spacing:-0.035em;margin:0">Tagihan ziarah.</h1>
+    <p style="font-size:16px;line-height:1.6;color:#5B5347;max-width:60ch;margin:0;text-wrap:pretty">Invoice dan kuitansi per termin untuk rombongan dan grup kecil, setelah proposal disetujui. Uang muka 30% saat konfirmasi, 50% di H-14, pelunasan 20% di H-7. Draf tersimpan di perangkat ini per kode perjalanan, jadi termin berikutnya tinggal dibuka lagi.</p>
+  </div>
+
+  <section style="display:flex;flex-direction:column;gap:12px;padding:20px 22px;border-radius:18px;background:#EFE8DA">
+    <span class="cap">DRAF DI PERANGKAT INI</span>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <sc-for list="{{ drafts }}" as="d" hint-placeholder-count="2">
+        <button type="button" onClick="{{ d.open }}" style="{{ d.style }}">{{ d.label }}</button>
+      </sc-for>
+      <button type="button" onClick="{{ fresh }}" class="chip" style="border-style:dashed">+ Perjalanan baru</button>
+    </div>
+    <span style="font-size:13px;color:#5B5347">{{ draftMsg }}</span>
+    <details style="border-top:1px solid #D6CBB8;padding-top:12px">
+      <summary class="cap" style="cursor:pointer">PINDAH PERANGKAT · SALIN / TEMPEL DRAF</summary>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
+        <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">Salin teks draf ini, kirim ke dirimu sendiri lewat WhatsApp, lalu tempel di perangkat lain dan klik Muat.</p>
+        <textarea value="{{ s.xfer }}" onInput="{{ on.xfer }}" rows="3" placeholder="Teks draf" style="width:100%;padding:10px 12px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2;font-size:12px;line-height:1.5;resize:vertical;color:#1A1712;font-family:'Space Mono',monospace"></textarea>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button type="button" onClick="{{ exportDraft }}" class="ghost">SALIN DRAF INI</button>
+          <button type="button" onClick="{{ importDraft }}" class="ghost">MUAT DARI TEKS</button>
+          <button type="button" onClick="{{ deleteDraft }}" class="ghost" style="border-color:#8A3B2E;color:#8A3B2E">HAPUS DRAF INI</button>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <span class="cap">01 · PERJALANAN</span>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <sc-for list="{{ kindBtns }}" as="k" hint-placeholder-count="3">
+        <button type="button" onClick="{{ k.pick }}" style="{{ k.style }}">{{ k.label }}</button>
+      </sc-for>
+    </div>
+    <div class="grid">
+      <label class="f">Kode perjalanan · otomatis<input value="{{ s.code }}" onInput="{{ on.code }}" placeholder="ZR-XXXXX" class="mono" style="font-family:'Space Mono',monospace"></label>
+      <div style="display:flex;align-items:flex-end"><button type="button" onClick="{{ newCode }}" class="ghost">KODE BARU</button></div>
+    </div>
+    <p style="margin:-6px 0 0;font-size:13px;line-height:1.6;color:#5B5347">Kode dibuat otomatis untuk setiap perjalanan baru, dengan awalan sesuai jenisnya. Kalau permintaan masuk lewat formulir situs, tempel kode dari formulir di sini supaya satu kode dipakai dari permintaan sampai lunas.</p>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:13px;color:#5B5347">Tujuan · urut sesuai perjalanan</span>
+      <sc-for list="{{ stopRows }}" as="t" hint-placeholder-count="0">
+        <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid #D6CBB8;border-radius:12px;background:#FBF8F2">
+          <span class="mono" style="color:#6C4BA6;font-size:12px;flex:none">{{ t.no }}</span>
+          <span style="flex:1;min-width:0;font-size:15px;line-height:1.35"><strong>{{ t.name }}</strong><span style="color:#8A8172;font-size:13px"> · {{ t.area }}</span></span>
+          <button type="button" onClick="{{ t.up }}" title="Naikkan" style="border:none;background:transparent;padding:4px 7px;color:#5B5347;font-size:15px">↑</button>
+          <button type="button" onClick="{{ t.down }}" title="Turunkan" style="border:none;background:transparent;padding:4px 7px;color:#5B5347;font-size:15px">↓</button>
+          <button type="button" onClick="{{ t.remove }}" title="Lepas tujuan" style="border:none;background:transparent;padding:4px 7px;color:#8A8172;font-size:17px">×</button>
+        </div>
+      </sc-for>
+      <sc-if value="{{ noStops }}" hint-placeholder-val="{{ true }}">
+        <p style="margin:0;font-size:14px;color:#8A8172">Belum ada tujuan. Pilih dari daftar di bawah, atau ketik tujuan lain.</p>
+      </sc-if>
+      <div style="display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:16px;background:#EFE8DA">
+        <sc-for list="{{ destPicks }}" as="g" hint-placeholder-count="5">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <span class="cap" style="min-width:120px;color:#5B5347">{{ g.region }}</span>
+            <sc-for list="{{ g.items }}" as="p" hint-placeholder-count="3">
+              <button type="button" onClick="{{ p.pick }}" title="{{ p.title }}" style="{{ p.style }}">{{ p.label }}</button>
+            </sc-for>
+          </div>
+        </sc-for>
+        <div class="ln" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;border-top:1px solid #D6CBB8;padding-top:12px">
+          <input value="{{ s.customStop }}" onInput="{{ on.customStop }}" placeholder="Tujuan lain: nama tempat, kota" style="flex:1 1 260px">
+          <button type="button" onClick="{{ addCustomStop }}" class="ghost">+ TUJUAN</button>
+        </div>
+        <p style="margin:0;font-size:12px;line-height:1.5;color:#5B5347">Abu-abu: rute belum dibuka, tetap bisa dipilih untuk proposal. Memilih tujuan menambah pos retribusi & parkirnya di bagian 03.</p>
+      </div>
+    </div>
+    <label class="f">{{ routeLabel }}<input value="{{ routeVal }}" onInput="{{ on.route }}" placeholder="Terisi dari tujuan dan tanggal"></label>
+    <sc-if value="{{ routeManual }}" hint-placeholder-val="{{ false }}">
+      <button type="button" onClick="{{ routeReset }}" style="align-self:flex-start;margin-top:-8px;border:none;background:transparent;padding:0;color:#6C4BA6;font-size:13px;cursor:pointer">↺ Kembalikan ke nama otomatis</button>
+    </sc-if>
+    <div class="grid">
+      <label class="f">Tanggal berangkat<input type="date" value="{{ s.start }}" onInput="{{ on.start }}"></label>
+      <label class="f">Tanggal pulang<input type="date" value="{{ s.end }}" onInput="{{ on.end }}"></label>
+      <label class="f">Jumlah peserta<input value="{{ s.pax }}" onInput="{{ on.pax }}" inputmode="numeric" class="mono" style="font-family:'Space Mono',monospace"></label>
+      <label class="f">Keterangan peserta (opsional)<input value="{{ s.paxNote }}" onInput="{{ on.paxNote }}" placeholder="4 lansia, 1 kursi roda"></label>
+    </div>
+    <span style="font-size:13px;color:#8A3B2E">{{ tripWarn }}</span>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <span class="cap">02 · DITAGIHKAN KE</span>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button type="button" onClick="{{ modeGroup }}" style="{{ modeGroupStyle }}">Rombongan / lembaga</button>
+      <button type="button" onClick="{{ modePerson }}" style="{{ modePersonStyle }}">Per peserta</button>
+    </div>
+    <div class="grid">
+      <label class="f">Lembaga / paroki / komunitas (opsional)<input value="{{ s.org }}" onInput="{{ on.org }}" placeholder="Lingkungan St. Yusuf, Paroki ..."></label>
+      <label class="f">Nama kontak / koordinator<input value="{{ s.name }}" onInput="{{ on.name }}"></label>
+      <label class="f">WhatsApp<input value="{{ s.phone }}" onInput="{{ on.phone }}" inputmode="tel"></label>
+      <label class="f">Email (opsional)<input value="{{ s.email }}" onInput="{{ on.email }}" inputmode="email"></label>
+    </div>
+    <div class="grid">
+      <label class="f">Alamat (opsional)<input value="{{ s.addr }}" onInput="{{ on.addr }}"></label>
+      <label class="f">NPWP (opsional)<input value="{{ s.npwp }}" onInput="{{ on.npwp }}" class="mono" style="font-family:'Space Mono',monospace"></label>
+    </div>
+    <sc-if value="{{ isPerson }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:14px;padding:18px;border-radius:16px;border:1px solid #D6CBB8">
+        <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">Dokumen atas nama satu peserta. Isi pos biaya di bagian 03 tetap dipakai untuk menghitung bagian per orang; ubah angkanya kalau ada peserta dengan harga berbeda (anak, kamar sendiri). Untuk satu perjalanan, pilih salah satu cara: tagihan rombongan atau per peserta, supaya tidak tercatat dua kali.</p>
+        <div class="grid">
+          <label class="f">Nama peserta<input value="{{ s.pName }}" onInput="{{ on.pName }}"></label>
+          <label class="f">Nomor peserta · otomatis<input value="{{ s.pId }}" onInput="{{ on.pId }}" placeholder="P01" class="mono" style="font-family:'Space Mono',monospace"></label>
+          <label class="f">Biaya per peserta (Rp)<input value="{{ s.pCost }}" onInput="{{ on.pCost }}" placeholder="{{ pCostHint }}" inputmode="numeric" class="mono" style="font-family:'Space Mono',monospace"></label>
+          <label class="f">Titipan per peserta (Rp)<input value="{{ s.pTitipan }}" onInput="{{ on.pTitipan }}" placeholder="{{ pTitipanHint }}" inputmode="numeric" class="mono" style="font-family:'Space Mono',monospace"></label>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <button type="button" onClick="{{ nextPerson }}" class="ghost">PESERTA BERIKUTNYA →</button>
+          <span style="font-size:13px;color:#5B5347">Nomor peserta naik otomatis ({{ nextPid }}); nama dan biaya dikosongkan.</span>
+        </div>
+      </div>
+    </sc-if>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <span class="cap">03 · POS BIAYA</span>
+    <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">Klik pos untuk menambah. Jumlah dihitung otomatis dari peserta, hari, malam, kamar ber-2, dan kendaraan (peserta ÷ kursi kendaraan pertama), dan ikut berubah kalau angka itu berubah. Jumlah ungu = otomatis; ketik angka lain untuk mengunci, ↺ untuk kembali otomatis. Harga yang sudah ada di tarif terisi sendiri. Hotel, restoran, atau vendor yang diminta rombongan: tulis namanya di kolom pos dan centang <strong>diminta</strong>, maka di PDF tercetak "atas permintaan rombongan".</p>
+    <div style="display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:16px;background:#EFE8DA">
+      <sc-for list="{{ picks }}" as="g" hint-placeholder-count="3">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <span class="cap" style="min-width:110px;color:#5B5347">{{ g.cat }}</span>
+          <sc-for list="{{ g.items }}" as="p" hint-placeholder-count="3">
+            <button type="button" onClick="{{ p.add }}" class="chip">+ {{ p.name }}</button>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <sc-for list="{{ lineRows }}" as="l" hint-placeholder-count="2">
+        <div class="ln" style="display:flex;flex-direction:column;gap:6px;padding:12px 0;border-top:1px solid #D6CBB8">
+          <sc-if value="{{ l.showCat }}" hint-placeholder-val="{{ false }}"><span class="cap" style="color:#6C4BA6">{{ l.cat }}</span></sc-if>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <input value="{{ l.name }}" onInput="{{ l.setName }}" placeholder="Nama pos" style="flex:2 1 220px;font-weight:600">
+            <input value="{{ l.detail }}" onInput="{{ l.setDetail }}" placeholder="{{ l.hint }}" style="flex:3 1 240px">
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <input value="{{ l.unit }}" onInput="{{ l.setUnit }}" list="satuan" placeholder="satuan" style="flex:1 1 150px">
+            <input value="{{ l.qty }}" onInput="{{ l.setQty }}" inputmode="numeric" title="{{ l.qtyTitle }}" style="{{ l.qtyStyle }}">
+            <sc-if value="{{ l.manual }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ l.resetQty }}" title="Kembali otomatis" style="border:none;background:transparent;padding:2px 4px;color:#6C4BA6;font-size:15px">↺</button></sc-if>
+            <span style="color:#8A8172">×</span>
+            <input value="{{ l.price }}" onInput="{{ l.setPrice }}" inputmode="numeric" placeholder="{{ l.pricePh }}" title="Harga satuan (Rp)" style="width:130px;font-family:'Space Mono',monospace">
+            <span class="mono" style="flex:1 1 120px;text-align:right;font-size:14px;font-weight:700">{{ l.sum }}</span>
+            <label style="display:flex;gap:6px;align-items:center;font-size:13px;color:#5B5347"><input type="checkbox" checked="{{ l.req }}" onChange="{{ l.setReq }}" style="width:16px;height:16px;accent-color:#6C4BA6;padding:0">diminta</label>
+            <button type="button" onClick="{{ l.remove }}" title="Hapus pos" style="border:none;background:transparent;padding:4px 8px;color:#8A8172;font-size:17px">×</button>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button type="button" onClick="{{ addBlank }}" class="ghost">+ POS LAIN</button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+      <span class="cap">TITIPAN · DITERUSKAN UTUH, BUKAN PENDAPATAN PEZIARAH</span>
+      <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">Persembahan misa, stipendium, atau sumbangan rombongan yang kami terima lalu serahkan ke pihak yang dituju. Tercetak terpisah di PDF dan tidak kena potongan pembatalan.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ titipanPicks }}" as="p" hint-placeholder-count="3">
+          <button type="button" onClick="{{ p.add }}" class="chip">+ {{ p.name }}</button>
+        </sc-for>
+      </div>
+      <sc-for list="{{ titipanRows }}" as="l" hint-placeholder-count="0">
+        <div class="ln" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 0;border-top:1px solid #D6CBB8">
+          <input value="{{ l.name }}" onInput="{{ l.setName }}" placeholder="Nama titipan" style="flex:2 1 200px;font-weight:600">
+          <input value="{{ l.detail }}" onInput="{{ l.setDetail }}" placeholder="{{ l.hint }}" style="flex:3 1 220px">
+          <input value="{{ l.qty }}" onInput="{{ l.setQty }}" inputmode="numeric" style="width:60px;text-align:center;font-family:'Space Mono',monospace">
+          <span style="color:#8A8172">×</span>
+          <input value="{{ l.price }}" onInput="{{ l.setPrice }}" inputmode="numeric" placeholder="Rp" style="width:130px;font-family:'Space Mono',monospace">
+          <span class="mono" style="flex:1 1 110px;text-align:right;font-size:14px;font-weight:700">{{ l.sum }}</span>
+          <button type="button" onClick="{{ l.remove }}" title="Hapus" style="border:none;background:transparent;padding:4px 8px;color:#8A8172;font-size:17px">×</button>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:6px">
+      <label style="display:flex;gap:10px;align-items:center;font-size:14px;color:#5B5347"><input type="checkbox" checked="{{ s.taxOn }}" onChange="{{ on.taxOn }}" style="width:18px;height:18px;accent-color:#6C4BA6">Tambah pajak</label>
+      <sc-if value="{{ s.taxOn }}" hint-placeholder-val="{{ false }}">
+        <div class="ln" style="display:flex;gap:8px;align-items:center">
+          <input value="{{ s.taxLabel }}" onInput="{{ on.taxLabel }}" style="width:110px">
+          <input value="{{ s.taxRate }}" onInput="{{ on.taxRate }}" inputmode="decimal" style="width:64px;text-align:center;font-family:'Space Mono',monospace"><span style="font-size:14px;color:#5B5347">% dari biaya perjalanan</span>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <span class="cap">04 · TERMIN</span>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <sc-for list="{{ stageBtns }}" as="b" hint-placeholder-count="3">
+        <button type="button" onClick="{{ b.pick }}" style="{{ b.style }}">{{ b.label }}</button>
+      </sc-for>
+      <label style="display:flex;gap:8px;align-items:center;font-size:14px;color:#5B5347;margin-left:6px"><input type="checkbox" checked="{{ s.single }}" onChange="{{ on.single }}" style="width:18px;height:18px;accent-color:#6C4BA6">Lunas sekaligus (satu kali bayar)</label>
+    </div>
+    <div style="display:flex;flex-direction:column;border-top:1px solid #1A1712">
+      <sc-for list="{{ planRows }}" as="r" hint-placeholder-count="3">
+        <div style="{{ r.style }}">
+          <span style="font-weight:600">{{ r.label }}</span>
+          <span style="color:#5B5347">{{ r.when }}</span>
+          <span style="color:#5B5347">{{ r.due }}</span>
+          <span class="mono" style="text-align:right">{{ r.pct }}</span>
+          <span class="mono" style="text-align:right;font-weight:700">{{ r.amount }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div class="grid">
+      <label class="f">Tanggal invoice<input type="date" value="{{ s.issue }}" onInput="{{ on.issue }}"></label>
+      <label class="f">Sudah dibayar sebelumnya (Rp)<input value="{{ s.paidBefore }}" onInput="{{ on.paidBefore }}" placeholder="{{ beforeHint }}" inputmode="numeric" class="mono" style="font-family:'Space Mono',monospace"></label>
+    </div>
+    <p style="margin:-6px 0 0;font-size:13px;line-height:1.6;color:#5B5347">Kosongkan "sudah dibayar" kalau semua termin sebelumnya masuk penuh; angkanya dihitung otomatis. Isi angka sebenarnya kalau ada termin yang kurang atau lebih.</p>
+    <label class="f">Catatan di dokumen (opsional)<input value="{{ s.note }}" onInput="{{ on.note }}" placeholder="mis. Harga hotel berlaku sampai 20 November 2026."></label>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:16px">
+    <span class="cap">05 · PEMBAYARAN DITERIMA · UNTUK KUITANSI</span>
+    <div class="grid">
+      <label class="f">Tanggal masuk rekening<input type="date" value="{{ s.payDate }}" onInput="{{ on.payDate }}"></label>
+      <label class="f">Nama di rekening pengirim<input value="{{ s.from }}" onInput="{{ on.from }}" placeholder="{{ fromHint }}"></label>
+      <label class="f">Jumlah diterima (Rp)<input value="{{ s.amount }}" onInput="{{ on.amount }}" placeholder="{{ billPlain }}" inputmode="numeric" class="mono" style="font-family:'Space Mono',monospace"></label>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:16px;padding:22px;border-radius:18px;border:1px solid #1A1712">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline">
+      <span class="cap">NOMOR DOKUMEN</span>
+      <span class="mono" style="font-weight:700;color:#6C4BA6">{{ docNo }}</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr auto;gap:8px 20px;font-size:15px">
+      <span style="color:#5B5347">Biaya perjalanan</span><span class="mono" style="text-align:right">{{ t.cost }}</span>
+      <sc-if value="{{ t.hasTax }}" hint-placeholder-val="{{ false }}"><span style="color:#5B5347">{{ t.taxLabel }}</span><span class="mono" style="text-align:right">{{ t.tax }}</span></sc-if>
+      <span style="color:#5B5347">Titipan</span><span class="mono" style="text-align:right">{{ t.titipan }}</span>
+      <span style="font-weight:600">Total perjalanan</span><span class="mono" style="font-weight:700;text-align:right">{{ t.total }}</span>
+      <span style="color:#5B5347">Sudah dibayar sebelumnya</span><span class="mono" style="text-align:right">{{ t.before }}</span>
+      <span style="color:#6C4BA6;font-weight:600">{{ t.billLine }}</span><span class="mono" style="color:#6C4BA6;font-weight:700;text-align:right">{{ t.bill }}</span>
+      <span style="color:#5B5347">{{ t.afterLine }}</span><span class="mono" style="text-align:right">{{ t.after }}</span>
+      <span style="color:#5B5347;border-top:1px solid #D6CBB8;padding-top:8px">Per peserta, dari pos biaya</span><span class="mono" style="text-align:right;border-top:1px solid #D6CBB8;padding-top:8px">{{ t.perPax }}</span>
+      <sc-if value="{{ t.hasFormula }}" hint-placeholder-val="{{ false }}"><span style="color:#5B5347">Per peserta, menurut rumus tarif<br><span style="font-size:12px;color:#8A8172">{{ t.formulaNote }}</span></span><span class="mono" style="text-align:right">{{ t.formula }}</span></sc-if>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <button type="button" onClick="{{ invoice }}" style="{{ invStyle }}">{{ invLabel }}</button>
+      <button type="button" onClick="{{ receipt }}" style="{{ recStyle }}">{{ recLabel }}</button>
+      <sc-if value="{{ s.doneKind }}" hint-placeholder-val="{{ false }}">
+        <a href="{{ waHref }}" target="_blank" rel="noopener" style="padding:14px 20px;border-radius:999px;border:1px solid #2E6A40;color:#2E6A40;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em">KIRIM KE WHATSAPP →</a>
+      </sc-if>
+    </div>
+    <span style="font-size:13px;color:#8A3B2E">{{ s.err }}</span>
+    <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">Tidak ada Sheet tambahan. Setiap invoice menandai baris permintaan perjalanan ini (di Sheet formulir Rombongan, Grup kecil, atau Susun sendiri, dicari dari kodenya) sebagai <strong>Order</strong>; setiap kuitansi mengisi kolom Bayar dan Riwayat, dan baris jadi <strong>Lunas</strong> setelah pelunasan. Perjalanan tanpa formulir (dari WhatsApp) otomatis dibuatkan barisnya. Salinan PDF masuk folder Drive "Invoice Peziarah". Pembayaran pertama dihitung sekali sebagai purchase di GA4 dan Meta.</p>
+    <sc-if value="{{ s.doneKind }}" hint-placeholder-val="{{ false }}">
+      <p style="margin:0;font-size:13px;line-height:1.6;color:#5B5347">PDF tersimpan di folder unduhan. WhatsApp tidak bisa melampirkan file otomatis — lampirkan PDF-nya sendiri di chat.</p>
+    </sc-if>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+// Admin-only trip invoices & receipts. Never linked from the site; noindex + robots Disallow.
+// A kuitansi counts only when it comes from the official WhatsApp (printed on the PDF).
+// Destinations, cost items, prices and the per-pax formula live in /data/ziarah-tarif.js.
+const BANK_ENC = "==Qfi8mbvN3ahNWaXBibvlGRgMXdulGblNmch1kI6IiclRGbvhmIsIiMtQzMxMTN3ATLwATL3MTMiojIyVmYtVnbiwiIpJXak5WYNByauFmQiojIl1WYuJye";
+const bank = () => JSON.parse(atob(BANK_ENC.split("").reverse().join("")));
+// Versioned: .htaccess caches JS for 7 days. Bump when either file changes.
+const INVOICE_JS = "/data/invoice.js?v=20261106b";
+const TARIF_JS = "/data/ziarah-tarif.js?v=20261106";
+const DATA = "/data/";
+const DRAFTS_KEY = "peziarah.ziarah.drafts.v1";
+const num = v => parseInt(String(v == null ? "" : v).replace(/[^\d]/g, ""), 10) || 0;
+const rp = n => "Rp " + Math.round(n).toLocaleString("id-ID");
+const today = () => { const d = new Date(); return new Date(d - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10); };
+const longDate = iso => iso ? new Date(iso + "T12:00:00").toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }) : "";
+const CODE_RE = /^(ZR|BY|CG)-[A-Z0-9]{4,8}$/;
+const KINDS = [
+  { key: "ZR", label: "Rombongan" },
+  { key: "CG", label: "Grup kecil" },
+  { key: "BY", label: "Susun sendiri" }
+];
+const genCode = kind => (kind || "ZR") + "-" + Date.now().toString(36).slice(-5).toUpperCase();
+const pidNum = v => num(v);
+const pidOf = n => "P" + String(Math.max(1, n)).padStart(2, "0");
+
+const BLANK = {
+  code: "", kind: "ZR", stops: [], route: "", routeAuto: true, start: "", end: "", pax: "", paxNote: "",
+  mode: "group", org: "", name: "", phone: "", email: "", addr: "", npwp: "",
+  pName: "", pId: "", pCost: "", pTitipan: "",
+  lines: [], titipan: [], taxOn: false, taxLabel: "PPN", taxRate: "11",
+  stage: "DP", single: false, issue: "", paidBefore: "", note: "",
+  payDate: "", from: "", amount: ""
+};
+const KEEP = Object.keys(BLANK);
+let uid = 0;
+const id = () => "l" + Date.now().toString(36) + (uid++);
+
+function loadDrafts() { try { return JSON.parse(localStorage.getItem(DRAFTS_KEY) || "{}"); } catch (e) { return {}; } }
+function saveDrafts(d) { try { localStorage.setItem(DRAFTS_KEY, JSON.stringify(d)); } catch (e) {} }
+
+class Component extends DCLogic {
+  state = { ...BLANK, code: genCode("ZR"), issue: today(), payDate: today(), busy: false, doneKind: "", err: "", xfer: "", draftMsg: "", customStop: "", mod: null, tarif: null, drafts: loadDrafts() };
+
+  componentDidMount() {
+    import(INVOICE_JS).then(m => this.setState({ mod: m })).catch(() => this.setState({ err: "Modul invoice gagal dimuat. Cek koneksi lalu muat ulang halaman." }));
+    import(TARIF_JS).then(m => this.setState({ tarif: m })).catch(() => this.setState({ err: "Daftar tarif gagal dimuat. Cek koneksi lalu muat ulang halaman." }));
+  }
+
+  // Every edit lands in the draft for this trip code. When the code itself changes
+  // (pasted from a form, kind switched) the draft moves with it.
+  set(patch) {
+    this.setState(s => {
+      const next = { ...s, ...(typeof patch === "function" ? patch(s) : patch), doneKind: "", err: "" };
+      const code = String(next.code || "").trim().toUpperCase();
+      const prev = String(s.code || "").trim().toUpperCase();
+      if (CODE_RE.test(code)) {
+        const d = { ...next.drafts };
+        if (prev !== code && d[prev]) delete d[prev];
+        const keep = {}; KEEP.forEach(k => { keep[k] = next[k]; });
+        keep.code = code;
+        d[code] = { ...keep, savedAt: new Date().toISOString() };
+        saveDrafts(d);
+        next.drafts = d;
+      }
+      return next;
+    });
+  }
+
+  open(code, d) {
+    d = d || this.state.drafts[code];
+    if (!d) return;
+    const patch = {}; KEEP.forEach(k => { patch[k] = d[k] !== undefined ? d[k] : BLANK[k]; });
+    if (!d.kind) patch.kind = String(code).slice(0, 2);
+    if (d.routeAuto === undefined) patch.routeAuto = !(d.route || "").trim();
+    this.setState({ ...patch, issue: today(), payDate: today(), paidBefore: "", amount: "", from: "", doneKind: "", err: "", draftMsg: `Draf ${code} dibuka.` });
+  }
+
+  // --- numbers --------------------------------------------------------------
+  span() {
+    const s = this.state;
+    if (!s.start) return { days: 1, nights: 0 };
+    const a = new Date(s.start + "T12:00:00"), b = new Date((s.end || s.start) + "T12:00:00");
+    const days = Math.max(1, Math.round((b - a) / 864e5) + 1);
+    return { days, nights: days - 1 };
+  }
+  ctx() {
+    const s = this.state, pax = num(s.pax), { days, nights } = this.span();
+    const n1 = Math.max(1, nights);
+    const veh = s.lines.find(l => l.seats);
+    const vehicles = pax ? Math.max(1, Math.ceil(pax / (veh ? veh.seats : 45))) : 1;
+    return { pax, days, nights, n1, rooms: Math.ceil(pax / 2) * n1, vehicles };
+  }
+  autoQty(basis, c) {
+    c = c || this.ctx();
+    return ({ pax: c.pax, days: c.days, nights: c.n1, rooms: c.rooms, paxDays: c.pax * c.days, paxNights: c.pax * c.n1, vehicles: c.vehicles, vehicleDays: c.vehicles * c.days, one: 1 })[basis] || 1;
+  }
+  qtyOf(l, c) { return l.qty !== "" && l.qty != null ? num(l.qty) : this.autoQty(l.basis || "one", c); }
+  // Percentage lines (e.g. service fee) take their price from the other lines.
+  priceLines() {
+    const c = this.ctx();
+    const base = this.state.lines.filter(l => !(l.pct && l.price === "")).reduce((a, l) => a + this.qtyOf(l, c) * num(l.price), 0);
+    return this.state.lines.map(l => {
+      const qty = this.qtyOf(l, c);
+      const price = l.pct && l.price === "" ? Math.round(base * l.pct / 100 / Math.max(1, qty)) : num(l.price);
+      return { l, qty, price };
+    });
+  }
+  routeText() {
+    const s = this.state;
+    if (!s.routeAuto) return s.route;
+    const names = s.stops.map(t => t.short || t.name).filter(Boolean);
+    if (!names.length) return "";
+    const { days, nights } = this.span();
+    const len = s.start ? (days > 1 ? `, ${days} hari ${nights} malam` : ", 1 hari") : "";
+    return names.join(" - ") + len;
+  }
+  groupLines() {
+    return this.priceLines().map(({ l, qty, price }) => ({ cat: l.cat, name: l.name, detail: l.detail, unit: l.unit, qty, price, req: !!l.req }));
+  }
+  groupTitipan() {
+    return this.state.titipan.map(l => ({ name: l.name, detail: l.detail, qty: num(l.qty), price: num(l.price) }));
+  }
+  formulaResult(groupT) {
+    const T = this.state.tarif, s = this.state;
+    if (!T || typeof T.formula !== "function") return null;
+    const c = this.ctx();
+    try {
+      const r = T.formula({ pax: c.pax, days: c.days, nights: c.nights, rooms: c.rooms, vehicles: c.vehicles,
+        destinations: s.stops.map(t => t.id), cost: groupT.cost, titipan: groupT.titipan,
+        lines: this.groupLines().map(l => ({ name: l.name, cat: l.cat, qty: l.qty, price: l.price, sum: l.qty * l.price })) });
+      return r && num(r.perPax) ? { perPax: num(r.perPax), note: r.note || "" } : null;
+    } catch (e) { return null; }
+  }
+  docData() {
+    const s = this.state, m = s.mod;
+    const person = s.mode === "person";
+    const code = s.code.trim().toUpperCase();
+    const pid = (s.pId || "").trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
+    const lines = this.groupLines(), titipan = this.groupTitipan();
+    const tax = s.taxOn ? { label: `${s.taxLabel || "Pajak"} ${String(s.taxRate).replace(".", ",")}%`, rate: (parseFloat(String(s.taxRate).replace(",", ".")) || 0) / 100 } : null;
+    const groupT = m ? m.tripTotals({ lines, titipan, tax: null }) : { cost: 0, titipan: 0 };
+    const pax = num(s.pax) || 1;
+    const share = n => Math.round(n / pax / 1000) * 1000;
+    const fx = this.formulaResult(groupT);
+    const participant = person ? {
+      name: s.pName, id: pid,
+      cost: s.pCost !== "" ? num(s.pCost) : (fx ? fx.perPax : share(groupT.cost)),
+      titipan: s.pTitipan !== "" ? num(s.pTitipan) : share(groupT.titipan)
+    } : null;
+    const base = person && pid ? `${code}-${pid}` : code;
+    const stage = s.single ? "LN" : s.stage;
+    const route = this.routeText();
+    return {
+      base, no: `${base}-${stage}`, code, stage, single: !!s.single, issue: s.issue || today(),
+      trip: { route, start: s.start, end: s.end, pax: num(s.pax), paxNote: s.paxNote, stops: s.stops.map(t => t.name) },
+      buyer: { org: s.org, name: s.name, phone: s.phone, email: s.email, addr: s.addr, npwp: s.npwp },
+      participant, lines, titipan, tax, note: s.note, bank: bank(),
+      groupT, fx
+    };
+  }
+  calc() {
+    const s = this.state, m = s.mod;
+    const d = this.docData();
+    if (!m || !s.start) return { d, ok: false, t: { cost: 0, tax: 0, titipan: 0, total: 0 }, plan: [], cur: null, before: 0, bill: 0, after: 0 };
+    const t = m.tripTotals(d);
+    const plan = m.tripSchedule(t.total, s.start, d.issue, d.single);
+    const ci = Math.max(0, plan.findIndex(p => p.key === d.stage));
+    const cur = plan[ci];
+    const auto = plan.slice(0, ci).reduce((a, p) => a + p.amount, 0);
+    const before = s.paidBefore !== "" ? num(s.paidBefore) : auto;
+    const due = Math.max(0, Math.min(cur.amount, t.total - before));
+    const received = s.amount !== "" ? num(s.amount) : due;
+    return { d, ok: true, t, plan, ci, cur, auto, before, bill: due, received };
+  }
+  problems(kind) {
+    const s = this.state, c = this.calc(), d = c.d;
+    if (!s.mod || !s.tarif) return "Modul belum termuat.";
+    if (!CODE_RE.test(d.code)) return "Kode perjalanan harus berbentuk ZR-, BY-, atau CG-XXXXX.";
+    if (!d.trip.route.trim()) return "Pilih tujuan atau isi nama perjalanan.";
+    if (!s.start) return "Isi tanggal berangkat.";
+    if (s.end && s.end < s.start) return "Tanggal pulang sebelum tanggal berangkat.";
+    if (!num(s.pax)) return "Isi jumlah peserta.";
+    if (s.mode === "person" && (!s.pName.trim() || !/^[A-Z0-9]{1,6}$/.test(String(s.pId).trim().toUpperCase().replace(/[^A-Z0-9]/g, "")))) return "Isi nama dan nomor peserta.";
+    if (!s.org.trim() && !s.name.trim()) return "Isi nama lembaga atau kontak.";
+    if (!c.t.total) return "Belum ada pos biaya dengan harga.";
+    if (s.lines.some(l => !String(l.name).trim())) return "Ada pos tanpa nama.";
+    const unpriced = this.priceLines().filter(x => !x.price).map(x => x.l.name);
+    if (unpriced.length) return `Pos belum ada harga: ${unpriced.join(", ")}. Isi harganya atau hapus posnya.`;
+    if (kind === "receipt" && !c.received) return "Isi jumlah diterima.";
+    if (kind === "invoice" && !c.bill) return "Termin ini sudah terbayar penuh menurut angka \"sudah dibayar\".";
+    return "";
+  }
+
+  // --- request row ---------------------------------------------------------------
+  // Sent with the PDF to the Apps Script, which writes it onto the trip's request
+  // row (Status, Total, Bayar, Riwayat, PDF links). See meta-capi-apps-script.gs.
+  tripMeta(d, c, paid) {
+    const dates = d.trip.end && d.trip.end !== d.trip.start ? `${d.trip.start} s.d. ${d.trip.end}` : d.trip.start;
+    const received = paid ? c.received : 0;
+    const items = d.participant
+      ? [{ name: "Biaya ziarah per peserta", qty: 1, price: d.participant.cost }]
+      : d.lines.map(l => ({ name: l.name, qty: l.qty, price: l.price }));
+    const meta = {
+      stage: c.cur.label.toLowerCase(), total: c.t.total, bill: c.bill, received,
+      after: Math.max(0, c.t.total - c.before - (paid ? received : c.bill)),
+      paidDate: paid ? paid.date : "", from: paid ? paid.from : "",
+      org: d.buyer.org, name: d.buyer.name, phone: d.buyer.phone, email: d.buyer.email,
+      route: d.trip.route, dates, pax: d.trip.pax, participant: d.participant ? d.participant.name : "", items
+    };
+    try { if (window.__pzPreviewLog) window.__pzPreviewLog("ziarah", { nomor: d.no, dokumen: paid ? "Kuitansi" : "Invoice", ...meta, items: items.map(i => `${i.name} × ${i.qty} @ ${rp(i.price)}`).join("\n") }); } catch (e) {}
+    return meta;
+  }
+
+  async invoice() {
+    const err = this.problems("invoice");
+    if (err) return this.setState({ err });
+    const s = this.state, c = this.calc(), d = c.d;
+    this.setState({ busy: true, err: "" });
+    try {
+      await s.mod.downloadTripInvoice({ ...d, paidBefore: c.before }, { upload: true, trip: this.tripMeta(d, c, null) });
+      this.setState({ busy: false, doneKind: "invoice" });
+    } catch (e) {
+      this.setState({ busy: false, err: "Gagal membuat PDF. Cek koneksi lalu coba lagi." });
+    }
+  }
+
+  async receipt() {
+    const err = this.problems("receipt");
+    if (err) return this.setState({ err });
+    const s = this.state, c = this.calc(), d = c.d;
+    const date = longDate(s.payDate || today());
+    const from = s.from || (d.participant ? d.participant.name : s.name || s.org);
+    const paid = { date, from, amount: c.received };
+    this.setState({ busy: true, err: "" });
+    try {
+      await s.mod.downloadTripInvoice({ ...d, paidBefore: c.before, paid }, { upload: true, trip: this.tripMeta(d, c, paid) });
+      this.setState({ busy: false, doneKind: "receipt" });
+    } catch (e) {
+      this.setState({ busy: false, err: "Gagal membuat PDF. Cek koneksi lalu coba lagi." });
+    }
+  }
+
+  // --- destinations ------------------------------------------------------------
+  // Picking a destination adds its own cost lines (tagged dest); dropping it removes them.
+  toggleStop(dest) {
+    this.set(s => {
+      if (s.stops.some(t => t.id === dest.id)) {
+        return { stops: s.stops.filter(t => t.id !== dest.id), lines: s.lines.filter(l => l.dest !== dest.id) };
+      }
+      const stop = { id: dest.id, short: dest.short, name: dest.name, area: dest.area };
+      const extra = (dest.items || []).map(it => this.lineFrom(it.cat, { ...it, detail: it.detail || dest.short }, dest.id));
+      return { stops: s.stops.concat(stop), lines: this.sortLines(s.lines.concat(extra)) };
+    });
+  }
+  addCustomStop() {
+    const name = String(this.state.customStop || "").trim();
+    if (!name) return;
+    const stop = { id: "x" + Date.now().toString(36), short: name.split(",")[0].trim(), name, area: "tujuan lain" };
+    this.set(s => ({ stops: s.stops.concat(stop), customStop: "" }));
+  }
+  moveStop(i, dir) {
+    this.set(s => {
+      const a = s.stops.slice(), j = i + dir;
+      if (j < 0 || j >= a.length) return {};
+      [a[i], a[j]] = [a[j], a[i]];
+      return { stops: a };
+    });
+  }
+
+  // --- lines -------------------------------------------------------------------
+  lineFrom(cat, it, dest) {
+    return { id: id(), cat, name: it.name, detail: it.detail || "", hint: it.hint || "", unit: it.unit || "paket", basis: it.basis || "one",
+      qty: "", price: it.price != null ? String(it.price) : "", seats: it.seats || 0, pct: it.pct || 0, req: !!it.req, dest: dest || "", touched: false };
+  }
+  sortLines(lines) {
+    const cats = ((this.state.tarif && this.state.tarif.CATALOG) || []).map(c => c.cat);
+    const rank = l => { const i = cats.indexOf(l.cat); return i < 0 ? cats.length : i; };
+    return lines.map((l, i) => [l, i]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map(x => x[0]);
+  }
+  addLine(cat, it) { this.set(s => ({ lines: this.sortLines(s.lines.concat(this.lineFrom(cat, it))) })); }
+  editLine(listKey, lid, patch) { this.set(s => ({ [listKey]: s[listKey].map(l => l.id === lid ? { ...l, ...patch, touched: true } : l) })); }
+  dropLine(listKey, lid) { this.set(s => ({ [listKey]: s[listKey].filter(l => l.id !== lid) })); }
+
+  renderVals() {
+    const s = this.state, T = s.tarif, c = this.calc(), d = c.d, cx = this.ctx();
+    const on = {};
+    ["org", "name", "phone", "email", "addr", "npwp", "pName", "pId", "pCost", "pTitipan", "paxNote",
+     "taxLabel", "taxRate", "issue", "paidBefore", "note", "payDate", "from", "amount", "start", "end", "pax"]
+      .forEach(k => { on[k] = e => this.set({ [k]: e.target.value }); });
+    on.code = e => {
+      const v = e.target.value.toUpperCase();
+      this.set(CODE_RE.test(v.trim()) ? { code: v, kind: v.trim().slice(0, 2) } : { code: v });
+    };
+    on.route = e => this.set({ route: e.target.value, routeAuto: false });
+    on.customStop = e => this.setState({ customStop: e.target.value });
+    on.taxOn = e => this.set({ taxOn: e.target.checked });
+    on.single = e => this.set({ single: e.target.checked, paidBefore: "", amount: "" });
+    on.log = e => this.setState({ log: e.target.checked });
+    on.xfer = e => this.setState({ xfer: e.target.value });
+
+    const pill = active => `padding:10px 16px;border-radius:999px;font-family:'Hanken Grotesk',sans-serif;font-size:14px;border:1px solid ${active ? "#1A1712" : "#D6CBB8"};background:${active ? "#1A1712" : "transparent"};color:${active ? "#F7F3EA" : "#1A1712"}`;
+    const codes = Object.keys(s.drafts).sort((a, b) => String(s.drafts[b].savedAt).localeCompare(String(s.drafts[a].savedAt)));
+    const curCode = s.code.trim().toUpperCase();
+
+    // destinations
+    const picked = new Set(s.stops.map(t => t.id));
+    const destPicks = T ? T.REGIONS.map(region => ({
+      region: region.toUpperCase(),
+      items: T.DESTINATIONS.filter(x => x.region === region).map(x => {
+        const on_ = picked.has(x.id), closed = x.open === false;
+        return {
+          label: (on_ ? "✓ " : "+ ") + x.short, title: `${x.name} · ${x.area}${closed ? " · rute belum dibuka" : ""}`,
+          pick: () => this.toggleStop(x),
+          style: `padding:8px 13px;border-radius:999px;font-family:'Hanken Grotesk',sans-serif;font-size:13px;line-height:1.2;border:1px ${closed && !on_ ? "dashed" : "solid"} ${on_ ? "#1A1712" : "#D6CBB8"};background:${on_ ? "#1A1712" : "transparent"};color:${on_ ? "#F7F3EA" : closed ? "#8A8172" : "#1A1712"}`
+        };
+      })
+    })).filter(g => g.items.length) : [];
+    const stopRows = s.stops.map((t, i) => ({
+      no: String(i + 1).padStart(2, "0"), name: t.name, area: t.area,
+      up: () => this.moveStop(i, -1), down: () => this.moveStop(i, 1),
+      remove: () => this.toggleStop(t)
+    }));
+
+    let lastCat = null;
+    const priced = this.priceLines();
+    const lineRows = priced.map(({ l, qty, price }) => {
+      const showCat = l.cat !== lastCat; lastCat = l.cat;
+      const manual = l.qty !== "" && l.qty != null;
+      return {
+        cat: l.cat || "Lainnya", showCat, name: l.name, detail: l.detail, hint: l.hint || "Keterangan (opsional)", unit: l.unit,
+        qty: String(qty), manual,
+        qtyTitle: manual ? "Jumlah diketik manual" : `Otomatis: ${l.basis || "one"}`,
+        qtyStyle: `width:70px;text-align:center;font-family:'Space Mono',monospace;${manual ? "" : "color:#6C4BA6;font-weight:700"}`,
+        price: l.price, pricePh: l.pct ? `otomatis ${l.pct}%` : "harga satuan", req: !!l.req,
+        sum: price ? rp(qty * price) : "—",
+        setName: e => this.editLine("lines", l.id, { name: e.target.value }),
+        setDetail: e => this.editLine("lines", l.id, { detail: e.target.value }),
+        setUnit: e => this.editLine("lines", l.id, { unit: e.target.value }),
+        setQty: e => this.editLine("lines", l.id, { qty: e.target.value }),
+        resetQty: () => this.editLine("lines", l.id, { qty: "" }),
+        setPrice: e => this.editLine("lines", l.id, { price: e.target.value }),
+        setReq: e => this.editLine("lines", l.id, { req: e.target.checked }),
+        remove: () => this.dropLine("lines", l.id)
+      };
+    });
+    const titipanRows = s.titipan.map(l => ({
+      name: l.name, detail: l.detail, hint: l.hint || "Diserahkan ke ...", qty: l.qty, price: l.price,
+      sum: num(l.price) ? rp(num(l.qty) * num(l.price)) : "—",
+      setName: e => this.editLine("titipan", l.id, { name: e.target.value }),
+      setDetail: e => this.editLine("titipan", l.id, { detail: e.target.value }),
+      setQty: e => this.editLine("titipan", l.id, { qty: e.target.value }),
+      setPrice: e => this.editLine("titipan", l.id, { price: e.target.value }),
+      remove: () => this.dropLine("titipan", l.id)
+    }));
+
+    const stages = s.mod ? (s.single ? [s.mod.TRIP_SINGLE] : s.mod.TRIP_STAGES) : [];
+    const stageBtns = stages.map(st => ({
+      label: `${st.label} ${st.pct}%`,
+      pick: () => this.set({ stage: st.key, paidBefore: "", amount: "" }),
+      style: pill(s.single || st.key === s.stage)
+    }));
+    const planRows = c.plan.map((p, i) => ({
+      label: p.label, when: p.whenLabel, due: p.dueLabel, pct: p.pct + "%", amount: rp(p.amount),
+      style: `display:grid;grid-template-columns:1.2fr 1fr 1.2fr 0.5fr 1fr;gap:10px;padding:11px 12px;font-size:14px;border-bottom:1px solid #D6CBB8;${i === c.ci ? "background:#EFE8DA;outline:1px solid #6C4BA6;outline-offset:-1px" : ""}`
+    }));
+
+    let tripWarn = "";
+    if (s.start && s.mod) {
+      const left = Math.round((new Date(s.start + "T12:00:00") - new Date((s.issue || today()) + "T12:00:00")) / 864e5);
+      if (left < 0) tripWarn = "Tanggal berangkat sudah lewat dari tanggal invoice.";
+      else if (left <= 14 && !s.single) tripWarn = `Berangkat ${left} hari lagi: termin dengan jatuh tempo yang sudah lewat tertulis "Segera". Pertimbangkan Lunas sekaligus.`;
+    }
+    if (s.stops.some(t => { const x = T && T.DESTINATIONS.find(y => y.id === t.id); return x && x.open === false; }))
+      tripWarn = (tripWarn ? tripWarn + " " : "") + "Ada tujuan yang rutenya belum dibuka di situs.";
+
+    const groupT = d.groupT, pax = num(s.pax) || 1;
+    const after = c.ok ? Math.max(0, c.t.total - c.before - (s.amount !== "" ? c.received : c.bill)) : 0;
+    const ready = c.ok && !this.problems("invoice");
+    const readyR = c.ok && !this.problems("receipt");
+    const btn = on_ => `padding:14px 22px;border-radius:999px;border:none;font-size:12px;letter-spacing:0.1em;background:${on_ ? "#1A1712" : "#B9AF9E"};color:#F7F3EA;cursor:${on_ ? "pointer" : "not-allowed"}`;
+
+    const route = d.trip.route;
+    const who = d.participant ? (d.participant.name || "Kak") : (s.name || s.org || "Kak");
+    const next = c.ok ? c.plan[c.ci + 1] : null;
+    const waMsg = s.doneKind === "receipt"
+      ? `Halo ${who}, pembayaran ${c.cur ? c.cur.label.toLowerCase() : ""} ${d.no} untuk perjalanan ${route} sebesar ${rp(c.received)} sudah kami terima.${after ? ` Sisa ${rp(after)}${next ? `, termin berikutnya ${next.label.toLowerCase()} ${rp(next.amount)} jatuh tempo ${next.dueLabel}` : ""}.` : " Perjalanan ini sudah LUNAS."} Kuitansinya kami lampirkan di chat ini. Terima kasih, Berkah Dalem. — Peziarah`
+      : `Halo ${who}, berikut invoice ${c.cur ? c.cur.label.toLowerCase() : ""} untuk perjalanan ${route} (${d.no}): ${rp(c.bill)}, paling lambat ${c.cur ? c.cur.dueLabel : ""}. Rekening, jadwal termin, dan ketentuan pembatalan ada di PDF terlampir. Terima kasih, Berkah Dalem. — Peziarah`;
+    const wa = (s.phone || "").replace(/[^\d]/g, "").replace(/^0/, "62");
+    const nextPidN = pidNum(s.pId) + 1;
+    const groupTotal = groupT.cost + (d.tax ? Math.round(groupT.cost * d.tax.rate) : 0) + groupT.titipan;
+    const perPaxAll = groupTotal ? Math.round(groupTotal / pax) : 0;
+
+    return {
+      s, on,
+      drafts: codes.map(k => ({
+        label: `${k}${s.drafts[k].route || (s.drafts[k].stops || []).length ? " · " + String(s.drafts[k].route || (s.drafts[k].stops || []).map(t => t.short).join(" - ")).slice(0, 28) : ""}`,
+        open: () => this.open(k),
+        style: `padding:8px 13px;border-radius:999px;font-family:'Space Mono',monospace;font-size:12px;border:1px solid ${k === curCode ? "#1A1712" : "#D6CBB8"};background:${k === curCode ? "#1A1712" : "transparent"};color:${k === curCode ? "#F7F3EA" : "#1A1712"}`
+      })),
+      draftMsg: s.draftMsg || (codes.length ? "" : "Belum ada draf. Draf tersimpan otomatis begitu ada isian."),
+      fresh: () => this.setState({ ...BLANK, kind: s.kind, code: genCode(s.kind), issue: today(), payDate: today(), doneKind: "", err: "", draftMsg: "", customStop: "" }),
+      kindBtns: KINDS.map(k => ({
+        label: `${k.label} · ${k.key}`, style: pill(s.kind === k.key),
+        pick: () => this.set(st => ({ kind: k.key, code: CODE_RE.test(st.code.trim()) ? k.key + st.code.trim().slice(2) : genCode(k.key) }))
+      })),
+      newCode: () => this.set(st => ({ code: genCode(st.kind) })),
+      exportDraft: () => {
+        const d0 = s.drafts[curCode];
+        if (!d0) return this.setState({ draftMsg: "Belum ada draf untuk kode ini. Isi sesuatu dulu." });
+        const txt = btoa(unescape(encodeURIComponent(JSON.stringify(d0))));
+        this.setState({ xfer: txt, draftMsg: "Teks draf ada di kotak. Salin semuanya." });
+        try { navigator.clipboard && navigator.clipboard.writeText(txt).then(() => this.setState({ draftMsg: "Teks draf tersalin." })).catch(() => {}); } catch (e) {}
+      },
+      importDraft: () => {
+        try {
+          const d0 = JSON.parse(decodeURIComponent(escape(atob(String(s.xfer).trim()))));
+          if (!CODE_RE.test(d0.code)) throw new Error();
+          const all = { ...s.drafts, [d0.code]: d0 }; saveDrafts(all);
+          this.setState({ drafts: all, xfer: "" });
+          this.open(d0.code, d0);
+        } catch (e) { this.setState({ draftMsg: "Teks draf tidak terbaca." }); }
+      },
+      deleteDraft: () => {
+        if (!s.drafts[curCode]) return;
+        const all = { ...s.drafts }; delete all[curCode]; saveDrafts(all);
+        this.setState({ ...BLANK, code: genCode("ZR"), issue: today(), payDate: today(), drafts: all, draftMsg: `Draf ${curCode} dihapus dari perangkat ini.` });
+      },
+      destPicks, stopRows, noStops: !s.stops.length,
+      addCustomStop: () => this.addCustomStop(),
+      routeLabel: s.routeAuto ? "Nama perjalanan · otomatis dari tujuan dan tanggal" : "Nama perjalanan · diketik manual",
+      routeVal: this.routeText(), routeManual: !s.routeAuto,
+      routeReset: () => this.set({ routeAuto: true, route: "" }),
+      tripWarn,
+      isPerson: s.mode === "person",
+      modeGroup: () => this.set({ mode: "group" }),
+      modePerson: () => this.set(st => ({ mode: "person", pId: st.pId || pidOf(nextPidN) })),
+      modeGroupStyle: pill(s.mode !== "person"),
+      modePersonStyle: pill(s.mode === "person"),
+      nextPid: pidOf(nextPidN),
+      nextPerson: () => this.set({ pId: pidOf(nextPidN), pName: "", pCost: "", pTitipan: "", stage: "DP", single: false, paidBefore: "", amount: "", from: "" }),
+      pCostHint: d.fx ? `${d.fx.perPax} (rumus)` : (groupT.cost ? `${Math.round(groupT.cost / pax / 1000) * 1000} (rata-rata)` : ""),
+      pTitipanHint: groupT.titipan ? `${Math.round(groupT.titipan / pax / 1000) * 1000} (rata-rata)` : "0",
+      picks: T ? T.CATALOG.map(g => ({ cat: g.cat.toUpperCase(), items: g.items.map(it => ({ name: it.name, add: () => this.addLine(g.cat, it) })) })) : [],
+      lineRows,
+      addBlank: () => this.addLine("Lainnya", { name: "", unit: "paket", basis: "one" }),
+      titipanPicks: T ? T.TITIPAN.map(it => ({ name: it.name, add: () => this.set(st => ({ titipan: st.titipan.concat({ id: id(), name: it.name, detail: it.detail || "", hint: it.hint || "", qty: "1", price: it.price != null ? String(it.price) : "" }) })) })) : [],
+      titipanRows,
+      stageBtns, planRows,
+      beforeHint: c.ok ? String(c.auto) : "0",
+      fromHint: d.participant ? (d.participant.name || "Nama peserta") : (s.name || "Sama dengan kontak"),
+      billPlain: c.ok ? String(c.bill) : "",
+      docNo: CODE_RE.test(d.code) ? d.no : "—",
+      t: {
+        cost: rp(c.t.cost), hasTax: !!c.t.tax, taxLabel: d.tax ? d.tax.label : "", tax: rp(c.t.tax), titipan: rp(c.t.titipan), total: rp(c.t.total),
+        before: rp(c.before || 0),
+        billLine: s.amount !== "" ? "Diterima (kuitansi)" : (c.cur ? `Tagihan ${c.cur.label.toLowerCase()}` : "Tagihan"),
+        bill: rp(s.amount !== "" ? c.received : c.bill),
+        afterLine: "Sisa setelah dokumen ini", after: rp(after),
+        perPax: perPaxAll ? `${rp(perPaxAll)} × ${cx.pax || 0}` : "—",
+        hasFormula: !!d.fx, formula: d.fx ? rp(d.fx.perPax) : "", formulaNote: d.fx ? d.fx.note : ""
+      },
+      invoice: () => this.invoice(),
+      receipt: () => this.receipt(),
+      invLabel: s.busy ? "MEMBUAT PDF…" : "UNDUH INVOICE (PDF)",
+      recLabel: s.busy ? "MEMBUAT PDF…" : "UNDUH KUITANSI (PDF)",
+      invStyle: btn(ready),
+      recStyle: btn(readyR).replace("background:#1A1712", "background:#2E6A40"),
+      waHref: wa ? `https://wa.me/${wa}?text=${encodeURIComponent(waMsg)}` : `https://wa.me/?text=${encodeURIComponent(waMsg)}`
+    };
+  }
+}
+</script>
+</body>
+</html>

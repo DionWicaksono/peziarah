@@ -38,8 +38,14 @@
  *   this script, which files it in Drive as
  *   "Invoice Peziarah/<yyyy-MM>/Invoice-PZ-XXXXX.pdf" (or Kuitansi-…) and writes
  *   the link into an "Invoice" / "Kuitansi" column on every row with that code.
- *   Happens on checkout (silently), on the buyer's invoice download, and on
+ *   Happens on checkout (silently), on the buyer's invoice download, on
  *   both buttons in /admin/kuitansi/. Nothing is sent to the buyer.
+ *
+ * Ziarah invoices / kuitansi (/admin/ziarah/)
+ *   Same web app. The PDF is filed in the same Drive folder and the trip's
+ *   REQUEST row (ziarah / grup kecil / susun sendiri form sheet) is marked:
+ *   Status Order -> Lunas, Total, Bayar, Riwayat, PDF links. See ZIARAH below:
+ *   fill in the request spreadsheet URLs, then deploy a new version.
  *   Only codes that already exist in the order sheet are accepted.
  *   Setup: run `setup` once more (grants Drive), then Deploy > New deployment >
  *   type Web app > Execute as: Me > Who has access: Anyone > Deploy. Paste the
@@ -72,6 +78,11 @@ const PAID = {
 
 // Drive folder for invoice / kuitansi PDFs uploaded by the site.
 const INVOICE = { folder: "Invoice Peziarah" };
+
+// Shop order spreadsheet(s) whose rows carry PZ- invoice codes.
+function books() {
+  return [PAID.sheetUrl].filter(u => u && u.indexOf("PASTE") !== 0).map(u => SpreadsheetApp.openByUrl(u));
+}
 
 // GA4 purchase, sent when an order is first marked LUNAS (Measurement Protocol).
 // apiSecret: GA4 Admin > Data streams > peziarah.com > Measurement Protocol API
@@ -133,7 +144,7 @@ function onFormSubmitCapi(e) {
     const a = answers(e.response.getItemResponses().map(r => [r.getItem().getTitle(), r.getResponse()]));
     // Invoice PDF downloads and paid receipts share the pesanan form; they are not new orders.
     if (kind === "pesanan" && /^\[(LUNAS|DIKIRIM)\]/.test(String(a.note || ""))) {
-      if (PAID.sheetUrl) { Utilities.sleep(4000); cleanupLunasRows(); }
+      if (books().length) { Utilities.sleep(4000); cleanupLunasRows(); }
       return;
     }
     // Orders (checkout or invoice) are unpaid: Purchase is sent at LUNAS, see sendMetaPurchase.
@@ -193,11 +204,11 @@ function onPaidEdit(e) {
 // into its original order row ("Lunas" / "Dikirim" column), then deletes it.
 // Runs automatically after each receipt; safe to run by hand any time.
 function cleanupLunasRows() {
-  if (!PAID.sheetUrl) throw new Error("Fill in PAID.sheetUrl first.");
+  if (!books().length) throw new Error("Fill in PAID.sheetUrl first.");
   const lock = LockService.getScriptLock();
   lock.waitLock(20000);
   try {
-    SpreadsheetApp.openByUrl(PAID.sheetUrl).getSheets().forEach(sh => {
+    books().forEach(ss => ss.getSheets().forEach(sh => {
       if (sh.getLastRow() < 2) return;
       let headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].map(String);
       const codeCol = headers.findIndex(h => /^kode_pesanan$|^kode/i.test(h.trim()));
@@ -266,7 +277,7 @@ function cleanupLunasRows() {
       });
       toDelete.reverse().forEach(row => sh.deleteRow(row));
       Logger.log(sh.getName() + ": folded " + toDelete.length + " receipt row(s)");
-    });
+    }));
   } finally {
     lock.releaseLock();
   }
@@ -278,32 +289,42 @@ const TAGGED = /^\[(LUNAS|DIKIRIM)\]/;
 const normCode = v => String(v).toUpperCase().replace(/\s+/g, "");
 
 // Web app endpoint. Body (text/plain JSON): { code, kind: "invoice"|"kuitansi", pdf: base64 }
+// Shop: code = PZ-XXXXX (order sheet). Ziarah: code = ZR-XXXXX-DP etc. with a
+// `trip` object, handled by markTrip() below (request sheets).
 function doPost(e) {
   const reply = t => ContentService.createTextOutput(t);
   try {
     const p = JSON.parse(e.postData.contents);
-    const code = normCode(p.code || "");
-    if (!/^PZ-[A-Z0-9]{4,8}$/.test(code)) return reply("bad code");
+    const docCode = normCode(p.code || "");
+    const pdfBytes = () => {
+      const b = Utilities.base64Decode(String(p.pdf || ""));
+      return b.length < 1000 || b.length > 4e6 || b[0] !== 37 || b[1] !== 80 || b[2] !== 68 || b[3] !== 70 ? null : b;
+    };
+    if (TRIP_DOC.test(docCode)) {
+      const bytes = pdfBytes();
+      if (!bytes || !p.trip) return reply("bad trip");
+      const label = p.kind === "kuitansi" ? "Kuitansi" : "Invoice";
+      return reply(markTrip(docCode, label, fileInvoice(label + "-" + docCode + ".pdf", bytes), p.trip));
+    }
+    if (!/^PZ-[A-Z0-9]{4,8}$/.test(docCode)) return reply("bad code");
+    const code = docCode;
     const ga = p.ga && /^[\d.]{6,40}$/.test(String(p.ga.cid)) ? p.ga.cid + "|" + (/^\d{1,12}$/.test(String(p.ga.sid)) ? p.ga.sid : "") : "";
     if (p.kind === "ga") {
-      if (!ga || !PAID.sheetUrl) return reply("skip");
+      if (!ga || !books().length) return reply("skip");
       for (let i = 0; i < 5 && !codeRows(code).length; i++) Utilities.sleep(4000);
       writeLink(code, ga, "GA");
       return reply("ok");
     }
     const label = p.kind === "kuitansi" ? "Kuitansi" : "Invoice";
-    const bytes = Utilities.base64Decode(String(p.pdf || ""));
-    if (bytes.length < 1000 || bytes.length > 4e6 || bytes[0] !== 37 || bytes[1] !== 80 || bytes[2] !== 68 || bytes[3] !== 70) return reply("bad pdf");
-    if (!PAID.sheetUrl) return reply("no sheet");
+    const bytes = pdfBytes();
+    if (!bytes) return reply("bad pdf");
+    if (!books().length) return reply("no sheet");
     // The order row can land a few seconds after the upload; only known codes are filed.
     let rows = 0;
     for (let i = 0; i < 5 && !(rows = codeRows(code).length); i++) Utilities.sleep(4000);
     if (!rows) return reply("unknown code");
-    const name = label + "-" + code + ".pdf";
-    const folder = invoiceFolder(new Date());
-    const old = folder.getFilesByName(name);
-    while (old.hasNext()) old.next().setTrashed(true);
-    const url = folder.createFile(Utilities.newBlob(bytes, "application/pdf", name)).getUrl();
+    const name = label + "-" + docCode + ".pdf";
+    const url = fileInvoice(name, bytes);
     writeLink(code, url, label);
     if (label === "Invoice") writePrintLinks(code);
     if (label === "Invoice" && ga) writeLink(code, ga, "GA");
@@ -316,6 +337,14 @@ function doPost(e) {
   }
 }
 
+// Files the PDF in "Invoice Peziarah/<yyyy-MM>/", replacing one of the same name.
+function fileInvoice(name, bytes) {
+  const folder = invoiceFolder(new Date());
+  const old = folder.getFilesByName(name);
+  while (old.hasNext()) old.next().setTrashed(true);
+  return folder.createFile(Utilities.newBlob(bytes, "application/pdf", name)).getUrl();
+}
+
 function invoiceFolder(d) {
   const sub = (p, n) => { const it = p.getFoldersByName(n); return it.hasNext() ? it.next() : p.createFolder(n); };
   return sub(sub(DriveApp.getRootFolder(), INVOICE.folder), Utilities.formatDate(d, "Asia/Jakarta", "yyyy-MM"));
@@ -324,7 +353,7 @@ function invoiceFolder(d) {
 // [{sheet, row, headers}] for every non-receipt row carrying this code.
 function codeRows(code) {
   const out = [];
-  SpreadsheetApp.openByUrl(PAID.sheetUrl).getSheets().forEach(sh => {
+  books().forEach(ss => ss.getSheets().forEach(sh => {
     if (sh.getLastRow() < 2) return;
     const headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].map(String);
     const codeCol = headers.findIndex(h => /^kode_pesanan$|^kode/i.test(h.trim()));
@@ -333,7 +362,7 @@ function codeRows(code) {
     sh.getRange(2, 1, sh.getLastRow() - 1, headers.length).getValues().forEach((r, i) => {
       if (normCode(r[codeCol]) === code && !(noteCol >= 0 && TAGGED.test(String(r[noteCol])))) out.push({ sh, row: i + 2, headers });
     });
-  });
+  }));
   return out;
 }
 
@@ -375,6 +404,158 @@ function writeLink(code, url, label) {
   } finally {
     lock.releaseLock();
   }
+}
+
+// --- ziarah: invoice & kuitansi mark the request row -------------------------
+//
+// No separate billing sheet. Every invoice or kuitansi made at /admin/ziarah/
+// finds the trip's REQUEST row (the row its request form created, matched on the
+// "kode" column) and writes, in columns added at the far right:
+//   Status    Order (from the first invoice) -> Lunas (when nothing is left)
+//   Total     trip total
+//   Bayar     what was last received and what is left
+//   Riwayat   one line per document, newest last (participants included)
+//   Invoice / Kuitansi   link to the latest group PDF in Drive
+// A trip with no request row (booked over WhatsApp) gets a new row in the
+// request tab for its kind. The first kuitansi of a trip (or of one participant)
+// sends GA4 purchase + Meta Purchase once, for that total.
+//
+// Fill in the spreadsheet each request form saves to (Form > Responses > the
+// green Sheets icon > copy the spreadsheet URL). They may be the same
+// spreadsheet; then set `tab` to each form's response tab name. tab "" = the
+// first tab with a "kode" column.
+const ZIARAH = {
+  ZR: { sheetUrl: "https://docs.google.com/spreadsheets/d/1cwJRk2ldnSTPGPlAG9xmca1A7buJ3x4s2TsYLGF4FPo/edit", tab: "" },   // Rombongan      (form "ziarah", sheet "Permintaan Ziarah")
+  CG: { sheetUrl: "https://docs.google.com/spreadsheets/d/1pwJhzh36SUSNmgr42dosuNK3Tu3wGcI7OCQuUwbKjpE/edit", tab: "" },   // Grup kecil     (form "concierge")
+  BY: { sheetUrl: "https://docs.google.com/spreadsheets/d/146VDhI72KvxakWfgJYtAjt1ShJOKDKvZ5B5DMmpxEEE/edit", tab: "" }    // Susun sendiri  (form "ziarah-susun-sendiri")
+};
+const TRIP_DOC = /^((ZR|BY|CG)-[A-Z0-9]{4,8})(-(P[A-Z0-9]{1,6}))?-(DP|T2|LN)$/;
+const TRIP_COLS = ["Status", "Total", "Bayar", "Riwayat", "Invoice", "Kuitansi"];
+
+function tripTabs() {
+  const seen = {}, out = [];
+  Object.keys(ZIARAH).forEach(kind => {
+    const cfg = ZIARAH[kind];
+    if (!cfg.sheetUrl || cfg.sheetUrl.indexOf("PASTE") === 0) return;
+    const ss = seen[cfg.sheetUrl] || (seen[cfg.sheetUrl] = SpreadsheetApp.openByUrl(cfg.sheetUrl));
+    ss.getSheets().forEach(sh => {
+      if (out.some(t => t.sh.getSheetId() === sh.getSheetId() && t.ss.getId() === ss.getId())) return;
+      const headers = sh.getRange(1, 1, 1, Math.max(1, sh.getLastColumn())).getValues()[0].map(String);
+      const codeCol = headers.findIndex(h => /^kode/i.test(h.trim()));
+      if (codeCol >= 0) out.push({ ss, sh, headers, codeCol });
+    });
+  });
+  return out;
+}
+
+// The tab a new row for this kind goes into.
+function tripHomeTab(kind, tabs) {
+  const cfg = ZIARAH[kind];
+  if (!cfg || !cfg.sheetUrl || cfg.sheetUrl.indexOf("PASTE") === 0) return null;
+  const id = (String(cfg.sheetUrl).match(/\/d\/([^/]+)/) || [])[1];
+  const mine = tabs.filter(t => t.ss.getId() === id);
+  if (cfg.tab) return mine.find(t => t.sh.getName() === cfg.tab) || null;
+  const used = mine.find(t => t.sh.getLastRow() > 1 && t.sh.getRange(2, t.codeCol + 1, t.sh.getLastRow() - 1, 1).getValues().some(r => normCode(r[0]).indexOf(kind + "-") === 0));
+  return used || mine[0] || null;
+}
+
+function markTrip(docCode, label, pdfUrl, m) {
+  const g = docCode.match(TRIP_DOC);
+  const trip = g[1], kind = g[2], pid = g[4] || "", base = trip + (pid ? "-" + pid : "");
+  const rp = n => "Rp " + Math.round(Number(n) || 0).toLocaleString("id-ID").replace(/,/g, ".");
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  let first = false, row = null;
+  try {
+    const tabs = tripTabs();
+    if (!tabs.length) return "no request sheet";
+    let hit = null;
+    for (const t of tabs) {
+      if (t.sh.getLastRow() < 2) continue;
+      const codes = t.sh.getRange(2, t.codeCol + 1, t.sh.getLastRow() - 1, 1).getValues();
+      const i = codes.findIndex(r => normCode(r[0]) === trip);
+      if (i >= 0) { hit = { t, row: i + 2 }; break; }
+    }
+    if (!hit) {
+      // Booked outside the site form: add the request row ourselves.
+      const t = tripHomeTab(kind, tabs);
+      if (!t) return "no tab for " + kind;
+      const vals = t.headers.map((h, c) => {
+        const x = h.trim();
+        if (c === t.codeCol) return trip;
+        if (/^(timestamp|stempel waktu)/i.test(x)) return new Date();
+        if (/rombongan|lembaga|paroki/i.test(x)) return m.org || "";
+        if (/nama/i.test(x)) return m.name || m.org || "";
+        if (MATCH.phone.test(x)) return m.phone || "";
+        if (MATCH.email.test(x)) return m.email || "";
+        if (/rute|destinasi|perjalanan/i.test(x)) return m.route || "";
+        if (/jumlah|peserta|orang/i.test(x)) return m.pax || "";
+        if (/bulan|waktu|tanggal/i.test(x)) return m.dates || "";
+        return "";
+      });
+      t.sh.appendRow(vals);
+      hit = { t, row: t.sh.getLastRow() };
+    }
+    const { t } = hit;
+    const col = name => {
+      let c = t.headers.findIndex(h => h.trim().toLowerCase() === name.toLowerCase());
+      if (c < 0) { c = t.sh.getLastColumn(); t.sh.getRange(1, c + 1).setValue(name); t.headers.push(name); }
+      return c + 1;
+    };
+    TRIP_COLS.forEach(col);
+    const cell = name => t.sh.getRange(hit.row, col(name));
+    const status = cell("Status"), now = Utilities.formatDate(new Date(), "Asia/Jakarta", "d MMM yyyy");
+    const who = pid ? pid + " " + (m.participant || "") + " · " : "";
+    let line;
+    if (label === "Invoice") {
+      if (String(status.getValue()) !== "Lunas") status.setValue("Order");
+      line = `${now} · ${who}Invoice ${m.stage} ${rp(m.bill)}`;
+    } else {
+      line = `${m.paidDate || now} · ${who}Diterima ${m.stage} ${rp(m.received)}${m.from ? " dari " + m.from : ""}`;
+      if (!pid) {
+        cell("Bayar").setValue(m.after > 0 ? `${m.stage} diterima · sisa ${rp(m.after)}` : "Lunas");
+        status.setValue(m.after > 0 ? "Order" : "Lunas");
+      } else if (String(status.getValue()) !== "Lunas") status.setValue("Order");
+      const props = PropertiesService.getScriptProperties();
+      if (!props.getProperty("trip-paid:" + base)) { props.setProperty("trip-paid:" + base, new Date().toISOString()); first = true; }
+    }
+    if (!pid) cell("Total").setValue(rp(m.total));
+    const hist = cell("Riwayat"), prev = String(hist.getValue() || "").trim();
+    hist.setValue(prev ? prev + "\n" + line : line);
+    if (!pid) cell(label).setValue(pdfUrl); // participant PDFs: Drive + Riwayat only
+    row = { headers: t.headers.slice(), values: t.sh.getRange(hit.row, 1, 1, t.headers.length).getValues()[0] };
+  } finally {
+    lock.releaseLock();
+  }
+  if (first) sendTripPurchase(base, m, row);
+  Logger.log("trip " + docCode + " " + label + " -> " + pdfUrl);
+  return "ok";
+}
+
+// GA4 purchase + Meta Purchase, once per trip (or participant), at the first payment.
+function sendTripPurchase(base, m, row) {
+  const items = (m.items || []).filter(i => i && i.name && i.qty).map(i => ({ item_name: String(i.name).slice(0, 100), quantity: Number(i.qty) || 1, price: Number(i.price) || 0, item_category: "Ziarah" }));
+  const secret = GA.apiSecret || PropertiesService.getScriptProperties().getProperty("GA_API_SECRET");
+  if (secret) {
+    try {
+      const res = UrlFetchApp.fetch("https://www.google-analytics.com/mp/collect?measurement_id=" + GA.measurementId + "&api_secret=" + secret, {
+        method: "post", contentType: "application/json", muteHttpExceptions: true,
+        payload: JSON.stringify({ client_id: "pz." + base, events: [{ name: "purchase", params: {
+          transaction_id: base, currency: "IDR", value: Number(m.total) || 0, payment_type: "transfer_manual",
+          items, engagement_time_msec: 1 } }] })
+      });
+      Logger.log("GA purchase " + base + " " + m.total + " -> " + res.getResponseCode());
+    } catch (err) { logError("sendTripPurchase GA", err); }
+  }
+  try {
+    const a = row ? answers(row.headers.map((h, i) => [h, row.values[i]])) : {};
+    send({
+      event_name: "Purchase", event_time: Math.floor(Date.now() / 1000), event_id: base,
+      event_source_url: SITE + "/ziarah/",
+      user_data: userData({ ...a, phone: m.phone || a.phone, email: m.email || a.email, name: m.name || a.name }),
+      custom_data: { currency: "IDR", value: Number(m.total) || 0, order_id: base }
+    });
+  } catch (err) { logError("sendTripPurchase Meta", err); }
 }
 
 // --- GA4 purchase on payment ------------------------------------------------
@@ -424,7 +605,7 @@ function sendMetaPurchase(headers, row, code) {
       event_name: "Purchase",
       event_time: Math.floor(Date.now() / 1000),
       event_id: code,
-      event_source_url: a.url || (SITE + "/keranjang/"),
+      event_source_url: a.url || (SITE + (/^PZ-/.test(code) ? "/keranjang/" : "/ziarah/")),
       user_data: userData(a),
       custom_data: { currency: "IDR", value: toNumber(a.total), order_id: code }
     });

@@ -27,6 +27,10 @@ Isi folder ini sudah siap di-upload apa adanya ke web root Hostinger
                                  cache header, security header
     faq/index.html            -> /faq/
     salve-regina/             -> /salve-regina/  (Maria digambar dengan ayat; WebGL)
+    admin/kuitansi/           -> kuitansi & invoice ulang pesanan toko (admin)
+    admin/resi/               -> label pengiriman (admin)
+    admin/ziarah/             -> invoice & kuitansi per termin perjalanan ziarah
+                                 (admin; noindex, diblokir robots.txt)
     _src/                     <- sumber halaman yang di-build (tidak disajikan,
                                  diblokir .htaccess)
     support.js
@@ -127,10 +131,10 @@ SUDAH BERES (tidak perlu diapa-apakan lagi)
 
 GOOGLE ANALYTICS
 ----------------
-Semua 73 file HTML (72 halaman + 404.html) sudah memuat tag GA4 (G-H8J9GKJ2NT) tepat sebelum
-</head>. Kalau nanti ada halaman baru hasil build ulang, tag ini harus
-ditambahkan lagi — file sumber (*.dc.html) sengaja tidak memuatnya supaya
-kunjungan saat mendesain tidak ikut terhitung.
+Pelacakan berjalan lewat Google Tag Manager (GTM-NQS6GCB7), bukan tag GA4
+langsung di tiap halaman. Detail event, Meta Pixel, dan Conversions API ada
+di README-TRACKING.md. Halaman baru yang publik perlu potongan GTM yang sama;
+halaman admin sengaja tanpa GTM.
 
 HALAMAN /salve-regina/
 Gambar Maria (karya Peziarah) yang garisnya diisi ayat Douay-Rheims, digerakkan
@@ -139,3 +143,34 @@ terbaca tanpa JavaScript; tanpa WebGL pengunjung melihat gambar diamnya.
 salve-regina.js dan index.html adalah HASIL BUILD dari _src/salve-regina/ —
 ubah ayat atau teks di sana, lalu build ulang (lihat _src/salve-regina/README.md).
 
+ADMIN: TAGIHAN ZIARAH (/admin/ziarah/)
+Invoice dan kuitansi perjalanan ziarah, per termin, untuk rombongan dan grup
+kecil setelah proposal disetujui. Tidak ada checkout: harga datang dari
+proposal per pos, jadi dokumen diterbitkan admin dan dikirim lewat WhatsApp.
+- Termin standar (data/invoice.js, TRIP_STAGES): uang muka 30% saat
+  konfirmasi (jatuh tempo 3 hari setelah invoice), 50% di H-14, pelunasan
+  20% di H-7. "Lunas sekaligus" untuk pemesanan mepet.
+- Pembatalan (TRIP_CANCEL): 30% sebelum H-14, 50% H-14 s.d. H-8, 75% H-7,
+  100% kurang dari H-7 — dari biaya perjalanan, di luar titipan. Tabel
+  tanggalnya tercetak di setiap PDF. Ubah angka di data/invoice.js DAN di
+  /syarat-ketentuan/ bagian 6 bersamaan.
+- Titipan (persembahan misa, stipendium romo, kolekte) tercetak terpisah,
+  diteruskan utuh, bukan pendapatan Peziarah.
+- Nomor dokumen = kode perjalanan + termin: ZR-XXXXX-DP / -T2 / -LN;
+  per peserta ZR-XXXXX-P03-DP. Kode dari formulir permintaan (ZR-, BY-, CG-).
+- PDF memakai kepala, kaki, dan kotak rekening yang sama dengan invoice toko.
+- Pencatatan tanpa Sheet baru: setiap invoice/kuitansi menandai baris
+  permintaan perjalanan itu (Sheet formulir Rombongan / Grup kecil / Susun
+  sendiri) lewat Apps Script: Status Order -> Lunas, Total, Bayar, Riwayat,
+  tautan PDF. Pengaturan: ZIARAH di meta-capi-apps-script.gs
+  (README-TRACKING.md bagian D). Salinan PDF ke Drive "Invoice
+  Peziarah/<bulan>/". Pembayaran pertama yang tercatat = satu purchase GA4
+  + Meta senilai total perjalanan.
+- Draf tersimpan di browser per kode perjalanan; pindah perangkat lewat
+  "Salin / tempel draf".
+- data/ziarah-tarif.js: daftar tujuan, pos biaya (basis jumlah + harga),
+  titipan, dan slot formula() untuk rumus per peserta. Harga null = diisi
+  di halaman. Naikkan TARIF_JS ?v= di admin/ziarah/index.html setelah edit.
+- Kode perjalanan dan nomor peserta dibuat otomatis; jumlah pos dihitung
+  dari peserta/hari/malam/kamar/kendaraan.
+- Pratinjau di Claude: _src/admin-ziarah-preview/build.py (lihat README di sana).

@@ -1,68 +1,118 @@
-# Upload — 5 November 2026
+# Upload — 6 November 2026
 
 Folder ini adalah SELURUH situs, sudah disinkronkan dengan repo terbaru
-(commit b6433ba) plus perubahan di bawah. Timpa semua isi repo / public_html
+(commit 03361b7) plus perubahan di bawah. Timpa semua isi repo / public_html
 dengan isi folder ini.
 
 ## Yang berubah
 
-**Halaman baru: `/salve-regina/`**
-Gambar Bunda Maria (karya Peziarah) yang setiap garisnya diisi ayat Kitab Suci,
-terjemahan Katolik Douay-Rheims (domain publik). Pengunjung menggulir: dari
-gambar utuh ke wajah, menyusuri kerudung, lalu gambar terbuka penuh dan
-"Salve Regina." muncul. Setelah itu halaman lanjut ke bagian navigasi:
-cara berdoa rosario, Gua Maria Sendangsono, tulisan Jurnal "Devosi bukan
-estetika", dan rosario buatan tangan. Tiga rangkaian ayat bisa dipilih:
-Maria, Magnificat, Sengsara (37 ayat). Teks antifon Latin dan daftar semua
-ayat ada di halaman.
+**Halaman admin baru: `/admin/ziarah/` — Tagihan ziarah**
+Invoice dan kuitansi perjalanan ziarah per termin, untuk rombongan dan grup
+kecil setelah proposal disetujui. Tidak dipasang checkout untuk ziarah:
+harganya datang dari proposal per pos, jadi dokumen diterbitkan admin.
+- Termin: uang muka 30% saat konfirmasi (jatuh tempo 3 hari setelah
+  invoice), 50% di H-14, pelunasan 20% di H-7. Ada pilihan "Lunas sekaligus"
+  untuk pemesanan mepet.
+- Pos biaya dipilih dari daftar (transportasi, penginapan, konsumsi,
+  pendampingan, ibadat, tiket & izin, perlengkapan, lainnya). Jumlah awal
+  terisi dari peserta, hari, dan malam. Hotel/restoran/vendor permintaan
+  rombongan: tulis namanya, centang "diminta" — tercetak "atas permintaan
+  rombongan".
+- Titipan (persembahan misa, stipendium romo, kolekte) tercetak terpisah:
+  diteruskan utuh, bukan pendapatan Peziarah, tidak kena potongan.
+- Ditagihkan ke rombongan/lembaga (NPWP opsional) atau per peserta.
+  Pajak opsional.
+- PDF: kepala, kaki, dan kotak rekening sama dengan invoice toko. Halaman 1
+  berisi jadwal termin, tagihan ini, dan rekening; rincian biaya dan tabel
+  pembatalan bertanggal di halaman berikutnya.
+- Pencatatan langsung di baris permintaan perjalanan (lihat di bawah),
+  salinan PDF ke Drive "Invoice Peziarah".
+- Draf tersimpan di browser per kode perjalanan.
+- Kode perjalanan dibuat otomatis (ZR- rombongan, CG- grup kecil, BY- susun
+  sendiri); kode dari formulir situs tetap bisa ditempel. Nomor peserta
+  (P01, P02, ...) juga naik otomatis.
+- Tujuan dipilih dari daftar (23 tempat dari halaman rute dan peta Gua
+  Maria, per wilayah) atau diketik sendiri, lalu diurutkan. Nama perjalanan
+  terisi otomatis dari tujuan dan tanggal; daftar tujuan tercetak di PDF.
+- Jumlah setiap pos dihitung otomatis dari peserta, hari, malam, kamar
+  ber-2, dan kendaraan (peserta ÷ kursi kendaraan), dan ikut berubah saat
+  angkanya berubah. Bisa dikunci manual.
 
-Isi folder `salve-regina/`:
-- `index.html` — sudah di-prerender: semua teks, ayat, SEO, footer.
-- `salve-regina.js` — gambar bergerak (WebGL). ±250 KB setelah dikompres,
-  hanya dimuat di halaman ini.
-- `maria.jpg` — gambar sumber untuk WebGL. `maria.webp` — gambar diam untuk
-  browser tanpa WebGL / tanpa JavaScript.
+**Pencatatan tagihan ziarah: langsung di baris permintaan, tanpa Sheet baru**
+Setiap invoice menandai baris permintaan perjalanan itu (di Sheet formulir
+Rombongan, Grup kecil, atau Susun sendiri, dicari dari kodenya) dengan
+Status "Order"; setiap kuitansi mengisi kolom Bayar dan Riwayat, dan Status
+jadi "Lunas" setelah pelunasan. Kolom Total dan tautan PDF juga terisi.
+Perjalanan dari WhatsApp (tanpa formulir) otomatis dibuatkan barisnya.
+Tidak ada yang masuk ke Sheet pesanan produk.
 
-**Aset baru:** `assets/og-salve-regina.jpg` (gambar share 1200×630).
+**`data/ziarah-tarif.js`** (baru) — satu tempat untuk daftar tujuan, pos
+biaya, harga, dan rumus per peserta. Harga masih kosong (null): isi di sini
+dan harga itu terisi sendiri di halaman admin. Ada slot `formula()` untuk
+rumus harga per peserta nanti; hasilnya tampil di ringkasan dan jadi angka
+awal tagihan per peserta. Setelah mengubah file ini, naikkan TARIF_JS
+?v=... di admin/ziarah/index.html.
 
-**Footer semua halaman (96 file)**
-Satu tautan baru di kolom BACAAN: **Salve Regina**, di bawah Bulan Rosario.
+**`_src/admin-ziarah-preview/`** (baru, tidak disajikan) — skrip yang membuat
+pratinjau halaman admin untuk dibuka di Claude.
 
-**`/bulan-rosario/`**
-Langkah 10 urutan doa (Salam Ya Ratu) sekarang menautkan ke /salve-regina/.
+**`data/invoice.js`**
+Tambah pembuat PDF ziarah (downloadTripInvoice) dan angka termin/pembatalan.
+Kepala, kaki, rekening, dan stempel invoice toko dipindah ke satu fungsi
+bersama — PDF toko dicek piksel-per-piksel, hasilnya identik.
 
-**`_src/salve-regina/`** (baru, tidak disajikan ke pengunjung)
-Sumber halaman Salve Regina: ayat, kode gambar, dan skrip build. Untuk
-mengubah ayat atau teks, edit di sini lalu build ulang — lihat README.md
-di folder itu.
+**`meta-capi-apps-script.gs`** — PERLU DITEMPEL ULANG DI APPS SCRIPT
+Menerima PDF ziarah (ZR-XXXXX-DP, -T2, -LN, ZR-XXXXX-P03-DP), menyimpannya
+di Drive, dan menandai baris permintaan. Bagian `ZIARAH` sudah berisi URL
+Sheet Permintaan Ziarah, Grup Kecil, dan Susun Sendiri.
+Purchase GA4/Meta dikirim sekali saat kuitansi pertama sebuah perjalanan.
 
-**`.htaccess`**
-Satu aturan baru: folder `_src/` diblokir (pengunjung dapat halaman 404).
+**`/admin/kuitansi/`** — tautan ke Tagihan Ziarah. Tombol "Unduh invoice
+(belum lunas)" tidak lagi mengirim ID GA milik admin ke Sheet (sebelumnya
+bisa menimpa ID GA pembeli). Memuat invoice.js versi baru (?v=20261106).
+**`/admin/resi/`** — tautan ke Tagihan Ziarah.
 
-**`sitemap.xml`** — tambah /salve-regina/; lastmod /bulan-rosario/ diperbarui.
-**`llms.txt`** — tambah ringkasan halaman Salve Regina.
-**`README.txt`** — struktur folder dan catatan halaman Salve Regina.
+**`/syarat-ketentuan/`** bagian 6 — ketentuan termin, potongan pembatalan,
+dan titipan menggantikan kalimat "disebutkan dalam proposal masing-masing".
+**`/ziarah/grup-kecil/`** — catatan biaya: "sisa dilunasi setelah perjalanan
+selesai" diganti jadwal termin yang baru.
+
+**`sitemap.xml`** — lastmod /syarat-ketentuan/ dan /ziarah/grup-kecil/.
+**`llms.txt`** — ketentuan bayar dan batal perjalanan ziarah.
+**`README.txt`** — struktur folder admin, catatan Tagihan Ziarah; bagian
+Google Analytics diperbaiki (pelacakan lewat GTM, bukan tag GA4 langsung).
+**`README-TRACKING.md`** — bagian D: alur Sheet/GA4/Meta untuk tagihan ziarah.
 
 ## Jumlah file berubah
 
 | Bagian | File |
 |---|---|
-| Halaman baru salve-regina/ | 4 |
-| Sumber _src/salve-regina/ | 8 |
-| Footer: produk | 49 |
-| Footer: jurnal | 17 |
-| Footer: ziarah & rute | 13 |
-| Footer: halaman lain, hampers, tanya (termasuk bulan-rosario) | 17 |
-| sitemap, llms.txt, README.txt, .htaccess, BACA-DULU.txt | 5 |
-| Aset gambar | 1 |
+| Halaman baru admin/ziarah/ | 1 |
+| data/invoice.js, data/ziarah-tarif.js (baru) | 2 |
+| Sumber _src/admin-ziarah-preview/ (baru) | 3 |
+| Admin lain (kuitansi, resi) | 2 |
+| Halaman publik (syarat-ketentuan, ziarah/grup-kecil) | 2 |
+| Apps Script | 1 |
+| sitemap, llms.txt, README.txt, README-TRACKING.md, BACA-DULU.txt | 5 |
 
 ## Setelah upload
 
-1. Buka `/salve-regina/` di HP dan laptop. Gambar menulis dirinya sendiri,
-   lalu gulir sampai "Salve Regina." dan kartu navigasi muncul di bawahnya.
-2. Cek huruf: judul harus Archivo (tebal, rapat), bukan huruf bawaan.
-3. Buka `/_src/salve-regina/README.md` — harus muncul halaman 404.
-4. Cek footer halaman mana saja: kolom BACAAN ada "Salve Regina".
-5. Tes tampilan share di WhatsApp dan Facebook Sharing Debugger:
-   gambar Maria dengan tulisan "Salve Regina." harus muncul.
-6. Submit ulang sitemap di Google Search Console.
+1. Apps Script: tempel isi baru `meta-capi-apps-script.gs` (URL Sheet
+   Permintaan Ziarah, Grup Kecil, dan Susun Sendiri sudah terisi di bagian
+   `ZIARAH`). Simpan, lalu Deploy > Manage deployments > edit > Version:
+   New version (URL tetap sama). Akun Google pemilik Apps Script harus bisa
+   mengedit ketiga Sheet itu.
+2. Buka `/admin/ziarah/`. Buka satu permintaan yang sudah ada: tempel
+   kodenya (mis. ZR-…) di Kode perjalanan, pilih tujuan, isi tanggal,
+   peserta, dan 2–3 pos dengan harga, lalu unduh Invoice uang muka. Cek PDF:
+   tujuan, jadwal termin, jatuh tempo, tabel pembatalan, rekening.
+3. Cek Sheet permintaannya: baris kode itu berkolom Status "Order", Total,
+   Riwayat, dan tautan Invoice. Cek Drive: Invoice-ZR-…-DP.pdf.
+4. Unduh kuitansi uang muka untuk perjalanan yang sama: kolom Bayar berisi
+   "uang muka diterima · sisa …" dan Riwayat bertambah satu baris. Setelah
+   uji, kosongkan sel-sel itu (pembayaran uji juga mengirim satu purchase ke
+   GA4/Meta).
+5. Buka `/admin/kuitansi/`: unduh satu invoice dan kuitansi toko seperti
+   biasa, pastikan tetap sama.
+6. Baca ulang `/syarat-ketentuan/` bagian 6 dan catatan biaya di
+   `/ziarah/grup-kecil/`.

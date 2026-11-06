@@ -1,0 +1,54 @@
+<div id="pz-pv" style="display:none;position:fixed;inset:0;z-index:50;background:rgba(26,23,18,0.72);overflow:auto;font-family:'Hanken Grotesk',Helvetica,sans-serif">
+  <div style="max-width:860px;margin:24px auto;padding:0 16px 40px">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;background:#F7F3EA;border-radius:14px 14px 0 0;padding:12px 16px;position:sticky;top:0">
+      <span id="pz-pv-name" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#1A1712"></span>
+      <button id="pz-pv-close" type="button" style="padding:9px 16px;border-radius:999px;border:1px solid #1A1712;background:transparent;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;cursor:pointer">TUTUP</button>
+    </div>
+    <div id="pz-pv-log" style="display:none;background:#EFE8DA;padding:12px 16px;font-size:12px;line-height:1.55;color:#3A342B"></div>
+    <div id="pz-pv-pages" style="display:flex;flex-direction:column;gap:12px;background:#D6CBB8;padding:12px;border-radius:0 0 14px 14px"></div>
+  </div>
+</div>
+<script>
+(function () {
+  var pending = [];
+  function esc(t) { return String(t == null ? "" : t).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
+  window.__pzPreviewLog = function (kind, v) { pending.push(v); };
+  try { pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"; } catch (e) {}
+  var $ = function (id) { return document.getElementById(id); };
+  document.addEventListener("click", function (e) { if (e.target && e.target.id === "pz-pv-close") $("pz-pv").style.display = "none"; });
+  function show(buf, name) {
+    var box = $("pz-pv"), log = $("pz-pv-log");
+    $("pz-pv-name").textContent = name;
+    $("pz-pv-pages").innerHTML = '<p style="margin:8px;color:#1A1712">Menyusun PDF…</p>';
+    if (pending.length) {
+      var v = pending[pending.length - 1];
+      log.style.display = "block";
+      log.innerHTML = '<div style="font-family:Space Mono,monospace;font-size:11px;letter-spacing:0.1em;color:#5B5347;margin-bottom:6px">YANG DITULIS KE BARIS PERMINTAAN DI HALAMAN ASLI</div>' +
+        Object.keys(v).map(function (k) { return '<div><b>' + esc(k) + '</b>: ' + esc(v[k]).replace(/\n/g, "<br>") + '</div>'; }).join("");
+    } else { log.style.display = "none"; log.innerHTML = ""; }
+    pending = [];
+    box.style.display = "block"; box.scrollTop = 0;
+    pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise.then(function (pdf) {
+      var pages = $("pz-pv-pages");
+      pages.innerHTML = "";
+      var w = Math.min(820, pages.clientWidth - 24);
+      var chain = Promise.resolve();
+      for (var i = 1; i <= pdf.numPages; i++) (function (n) {
+        chain = chain.then(function () { return pdf.getPage(n); }).then(function (page) {
+          var vp0 = page.getViewport({ scale: 1 }), dpr = window.devicePixelRatio || 1;
+          var vp = page.getViewport({ scale: (w / vp0.width) * dpr });
+          var c = document.createElement("canvas");
+          c.width = vp.width; c.height = vp.height; c.style.width = (vp.width / dpr) + "px"; c.style.background = "#fff"; c.style.borderRadius = "4px"; c.style.alignSelf = "center";
+          pages.appendChild(c);
+          return page.render({ canvasContext: c.getContext("2d"), viewport: vp }).promise;
+        });
+      })(i);
+      return chain;
+    }).catch(function () { $("pz-pv-pages").innerHTML = '<p style="margin:8px;color:#8A3B2E">PDF tidak bisa ditampilkan di pratinjau ini.</p>'; });
+  }
+  // invoice.js uses window.jspdf when present: route its download into the viewer.
+  if (window.jspdf && window.jspdf.jsPDF) {
+    window.jspdf.jsPDF.API.save = function (name) { var buf = this.output("arraybuffer").slice(0); setTimeout(function () { show(buf, name); }, 0); return this; };
+  }
+})();
+</script>
