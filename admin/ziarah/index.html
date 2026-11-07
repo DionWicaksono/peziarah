@@ -446,10 +446,33 @@ function parseItinerary(text) {
       days.push({ id: id(), day: m ? m[1] : (flat || `Hari ${days.length + 1}`), date: m ? m[2] : "", note: "", rows: [] });
     }
     const d = days[days.length - 1];
-    if (c1 || c2) d.rows.push({ id: id(), time: c1.replace(/\s*\n\s*/g, " "), activity: c2.replace(/\s*\n\s*/g, " ") });
+    splitActivities(c1, c2).forEach(x => d.rows.push({ id: id(), ...x }));
     if (c3) d.note = d.note ? d.note + "\n" + c3 : c3;
   });
   return { title, days };
+}
+// One cell often holds a whole day: several times (one per line) next to several
+// activities (one per line). Pair them line by line. An activity line that starts
+// lower-case or continues an open bracket is a wrapped line of the one before.
+function splitActivities(timeCell, actCell) {
+  const times = String(timeCell || "").split("\n").map(x => x.trim()).filter(Boolean);
+  const raw = String(actCell || "").split("\n").map(x => x.trim()).filter(Boolean);
+  if (times.length <= 1) return times.length || raw.length ? [{ time: times[0] || "", activity: raw.join(" ") }] : [];
+  const acts = [];
+  raw.forEach(l => {
+    const prev = acts[acts.length - 1];
+    const open = prev && (prev.split("(").length > prev.split(")").length);
+    if (prev && acts.length >= times.length) acts[acts.length - 1] = prev + " " + l;
+    else if (prev && (open || /^[a-z]/.test(l))) acts[acts.length - 1] = prev + " " + l;
+    else acts.push(l);
+  });
+  return times.map((t, i) => ({ time: t, activity: acts[i] || "" }))
+    .concat(acts.slice(times.length).map(a => ({ time: "", activity: a })));
+}
+// Older drafts and hand-typed rows may still hold several times in one row.
+function expandRows(rows) {
+  return (rows || []).flatMap(r => String(r.time || "").includes("\n") || String(r.activity || "").includes("\n")
+    ? splitActivities(r.time, r.activity) : [{ time: r.time, activity: r.activity }]);
 }
 const shortDate = (iso, add) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + add); return d.toLocaleDateString("id-ID", { day: "numeric", month: "short" }).replace(".", ""); };
 const plusDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
@@ -574,7 +597,7 @@ class Component extends DCLogic {
       trip: { route, start: s.start, end: s.end, pax: num(s.pax), paxNote: s.paxNote, stops: s.stops.map(t => t.name) },
       buyer: { org: s.org, name: s.name, phone: s.phone, email: s.email, addr: s.addr, npwp: s.npwp },
       participant, lines, titipan, tax, note: s.note, bank: bank(),
-      itinerary: s.itinOn && s.itin.length ? { noteTitle: s.itinNoteTitle || "Catatan", days: s.itin.map(x => ({ day: x.day, date: x.date, note: x.note, rows: x.rows })) } : null,
+      itinerary: s.itinOn && s.itin.length ? { noteTitle: s.itinNoteTitle || "Catatan", days: s.itin.map(x => ({ day: x.day, date: x.date, note: x.note, rows: expandRows(x.rows) })) } : null,
       validUntil: s.validUntil || plusDays(s.issue || today(), 7),
       groupT, fx
     };

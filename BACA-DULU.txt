@@ -1,4 +1,4 @@
-# Upload — 6 November 2026
+# Upload — 7 November 2026
 
 Folder ini adalah SELURUH situs, sudah disinkronkan dengan repo terbaru
 (commit 03361b7) plus perubahan di bawah. Timpa semua isi repo / public_html
@@ -57,6 +57,11 @@ Tidak ada yang masuk ke Sheet pesanan produk.
   terbaca), lalu ubah per hari dan per baris. Judul kolom catatan bisa
   diganti (mis. "Catatan Khusus Lansia"). Tercetak di halaman tersendiri
   pada penawaran, invoice, dan kuitansi.
+- Tempelan itinerary dengan satu baris per hari (jam dan kegiatan ditulis
+  bertumpuk dalam satu sel) kini dipecah jadi satu baris per kegiatan.
+- Menerbitkan ulang dokumen yang sama (penawaran, invoice, atau kuitansi
+  dengan jumlah sama) memperbarui barisnya di kolom Riwayat dengan tanda
+  "revisi", tidak menambah baris ganda. PDF di Drive diganti yang terbaru.
 
 **`data/ziarah-tarif.js`** (baru) — satu tempat untuk daftar tujuan, pos
 biaya, harga, dan rumus per peserta. Harga masih kosong (null): isi di sini

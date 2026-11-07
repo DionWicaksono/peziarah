@@ -414,7 +414,8 @@ function writeLink(code, url, label) {
 //   Status    Penawaran (quote sent) -> Order (first invoice) -> Lunas (nothing left)
 //   Total     trip total
 //   Bayar     what was last received and what is left
-//   Riwayat   one line per document, newest last (participants included)
+//   Riwayat   one line per document, newest last (participants included);
+//             re-issuing the same document updates its line ("revisi")
 //   Penawaran / Invoice / Kuitansi   link to the latest group PDF in Drive
 // A trip with no request row (booked over WhatsApp) gets a new row in the
 // request tab for its kind. The first kuitansi of a trip (or of one participant)
@@ -523,8 +524,17 @@ function markTrip(docCode, label, pdfUrl, m) {
       if (!props.getProperty("trip-paid:" + base)) { props.setProperty("trip-paid:" + base, new Date().toISOString()); first = true; }
     }
     if (!pid) cell("Total").setValue(rp(m.total));
-    const hist = cell("Riwayat"), prev = String(hist.getValue() || "").trim();
-    hist.setValue(prev ? prev + "\n" + line : line);
+    // Each line ends with its document number. Re-issuing the same quote or invoice
+    // (or the same kuitansi for the same amount) replaces its line and marks it
+    // "revisi" instead of adding a second one; a new payment is always a new line.
+    line += " · " + docCode;
+    const hist = cell("Riwayat");
+    const lines = String(hist.getValue() || "").split("\n").filter(l => l.trim());
+    const kindWord = label === "Kuitansi" ? "Diterima" : label;
+    const same = lines.findIndex(l => l.endsWith(" · " + docCode) && l.indexOf(kindWord) >= 0 &&
+      (label !== "Kuitansi" || l.indexOf(rp(m.received)) >= 0));
+    if (same >= 0) lines[same] = line + " (revisi " + now + ")"; else lines.push(line);
+    hist.setValue(lines.join("\n"));
     if (!pid) cell(label).setValue(pdfUrl); // participant PDFs: Drive + Riwayat only
     row = { headers: t.headers.slice(), values: t.sh.getRange(hit.row, 1, 1, t.headers.length).getValues()[0] };
   } finally {
