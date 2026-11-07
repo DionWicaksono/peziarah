@@ -46,7 +46,7 @@
  *   REQUEST row (ziarah / grup kecil / susun sendiri form sheet) is marked:
  *   Status Order -> Lunas, Total, Bayar, Riwayat, PDF links. See ZIARAH below:
  *   fill in the request spreadsheet URLs, then deploy a new version.
- *   Only codes that already exist in the order sheet are accepted.
+ *   Shop PDFs: only codes that already exist in the order sheet are accepted.
  *   Setup: run `setup` once more (grants Drive), then Deploy > New deployment >
  *   type Web app > Execute as: Me > Who has access: Anyone > Deploy. Paste the
  *   Web app URL into DRIVE_URL in data/invoice.js (both copies) and upload it.
@@ -161,7 +161,7 @@ function sendPurchase(cfg, a, e) {
 
     const custom = { currency: "IDR" };
     if (cfg.event === "Purchase") custom.value = toNumber(a.total);
-    else custom.content_name = kind;
+    else custom.content_name = cfg.kind;
 
     send({
       event_name: cfg.event,
@@ -304,9 +304,11 @@ function doPost(e) {
       const bytes = pdfBytes();
       if (!bytes || !p.trip) return reply("bad trip");
       const label = p.kind === "kuitansi" ? "Kuitansi" : p.kind === "penawaran" ? "Penawaran" : "Invoice";
-      return reply(markTrip(docCode, label, fileInvoice(label + "-" + docCode + ".pdf", bytes), p.trip));
+      const res = markTrip(docCode, label, fileInvoice(label + "-" + docCode + ".pdf", bytes), p.trip);
+      if (res !== "ok") logError("markTrip " + docCode, res);
+      return reply(res);
     }
-    if (!/^PZ-[A-Z0-9]{4,8}$/.test(docCode)) return reply("bad code");
+    if (!/^PZ-[A-Z0-9]{4,8}$/.test(docCode)) { logError("doPost", "bad code " + docCode); return reply("bad code"); }
     const code = docCode;
     const ga = p.ga && /^[\d.]{6,40}$/.test(String(p.ga.cid)) ? p.ga.cid + "|" + (/^\d{1,12}$/.test(String(p.ga.sid)) ? p.ga.sid : "") : "";
     if (p.kind === "ga") {
@@ -406,6 +408,40 @@ function writeLink(code, url, label) {
   }
 }
 
+// Bump with every change, so the live version can be checked by opening the
+// web app URL (the DRIVE_URL in data/invoice.js) in a browser.
+const SCRIPT_VERSION = "2026-11-07e";
+function doGet() {
+  const linked = Object.keys(ZIARAH).filter(k => ZIARAH[k].sheetUrl && ZIARAH[k].sheetUrl.indexOf("PASTE") !== 0);
+  const last = PropertiesService.getScriptProperties().getProperty("LAST_ERROR") || "-";
+  return ContentService.createTextOutput("Peziarah Apps Script versi " + SCRIPT_VERSION +
+    " · Sheet ziarah tersambung: " + (linked.join(", ") || "belum ada") + " · error terakhir: " + last);
+}
+
+// Run manually from the editor (choose cekZiarah, then Run). The log lists every
+// request sheet, the tab it will use and the "kode" column it found, and checks
+// the Drive folder. Nothing is written.
+function cekZiarah() {
+  Logger.log("Versi " + SCRIPT_VERSION);
+  Object.keys(ZIARAH).forEach(kind => {
+    const cfg = ZIARAH[kind];
+    if (!cfg.sheetUrl || cfg.sheetUrl.indexOf("PASTE") === 0) { Logger.log(kind + ": belum diisi"); return; }
+    try {
+      const ss = SpreadsheetApp.openByUrl(cfg.sheetUrl);
+      Logger.log(kind + ": " + ss.getName());
+      ss.getSheets().forEach(sh => {
+        const h = sh.getRange(1, 1, 1, Math.max(1, sh.getLastColumn())).getValues()[0].map(String);
+        const c = h.findIndex(x => /^kode/i.test(x.trim()));
+        Logger.log("   tab \"" + sh.getName() + "\": " + (sh.getLastRow() - 1) + " baris, kolom kode: " + (c >= 0 ? "\"" + h[c] + "\" (kolom " + (c + 1) + ")" : "TIDAK ADA"));
+      });
+      const home = tripHomeTab(kind, tripTabs());
+      Logger.log("   baris baru " + kind + " masuk ke tab: " + (home ? home.sh.getName() : "TIDAK ADA (perlu kolom kode)"));
+    } catch (err) { Logger.log(kind + ": GAGAL dibuka — " + err); }
+  });
+  try { Logger.log("Drive: " + invoiceFolder(new Date()).getName() + " OK"); } catch (err) { Logger.log("Drive GAGAL — " + err); }
+  Logger.log("Error terakhir: " + (PropertiesService.getScriptProperties().getProperty("LAST_ERROR") || "-"));
+}
+
 // --- ziarah: invoice & kuitansi mark the request row -------------------------
 //
 // No separate billing sheet. Every invoice or kuitansi made at /admin/ziarah/
@@ -413,6 +449,8 @@ function writeLink(code, url, label) {
 // "kode" column) and writes, in columns added at the far right:
 //   Status    Penawaran (quote sent) -> Order (first invoice) -> Lunas (nothing left)
 //   Total     trip total
+//   Peserta   participants on the latest document, e.g. "4 · 2 Lansia"
+//   Durasi    e.g. "5 hari 4 malam · 29 Nov - 3 Des 2026"
 //   Bayar     what was last received and what is left
 //   Riwayat   one line per document, newest last (participants included);
 //             re-issuing the same document updates its line ("revisi")
@@ -431,7 +469,7 @@ const ZIARAH = {
   BY: { sheetUrl: "https://docs.google.com/spreadsheets/d/146VDhI72KvxakWfgJYtAjt1ShJOKDKvZ5B5DMmpxEEE/edit", tab: "" }    // Susun sendiri  (form "ziarah-susun-sendiri")
 };
 const TRIP_DOC = /^((ZR|BY|CG)-[A-Z0-9]{4,8})(-(P[A-Z0-9]{1,6}))?-(DP|T2|LN|Q)$/;
-const TRIP_COLS = ["Status", "Total", "Bayar", "Riwayat", "Penawaran", "Invoice", "Kuitansi"];
+const TRIP_COLS = ["Status", "Total", "Bayar", "Riwayat", "Penawaran", "Invoice", "Kuitansi", "Peserta", "Durasi"];
 
 function tripTabs() {
   const seen = {}, out = [];
@@ -459,6 +497,10 @@ function tripHomeTab(kind, tabs) {
   const used = mine.find(t => t.sh.getLastRow() > 1 && t.sh.getRange(2, t.codeCol + 1, t.sh.getLastRow() - 1, 1).getValues().some(r => normCode(r[0]).indexOf(kind + "-") === 0));
   return used || mine[0] || null;
 }
+
+// Text that starts with + = - or @ (e.g. "+62 812…", "+1 (650) …") would be read
+// by Sheets as a formula and show #ERROR!; a leading apostrophe keeps it as text.
+const asText = v => typeof v === "string" && /^[=+\-@]/.test(v) ? "'" + v : v;
 
 function markTrip(docCode, label, pdfUrl, m) {
   const g = docCode.match(TRIP_DOC);
@@ -490,10 +532,11 @@ function markTrip(docCode, label, pdfUrl, m) {
         if (MATCH.phone.test(x)) return m.phone || "";
         if (MATCH.email.test(x)) return m.email || "";
         if (/rute|destinasi|perjalanan/i.test(x)) return m.route || "";
+        if (/^lama|durasi/i.test(x)) return m.duration || "";
         if (/jumlah|peserta|orang/i.test(x)) return m.pax || "";
         if (/bulan|waktu|tanggal/i.test(x)) return m.dates || "";
         return "";
-      });
+      }).map(asText);
       t.sh.appendRow(vals);
       hit = { t, row: t.sh.getLastRow() };
     }
@@ -524,6 +567,8 @@ function markTrip(docCode, label, pdfUrl, m) {
       if (!props.getProperty("trip-paid:" + base)) { props.setProperty("trip-paid:" + base, new Date().toISOString()); first = true; }
     }
     if (!pid) cell("Total").setValue(rp(m.total));
+    if (!pid && m.pax) cell("Peserta").setValue(asText(m.pax + (m.paxNote ? " · " + m.paxNote : "")));
+    if (!pid && m.duration) cell("Durasi").setValue(asText(m.duration));
     // Each line ends with its document number. Re-issuing the same quote or invoice
     // (or the same kuitansi for the same amount) replaces its line and marks it
     // "revisi" instead of adding a second one; a new payment is always a new line.

@@ -62,6 +62,9 @@ Tidak ada yang masuk ke Sheet pesanan produk.
 - Menerbitkan ulang dokumen yang sama (penawaran, invoice, atau kuitansi
   dengan jumlah sama) memperbarui barisnya di kolom Riwayat dengan tanda
   "revisi", tidak menambah baris ganda. PDF di Drive diganti yang terbaru.
+- Baris permintaan juga mendapat kolom Peserta (mis. "4 · 2 Lansia") dan
+  Durasi (mis. "5 hari 4 malam · 29 Nov - 3 Des 2026"). Nomor WhatsApp yang
+  diawali "+" tersimpan sebagai teks, tidak lagi #ERROR!.
 
 **`data/ziarah-tarif.js`** (baru) — satu tempat untuk daftar tujuan, pos
 biaya, harga, dan rumus per peserta. Harga masih kosong (null): isi di sini
@@ -83,6 +86,9 @@ Menerima PDF ziarah (ZR-XXXXX-DP, -T2, -LN, ZR-XXXXX-P03-DP), menyimpannya
 di Drive, dan menandai baris permintaan. Bagian `ZIARAH` sudah berisi URL
 Sheet Permintaan Ziarah, Grup Kecil, dan Susun Sendiri.
 Purchase GA4/Meta dikirim sekali saat kuitansi pertama sebuah perjalanan.
+Cek cepat: buka URL web app (DRIVE_URL di data/invoice.js) di browser —
+harus tertulis "Peziarah Apps Script versi 2026-11-07e". Fungsi `cekZiarah`
+(jalankan dari editor) menampilkan Sheet, tab, dan kolom kode yang dipakai.
 
 **`/admin/kuitansi/`** — tautan ke Tagihan Ziarah. Tombol "Unduh invoice
 (belum lunas)" tidak lagi mengirim ID GA milik admin ke Sheet (sebelumnya

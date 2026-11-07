@@ -100,6 +100,8 @@ No extra form or sheet. Each invoice / kuitansi PDF from `/admin/ziarah/` is sen
 | Status | `Penawaran` after a quote (`ZR-XXXXX-Q`), `Order` from the first invoice, `Lunas` once nothing is left |
 | Total | trip total |
 | Bayar | e.g. `uang muka diterima · sisa Rp 16.674.000`, then `Lunas` |
+| Peserta | participants + note, e.g. `4 · 2 Lansia` |
+| Durasi | e.g. `5 hari 4 malam · 29 Nov - 3 Des 2026` |
 | Riwayat | one line per invoice/receipt, incl. per-participant ones (P03 …) |
 | Penawaran / Invoice / Kuitansi | link to the latest group PDF |
 

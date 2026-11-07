@@ -547,6 +547,15 @@ class Component extends DCLogic {
       return { l, qty, price };
     });
   }
+  // "5 hari 4 malam · 29 Nov - 3 Des 2026"
+  durationText() {
+    const s = this.state;
+    if (!s.start) return "";
+    const { days, nights } = this.span();
+    const f = (iso, y) => new Date(iso + "T12:00:00").toLocaleDateString("id-ID", y ? { day: "numeric", month: "short", year: "numeric" } : { day: "numeric", month: "short" }).replace(/\./g, "");
+    const len = days > 1 ? `${days} hari ${nights} malam` : "1 hari";
+    return len + " · " + (s.end && s.end !== s.start ? `${f(s.start)} - ${f(s.end, true)}` : f(s.start, true));
+  }
   routeText() {
     const s = this.state;
     if (!s.routeAuto) return s.route;
@@ -650,7 +659,7 @@ class Component extends DCLogic {
       after: quote ? c.t.total : Math.max(0, c.t.total - c.before - (paid ? received : c.bill)),
       paidDate: paid ? paid.date : "", from: paid ? paid.from : "",
       org: d.buyer.org, name: d.buyer.name, phone: d.buyer.phone, email: d.buyer.email,
-      route: d.trip.route, dates, pax: d.trip.pax, participant: d.participant ? d.participant.name : "", items
+      route: d.trip.route, dates, duration: this.durationText(), pax: d.trip.pax, paxNote: d.trip.paxNote || "", participant: d.participant ? d.participant.name : "", items
     };
     try { if (window.__pzPreviewLog) window.__pzPreviewLog("ziarah", { nomor: quote ? d.base + "-Q" : d.no, dokumen: quote ? "Penawaran" : paid ? "Kuitansi" : "Invoice", ...meta, items: items.map(i => `${i.name} × ${i.qty} @ ${rp(i.price)}`).join("\n") }); } catch (e) {}
     return meta;
