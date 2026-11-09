@@ -7,6 +7,7 @@ Isi folder ini sudah siap di-upload apa adanya ke web root Hostinger
 (biasanya public_html/). Struktur akhirnya:
 
   public_html/
+    curhat/index.html         -> /curhat/             (Curhat Katolik — dibangun dari _src/curhat/)
     index.html                -> /                    (Landing — DIBANGUN dari _src/landing/, lihat bawah)
     katalog/index.html        -> /katalog/
     produk/<id>/index.html    -> /produk/<id>/        (38 halaman produk)

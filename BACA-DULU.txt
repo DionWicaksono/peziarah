@@ -1,113 +1,53 @@
-# Upload — 9 November 2026 (sore): landing page baru, keyword, shuttle /ziarah/ + Jurnal
+# Upload — 9 November 2026 (malam): Curhat Katolik
 
 Folder ini adalah SELURUH situs, disinkronkan dengan repo terbaru
-(commit a402d2e "Blocked Checkout") plus perubahan di bawah. Timpa semua isi
+(commit 6632cf4 "Change Landing") plus perubahan di bawah. Timpa semua isi
 repo / public_html dengan isi folder ini.
 
 ## Yang berubah
 
-**Landing page baru (index.html)**
-- Hero satu foto (Gua Maria Sendangsono) dengan satu janji: "Ziarah yang kami
-  jalani sendiri." Dua tombol: Susun ziarah, Belanja katalog; WhatsApp jadi
-  tautan kecil di bawahnya. Slider 4 slide dihapus.
-- Strip fakta: shuttle (segera hadir), jumlah produk (dihitung dari data),
-  Transfer · QRIS · COD + tukar ukuran.
-- 01 Ziarah: 3 kartu rute (Sendangsono, Ganjuran, Muntilan) dari
-  data/routes.js + panel rombongan paroki / grup kecil 2–8. Peta besar
-  dihapus dari landing (tetap ada di /ziarah/).
-- Shuttle: SEGERA HADIR · BELUM BEROPERASI. Tarif dan jadwal ditulis sebagai
-  rencana; tombol "Kabari saya saat mulai" (WhatsApp) menggantikan form
-  daftar kursi. Form shuttle 7 kolom dihapus dari landing.
-- 02 Katalog: 8 produk asli dengan foto, harga, status (PRE-ORDER/SEGERA),
-  diambil langsung dari data/products.js — harga ikut berubah otomatis.
-  Produk yang ditunda/terjual otomatis tidak tampil.
-- 03 Hampers: per momen (Komuni Pertama, Krisma, Pernikahan, Penghiburan).
-- 04 Jurnal: 3 tulisan terbaru otomatis dari data/journal.js (tulisan
-  shuttle dilewati selama shuttle belum jalan).
-- Blok jujur "Kami baru mulai tahun ini." menggantikan angka 4.200+ umat,
-  4,9/5 dari 1.180 ulasan, dan 3 testimoni rekaan — semuanya dihapus.
-- Form newsletter (yang tidak mengirim ke mana pun) diganti "Kabar batch
-  baru" → Instagram + WhatsApp.
-- Header = header standar (sama dengan halaman produk); footer = footer
-  bersama. Keduanya kini komponen "Header" dan "Footer" di design system
-  Peziarah, dan build.py menyalinnya dari produk/index.html.
+**Halaman baru: /curhat/ — Curhat Katolik**
+- Curhat lewat WhatsApp Peziarah (nomor yang sama dengan toko untuk
+  sekarang) dengan admin Peziarah. Chat 30 menit Rp 15K, chat 60 menit
+  Rp 25K, telepon 30 menit Rp 25K, telepon 60 menit Rp 45K. QRIS/transfer
+  sebelum sesi. Senin–Sabtu 10.00–21.00 WIB.
+- Cara kerja 4 langkah, janji (hanya admin yang membaca, tidak disimpan,
+  tanpa ceramah, tidak ada kontak di luar layanan, boleh berhenti), batas
+  kerahasiaan (nyawa terancam), usia 18+.
+- Pendampingan (tingkat 2): romo (persembahan, saran Rp 150K, diteruskan
+  utuh), psikolog berizin Rp 300K, konselor pernikahan & keluarga Rp 250K,
+  pendamping awam Rp 150K. Biaya curhat dipotong dari sesi pendampingan
+  pertama. Pengakuan dosa bukan bagian dari layanan.
+- Kotak "Bukan untuk keadaan darurat": 112 / IGD.
+- Tombol WhatsApp membuka chat dengan pesan "Halo Peziarah, saya mau
+  curhat." — admin bisa langsung mengenali pesan curhat.
+- Meta, OG, Twitter, keyword, JSON-LD (Service + harga, FAQPage), blok statis
+  untuk Google. Gambar share: assets/og/curhat.jpg.
+- Sumber: _src/curhat/ (head.html, body.dc.html, build.py).
+  Bangun ulang: python3 _src/curhat/build.py. Header/footer disalin dari
+  produk/index.html (komponen Header/Footer design system).
 
-**SEO / share**
-- Title: "Peziarah — Ziarah Katolik · Toko Rohani & Jurnal Iman Katolik".
-  Description, OG, Twitter diperbarui (tanpa klaim shuttle jalan).
-- Keyword beranda: untuk orang yang merencanakan ziarah Katolik (rombongan
-  paroki/besar, grup kecil, keluarga; Sendangsono, Ganjuran, Muntilan, Kerep,
-  Puhsarang) dan pembeli toko rohani (souvenir, oleh-oleh, kado, hampers
-  Komuni Pertama/Krisma, rosario, salib, krusifiks, perhiasan).
-- Keyword Jurnal: diambil dari isi tiap tulisan. 8 tulisan yang tadinya
-  memakai keyword umum ("artikel katolik, catatan ziarah") kini punya keyword
-  sendiri: batas-merch-iman, devosi-bukan-estetika, gua-maria-kerep-ambarawa,
-  ketika-romo-berulah, muntilan-dua-hari, sendangsono-tanpa-rombongan,
-  tenun-ende-yang-hampir-hilang, warna-ungu-dan-kenapa. 7 tulisan lain sudah
-  spesifik, tidak diubah.
-- Gambar share baru: assets/og-peziarah-2026-11.jpg (nama baru supaya
-  WhatsApp/Facebook tidak memakai cache lama). og-peziarah.jpg lama tetap ada
-  untuk halaman lain.
-- JSON-LD Organization/TravelAgency: shuttle ditulis "segera hadir (belum
-  beroperasi)"; priceRange Rp 50K – Rp 2.520K.
-- Blok statis #__pr (dibaca Google & tanpa JS) ditulis ulang sesuai halaman
-  baru.
-- llms.txt: deskripsi Beranda baru; shuttle "SEGERA HADIR, belum beroperasi".
-- sitemap.xml: lastmod beranda 2026-11-09.
+**Tanya Awam (/tanya/)**
+- Bagian baru "Mau ngobrol langsung? Curhat Katolik." sebelum kotak darurat,
+  plus satu paragraf di blok statis. Tanya Awam tetap gratis dan anonim.
 
-**/ziarah/ — bagian shuttle**
-- Diganti dengan bagian shuttle yang sama persis dengan landing: SEGERA HADIR
-  · BELUM BEROPERASI, tarif & jadwal sebagai rencana, tombol "Kabari saya saat
-  mulai" (WhatsApp) dan "Baca rencananya di Jurnal". Tombol "Daftar kursi",
-  daftar "Sebelum ikut", dan hitungan biaya (Rp 38,5 jt dst.) dihapus.
-- Blok statis #__pr /ziarah/ juga ditulis "segera hadir, belum beroperasi".
-- Label peta Makam Rm. Sanjaya: "SHUTTLE SEGERA HADIR".
+**Footer (95 halaman)**
+- Kolom BACAAN: tautan "Curhat Katolik" setelah "Tanya Awam". Komponen
+  Footer di design system Peziarah juga diperbarui.
 
-**Jurnal — tulisan shuttle ditulis ulang sebagai rencana**
-- Judul: "Shuttle Kerkhof Muntilan–Sendangsono, dan kenapa kami
-  menyiapkannya" (sebelumnya "…dan kenapa kami akhirnya menyewa satu mobil").
-  Slug/URL tetap sama.
-- Kotak "KOREKSI · 9 NOVEMBER 2026" di awal tulisan: shuttle belum
-  beroperasi; versi pertama terbit seolah sudah jalan; itu keliru.
-- Isi: semua kalimat "sudah jalan" jadi rencana; caption foto tidak lagi
-  menyebut QR pendaftaran; tombol "Daftar kursi" diganti "Kabari saya saat
-  mulai" (WhatsApp).
-- Meta, OG, Twitter, JSON-LD (dateModified 2026-11-09), keyword, blok statis,
-  dan daftar di /jurnal/ ikut diperbarui. Gambar share
-  assets/og/artikel-shuttle-kerkhof-sendangsono.jpg dibuat (sebelumnya
-  filenya tidak ada).
-- data/journal.js dan data/post-bodies.js kini dimuat dengan ?v=20261109 di
-  semua halaman, supaya cache 7 hari tidak menahan teks lama.
-
-**Sumber**
-- _src/landing/ (head.html, body.dc.html, build.py). index.html dibangun
-  dengan: python3 _src/landing/build.py. Rincian di README.txt bagian
-  LANDING.
-
-## Jumlah file
-
-| Bagian | File |
-|---|---|
-| index.html (dibangun ulang) | 1 |
-| _src/landing/ (baru) | 3 |
-| assets/og-peziarah-2026-11.jpg (baru) | 1 |
-| ziarah/index.html | 1 |
-| jurnal/artikel/*/index.html (keyword 8, shuttle 1) | 9 |
-| data/journal.js, data/post-bodies.js | 2 |
-| Halaman lain (hanya ?v= pada journal.js/post-bodies.js) | ±30 |
-| assets/og/artikel-shuttle-kerkhof-sendangsono.jpg (baru) | 1 |
-| llms.txt, sitemap.xml, README.txt, README-TRACKING.md, BACA-DULU.txt | 5 |
+**Lainnya**
+- sitemap.xml: /curhat/ ditambahkan; lastmod /tanya/.
+- llms.txt: bagian Curhat Katolik (harga, jam, batas layanan).
+- README.txt: /curhat/ di daftar halaman.
 
 ## Setelah upload
 
-1. Buka https://peziarah.com/ di desktop dan HP: hero, 3 rute, shuttle
-   "Segera hadir", 8 produk dengan harga, 3 tulisan Jurnal, footer.
-2. Klik CARI, ketik "rosario": hasil muncul. Di HP, buka menu burger.
-3. Tempel https://peziarah.com/ di WhatsApp: pratinjau memakai gambar baru.
-   Kalau masih lama, buka Facebook Sharing Debugger dan klik "Scrape Again".
-4. Search Console → URL Inspection → https://peziarah.com/ → Request
-   indexing.
-5. Buka https://peziarah.com/ziarah/#shuttle: bagian shuttle sama dengan
-   landing (Segera hadir).
-6. Buka /jurnal/artikel/shuttle-kerkhof-sendangsono/: kotak KOREKSI di
-   atas, tombol "Kabari saya saat mulai" di bawah.
+1. Buka https://peziarah.com/curhat/ di desktop dan HP. Klik "Mulai curhat
+   di WhatsApp": chat terbuka dengan pesan "saya mau curhat".
+2. Buka /tanya/: bagian Curhat Katolik muncul sebelum kotak darurat.
+3. Cek footer halaman mana pun: BACAAN → Curhat Katolik.
+4. Search Console → URL Inspection → https://peziarah.com/curhat/ →
+   Request indexing.
+5. Sebelum promosi: siapkan admin (pelatihan mendengar, skrip darurat,
+   debrief bulanan), cara bayar QRIS, dan daftar pendamping per peran.
+   Halaman menjanjikan pendamping tersedia — pastikan minimal satu per peran.
