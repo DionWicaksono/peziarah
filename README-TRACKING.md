@@ -67,7 +67,7 @@ Privacy: no name, phone, email, address or free text is ever pushed. `tanya` sen
 
 ### A. Add four hidden questions to each Google Form
 
-Forms: checkout (pesanan), ziarah, ziarah susun sendiri, grup kecil (concierge), shuttle. Paroki has no Google Form yet; add these when you create it.
+Forms: checkout (pesanan), ziarah, ziarah susun sendiri, grup kecil (concierge), shuttle. (Shuttle: the form is off the site since 9 Nov 2026 — the shuttle isn't running yet; landing and /ziarah/#shuttle only offer a WhatsApp "kabari saya" link. Reconnect it when the shuttle starts.) Paroki has no Google Form yet; add these when you create it.
 
 1. Open the form → add 4 **Short answer** questions, not required, titled exactly: `_ua`, `_fbp`, `_fbc`, `_url`. (Visitors never see the Google Form; the site posts to it directly.)
 2. ⋮ → **Get pre-filled link** → type `x` in each of the 4 → **Get link** → copy it.

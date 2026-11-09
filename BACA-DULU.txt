@@ -1,98 +1,113 @@
-# Upload — 9 November 2026
+# Upload — 9 November 2026 (sore): landing page baru, keyword, shuttle /ziarah/ + Jurnal
 
-Folder ini adalah SELURUH situs, sudah disinkronkan dengan repo terbaru
-(commit 9457b6a) plus perubahan di bawah. Timpa semua isi repo / public_html
-dengan isi folder ini.
+Folder ini adalah SELURUH situs, disinkronkan dengan repo terbaru
+(commit a402d2e "Blocked Checkout") plus perubahan di bawah. Timpa semua isi
+repo / public_html dengan isi folder ini.
 
 ## Yang berubah
 
-**Cara beli per produk (baru di data/products.js: `order`, `hidden`)**
-- Pemesanan ditunda, tanya lewat WhatsApp (18): Dry Bag 20L, Topi Bucket,
-  Kalung Ichthys, Anting Ichthys, Rosario Kayu Sonokeling,
-  Salib Dinding Sonokeling, Krusifiks Dayak, Salib San Damiano, Syal Tenun
-  Sumba, Selendang Tenun Ende, Ikon Bunda Maria, Wall Art Bunda Maria Line
-  Art, Poster Risograph John 14:6, Crown of Thorn, Bunda Guadalupe dalam Nis
-  Kayu, Tato Kalvari, Lilin Aroma Vespers, The Confessions (Agustinus).
-  Di halaman produk: harga, pilihan, bungkus kado, dan tombol keranjang
-  diabu-abukan dan tidak bisa diklik; kotak ungu "Pemesanan ditunda · Tanya
-  lewat WhatsApp" ("Pemesanan produk ini ditunda sementara. …") dengan tombol
-  "Tanya via WhatsApp" berisi nama produk + varian. Badge: TANYA VIA WA.
-- Mode admin toko (baru): klik "MODE ADMIN TOKO" di /admin/kuitansi/ atau
-  /admin/resi/ (atau buka halaman toko mana pun dengan ?admin=1). Di browser
-  itu saja, produk yang ditunda bisa masuk keranjang lagi, jadi invoice/PDF
-  dibuat dari /keranjang/ seperti biasa. Kotak hitam "Mode admin · checkout
-  dibuka" di halaman produk dan pil "MODE ADMIN TOKO · MATIKAN" di kiri bawah
-  menandainya; klik pil untuk mematikan. Pelanggan tidak terpengaruh.
-- Pre-order (16): semua Batik Print (4), Dopp Kit Kulit, Tas Romo, semua Tote
-  (6), Hoodie Berkah Dalem, Card Holder, Kartu Rosario, Jurnal Jahit Koptik.
-  Di halaman produk: kotak "Pre-order · dibuat setelah kamu pesan" — 10–14
-  hari kerja produksi + 1–4 hari kerja kirim; tombol jadi "Pre-order ke
-  Keranjang"; poin 04 jadi "Dibuat dulu, baru dikirim." Badge: PRE-ORDER.
-  (Knuckle Duster dan Guadalupe 3D yang sudah PRE-ORDER ikut tampilan ini.)
-- Disembunyikan: Allegoria, Patch Bordir Peziarah MC. Hilang dari katalog,
-  pencarian, sitemap, feed Meta; halaman produknya dialihkan ke /katalog/.
-- Lukisan "Mazmur 23": TERJUAL (stok 0, badge abu-abu, tombol pre-order
-  hilang, JSON-LD SoldOut).
+**Landing page baru (index.html)**
+- Hero satu foto (Gua Maria Sendangsono) dengan satu janji: "Ziarah yang kami
+  jalani sendiri." Dua tombol: Susun ziarah, Belanja katalog; WhatsApp jadi
+  tautan kecil di bawahnya. Slider 4 slide dihapus.
+- Strip fakta: shuttle (segera hadir), jumlah produk (dihitung dari data),
+  Transfer · QRIS · COD + tukar ukuran.
+- 01 Ziarah: 3 kartu rute (Sendangsono, Ganjuran, Muntilan) dari
+  data/routes.js + panel rombongan paroki / grup kecil 2–8. Peta besar
+  dihapus dari landing (tetap ada di /ziarah/).
+- Shuttle: SEGERA HADIR · BELUM BEROPERASI. Tarif dan jadwal ditulis sebagai
+  rencana; tombol "Kabari saya saat mulai" (WhatsApp) menggantikan form
+  daftar kursi. Form shuttle 7 kolom dihapus dari landing.
+- 02 Katalog: 8 produk asli dengan foto, harga, status (PRE-ORDER/SEGERA),
+  diambil langsung dari data/products.js — harga ikut berubah otomatis.
+  Produk yang ditunda/terjual otomatis tidak tampil.
+- 03 Hampers: per momen (Komuni Pertama, Krisma, Pernikahan, Penghiburan).
+- 04 Jurnal: 3 tulisan terbaru otomatis dari data/journal.js (tulisan
+  shuttle dilewati selama shuttle belum jalan).
+- Blok jujur "Kami baru mulai tahun ini." menggantikan angka 4.200+ umat,
+  4,9/5 dari 1.180 ulasan, dan 3 testimoni rekaan — semuanya dihapus.
+- Form newsletter (yang tidak mengirim ke mana pun) diganti "Kabar batch
+  baru" → Instagram + WhatsApp.
+- Header = header standar (sama dengan halaman produk); footer = footer
+  bersama. Keduanya kini komponen "Header" dan "Footer" di design system
+  Peziarah, dan build.py menyalinnya dari produk/index.html.
 
-**Harga**
-- Batik Print (Kenaikan, Nativity, Calvary, Marian): Kain print Rp 700K,
-  Pashmina Rp 400K ("mulai Rp 400K").
-- Jurnal Jahit Koptik: pilihan ukuran A6 Rp 150K, A5 Rp 250K.
+**SEO / share**
+- Title: "Peziarah — Ziarah Katolik · Toko Rohani & Jurnal Iman Katolik".
+  Description, OG, Twitter diperbarui (tanpa klaim shuttle jalan).
+- Keyword beranda: untuk orang yang merencanakan ziarah Katolik (rombongan
+  paroki/besar, grup kecil, keluarga; Sendangsono, Ganjuran, Muntilan, Kerep,
+  Puhsarang) dan pembeli toko rohani (souvenir, oleh-oleh, kado, hampers
+  Komuni Pertama/Krisma, rosario, salib, krusifiks, perhiasan).
+- Keyword Jurnal: diambil dari isi tiap tulisan. 8 tulisan yang tadinya
+  memakai keyword umum ("artikel katolik, catatan ziarah") kini punya keyword
+  sendiri: batas-merch-iman, devosi-bukan-estetika, gua-maria-kerep-ambarawa,
+  ketika-romo-berulah, muntilan-dua-hari, sendangsono-tanpa-rombongan,
+  tenun-ende-yang-hampir-hilang, warna-ungu-dan-kenapa. 7 tulisan lain sudah
+  spesifik, tidak diubah.
+- Gambar share baru: assets/og-peziarah-2026-11.jpg (nama baru supaya
+  WhatsApp/Facebook tidak memakai cache lama). og-peziarah.jpg lama tetap ada
+  untuk halaman lain.
+- JSON-LD Organization/TravelAgency: shuttle ditulis "segera hadir (belum
+  beroperasi)"; priceRange Rp 50K – Rp 2.520K.
+- Blok statis #__pr (dibaca Google & tanpa JS) ditulis ulang sesuai halaman
+  baru.
+- llms.txt: deskripsi Beranda baru; shuttle "SEGERA HADIR, belum beroperasi".
+- sitemap.xml: lastmod beranda 2026-11-09.
 
-**Jurnal Jahit Koptik — foto baru**
-- assets/jurnal-koptik-berdiri.webp, assets/jurnal-koptik-jahitan.webp
-  (foto studio latar putih, 1122×1402 dan 1402×1122)
-  (+ versi Meta di assets/meta/, gambar share baru assets/og/jurnal-koptik.jpg).
-- Spesifikasi Ukuran jadi A6/A5; kalimat "mawar rosette dicetak timbul"
-  dihapus dari deskripsi karena sampul di foto baru polos.
+**/ziarah/ — bagian shuttle**
+- Diganti dengan bagian shuttle yang sama persis dengan landing: SEGERA HADIR
+  · BELUM BEROPERASI, tarif & jadwal sebagai rencana, tombol "Kabari saya saat
+  mulai" (WhatsApp) dan "Baca rencananya di Jurnal". Tombol "Daftar kursi",
+  daftar "Sebelum ikut", dan hitungan biaya (Rp 38,5 jt dst.) dihapus.
+- Blok statis #__pr /ziarah/ juga ditulis "segera hadir, belum beroperasi".
+- Label peta Makam Rm. Sanjaya: "SHUTTLE SEGERA HADIR".
 
-**Bulan Rosario — panduan kartu rosario**
-- Di bagian "Cara berdoa rosario", gambar baru "02 · Kartu Rosario"
-  berdampingan dengan diagram rosario manik, masing-masing dengan tombol
-  Unduh PNG; ada tautan ke Kartu Rosario. File:
-  assets/cara-berdoa-kartu-rosario.webp/.png.
+**Jurnal — tulisan shuttle ditulis ulang sebagai rencana**
+- Judul: "Shuttle Kerkhof Muntilan–Sendangsono, dan kenapa kami
+  menyiapkannya" (sebelumnya "…dan kenapa kami akhirnya menyewa satu mobil").
+  Slug/URL tetap sama.
+- Kotak "KOREKSI · 9 NOVEMBER 2026" di awal tulisan: shuttle belum
+  beroperasi; versi pertama terbit seolah sudah jalan; itu keliru.
+- Isi: semua kalimat "sudah jalan" jadi rencana; caption foto tidak lagi
+  menyebut QR pendaftaran; tombol "Daftar kursi" diganti "Kabari saya saat
+  mulai" (WhatsApp).
+- Meta, OG, Twitter, JSON-LD (dateModified 2026-11-09), keyword, blok statis,
+  dan daftar di /jurnal/ ikut diperbarui. Gambar share
+  assets/og/artikel-shuttle-kerkhof-sendangsono.jpg dibuat (sebelumnya
+  filenya tidak ada).
+- data/journal.js dan data/post-bodies.js kini dimuat dengan ?v=20261109 di
+  semua halaman, supaya cache 7 hari tidak menahan teks lama.
 
-**Lainnya**
-- Keranjang: barang yang sekarang WA-only/terjual/tersembunyi otomatis
-  dikeluarkan dari keranjang lama; harga varian lama (mis. batik Rp 150K)
-  disesuaikan ke harga baru.
-- Essentials: Bunda Guadalupe dalam Nis (opsional) tombolnya jadi "Pesan via
-  WA", tidak masuk keranjang.
-- /data/products.js dan /data/cart.js dimuat sebagai ?v=20261109 di semua
-  halaman supaya cache 7 hari tidak menahan harga lama.
-- Halaman produk (prerender): baris status, tombol WA, catatan pre-order/WA,
-  dan JSON-LD (harga + availability) diperbarui. Katalog prerender: harga,
-  status, jumlah per kategori, ItemList.
-- meta-catalog.csv: harga batik & jurnal (jurnal jadi 2 varian), availability
-  (preorder / available for order / out of stock), 2 produk tersembunyi
-  dihapus.
-- sitemap.xml, llms.txt, README.txt diperbarui.
+**Sumber**
+- _src/landing/ (head.html, body.dc.html, build.py). index.html dibangun
+  dengan: python3 _src/landing/build.py. Rincian di README.txt bagian
+  LANDING.
 
 ## Jumlah file
 
 | Bagian | File |
 |---|---|
-| Halaman produk (prerender + kode halaman) | 50 |
-| data/products.js, data/cart.js | 2 |
-| Katalog, keranjang, essentials, bulan-rosario | 4 |
-| Halaman lain (hanya ?v= pada products.js/cart.js) | ±45 |
-| Admin (kuitansi, resi: tautan mode admin) | 2 |
-| Gambar baru (jurnal 2 + meta 2 + og 1, kartu rosario 2) | 7 |
-| meta-catalog.csv, sitemap.xml, llms.txt, README.txt, BACA-DULU.txt | 5 |
+| index.html (dibangun ulang) | 1 |
+| _src/landing/ (baru) | 3 |
+| assets/og-peziarah-2026-11.jpg (baru) | 1 |
+| ziarah/index.html | 1 |
+| jurnal/artikel/*/index.html (keyword 8, shuttle 1) | 9 |
+| data/journal.js, data/post-bodies.js | 2 |
+| Halaman lain (hanya ?v= pada journal.js/post-bodies.js) | ±30 |
+| assets/og/artikel-shuttle-kerkhof-sendangsono.jpg (baru) | 1 |
+| llms.txt, sitemap.xml, README.txt, README-TRACKING.md, BACA-DULU.txt | 5 |
 
 ## Setelah upload
 
-1. Buka /produk/rosario-sonokeling/: blok harga & tombol abu-abu, kotak ungu
-   WhatsApp membuka chat dengan nama produk.
-1b. Klik MODE ADMIN TOKO di /admin/kuitansi/, buka lagi produk itu: tombol
-   keranjang aktif. Masukkan ke keranjang, buat PDF di /keranjang/, lalu klik
-   pil "MODE ADMIN TOKO · MATIKAN".
-2. Buka /produk/batik-marian/: Kain Rp 700K, klik Pashmina → Rp 400K; kotak
-   pre-order tampil. Tambah ke keranjang, cek harga di /keranjang/.
-3. /produk/jurnal-koptik/: foto baru, A6 Rp 150K / A5 Rp 250K.
-4. /katalog/: Allegoria dan Patch Bordir tidak ada; badge PRE-ORDER /
-   PESAN VIA WA / TERJUAL tampil.
-5. /bulan-rosario/#urutan: dua gambar berdampingan, kedua tombol unduh jalan.
-6. Meta Commerce Manager: jalankan ulang feed meta-catalog.csv.
-7. Masih lama (belum disentuh): gambar share batik (assets/og/batik-*.jpg)
-   masih menulis harga dan nama lama.
+1. Buka https://peziarah.com/ di desktop dan HP: hero, 3 rute, shuttle
+   "Segera hadir", 8 produk dengan harga, 3 tulisan Jurnal, footer.
+2. Klik CARI, ketik "rosario": hasil muncul. Di HP, buka menu burger.
+3. Tempel https://peziarah.com/ di WhatsApp: pratinjau memakai gambar baru.
+   Kalau masih lama, buka Facebook Sharing Debugger dan klik "Scrape Again".
+4. Search Console → URL Inspection → https://peziarah.com/ → Request
+   indexing.
+5. Buka https://peziarah.com/ziarah/#shuttle: bagian shuttle sama dengan
+   landing (Segera hadir).
+6. Buka /jurnal/artikel/shuttle-kerkhof-sendangsono/: kotak KOREKSI di
+   atas, tombol "Kabari saya saat mulai" di bawah.

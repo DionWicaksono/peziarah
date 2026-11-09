@@ -116,8 +116,8 @@ export const POSTS = [
     photoCredit: "Foto oleh Elisabeth Woro Setyowati" },
 
   { id: "shuttle-kerkhof-sendangsono", pillar: "ziarah", route: "sendangsono",
-    title: "Shuttle Kerkhof Muntilan–Sendangsono, dan kenapa kami akhirnya menyewa satu mobil",
-    dek: "Sebelas kilometer yang selama ini bikin orang batal ziarah sendiri. Sekarang ada mobil yang jalan bolak-balik setiap hari, empat trip.",
+    title: "Shuttle Kerkhof Muntilan–Sendangsono, dan kenapa kami menyiapkannya",
+    dek: "Sebelas kilometer yang selama ini bikin orang batal ziarah sendiri. Rencana kami: satu mobil, bolak-balik empat trip sehari. Belum beroperasi.",
     author: "Dion Wicaksono", date: "29 Agustus 2026", read: 7,
     image: "/assets/shuttle-hero.webp", slot: "[ foto: shuttle bus peziarah ]" },
 

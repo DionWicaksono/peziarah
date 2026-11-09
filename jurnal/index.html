@@ -27,8 +27,8 @@
 <link rel="modulepreload" href="/data/products.js?v=20261109">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
 <link rel="modulepreload" href="/data/verses.js">
-<link rel="modulepreload" href="/data/post-bodies.js">
-<link rel="modulepreload" href="/data/journal.js">
+<link rel="modulepreload" href="/data/post-bodies.js?v=20261109">
+<link rel="modulepreload" href="/data/journal.js?v=20261109">
 <script defer src="/support.js"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -70,9 +70,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h3 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:700;font-size:18px;letter-spacing:-0.024em;margin:26px 0 10px"><a href="/jurnal/artikel/menyusun-rute-sendiri/" style="color:#6C4BA6;text-decoration:none">Menyusun rute ziarah rombonganmu sendiri</a></h3>
 <p style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#8A8172;margin:0 0 8px">Catatan Ziarah · Dion Wicaksono · 11 Juni 2026 · 9 MENIT</p>
 <p style="font-size:17px;line-height:1.68;color:#3A342B;max-width:64ch;margin:0 0 18px">Rute terbaik biasanya bukan yang paling terkenal, tapi yang punya alasan. Cara menyusunnya dari nol.</p>
-<h3 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:700;font-size:18px;letter-spacing:-0.024em;margin:26px 0 10px"><a href="/jurnal/artikel/shuttle-kerkhof-sendangsono/" style="color:#6C4BA6;text-decoration:none">Shuttle Kerkhof Muntilan–Sendangsono, dan kenapa kami akhirnya menyewa satu mobil</a></h3>
+<h3 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:700;font-size:18px;letter-spacing:-0.024em;margin:26px 0 10px"><a href="/jurnal/artikel/shuttle-kerkhof-sendangsono/" style="color:#6C4BA6;text-decoration:none">Shuttle Kerkhof Muntilan–Sendangsono, dan kenapa kami menyiapkannya</a></h3>
 <p style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#8A8172;margin:0 0 8px">Catatan Ziarah · Dion Wicaksono · 29 Agustus 2026 · 7 MENIT</p>
-<p style="font-size:17px;line-height:1.68;color:#3A342B;max-width:64ch;margin:0 0 18px">Sebelas kilometer yang selama ini bikin orang batal ziarah sendiri. Sekarang ada mobil yang jalan bolak-balik tiap hari.</p>
+<p style="font-size:17px;line-height:1.68;color:#3A342B;max-width:64ch;margin:0 0 18px">Sebelas kilometer yang selama ini bikin orang batal ziarah sendiri. Rencana kami: satu mobil, bolak-balik empat trip sehari. Belum beroperasi.</p>
 <h3 style="font-family:'Archivo',Helvetica,Arial,sans-serif;font-weight:700;font-size:18px;letter-spacing:-0.024em;margin:26px 0 10px"><a href="/jurnal/artikel/gua-maria-kerep-ambarawa/" style="color:#6C4BA6;text-decoration:none">Gua Maria Kerep, dan patung yang terlalu besar untuk difoto</a></h3>
 <p style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#8A8172;margin:0 0 8px">Catatan Ziarah · Dion Wicaksono · 8 Agustus 2026 · 9 MENIT</p>
 <p style="font-size:17px;line-height:1.68;color:#3A342B;max-width:64ch;margin:0 0 18px">Gua kecil dari tahun 1950-an, lalu sebuah patung raksasa di halaman yang sama. Dua cara memuliakan yang tidak selalu akur.</p>
@@ -486,11 +486,11 @@ class Component extends DCLogic {
       this._offCart = m.subscribe(items => this.setState({ cartCount: items.reduce((n, i) => n + i.qty, 0) }));
     });
     import("/data/verses.js").then(m => this.setState({ verse: m.currentVerse() }));
-    import("/data/post-bodies.js").then(m => {
+    import("/data/post-bodies.js?v=20261109").then(m => {
       WRITTEN = Object.keys(m.BODIES);
       this.forceUpdate();
     }).catch(() => {});
-    import("/data/journal.js").then(m => {
+    import("/data/journal.js?v=20261109").then(m => {
       POSTS = m.POSTS;
       PILLARS = m.PILLARS;
       PANDUAN = m.PANDUAN;

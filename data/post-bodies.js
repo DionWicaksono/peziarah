@@ -52,26 +52,30 @@ export const BODIES = {
   ],
 
   "shuttle-kerkhof-sendangsono": [
+    { box: "KOREKSI · 9 NOVEMBER 2026", rows: [
+      ["Status", "Shuttle ini belum beroperasi."],
+      ["Yang kami ubah", "Versi pertama tulisan ini terbit seolah mobilnya sudah jalan setiap hari. Itu keliru. Tulisan ini kami ubah menjadi rencana: jadwal dan tarif di bawah belum bisa dipesan."]
+    ] },
     { p: "“Dari Muntilan ke Sendangsono naik apa?” adalah pertanyaan yang sering muncul di kalangan para peziarah — bisa ke diri sendiri, bisa ke satu sama lain. Jawaban jujurnya selama ini kadang bikin geli: nawar ojek di depan pasar, atau menunggu ada rombongan paroki yang kursinya sisa." },
-    { p: "Jadi mulai bulan ini kami menyewa satu mobil, empat belas kursi, dan menjalankannya bolak-balik di satu ruas saja: Kerkhof Muntilan — tempat Romo Sanjaya dan para perintis misi Jawa dimakamkan — ke Sendangsono, lalu kembali ke titik yang sama, 4 kali sehari." },
+    { p: "Jadi kami sedang menyiapkan satu mobil, empat belas kursi, untuk satu ruas saja: Kerkhof Muntilan — tempat Romo Sanjaya dan para perintis misi Jawa dimakamkan — ke Sendangsono, lalu kembali ke titik yang sama. Rencananya empat kali sehari, setiap hari." },
 
     { h2: "Kenapa cuma satu ruas" },
     { p: "Karena ruas ini yang paling sering memutus perjalanan orang. Sebelas kilometer, jalan naik, sinyal tipis di beberapa titik, dan taksi online yang sering tidak mau ambil order balik dari Sendangsono karena kosong di jalan pulang. Untuk peziarah yang datang sendiri atau berdua, biaya transportnya jadi lebih mahal daripada seluruh sisa perjalanannya." },
-    { p: "Kami tidak menambah rute lain dulu. Satu mobil, satu ruas, jadwal tetap — supaya kalau gagal, gagalnya kecil dan kelihatan." },
+    { p: "Kami tidak akan menambah rute lain dulu. Satu mobil, satu ruas, jadwal tetap — supaya kalau gagal, gagalnya kecil dan kelihatan." },
 
-    { figure: "/assets/shuttle-hero.webp", slot: "", caption: "Satu mobil, empat belas kursi, satu ruas. Kalau QR di kacanya dipindai, ia membuka halaman pendaftaran yang sama." },
+    { figure: "/assets/shuttle-hero.webp", slot: "", caption: "Rancangan tampilan mobilnya: satu unit, empat belas kursi, satu ruas." },
 
     { h2: "Kenapa tarifnya kami tulis terbuka" },
-    { p: "Tarif Rp 45.000 bukan harga hasil survei pasar. Itu hasil bagi biaya sewa unit dan biaya jalan dengan jumlah kursi yang realistis terisi — sekitar separuh dari yang kami jalankan. Rinciannya kami pasang di halaman shuttle, lengkap dengan titik impasnya, supaya siapa pun bisa menghitung ulang sendiri." },
-    { p: "Alasannya sederhana: kalau angkanya kelihatan, janji kami bisa ditagih. Kalau kursinya konsisten penuh, yang turun duluan adalah tarifnya, bukan jumlah tripnya." },
+    { p: "Rencana tarif Rp 45.000 per orang pulang-pergi bukan harga hasil survei pasar. Itu hasil bagi perkiraan biaya sewa unit dan biaya jalan dengan jumlah kursi yang realistis terisi — sekitar separuh dari kapasitasnya. Begitu shuttle mulai jalan, rinciannya kami pasang lengkap dengan titik impasnya, supaya siapa pun bisa menghitung ulang sendiri." },
+    { p: "Alasannya sederhana: kalau angkanya kelihatan, janji kami bisa ditagih. Kalau nanti kursinya konsisten penuh, yang turun duluan adalah tarifnya, bukan jumlah tripnya." },
 
     { h2: "Kalau ternyata tidak jalan" },
-    { p: "Ini layanan yang bisa gagal. Satu mobil sewaan, biaya tetap yang jalan terus entah ada penumpang atau tidak, dan pasar yang belum pernah kami uji. Kami sengaja mulai dari ukuran yang kalau rugi, ruginya tidak menyeret hal lain." },
+    { p: "Ini layanan yang bisa gagal. Satu mobil sewaan, biaya tetap yang jalan terus entah ada penumpang atau tidak, dan pasar yang belum pernah kami uji. Karena itu kami mulai dari ukuran yang kalau rugi, ruginya tidak menyeret hal lain." },
     { quote: "Ziarah tidak seharusnya batal karena urusan sebelas kilometer." },
-    { p: "Kalau ternyata penuh terus, kami tambah hari. Kalau ternyata sepi, kami hentikan dan mengaku di jurnal ini juga." },
+    { p: "Kalau nanti penuh terus, kami tambah hari. Kalau sepi, kami hentikan dan mengaku di jurnal ini juga." },
 
-    { cta: "Daftar kursi", href: "/#shuttle",
-      note: "Isi nama, tanggal, dan jumlah kursi — kami konfirmasi lewat WhatsApp. Jadwal dan rincian tarifnya ada di halaman shuttle." }
+    { cta: "Kabari saya saat mulai", href: "https://wa.me/6281542615445?text=Halo%20Peziarah%2C%20kabari%20saya%20saat%20shuttle%20Kerkhof%E2%80%93Sendangsono%20mulai%20jalan.",
+      note: "Belum ada pendaftaran kursi. Kirim pesan lewat WhatsApp, kami kabari begitu shuttle mulai jalan." }
   ],
 
   "sendangsono-tanpa-rombongan": [

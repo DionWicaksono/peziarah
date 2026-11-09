@@ -28,7 +28,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://peziarah.com/"},{"@type":"ListItem","position":2,"name":"Ziarah","item":"https://peziarah.com/ziarah/"},{"@type":"ListItem","position":3,"name":"Semarang","item":"https://peziarah.com/ziarah/rute/semarang-tiga-gereja/"}]}</script>
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/routes.js">
-<link rel="modulepreload" href="/data/journal.js">
+<link rel="modulepreload" href="/data/journal.js?v=20261109">
 <link rel="modulepreload" href="/data/products.js?v=20261109">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
 <script defer src="/support.js"></script>
@@ -493,7 +493,7 @@ class Component extends DCLogic {
   componentDidMount() {
     import("/data/verses.js").then(m => this.setState({ verse: m.currentVerse() }));
     import("/data/routes.js").then(m => { ROUTES = m.ROUTES; this.setState({ loaded: true }); });
-    import("/data/journal.js").then(m => { POSTS = m.POSTS; this.forceUpdate(); });
+    import("/data/journal.js?v=20261109").then(m => { POSTS = m.POSTS; this.forceUpdate(); });
     import("/data/products.js?v=20261109").then(m => {
       PRODUCTS = m.PRODUCTS;
       CAT_LABEL = {};

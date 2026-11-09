@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gua Maria Kerep, dan patung yang terlalu besar untuk difoto | Jurnal Peziarah</title>
 <meta name="description" content="Gua kecil dari tahun 1950-an, lalu sebuah patung raksasa di halaman yang sama. Dua cara memuliakan yang tidak selalu akur.">
-<meta name="keywords" content="artikel katolik, catatan ziarah">
+<meta name="keywords" content="gua maria kerep ambarawa, patung bunda maria kerep, ziarah ambarawa, ziarah semarang, gua maria jawa tengah, catatan ziarah">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://peziarah.com/jurnal/artikel/gua-maria-kerep-ambarawa/">
 <meta property="og:type" content="article">
@@ -28,8 +28,8 @@
 <link rel="modulepreload" href="/data/products.js?v=20261109">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
 <link rel="modulepreload" href="/data/verses.js">
-<link rel="modulepreload" href="/data/journal.js">
-<link rel="modulepreload" href="/data/post-bodies.js">
+<link rel="modulepreload" href="/data/journal.js?v=20261109">
+<link rel="modulepreload" href="/data/post-bodies.js?v=20261109">
 <script defer src="/support.js"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -438,7 +438,7 @@ class Component extends DCLogic {
     window.addEventListener("hashchange", readHash);
 
     import("/data/verses.js").then(m => this.setState({ verse: m.currentVerse() })).catch(() => {});
-    Promise.all([import("/data/journal.js"), import("/data/post-bodies.js")]).then(([j, b]) => {
+    Promise.all([import("/data/journal.js?v=20261109"), import("/data/post-bodies.js?v=20261109")]).then(([j, b]) => {
       POSTS = j.POSTS; PILLARS = j.PILLARS; BODIES = b.BODIES;
       this.setState({ loaded: true });
       readHash();

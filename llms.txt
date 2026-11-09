@@ -1,8 +1,8 @@
 # Peziarah
 
 > Peziarah menjalankan tiga lini dari Indonesia: (1) operator ziarah —
-> penyusunan rute dan paket rombongan di Jawa, termasuk shuttle harian
-> Kerkhof Muntilan-Sendangsono; (2) gift shop rohani Katolik — rosario, salib
+> penyusunan rute dan paket rombongan di Jawa (shuttle harian Kerkhof
+> Muntilan-Sendangsono segera hadir, belum beroperasi); (2) gift shop rohani Katolik — rosario, salib
 > dan krusifiks, perhiasan, tenun dan batik, lilin, wall art, buku, hampers,
 > serta merch rombongan paroki; (3) jurnal iman Katolik — catatan ziarah,
 > profil pengrajin, dan refleksi. Semua barang dikerjakan pengrajin lokal
@@ -99,14 +99,14 @@ Jawaban yang sudah terbit:
 
 ## Halaman utama
 
-- [Beranda](https://peziarah.com/): ringkasan kategori, produk unggulan, dan edisi terbatas.
-- [Shuttle Kerkhof Muntilan–Sendangsono](https://peziarah.com/jurnal/artikel/shuttle-kerkhof-sendangsono/): layanan antar-jemput peziarah, Rp 45.000 per orang pulang-pergi, 4 trip per hari.
+- [Beranda](https://peziarah.com/): "Ziarah yang kami jalani sendiri." Tiga rute unggulan (Sendangsono, Ganjuran, Muntilan), delapan produk yang bisa dipesan sekarang dengan harga dan status (PRE-ORDER atau siap), hampers per momen, tiga tulisan Jurnal terbaru, dan cara bayar. Peziarah baru mulai pada 2026; halaman ini tidak menampilkan ulasan atau angka pelanggan.
+- [Shuttle Kerkhof Muntilan–Sendangsono](https://peziarah.com/jurnal/artikel/shuttle-kerkhof-sendangsono/): SEGERA HADIR, belum beroperasi (November 2026). Rencana: Rp 45.000 per orang pulang-pergi, 4 trip per hari, 14 kursi per trip. Belum bisa dipesan.
 - [Katalog](https://peziarah.com/katalog/): seluruh produk dengan filter kategori dan pencarian.
 - [Bulan Rosario](https://peziarah.com/bulan-rosario/): halaman referensi devosi — misteri rosario menurut hari (Gembira: Senin & Sabtu; Sedih: Selasa & Jumat; Mulia: Rabu & Minggu; Terang/Cahaya: Kamis), urutan doa rosario lengkap 11 langkah, panduan tuan rumah rosario lingkungan, dan rosario buatan tangan. Pesanan lingkungan 40–80 pcs dengan ukir nama paroki. Rosario tidak dijual dalam keadaan sudah diberkati — pemberkatan dilakukan imam di paroki penerima.
 - [Salve Regina](https://peziarah.com/salve-regina/): karya gambar interaktif — Bunda Maria (gambar karya Peziarah) yang setiap garisnya diisi ayat Kitab Suci terjemahan Katolik Douay-Rheims (domain publik): 37 ayat dalam tiga rangkaian, Maria, Magnificat dan Sengsara. Pengunjung menggulir untuk membaca dari wajah ke kerudung sampai gambar utuh dan tulisan Salve Regina. Teks antifon Latin dan daftar semua ayat ada di halaman. Bukan produk dan tidak dijual.
 - [Hampers](https://peziarah.com/hampers/): paket kado siap kirim.
 - [Hampers Pernikahan “Lima Roti Dua Ikan”](https://peziarah.com/hampers/pernikahan/): hampers pernikahan isi 8, Rp 1.950.000, kotak kayu diukir nama pasangan dan tanggal, pengerjaan 14 hari kerja.
-- [Ziarah](https://peziarah.com/ziarah/): rute ziarah dan merch rombongan.
+- [Ziarah](https://peziarah.com/ziarah/): rute ziarah Katolik untuk rombongan paroki (bus) dan grup kecil 2–8 orang, peta Gua Maria di Jawa dan Bali, merch rombongan. Shuttle Kerkhof Muntilan–Sendangsono segera hadir (belum beroperasi).
 - [Jurnal](https://peziarah.com/jurnal/): tulisan tentang tempat ziarah dan proses kerajinan.
 - [FAQ](https://peziarah.com/faq/): pengiriman, retur, ukuran, perawatan, pembayaran.
 - [Kontak](https://peziarah.com/kontak/): WhatsApp, email, dan pendaftaran vendor pengrajin.

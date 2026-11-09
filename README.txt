@@ -7,7 +7,7 @@ Isi folder ini sudah siap di-upload apa adanya ke web root Hostinger
 (biasanya public_html/). Struktur akhirnya:
 
   public_html/
-    index.html                -> /                    (Landing)
+    index.html                -> /                    (Landing — DIBANGUN dari _src/landing/, lihat bawah)
     katalog/index.html        -> /katalog/
     produk/<id>/index.html    -> /produk/<id>/        (38 halaman produk)
     produk/index.html         -> /produk/?id=<id>     (link lama, tetap jalan)
@@ -201,3 +201,18 @@ proposal per pos, jadi dokumen diterbitkan admin dan dikirim lewat WhatsApp.
 - Penawaran (ZR-XXXXX-Q) dan rencana perjalanan: itinerary ditempel dari
   Sheets/Excel, tercetak di halaman tersendiri pada penawaran/invoice/kuitansi.
 - Pratinjau di Claude: _src/admin-ziarah-preview/build.py (lihat README di sana).
+
+LANDING (index.html) — sejak 9 November 2026
+index.html dibangun ulang dari _src/landing/ (folder ini diblokir .htaccess):
+  head.html      <head>: title, meta, OG, JSON-LD, GTM. Ubah meta di sini.
+  body.dc.html   isi halaman (template). Produk unggulan = FEATURED, rute =
+                 ROUTE_IDS, tulisan yang tidak ditampilkan = POST_SKIP.
+  build.py       python3 _src/landing/build.py (dari root repo).
+Header dan footer TIDAK ditulis di body.dc.html: build.py menyalinnya dari
+produk/index.html, jadi selalu sama dengan halaman lain (komponen Header dan
+Footer di design system Peziarah). Blok statis #__pr (yang dibaca Google)
+dibuat otomatis dari data/products.js, data/routes.js, data/journal.js.
+Jangan edit index.html langsung — jalankan build.py lagi.
+Shuttle di landing berstatus SEGERA HADIR (belum beroperasi): ubah teksnya di
+body.dc.html dan build.py (blok #__pr) saat shuttle mulai jalan.
+
