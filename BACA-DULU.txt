@@ -1,141 +1,98 @@
-# Upload — 7 November 2026
+# Upload — 9 November 2026
 
 Folder ini adalah SELURUH situs, sudah disinkronkan dengan repo terbaru
-(commit 03361b7) plus perubahan di bawah. Timpa semua isi repo / public_html
+(commit 9457b6a) plus perubahan di bawah. Timpa semua isi repo / public_html
 dengan isi folder ini.
 
 ## Yang berubah
 
-**Halaman admin baru: `/admin/ziarah/` — Tagihan ziarah**
-Invoice dan kuitansi perjalanan ziarah per termin, untuk rombongan dan grup
-kecil setelah proposal disetujui. Tidak dipasang checkout untuk ziarah:
-harganya datang dari proposal per pos, jadi dokumen diterbitkan admin.
-- Termin: uang muka 30% saat konfirmasi (jatuh tempo 3 hari setelah
-  invoice), 50% di H-14, pelunasan 20% di H-7. Ada pilihan "Lunas sekaligus"
-  untuk pemesanan mepet.
-- Pos biaya dipilih dari daftar (transportasi, penginapan, konsumsi,
-  pendampingan, ibadat, tiket & izin, perlengkapan, lainnya). Jumlah awal
-  terisi dari peserta, hari, dan malam. Hotel/restoran/vendor permintaan
-  rombongan: tulis namanya, centang "diminta" — tercetak "atas permintaan
-  rombongan".
-- Titipan (persembahan misa, stipendium romo, kolekte) tercetak terpisah:
-  diteruskan utuh, bukan pendapatan Peziarah, tidak kena potongan.
-- Ditagihkan ke rombongan/lembaga (NPWP opsional) atau per peserta.
-  Pajak opsional.
-- PDF: kepala, kaki, dan kotak rekening sama dengan invoice toko. Halaman 1
-  berisi jadwal termin, tagihan ini, dan rekening; rincian biaya dan tabel
-  pembatalan bertanggal di halaman berikutnya.
-- Pencatatan langsung di baris permintaan perjalanan (lihat di bawah),
-  salinan PDF ke Drive "Invoice Peziarah".
-- Draf tersimpan di browser per kode perjalanan.
-- Kode perjalanan dibuat otomatis (ZR- rombongan, CG- grup kecil, BY- susun
-  sendiri); kode dari formulir situs tetap bisa ditempel. Nomor peserta
-  (P01, P02, ...) juga naik otomatis.
-- Tujuan dipilih dari daftar (23 tempat dari halaman rute dan peta Gua
-  Maria, per wilayah) atau diketik sendiri, lalu diurutkan. Nama perjalanan
-  terisi otomatis dari tujuan dan tanggal; daftar tujuan tercetak di PDF.
-- Jumlah setiap pos dihitung otomatis dari peserta, hari, malam, kamar
-  ber-2, dan kendaraan (peserta ÷ kursi kendaraan), dan ikut berubah saat
-  angkanya berubah. Bisa dikunci manual.
+**Cara beli per produk (baru di data/products.js: `order`, `hidden`)**
+- Pemesanan ditunda, tanya lewat WhatsApp (18): Dry Bag 20L, Topi Bucket,
+  Kalung Ichthys, Anting Ichthys, Rosario Kayu Sonokeling,
+  Salib Dinding Sonokeling, Krusifiks Dayak, Salib San Damiano, Syal Tenun
+  Sumba, Selendang Tenun Ende, Ikon Bunda Maria, Wall Art Bunda Maria Line
+  Art, Poster Risograph John 14:6, Crown of Thorn, Bunda Guadalupe dalam Nis
+  Kayu, Tato Kalvari, Lilin Aroma Vespers, The Confessions (Agustinus).
+  Di halaman produk: harga, pilihan, bungkus kado, dan tombol keranjang
+  diabu-abukan dan tidak bisa diklik; kotak ungu "Pemesanan ditunda · Tanya
+  lewat WhatsApp" ("Pemesanan produk ini ditunda sementara. …") dengan tombol
+  "Tanya via WhatsApp" berisi nama produk + varian. Badge: TANYA VIA WA.
+- Mode admin toko (baru): klik "MODE ADMIN TOKO" di /admin/kuitansi/ atau
+  /admin/resi/ (atau buka halaman toko mana pun dengan ?admin=1). Di browser
+  itu saja, produk yang ditunda bisa masuk keranjang lagi, jadi invoice/PDF
+  dibuat dari /keranjang/ seperti biasa. Kotak hitam "Mode admin · checkout
+  dibuka" di halaman produk dan pil "MODE ADMIN TOKO · MATIKAN" di kiri bawah
+  menandainya; klik pil untuk mematikan. Pelanggan tidak terpengaruh.
+- Pre-order (16): semua Batik Print (4), Dopp Kit Kulit, Tas Romo, semua Tote
+  (6), Hoodie Berkah Dalem, Card Holder, Kartu Rosario, Jurnal Jahit Koptik.
+  Di halaman produk: kotak "Pre-order · dibuat setelah kamu pesan" — 10–14
+  hari kerja produksi + 1–4 hari kerja kirim; tombol jadi "Pre-order ke
+  Keranjang"; poin 04 jadi "Dibuat dulu, baru dikirim." Badge: PRE-ORDER.
+  (Knuckle Duster dan Guadalupe 3D yang sudah PRE-ORDER ikut tampilan ini.)
+- Disembunyikan: Allegoria, Patch Bordir Peziarah MC. Hilang dari katalog,
+  pencarian, sitemap, feed Meta; halaman produknya dialihkan ke /katalog/.
+- Lukisan "Mazmur 23": TERJUAL (stok 0, badge abu-abu, tombol pre-order
+  hilang, JSON-LD SoldOut).
 
-**Pencatatan tagihan ziarah: langsung di baris permintaan, tanpa Sheet baru**
-Setiap invoice menandai baris permintaan perjalanan itu (di Sheet formulir
-Rombongan, Grup kecil, atau Susun sendiri, dicari dari kodenya) dengan
-Status "Order"; setiap kuitansi mengisi kolom Bayar dan Riwayat, dan Status
-jadi "Lunas" setelah pelunasan. Kolom Total dan tautan PDF juga terisi.
-Perjalanan dari WhatsApp (tanpa formulir) otomatis dibuatkan barisnya.
-Tidak ada yang masuk ke Sheet pesanan produk.
+**Harga**
+- Batik Print (Kenaikan, Nativity, Calvary, Marian): Kain print Rp 700K,
+  Pashmina Rp 400K ("mulai Rp 400K").
+- Jurnal Jahit Koptik: pilihan ukuran A6 Rp 150K, A5 Rp 250K.
 
-**Penawaran dan rencana perjalanan**
-- Tombol baru "Unduh penawaran": PDF PENAWARAN (nomor ZR-XXXXX-Q) berisi
-  rincian biaya, jadwal termin, ketentuan pembatalan, berlaku sampai
-  (bawaan 7 hari), dan kotak konfirmasi tanpa rekening. Baris permintaan
-  ditandai Status "Penawaran" (lalu "Order" setelah invoice) dan punya kolom
-  tautan Penawaran.
-- Bagian baru "04 · Rencana perjalanan": tempel tabel itinerary langsung dari
-  Google Sheets/Excel (Hari, Waktu, Kegiatan & Rute, Catatan; sel gabungan
-  terbaca), lalu ubah per hari dan per baris. Judul kolom catatan bisa
-  diganti (mis. "Catatan Khusus Lansia"). Tercetak di halaman tersendiri
-  pada penawaran, invoice, dan kuitansi.
-- Tempelan itinerary dengan satu baris per hari (jam dan kegiatan ditulis
-  bertumpuk dalam satu sel) kini dipecah jadi satu baris per kegiatan.
-- Menerbitkan ulang dokumen yang sama (penawaran, invoice, atau kuitansi
-  dengan jumlah sama) memperbarui barisnya di kolom Riwayat dengan tanda
-  "revisi", tidak menambah baris ganda. PDF di Drive diganti yang terbaru.
-- Baris permintaan juga mendapat kolom Peserta (mis. "4 · 2 Lansia") dan
-  Durasi (mis. "5 hari 4 malam · 29 Nov - 3 Des 2026"). Nomor WhatsApp yang
-  diawali "+" tersimpan sebagai teks, tidak lagi #ERROR!.
+**Jurnal Jahit Koptik — foto baru**
+- assets/jurnal-koptik-berdiri.webp, assets/jurnal-koptik-jahitan.webp
+  (foto studio latar putih, 1122×1402 dan 1402×1122)
+  (+ versi Meta di assets/meta/, gambar share baru assets/og/jurnal-koptik.jpg).
+- Spesifikasi Ukuran jadi A6/A5; kalimat "mawar rosette dicetak timbul"
+  dihapus dari deskripsi karena sampul di foto baru polos.
 
-**`data/ziarah-tarif.js`** (baru) — satu tempat untuk daftar tujuan, pos
-biaya, harga, dan rumus per peserta. Harga masih kosong (null): isi di sini
-dan harga itu terisi sendiri di halaman admin. Ada slot `formula()` untuk
-rumus harga per peserta nanti; hasilnya tampil di ringkasan dan jadi angka
-awal tagihan per peserta. Setelah mengubah file ini, naikkan TARIF_JS
-?v=... di admin/ziarah/index.html.
+**Bulan Rosario — panduan kartu rosario**
+- Di bagian "Cara berdoa rosario", gambar baru "02 · Kartu Rosario"
+  berdampingan dengan diagram rosario manik, masing-masing dengan tombol
+  Unduh PNG; ada tautan ke Kartu Rosario. File:
+  assets/cara-berdoa-kartu-rosario.webp/.png.
 
-**`_src/admin-ziarah-preview/`** (baru, tidak disajikan) — skrip yang membuat
-pratinjau halaman admin untuk dibuka di Claude.
+**Lainnya**
+- Keranjang: barang yang sekarang WA-only/terjual/tersembunyi otomatis
+  dikeluarkan dari keranjang lama; harga varian lama (mis. batik Rp 150K)
+  disesuaikan ke harga baru.
+- Essentials: Bunda Guadalupe dalam Nis (opsional) tombolnya jadi "Pesan via
+  WA", tidak masuk keranjang.
+- /data/products.js dan /data/cart.js dimuat sebagai ?v=20261109 di semua
+  halaman supaya cache 7 hari tidak menahan harga lama.
+- Halaman produk (prerender): baris status, tombol WA, catatan pre-order/WA,
+  dan JSON-LD (harga + availability) diperbarui. Katalog prerender: harga,
+  status, jumlah per kategori, ItemList.
+- meta-catalog.csv: harga batik & jurnal (jurnal jadi 2 varian), availability
+  (preorder / available for order / out of stock), 2 produk tersembunyi
+  dihapus.
+- sitemap.xml, llms.txt, README.txt diperbarui.
 
-**`data/invoice.js`**
-Tambah pembuat PDF ziarah (downloadTripInvoice) dan angka termin/pembatalan.
-Kepala, kaki, rekening, dan stempel invoice toko dipindah ke satu fungsi
-bersama — PDF toko dicek piksel-per-piksel, hasilnya identik.
-
-**`meta-capi-apps-script.gs`** — PERLU DITEMPEL ULANG DI APPS SCRIPT
-Menerima PDF ziarah (ZR-XXXXX-DP, -T2, -LN, ZR-XXXXX-P03-DP), menyimpannya
-di Drive, dan menandai baris permintaan. Bagian `ZIARAH` sudah berisi URL
-Sheet Permintaan Ziarah, Grup Kecil, dan Susun Sendiri.
-Purchase GA4/Meta dikirim sekali saat kuitansi pertama sebuah perjalanan.
-Cek cepat: buka URL web app (DRIVE_URL di data/invoice.js) di browser —
-harus tertulis "Peziarah Apps Script versi 2026-11-07e". Fungsi `cekZiarah`
-(jalankan dari editor) menampilkan Sheet, tab, dan kolom kode yang dipakai.
-
-**`/admin/kuitansi/`** — tautan ke Tagihan Ziarah. Tombol "Unduh invoice
-(belum lunas)" tidak lagi mengirim ID GA milik admin ke Sheet (sebelumnya
-bisa menimpa ID GA pembeli). Memuat invoice.js versi baru (?v=20261106).
-**`/admin/resi/`** — tautan ke Tagihan Ziarah.
-
-**`/syarat-ketentuan/`** bagian 6 — ketentuan termin, potongan pembatalan,
-dan titipan menggantikan kalimat "disebutkan dalam proposal masing-masing".
-**`/ziarah/grup-kecil/`** — catatan biaya: "sisa dilunasi setelah perjalanan
-selesai" diganti jadwal termin yang baru.
-
-**`sitemap.xml`** — lastmod /syarat-ketentuan/ dan /ziarah/grup-kecil/.
-**`llms.txt`** — ketentuan bayar dan batal perjalanan ziarah.
-**`README.txt`** — struktur folder admin, catatan Tagihan Ziarah; bagian
-Google Analytics diperbaiki (pelacakan lewat GTM, bukan tag GA4 langsung).
-**`README-TRACKING.md`** — bagian D: alur Sheet/GA4/Meta untuk tagihan ziarah.
-
-## Jumlah file berubah
+## Jumlah file
 
 | Bagian | File |
 |---|---|
-| Halaman baru admin/ziarah/ | 1 |
-| data/invoice.js, data/ziarah-tarif.js (baru) | 2 |
-| Sumber _src/admin-ziarah-preview/ (baru) | 3 |
-| Admin lain (kuitansi, resi) | 2 |
-| Halaman publik (syarat-ketentuan, ziarah/grup-kecil) | 2 |
-| Apps Script | 1 |
-| sitemap, llms.txt, README.txt, README-TRACKING.md, BACA-DULU.txt | 5 |
+| Halaman produk (prerender + kode halaman) | 50 |
+| data/products.js, data/cart.js | 2 |
+| Katalog, keranjang, essentials, bulan-rosario | 4 |
+| Halaman lain (hanya ?v= pada products.js/cart.js) | ±45 |
+| Admin (kuitansi, resi: tautan mode admin) | 2 |
+| Gambar baru (jurnal 2 + meta 2 + og 1, kartu rosario 2) | 7 |
+| meta-catalog.csv, sitemap.xml, llms.txt, README.txt, BACA-DULU.txt | 5 |
 
 ## Setelah upload
 
-1. Apps Script: tempel isi baru `meta-capi-apps-script.gs` (URL Sheet
-   Permintaan Ziarah, Grup Kecil, dan Susun Sendiri sudah terisi di bagian
-   `ZIARAH`). Simpan, lalu Deploy > Manage deployments > edit > Version:
-   New version (URL tetap sama). Akun Google pemilik Apps Script harus bisa
-   mengedit ketiga Sheet itu.
-2. Buka `/admin/ziarah/`. Buka satu permintaan yang sudah ada: tempel
-   kodenya (mis. ZR-…) di Kode perjalanan, pilih tujuan, isi tanggal,
-   peserta, dan 2–3 pos dengan harga, lalu unduh Invoice uang muka. Cek PDF:
-   tujuan, jadwal termin, jatuh tempo, tabel pembatalan, rekening.
-3. Cek Sheet permintaannya: baris kode itu berkolom Status "Order", Total,
-   Riwayat, dan tautan Invoice. Cek Drive: Invoice-ZR-…-DP.pdf.
-4. Unduh kuitansi uang muka untuk perjalanan yang sama: kolom Bayar berisi
-   "uang muka diterima · sisa …" dan Riwayat bertambah satu baris. Setelah
-   uji, kosongkan sel-sel itu (pembayaran uji juga mengirim satu purchase ke
-   GA4/Meta).
-5. Buka `/admin/kuitansi/`: unduh satu invoice dan kuitansi toko seperti
-   biasa, pastikan tetap sama.
-6. Baca ulang `/syarat-ketentuan/` bagian 6 dan catatan biaya di
-   `/ziarah/grup-kecil/`.
+1. Buka /produk/rosario-sonokeling/: blok harga & tombol abu-abu, kotak ungu
+   WhatsApp membuka chat dengan nama produk.
+1b. Klik MODE ADMIN TOKO di /admin/kuitansi/, buka lagi produk itu: tombol
+   keranjang aktif. Masukkan ke keranjang, buat PDF di /keranjang/, lalu klik
+   pil "MODE ADMIN TOKO · MATIKAN".
+2. Buka /produk/batik-marian/: Kain Rp 700K, klik Pashmina → Rp 400K; kotak
+   pre-order tampil. Tambah ke keranjang, cek harga di /keranjang/.
+3. /produk/jurnal-koptik/: foto baru, A6 Rp 150K / A5 Rp 250K.
+4. /katalog/: Allegoria dan Patch Bordir tidak ada; badge PRE-ORDER /
+   PESAN VIA WA / TERJUAL tampil.
+5. /bulan-rosario/#urutan: dua gambar berdampingan, kedua tombol unduh jalan.
+6. Meta Commerce Manager: jalankan ulang feed meta-catalog.csv.
+7. Masih lama (belum disentuh): gambar share batik (assets/og/batik-*.jpg)
+   masih menulis harga dan nama lama.

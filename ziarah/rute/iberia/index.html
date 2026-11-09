@@ -27,8 +27,8 @@
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/routes.js">
 <link rel="modulepreload" href="/data/journal.js">
-<link rel="modulepreload" href="/data/products.js">
-<link rel="modulepreload" href="/data/cart.js">
+<link rel="modulepreload" href="/data/products.js?v=20261109">
+<link rel="modulepreload" href="/data/cart.js?v=20261109">
 <script defer src="/support.js"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -495,13 +495,13 @@ class Component extends DCLogic {
     import("/data/verses.js").then(m => this.setState({ verse: m.currentVerse() }));
     import("/data/routes.js").then(m => { ROUTES = m.ROUTES; this.setState({ loaded: true }); });
     import("/data/journal.js").then(m => { POSTS = m.POSTS; this.forceUpdate(); });
-    import("/data/products.js").then(m => {
+    import("/data/products.js?v=20261109").then(m => {
       PRODUCTS = m.PRODUCTS;
       CAT_LABEL = {};
       m.CATEGORIES.forEach(c => { CAT_LABEL[c.id] = c.name; });
       this.forceUpdate();
     });
-    import("/data/cart.js").then(m => {
+    import("/data/cart.js?v=20261109").then(m => {
       this.setState({ cartCount: m.count() });
       this._offCart = m.subscribe(items => this.setState({ cartCount: items.reduce((n, i) => n + i.qty, 0) }));
     });

@@ -47,7 +47,7 @@ Jawaban yang sudah terbit:
 - **Perhiasan & Aksesori** — kalung, cincin, gelang, anting bermotif rohani (ichthys, salib).
 - **Tenun & Batik** — batik tulis dan tenun bermotif rohani; bisa dijahit jadi kemeja atau dress.
 - **Wall Art** — ikon cukil kayu, poster risograph, panel kuningan.
-- **Merch** — kaos grafis, tote, bandana, patch.
+- **Merch** — kaos grafis, hoodie, tote, bandana, topi.
 - **Lilin Aroma** — lilin kedelai untuk doa dan adorasi.
 - **Carry Goods** — dopp kit kulit, dry bag untuk ziarah.
 - **Buku** — buku dan jurnal jahit tangan.
@@ -76,6 +76,9 @@ Jawaban yang sudah terbit:
 ## Cara pesan & bayar
 
 - Pesanan dibuat lewat keranjang di situs, lalu dikonfirmasi via WhatsApp.
+- Pemesanan sebagian produk sedang ditunda (ditandai "Tanya via WA" di halaman
+  produknya; keranjang ditutup untuk barang itu) — tanyakan ketersediaannya lewat WhatsApp. Produk bertanda "Pre-order"
+  dibuat setelah dipesan: 10–14 hari kerja produksi, lalu 1–4 hari kerja pengiriman.
 - Pembayaran: transfer bank manual, konfirmasi bukti transfer lewat WhatsApp.
 - Gratis ongkir untuk pembelian di atas Rp 500.000.
 - Tukar 14 hari untuk kesalahan ukuran, satu kali gratis.

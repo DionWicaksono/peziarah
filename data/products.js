@@ -23,6 +23,13 @@
 //   stock   number   0 = SOLD OUT badge overrides `badge`
 //   status  string   optional; replaces the "SEGERA" status pill (e.g. "AVAILABLE")
 //   stockNote string optional; replaces the PDP pre-order line (e.g. one-off originals)
+//   order   "preorder" | "wa"  optional (9 Nov 2026). "preorder" = made after the order,
+//                    PDP explains production + shipping time (`lead`, default PREORDER_LEAD).
+//                    "wa" = ordering paused: buy box greyed out, "Tanya via WhatsApp" box.
+//                    Admin mode (?admin=1, see ADMIN below) opens checkout again for invoices.
+//   lead    string   optional; production time for pre-order, e.g. "3–4 minggu"
+//   hidden  boolean  optional; kept in the data but not published anywhere
+//   soldLabel/soldNote  optional; badge + PDP line when stock is 0 (e.g. "TERJUAL")
 //   quote   object   optional; { lines[], cite } scripture pull-quote shown above desc
 //   base    number   optional; price in rupiah, used when `opt.add` recomputes price
 //   opt     object   optional per-product variant selector that overrides the PDP's
@@ -145,7 +152,9 @@ export const CATEGORY_COPY = {
 export const BODYART_RATE = { perCm: 180000, min: 900000 };
 
 // Batik designs ship as a full cloth or as a pashmina; surcharge added on top of `base`.
-const FORMAT = { label: "FORMAT", values: ["Kain print 150×200 cm", "Pashmina viscose 70×180 cm"], add: [0, 100000], note: "Pashmina viscose 70×180 cm — dicetak batch kecil di Klaten, 10–14 hari kerja." };
+// Kain Rp 700K, pashmina Rp 400K (9 Nov 2026). Value order stays kain → pashmina
+// because Essentials links to `opt: 1` = pashmina; the pashmina price is base + add[1].
+const FORMAT = { label: "FORMAT", values: ["Kain print 150×200 cm", "Pashmina viscose 70×180 cm"], add: [0, -300000], note: ["", ""] };
 
 export const SEWING = { kemeja: 450000, dress: 650000 };
 
@@ -155,35 +164,35 @@ export const SEWING = { kemeja: 450000, dress: 650000 };
 export const ESSENTIALS_KIT = { name: "Peziarah Essentials", href: "/essentials/" };
 
 const ALL_PRODUCTS = [
-  { id: "batik-kenaikan", name: "Batik Print “Kenaikan”", cat: "apparel", price: "mulai Rp 150K", base: 150000,
+  { id: "batik-kenaikan", order: "preorder", name: "Batik Print “Kenaikan”", cat: "apparel", price: "mulai Rp 400K", base: 700000,
     opt: FORMAT,
     desc: "Kristus naik ke surga dalam bahasa rupa Jawa: awan mega mendung menyangga tubuh-Nya, para rasul berkain dan berkerudung menengadah dari bawah, parang klasik mengunci kaki kain. Dicetak di Klaten dalam batch kecil, dari desain yang digambar khusus untuk Peziarah. Ambil sebagai kain utuh 150×200 cm, atau sebagai pashmina viscose yang jatuh lembut di bahu.",
     specs: [{ k: "Bahan", v: "Kain — katun Toyobo · Pashmina — viscose" }, { k: "Ukuran", v: "Kain 150×200 cm · Pashmina 70×180 cm" }, { k: "Teknik", v: "Cetak batik, batch kecil di Klaten" }, { k: "Desain", v: "Digambar khusus untuk Peziarah, bukan motif pasaran" }, { k: "Kemasan", v: "Dilipat kertas asam-netral + kotak kado" }],
     care: "Cuci tangan dengan sabun cair lembut bersuhu dingin, terpisah dari pakaian lain pada dua-tiga cucian pertama. Jangan direndam lama, jangan disikat, jangan diperas kencang. Jemur balik di tempat teduh — sinar matahari langsung memudarkan warna cetak. Setrika suhu sedang dari sisi dalam; pashmina viscose cukup disetrika selagi agak lembap.",
     rite: { title: "Sebelum kain dilipat", body: "Setiap lembar diperiksa di bawah cahaya siang — ketajaman cetak, warna, dan jahitan tepinya — lalu dilipat dengan kertas asam-netral dan disertai kartu keterangan motif. Tanpa plastik sekali pakai." },
     badge: "SEGERA", hero: "/assets/batik-kenaikan-pashmina.webp", image: "/assets/batik-kenaikan.webp", shots: ["/assets/batik-kenaikan-full.webp", "/assets/batik-kenaikan-pashmina.webp"], slot: "[ batik print kenaikan ]", h: 480, tone: "light", rot: -0.7, stock: 6 },
-  { id: "batik-nativity", name: "Batik Print “Nativity”", cat: "apparel", price: "mulai Rp 150K", base: 150000,
+  { id: "batik-nativity", order: "preorder", name: "Batik Print “Nativity”", cat: "apparel", price: "mulai Rp 400K", base: 700000,
     opt: FORMAT,
     desc: "Malam Natal dengan kandang beratap joglo: bintang timur pecah jadi sinar di tengah kain, dua malaikat melayang di awan, tiga raja datang dari kiri membawa pundi-pundi, unta dan lembu menunggu di tepi. Nila tua dengan emas gading — warna yang sama tenangnya dipakai ke misa malam atau disampirkan di meja Natal.",
     specs: [{ k: "Bahan", v: "Kain — katun Toyobo · Pashmina — viscose" }, { k: "Ukuran", v: "Kain 150×200 cm · Pashmina 70×180 cm" }, { k: "Teknik", v: "Cetak batik, batch kecil di Klaten" }, { k: "Desain", v: "Digambar khusus untuk Peziarah, bukan motif pasaran" }, { k: "Kemasan", v: "Dilipat kertas asam-netral + kotak kado" }],
     care: "Cuci tangan dengan sabun cair lembut bersuhu dingin, terpisah dari pakaian lain pada dua-tiga cucian pertama. Jangan direndam lama, jangan disikat, jangan diperas kencang. Jemur balik di tempat teduh — sinar matahari langsung memudarkan warna cetak. Setrika suhu sedang dari sisi dalam; pashmina viscose cukup disetrika selagi agak lembap.",
     rite: { title: "Sebelum kain dilipat", body: "Setiap lembar diperiksa di bawah cahaya siang — ketajaman cetak, warna, dan jahitan tepinya — lalu dilipat dengan kertas asam-netral dan disertai kartu keterangan motif. Tanpa plastik sekali pakai." },
     badge: "SEGERA", hero: "/assets/batik-nativity-model.webp", image: "/assets/batik-nativity.webp", shots: ["/assets/batik-nativity-model.webp"], slot: "[ batik print nativity ]", h: 440, tone: "dark", rot: 0.6, stock: 6 },
-  { id: "batik-calvary", name: "Batik Print “Calvary”", cat: "apparel", price: "mulai Rp 150K", base: 150000,
+  { id: "batik-calvary", order: "preorder", name: "Batik Print “Calvary”", cat: "apparel", price: "mulai Rp 400K", base: 700000,
     opt: FORMAT,
     desc: "Golgota di antara tembok Yerusalem: Kristus di salib dengan INRI di atas kepala, Bunda Maria dan Yohanes berdiri mengapit, merpati dan awan mengisi langit, sulur bunga menutup seluruh latar sampai ke pinggir kain. Cokelat soga tua — kain Jumat Agung, tapi cukup tenang untuk dipakai sepanjang tahun.",
     specs: [{ k: "Bahan", v: "Kain — katun Toyobo · Pashmina — viscose" }, { k: "Ukuran", v: "Kain 150×200 cm · Pashmina 70×180 cm" }, { k: "Teknik", v: "Cetak batik, batch kecil di Klaten" }, { k: "Desain", v: "Digambar khusus untuk Peziarah, bukan motif pasaran" }, { k: "Kemasan", v: "Dilipat kertas asam-netral + kotak kado" }],
     care: "Cuci tangan dengan sabun cair lembut bersuhu dingin, terpisah dari pakaian lain pada dua-tiga cucian pertama. Jangan direndam lama, jangan disikat, jangan diperas kencang. Jemur balik di tempat teduh — sinar matahari langsung memudarkan warna cetak. Setrika suhu sedang dari sisi dalam; pashmina viscose cukup disetrika selagi agak lembap.",
     rite: { title: "Sebelum kain dilipat", body: "Setiap lembar diperiksa di bawah cahaya siang — ketajaman cetak, warna, dan jahitan tepinya — lalu dilipat dengan kertas asam-netral dan disertai kartu keterangan motif. Tanpa plastik sekali pakai." },
     badge: "SEGERA", hero: "/assets/batik-calvary-model.webp", image: "/assets/batik-calvary.webp", shots: ["/assets/batik-calvary-pashmina.webp", "/assets/batik-calvary-model.webp"], slot: "[ batik print calvary ]", h: 400, tone: "light", rot: -0.4, stock: 6 },
-  { id: "batik-marian", kit: ESSENTIALS_KIT, name: "Batik Print “Marian”", cat: "apparel", price: "mulai Rp 150K", base: 150000,
+  { id: "batik-marian", order: "preorder", kit: ESSENTIALS_KIT, name: "Batik Print “Marian”", cat: "apparel", price: "mulai Rp 400K", base: 700000,
     opt: FORMAT,
     desc: "Bunda Maria berdiri di atas bulan sabit, diapit dua malaikat pembawa lili, dengan gunung, danau, dan siluet menara gereja Jawa di kedua sisi. Nila tua dengan emas — panel memanjang yang jatuh persis di sepanjang pashmina, dan terbaca utuh ketika kainnya dibentangkan.",
     specs: [{ k: "Bahan", v: "Kain — katun Toyobo · Pashmina — viscose" }, { k: "Ukuran", v: "Kain 150×200 cm · Pashmina 70×180 cm" }, { k: "Teknik", v: "Cetak batik, batch kecil di Klaten" }, { k: "Desain", v: "Digambar khusus untuk Peziarah, bukan motif pasaran" }, { k: "Kemasan", v: "Dilipat kertas asam-netral + kotak kado" }],
     care: "Cuci tangan dengan sabun cair lembut bersuhu dingin, terpisah dari pakaian lain pada dua-tiga cucian pertama. Jangan direndam lama, jangan disikat, jangan diperas kencang. Jemur balik di tempat teduh — sinar matahari langsung memudarkan warna cetak. Setrika suhu sedang dari sisi dalam; pashmina viscose cukup disetrika selagi agak lembap.",
     rite: { title: "Sebelum kain dilipat", body: "Setiap lembar diperiksa di bawah cahaya siang — ketajaman cetak, warna, dan jahitan tepinya — lalu dilipat dengan kertas asam-netral dan disertai kartu keterangan motif. Tanpa plastik sekali pakai." },
     badge: "SEGERA", hero: "/assets/batik-marian-model.webp", image: "/assets/batik-marian.webp", shots: ["/assets/batik-marian-model.webp"], slot: "[ batik print marian ]", h: 360, tone: "dark", rot: 0, stock: 6 },
-  { id: "rosario-sonokeling", name: "Rosario Kayu Sonokeling", cat: "rosario", price: "Rp 249K", badge: "BEST SELLER", image: "/assets/hero-rosario.webp", shots: ["/assets/hero-rosario-full.webp"], slot: "[ rosario sonokeling ]", h: 420, tone: "light", rot: -1.2, stock: 12 },
+  { id: "rosario-sonokeling", order: "wa", name: "Rosario Kayu Sonokeling", cat: "rosario", price: "Rp 249K", badge: "BEST SELLER", image: "/assets/hero-rosario.webp", shots: ["/assets/hero-rosario-full.webp"], slot: "[ rosario sonokeling ]", h: 420, tone: "light", rot: -1.2, stock: 12 },
   { id: "rosario-mutiara", kit: ESSENTIALS_KIT, name: "Rosario Mutiara Air Tawar", cat: "rosario", price: "Rp 700K", badge: "BARU",
     desc: "Dibuat tangan oleh Suster Dien FCh di Biara Santa Monika, Palembang. Mutiara air tawar dari Lombok, bulat-tak-sempurna seperti asalnya, dirangkai satu per satu dengan kawat stainless yang dipuntir tangan — bukan diikat benang, jadi tidak berhamburan kalau tersangkut. Medali Maria dan krusifiks perak di ujungnya. Untuk dipakai seumur hidup, lalu diwariskan.",
     specs: [{ k: "Manik", v: "Mutiara air tawar Lombok 7–8 mm, putih" }, { k: "Rangka", v: "Kawat stainless steel, puntir tangan" }, { k: "Medali", v: "Regina sine labe, oval 22 mm" }, { k: "Panjang", v: "±58 cm termasuk krusifiks" }],
@@ -192,14 +201,14 @@ const ALL_PRODUCTS = [
     desc: "Rosario untuk Ratu Cahaya. Mutiara air tawar berwarna persik dirangkai dengan penghubung zirkonia premium berbentuk hati, berpusat pada zirkonia berbentuk mawar. Kilau zirkonia dan lembutnya mutiara — dua cahaya yang berbeda, untuk satu Ratu yang sama.",
     specs: [{ k: "Manik", v: "Mutiara air tawar, warna persik" }, { k: "Penghubung", v: "Zirkonia premium bentuk hati" }, { k: "Pusat", v: "Zirkonia bentuk mawar" }, { k: "Salib", v: "Berhias zirkonia" }],
     video: ["https://res.cloudinary.com/bq8bgkqr/video/upload/so_11,eo_19,ac_none,w_720,c_scale,vc_vp9,q_auto:good/v1790137672/WhatsApp_Video_2026-09-22_at_4.52.06_PM.webm", "https://res.cloudinary.com/bq8bgkqr/video/upload/so_11,eo_19,ac_none,w_720,c_scale,vc_h264:main,q_auto:good/v1790137672/WhatsApp_Video_2026-09-22_at_4.52.06_PM.mp4"], hero: "/assets/regina-lucis-poster.webp", image: "/assets/regina-lucis.webp", slot: "[ rosario regina lucis ]", h: 460, tone: "light", rot: 1.1, stock: 10 },
-  { id: "kartu-rosario", kit: ESSENTIALS_KIT, pair: ["card-holder-peziarah"], name: "Kartu Rosario Stainless", cat: "rosario", price: "Rp 50K", base: 50000, badge: "BARU",
+  { id: "kartu-rosario", order: "preorder", kit: ESSENTIALS_KIT, pair: ["card-holder-peziarah"], name: "Kartu Rosario Stainless", cat: "rosario", price: "Rp 50K", base: 50000, badge: "BARU",
     opt: { label: "FINISHING", values: ["Stainless steel hairline"] },
     desc: "Rosario yang muat di dompet. Selembar stainless steel seukuran kartu ATM dengan finishing hairline, dilubangi mengikuti urutan doa: salib, lima lubang pembuka, lalu sepuluh lubang untuk satu dekade Salam Maria. Ujung jari menelusuri lubang satu per satu — di kereta, di ruang tunggu, di jalan ziarah — tanpa manik yang berbunyi atau tali yang kusut. Bagian dari Peziarah Essential: barang bawaan harian seorang peziarah.",
     specs: [{ k: "Bahan", v: "Stainless steel, finishing hairline" }, { k: "Ukuran", v: "Seukuran kartu ATM / kartu kredit (85,6 × 54 mm)" }, { k: "Pola", v: "Salib, 1 + 3 + 1 lubang pembuka, satu dekade (10 lubang)" }, { k: "Muat di", v: "Slot kartu dompet atau card holder" }],
     care: "Stainless steel tidak berkarat dan tidak perlu perawatan khusus. Lap dengan kain kering bila berbekas sidik jari — goresan halus akan menyatu dengan serat hairline seiring pemakaian.",
     rite: { title: "Sebelum masuk amplop", body: "Setiap kartu diraba tepinya satu per satu — tidak boleh ada sisi yang tajam di saku atau dompet — lalu dilap bersih dan dikemas dalam amplop kertas kaku, tanpa plastik sekali pakai." },
     image: "/assets/kartu-rosario.webp", shots: ["/assets/kartu-rosario-edc.webp", "/assets/kartu-rosario-essential.webp"], slot: "[ kartu rosario ]", h: 380, tone: "light", rot: 0, stock: 50 },
-  { id: "card-holder-peziarah", kit: ESSENTIALS_KIT, pair: ["kartu-rosario"], name: "Card Holder Kulit Peziarah", cat: "carry", price: "mulai Rp 350K", base: 350000, badge: "BARU",
+  { id: "card-holder-peziarah", order: "preorder", kit: ESSENTIALS_KIT, pair: ["kartu-rosario"], name: "Card Holder Kulit Peziarah", cat: "carry", price: "mulai Rp 350K", base: 350000, badge: "BARU",
     opt: { label: "JAHITAN", values: ["Jahit mesin", "Jahit tangan"], add: [0, 150000], note: "Jahit tangan pelana — dua jarum, satu benang, tidak lepas meski satu jahitan putus. 10–14 hari kerja." },
     desc: "Dompet kartu paling tipis yang masih pantas disebut kulit. Dua slot depan dan satu kantong utama — cukup untuk KTP, satu kartu bank, dan Kartu Rosario Stainless di slot paling atas, siap diraba kapan saja. Kulit sapi full-grain cokelat tua, logo PEZIARAH di-emboss tanpa tinta, tepi dijahit benang lilin jingga. Pilih jahit mesin yang rapi dan rata, atau jahit tangan pelana: dua jarum, satu benang, tidak lepas meski satu jahitan putus.",
     specs: [{ k: "Bahan", v: "Kulit sapi full-grain, cokelat tua" }, { k: "Ukuran", v: "10 × 7 cm · tebal ±4 mm kosong" }, { k: "Muat", v: "2–3 kartu — 2 slot depan + 1 kantong utama" }, { k: "Jahitan", v: "Mesin, atau jahit tangan pelana benang lilin" }, { k: "Logo", v: "Emboss PEZIARAH, tanpa tinta" }],
@@ -214,52 +223,52 @@ const ALL_PRODUCTS = [
     care: "Lap dengan kain mikrofiber. Stainless tidak berkarat, tapi sidik jari dan garam keringat tetap menempel — bilas air hangat sesekali lalu keringkan. Gores halus pada hairline bisa dirapikan searah serat dengan spons abrasif halus; jangan menggosok di atas ukiran.",
     rite: { title: "Sebelum masuk kantong", body: "Tiap keping diraba sepanjang lubang jarinya — tidak boleh ada sudut tajam sisa potongan — dan ukiran laser dicek terbaca penuh di bawah cahaya siang. Dibungkus kain dan kertas, tanpa plastik sekali pakai." },
     image: "/assets/knuckle-duster-yesaya.webp", shots: ["/assets/knuckle-duster-yesaya-genggam.webp", "/assets/knuckle-duster-yesaya-meja.webp", "/assets/knuckle-duster-yesaya-flatlay.webp"], slot: "[ knuckle duster ]", h: 380, tone: "light", rot: 0.4, stock: 99 },
-  { id: "salib-sonokeling-kuningan", name: "Salib Dinding Sonokeling — Korpus Kuningan", cat: "salib", price: "Rp 685K", badge: "BEST SELLER", image: "/assets/salib-sonokeling-kuningan.webp", shots: ["/assets/salib-sonokeling-kuningan-full.webp"], slot: "[ salib sonokeling kuningan ]", h: 400, tone: "light", rot: -1, stock: 16 },
+  { id: "salib-sonokeling-kuningan", order: "wa", name: "Salib Dinding Sonokeling — Korpus Kuningan", cat: "salib", price: "Rp 685K", badge: "BEST SELLER", image: "/assets/salib-sonokeling-kuningan.webp", shots: ["/assets/salib-sonokeling-kuningan-full.webp"], slot: "[ salib sonokeling kuningan ]", h: 400, tone: "light", rot: -1, stock: 16 },
   { id: "krusifiks-jati", name: "Krusifiks Dinding Jati", cat: "salib", price: "Rp 545K", badge: "", image: "", slot: "[ krusifiks jati ]", h: 460, tone: "light", rot: 0.8, stock: 5 },
-  { id: "krusifiks-dayak", name: "Krusifiks Ukir Dayak — Sulur Enggang", cat: "salib", price: "Rp 2.450K", base: 2450000,
+  { id: "krusifiks-dayak", order: "wa", name: "Krusifiks Ukir Dayak — Sulur Enggang", cat: "salib", price: "Rp 2.450K", base: 2450000,
     opt: { label: "UKURAN", values: ["M — 45 cm", "L — 60 cm", "XL — 80 cm"], add: [0, 950000, 2100000] },
     desc: "Satu papan meranti dipahat tembus jadi sulur yang saling mengunci — ragam hias Dayak yang biasanya menutup dinding rumah panjang dan sarung mandau, di sini mengelilingi korpus. Ujung-ujungnya melengkung seperti kepala enggang, burung yang di Kalimantan dipakai untuk menyebut yang di atas. Warnanya dikuas tangan lapis demi lapis: merah, kuning, putih, hitam — empat warna yang sama yang dipakai pada perisai dan tato adat, bukan palet yang kami pilih sendiri. Korpusnya dipahat terpisah dan disatukan tanpa sekrup dari depan. Pengerjaan satu keping enam sampai delapan minggu, dan tidak ada dua yang sama persis.",
     specs: [{ k: "Bahan", v: "Kayu meranti, pahat tembus tangan" }, { k: "Warna", v: "Cat akrilik kuas tangan, finishing matte" }, { k: "Korpus", v: "Dipahat terpisah, disatukan pasak kayu" }, { k: "Gantungan", v: "Kait logam terpasang, siap dipaku" }, { k: "Waktu buat", v: "6–8 minggu per keping" }],
     fit: "contain", badge: "HANDMADE", image: "/assets/krusifiks-dayak.webp", shots: ["/assets/krusifiks-dayak-detail.webp"], slot: "[ krusifiks ukir dayak ]", h: 540, tone: "light", rot: 0, stock: 3 },
-  { id: "san-damiano-mini", name: "Salib San Damiano — Wayang", cat: "salib", price: "Rp 1.290K", base: 1290000,
+  { id: "san-damiano-mini", order: "wa", name: "Salib San Damiano — Wayang", cat: "salib", price: "Rp 1.290K", base: 1290000,
     opt: { label: "UKURAN", values: ["S — 30 cm", "M — 45 cm", "L — 60 cm"], add: [0, 380000, 820000] },
     desc: "San Damiano yang ditulis ulang dalam bahasa rupa Jawa: korpus digambar seperti tokoh wayang, para saksi memakai kain batik, dan tulisannya beraksara Jawa. Dilukis tangan di atas panel kayu mahoni dengan cat tempera dan prada emas, lalu difinishing sirlak — persis cara ikon lama dibuat, hanya tokohnya orang sini.",
     specs: [{ k: "Bahan", v: "Panel mahoni, tempera telur, prada emas" }, { k: "Teknik", v: "Lukis tangan, aksara Jawa" }, { k: "Finishing", v: "Sirlak, kait gantung di belakang" }, { k: "Waktu buat", v: "3–5 minggu per keping" }],
     badge: "", fit: "contain", image: "/assets/salib-san-damiano.webp", slot: "[ san damiano wayang ]", h: 520, tone: "light", rot: 0, stock: 7 },
-  { id: "ichthys-kalung-perak", name: "Kalung Ichthys Perak 925", cat: "perhiasan", price: "Rp 459K", base: 459000,
+  { id: "ichthys-kalung-perak", order: "wa", name: "Kalung Ichthys Perak 925", cat: "perhiasan", price: "Rp 459K", base: 459000,
     opt: { label: "PANJANG RANTAI", values: ["40 cm", "45 cm", "50 cm"], add: [0, 0, 25000] },
     desc: "Ichthys — tanda ikan yang dulu digores diam-diam di dinding katakombe. Liontinnya dibentuk dari satu batang perak 925 yang ditekuk dan dipoles cermin, digantung pada rantai kabel halus. Kecil, tidak menjelaskan diri, dan hanya dikenali oleh yang tahu.",
     specs: [{ k: "Bahan", v: "Perak 925, poles cermin" }, { k: "Liontin", v: "22 × 9 mm" }, { k: "Rantai", v: "Kabel 1,2 mm, kaitan lobster" }, { k: "Perawatan", v: "Termasuk kain poles; lepas saat berenang" }],
     fit: "contain", badge: "BARU", image: "/assets/ichthys-kalung.webp", slot: "[ kalung ichthys perak ]", h: 380, tone: "light", rot: 0, stock: 26 },
-  { id: "ichthys-anting-perak", name: "Anting Ichthys Perak 925", cat: "perhiasan", price: "Rp 385K", base: 385000,
+  { id: "ichthys-anting-perak", order: "wa", name: "Anting Ichthys Perak 925", cat: "perhiasan", price: "Rp 385K", base: 385000,
     opt: { label: "KAITAN", values: ["French hook", "Huggie klik"], add: [0, 40000] },
     desc: "Sepasang ichthys menggantung ringan dari kait perak — cukup panjang untuk bergerak saat kepala menunduk. Dibuat dari batang perak 925 yang sama dengan kalungnya, jadi keduanya bisa dipakai sebagai satu set.",
     specs: [{ k: "Bahan", v: "Perak 925, poles cermin" }, { k: "Ukuran", v: "38 mm total, liontin 22 mm" }, { k: "Kait", v: "French hook, anti-alergi" }, { k: "Berat", v: "1,4 g per sisi" }],
     fit: "contain", badge: "BARU", image: "/assets/ichthys-anting.webp", slot: "[ anting ichthys perak ]", h: 340, tone: "violet", rot: 1.1, stock: 19 },
   { id: "cincin-ora", name: "Cincin Doa “Ora”", cat: "perhiasan", price: "Rp 189K", badge: "", image: "", slot: "[ cincin doa ]", h: 300, tone: "light", rot: 1.3, stock: 18 },
   { id: "gelang-manik-tenun", name: "Gelang Manik Tenun", cat: "perhiasan", price: "Rp 129K", badge: "", image: "", slot: "[ gelang manik ]", h: 340, tone: "light", rot: 0, stock: 64 },
-  { id: "syal-tenun-sumba", name: "Syal Tenun Sumba Liturgi", cat: "apparel", price: "Rp 675K", badge: "HANDMADE",
+  { id: "syal-tenun-sumba", order: "wa", name: "Syal Tenun Sumba Liturgi", cat: "apparel", price: "Rp 675K", badge: "HANDMADE",
     desc: "Tenun ikat Sumba Timur dengan monogram IHS di tengah, diapit ayam dan bintang timur — motif adat yang dipakai penenun Kristen setempat untuk kisah imannya sendiri. Kapasnya dipintal tangan, dicelup indigo dan akar mengkudu, lalu ditenun di gedogan. Dipakai sebagai syal liturgi atau kain penutup meja doa.",
     specs: [{ k: "Bahan", v: "Kapas pintal tangan, tenun ikat lungsi Sumba" }, { k: "Pengrajin", v: "Penenun mitra kami di Sumba Timur" }, { k: "Pewarna", v: "Alami — indigo (wora) & akar mengkudu (kombu)" }, { k: "Motif", v: "Monogram IHS, salib, ayam & bintang timur" }, { k: "Ukuran", v: "±190 × 40 cm, rumbai tangan di kedua ujung" }, { k: "Kemasan", v: "Kotak kado + kartu nama penenun" }],
     image: "/assets/syal-tenun-sumba.webp", slot: "[ syal tenun sumba ]", h: 460, tone: "light", rot: 0, stock: 7 },
-  { id: "outer-tenun-ende", name: "Selendang Tenun Ende", cat: "apparel", price: "Rp 1.150K", badge: "",
+  { id: "outer-tenun-ende", order: "wa", name: "Selendang Tenun Ende", cat: "apparel", price: "Rp 1.150K", badge: "",
     desc: "Selendang tenun ikat dari Ende, Flores: benang lungsinya diikat dan dicelup dulu sebelum ditenun, jadi salib, merpati, dan kuda-kudanya tumbuh dari benang — bukan dicap di permukaan. Warnanya dari indigo dan akar mengkudu, dengan pita merah bata di kedua sisi. Cukup lebar untuk dikalungkan di leher atau disampirkan di meja doa.",
     specs: [{ k: "Bahan", v: "Kapas pintal tangan, tenun ikat Ende–Lio" }, { k: "Pengrajin", v: "Penenun mitra kami di Ende, Flores" }, { k: "Pewarna", v: "Alami — indigo (tarum) & akar mengkudu" }, { k: "Motif", v: "Salib, merpati, kuda & sulur — diikat, bukan dicetak" }, { k: "Ukuran", v: "±200 × 45 cm, rumbai tangan di kedua ujung" }, { k: "Kemasan", v: "Kotak kado + kartu nama penenun" }],
     image: "/assets/selendang-tenun-ende.webp", slot: "[ selendang tenun ende ]", h: 480, tone: "light", rot: 0, stock: 4 },
   { id: "batik-agnus", name: "Kemeja Batik Tulis “Agnus”", cat: "apparel", price: "Rp 749K", badge: "", image: "", slot: "[ kemeja batik tulis ]", h: 420, tone: "light", rot: 0, stock: 9 },
   { id: "selendang-batik-kapel", name: "Selendang Batik Kapel", cat: "apparel", price: "Rp 385K", badge: "", image: "", slot: "[ selendang batik ]", h: 320, tone: "violet", rot: 0, stock: 14 },
-  { id: "ikon-bunda-maria", name: "Ikon Bunda Maria — Cetak Kayu / Lino", cat: "wallart", price: "Rp 465K", base: 465000,
+  { id: "ikon-bunda-maria", order: "wa", name: "Ikon Bunda Maria — Cetak Kayu / Lino", cat: "wallart", price: "Rp 465K", base: 465000,
     opt: { label: "UKURAN", values: ["A4 — 21×29,7 cm", "A3 — 29,7×42 cm", "40×50 cm"], add: [0, 145000, 320000] },
     desc: "Bunda Maria dan Kanak-kanak Yesus dipahat sebagai tokoh wayang: mahkota sungging, kain batik, tangan berdempak seperti figur kulit. Bloknya dipahat tangan, lalu dicetak satu per satu dengan tinta hitam di atas kertas daluang buatan tangan — jadi tidak ada dua cetakan yang identik. Blok aslinya disimpan, tidak dijual.",
     specs: [{ k: "Teknik", v: "Cukil kayu/lino, cetak tangan" }, { k: "Kertas", v: "Daluang buatan tangan, tepi sobek alami" }, { k: "Tinta", v: "Tinta relief hitam, tahan cahaya" }, { k: "Edisi", v: "Bernomor & ditandatangani, tanpa bingkai" }],
     fit: "contain", badge: "HANDMADE", image: "/assets/ikon-maria-lino.webp",
     shots: ["/assets/ikon-maria-lino-kertas.webp", "/assets/ikon-maria-lino-blok.webp"],
     slot: "[ ikon maria cukil kayu ]", h: 470, tone: "light", rot: 1, stock: 11 },
-  { id: "wallart-maria-line", name: "Wall Art Bunda Maria — Line Art", cat: "wallart", price: "Rp 395K", badge: "BARU", image: "/assets/wallart-maria-line.webp", shots: ["/assets/wallart-maria-line-full.webp"], slot: "[ line art bunda maria ]", h: 470, tone: "light", rot: 0.6, stock: 24 },
-  { id: "poster-john146", name: "Poster Risograph “John 14:6”", cat: "wallart", price: "Rp 285K", base: 285000,
+  { id: "wallart-maria-line", order: "wa", name: "Wall Art Bunda Maria — Line Art", cat: "wallart", price: "Rp 395K", badge: "BARU", image: "/assets/wallart-maria-line.webp", shots: ["/assets/wallart-maria-line-full.webp"], slot: "[ line art bunda maria ]", h: 470, tone: "light", rot: 0.6, stock: 24 },
+  { id: "poster-john146", order: "wa", name: "Poster Risograph “John 14:6”", cat: "wallart", price: "Rp 285K", base: 285000,
     opt: { label: "UKURAN", values: ["A3 — 29,7×42 cm", "A2 — 42×59,4 cm", "50×70 cm"], add: [0, 120000, 240000], note: ["", "", ""] },
     badge: "EDISI 10", fit: "contain", image: "/assets/poster-john146.webp", shots: ["/assets/poster-john146-room.webp"], slot: "[ poster risograph john 14:6 ]", h: 470, tone: "violet", rot: 0, stock: 10 },
-  { id: "wallart-crown-of-thorn", name: "Wall Art “Crown of Thorn” — Kawat Berduri", cat: "wallart", price: "Rp 1.850K", badge: "BARU",
+  { id: "wallart-crown-of-thorn", order: "wa", name: "Wall Art “Crown of Thorn” — Kawat Berduri", cat: "wallart", price: "Rp 1.850K", badge: "BARU",
     desc: "Mahkota duri dibentuk tangan dari kawat berduri yang sengaja dibiarkan berkarat, lalu dipasang mengapung di dalam kotak bayangan berpelat kuningan. Satu keping butuh dua hari kerja: memotong, memutar, menua, menyegel. Setiap mahkota berbeda bentuk — tidak bisa diulang.",
     specs: [{ k: "Bahan", v: "Kawat berduri berkarat, pelat kuningan" }, { k: "Bingkai", v: "Kotak bayangan kayu, 60×45 cm" }, { k: "Finishing", v: "Disegel matte, siap gantung" }, { k: "Kemasan", v: "Peti kayu, kirim berasuransi" }],
     image: "/assets/wallart-crown-of-thorn.webp", shots: ["/assets/wallart-crown-of-thorn-full.webp"], slot: "[ crown of thorn — kawat berduri ]", h: 360, tone: "light", rot: 0.5, stock: 4 },
@@ -291,7 +300,7 @@ const ALL_PRODUCTS = [
     care: "Gantung jauh dari sinar matahari langsung. Tinta pigmen tahan pudar, tapi kertas matte mudah tergores — pegang di tepinya, jangan diusap. Bersihkan kaca bingkai dengan kain microfiber kering.",
     rite: { title: "Sebelum masuk tabung", body: "Setiap cetakan dicek di bawah cahaya siang: hitamnya rata, lengkung tipisnya tidak putus, ejaan kutipan dan dedikasi sama persis dengan proof yang kamu setujui. Digulung dengan kertas pelindung dalam tabung kaku, atau dikirim dalam kotak bila berbingkai." },
     fit: "contain", image: "/assets/poster-peta-alkitab.webp", shots: ["/assets/poster-peta-alkitab-sorot.webp", "/assets/poster-peta-alkitab-detail.webp", "/assets/poster-peta-alkitab-panorama.webp"], slot: "[ poster peta alkitab ]", h: 420, tone: "dark", rot: 0, stock: 99 },
-  { id: "lukisan-mazmur-23", name: "Lukisan “Mazmur 23”", cat: "wallart", price: "Rp 8.000K", badge: "KARYA ASLI", status: "AVAILABLE",
+  { id: "lukisan-mazmur-23", soldLabel: "TERJUAL", soldNote: "Karya asli — sudah terjual", name: "Lukisan “Mazmur 23”", cat: "wallart", price: "Rp 8.000K", badge: "KARYA ASLI", status: "TERJUAL",
     artist: { name: "Castella Natalia", href: "https://www.threads.com/@castellanatalia" },
     opt: { label: "EDISI", values: ["Karya asli — 60×60 cm"] },
     quote: { lines: ["Though I walk through the valley","of the shadow of death,","I will fear no evil:","for thou art with me."], cite: "Psalm 23:4" },
@@ -300,9 +309,9 @@ const ALL_PRODUCTS = [
     care: "Gantung jauh dari sinar matahari langsung dan dinding yang lembap. Bersihkan debu di sela tekstur dengan kuas lembut yang kering — jangan dilap basah atau diberi cairan pembersih. Angkat dari sisi bingkai, jangan menekan permukaan kanvas.",
     rite: { title: "Sebelum lukisan berangkat", body: "Permukaan tekstur dilapis kertas glassine agar tidak tergores, sudut dilindungi, lalu lukisan dikemas dalam kotak kardus tebal berlapis dan dikirim berasuransi. Certificate of Authenticity bertanda tangan Castella Natalia ikut di dalam. Kondisi lukisan kami foto sebelum berangkat dan kami kirimkan kepadamu." },
     stockNote: "Karya asli — hanya satu keping",
-    hero: "/assets/lukisan-mazmur-23-ruang.webp", image: "/assets/lukisan-mazmur-23.webp", shots: ["/assets/lukisan-mazmur-23-ruang.webp", "/assets/lukisan-mazmur-23-detail.webp"], slot: "[ lukisan mazmur 23 ]", h: 460, tone: "dark", rot: -0.6, stock: 1 },
+    hero: "/assets/lukisan-mazmur-23-ruang.webp", image: "/assets/lukisan-mazmur-23.webp", shots: ["/assets/lukisan-mazmur-23-ruang.webp", "/assets/lukisan-mazmur-23-detail.webp"], slot: "[ lukisan mazmur 23 ]", h: 460, tone: "dark", rot: -0.6, stock: 0 },
   { id: "panel-ayat-kuningan", name: "Panel Ayat Kuningan", cat: "wallart", price: "Rp 590K", badge: "", image: "", slot: "[ panel kuningan ayat ]", h: 360, tone: "dark", rot: 0, stock: 6 },
-  { id: "guadalupe-nis", name: "Bunda Guadalupe dalam Nis Kayu", cat: "altar", price: "Rp 1.650K", badge: "BARU",
+  { id: "guadalupe-nis", order: "wa", name: "Bunda Guadalupe dalam Nis Kayu", cat: "altar", price: "Rp 1.650K", badge: "BARU",
     desc: "Nis lipat tiga daun dari kayu mahoni, dibubut utuh dari satu blok sehingga urat kayunya menyambung dari kubah ke alas — bukan potongan yang disatukan. Dua daun sampingnya berengsel kuningan dan menutup rapat jadi bentuk peluru; dibuka, keduanya jadi dinding pemantul cahaya buat figurnya. Di dalamnya Bunda Guadalupe dicetak 3D low poly lalu dicat tangan satu per satu: mantel biru berbintang, gaun mawar, sinar keemasan di belakangnya, dan malaikat di kakinya. Bidang-bidang datar low poly-nya sengaja dibiarkan terbaca — cara baru menggambar ikon yang umurnya sudah lima abad. Cukup kecil untuk meja samping tempat tidur, cukup tertutup untuk dibawa pindah kos.",
     specs: [{ k: "Nis", v: "Kayu mahoni, engsel kuningan solid" }, { k: "Figur", v: "Cetak 3D resin, dicat tangan" }, { k: "Tinggi", v: "28 cm termasuk alas" }, { k: "Lebar", v: "27 cm terbuka, 13 cm tertutup" }, { k: "Alas", v: "Ø 13 cm, bubut satu blok" }, { k: "Kemasan", v: "Kotak kayu berlapis busa" }],
     image: "/assets/guadalupe-nis.webp", shots: ["/assets/guadalupe-nis-tutup.webp", "/assets/guadalupe-nis-kosong.webp"],
@@ -316,12 +325,12 @@ const ALL_PRODUCTS = [
     specs: [{ k: "Bahan", v: "PLA, cetak 3D" }, { k: "Besar", v: "Tinggi 14 cm, tatakan Ø 8 cm" }, { k: "Kecil", v: "Tinggi 11 cm, tatakan Ø 6,5 cm" }, { k: "Warna", v: "Putih atau krem" }],
     fit: "contain", badge: "BARU", image: "/assets/guadalupe-3d.webp", shots: ["/assets/guadalupe-3d-ukuran.webp", "/assets/guadalupe-3d-krem.webp", "/assets/guadalupe-3d-ungu.webp", "/assets/tas-romo-guadalupe.webp"], slot: "[ bunda guadalupe cetak 3d ]", h: 440, tone: "light", rot: -0.6, stock: 99 },
   { id: "tato-sacred-heart", name: "Tato “Sacred Heart” — 8 cm", cat: "bodyart", price: "Rp 1.440K", badge: "", image: "", slot: "[ tato sacred heart ]", h: 300, tone: "light", rot: -0.9, stock: 8 },
-  { id: "tato-kalvari", name: "Tato “Kalvari” — Armband 14 cm", cat: "bodyart", price: "Rp 2.520K", badge: "BY GILANG PRAWIRA", image: "/assets/tato-kalvari.webp", shots: ["/assets/tato-kalvari-full.webp"], slot: "[ armband kalvari — gilang prawira ]", h: 320, tone: "dark", rot: 1.2, stock: 6 },
+  { id: "tato-kalvari", order: "wa", name: "Tato “Kalvari” — Armband 14 cm", cat: "bodyart", price: "Rp 2.520K", badge: "BY GILANG PRAWIRA", image: "/assets/tato-kalvari.webp", shots: ["/assets/tato-kalvari-full.webp"], slot: "[ armband kalvari — gilang prawira ]", h: 320, tone: "dark", rot: 1.2, stock: 6 },
   { id: "set-henna-salib", name: "Set Henna Motif Salib", cat: "bodyart", price: "Rp 145K", badge: "BARU", image: "", slot: "[ set henna ]", h: 350, tone: "light", rot: 0, stock: 25 },
   { id: "kaos-peziarah", name: "Kaos Katun “Peziarah”", cat: "merch", price: "Rp 299K", base: 299000,
     opt: { label: "UKURAN", values: ["S", "M", "L", "XL", "XXL"], add: [0, 0, 0, 0, 25000] },
     badge: "BARU", image: "/assets/kaos-peziarah-detail.webp", shots: ["/assets/kaos-peziarah.webp", "/assets/kaos-peziarah-2.webp"], slot: "[ kaos peziarah ]", h: 400, tone: "light", rot: 0.9, stock: 38 },
-  { id: "hoodie-berkah-dalem", name: "Hoodie “Berkah Dalem” — Hitam", cat: "merch", price: "Rp 250K", base: 250000,
+  { id: "hoodie-berkah-dalem", order: "preorder", name: "Hoodie “Berkah Dalem” — Hitam", cat: "merch", price: "Rp 250K", base: 250000,
     opt: { label: "UKURAN", values: ["S", "M", "L", "XL", "2XL"], add: [0, 0, 0, 0, 10000], note: ["", "", "", "", "Ukuran 2XL +Rp 10K."] },
     sizeChart: { cols: ["S", "M", "L", "XL", "2XL"], rows: [{ k: "Lingkar dada", v: [102, 106, 112, 122, 128] }, { k: "Panjang badan", v: [65, 67, 70, 73, 76] }, { k: "Panjang lengan", v: [59, 60, 61, 62, 63] }], note: "Dalam cm, ukuran Asia. Toleransi 1–2,5 cm. Panjang badan diukur dari bahu ke bawah." },
     desc: "Salam yang paling sering kita dengar di depan gereja, sekarang di punggung: Berkah Dalem — berkat Tuhan menyertaimu. Huruf bulat besar warna gading di belakang, salib kecil dan PEZIARAH.COM di dada kiri. Fleece tebal 270 g/m² yang halus di dalam, ritsleting penuh, saku kanguru — cukup hangat untuk subuh di Sendangsono, cukup ringan untuk dipakai seharian di kota.",
@@ -334,52 +343,52 @@ const ALL_PRODUCTS = [
     desc: "Jaket angkatan yang tidak terlihat seperti jaket angkatan. Satin poliester hijau tua berlapis, ritsleting menyilang, rib knit di kerah dan pergelangan. Semua tulisan dibordir timbul satu warna — nama sekolah, angkatan, moto di lengan — jadi kelihatan hanya kalau cahaya jatuh miring; tidak berteriak, tapi yang tahu langsung tahu. Patch lambang dibordir terpisah lalu dijahit di dada. Contoh di foto: Van Lith angkatan 32, “berlari tanpa batas”. Minimum 12 pcs per pesanan, produksi 10–14 hari kerja.",
     specs: [{ k: "Bahan", v: "Satin poliester berlapis, rib knit kerah & manset" }, { k: "Bordir", v: "Timbul (puff) satu warna — dada, punggung, lengan" }, { k: "Patch", v: "Bordir penuh, dijahit (bukan lem panas)" }, { k: "Warna", v: "Hijau botol, hitam, maroon, navy" }, { k: "Minimum", v: "12 pcs per pesanan" }, { k: "Produksi", v: "10–14 hari kerja setelah approval mockup" }, { k: "Perawatan", v: "Cuci dingin, balik badan, jangan disetrika di atas bordir" }],
     badge: "CUSTOM", image: "/assets/bomber-vanlith-detail.webp", shots: ["/assets/bomber-vanlith.webp", "/assets/bomber-vanlith-sleeve.webp"], slot: "[ bomber bordir angkatan ]", h: 460, tone: "dark", rot: -0.6, stock: 12 },
-  { id: "tote-peziarah", name: "Tote Kanvas “Peziarah”", cat: "merch", price: "Rp 189K", base: 189000, opt: { label: "TALI", values: ["Tali tangan (standar)", "Tali panjang selempang"], add: [0, 20000], note: ["", "Tali panjang selempang +Rp 20K."] }, specs: [{ k: "Bahan", v: "Kanvas greige 577gsm" }, { k: "Ukuran", v: "40 × 35 × 15 cm (tinggi × lebar × alas) · portrait · tinggi tali 30 cm" }, { k: "Cetak", v: "Direct to Film" }, { k: "Daya angkut", v: "Sampai 8 kg, jahitan tali diperkuat silang" }, { k: "Perawatan", v: "Cuci tangan air dingin, jangan disetrika di atas cetakan" }], badge: "", image: "/assets/tote-peziarah-2.webp", shots: ["/assets/tote-peziarah.webp", "/assets/tote-peziarah-detail.webp", "/assets/tote-inside-1.webp", "/assets/tote-inside-2.webp"], slot: "[ tote peziarah ]", h: 470, tone: "light", rot: -1.3, stock: 47 },
-  { id: "tote-sendangsono", kit: ESSENTIALS_KIT, name: "Tote Kanvas Ziarah — Sendangsono", cat: "merch", price: "Rp 219K", base: 219000,
+  { id: "tote-peziarah", order: "preorder", name: "Tote Kanvas “Peziarah”", cat: "merch", price: "Rp 189K", base: 189000, opt: { label: "TALI", values: ["Tali tangan (standar)", "Tali panjang selempang"], add: [0, 20000], note: ["", "Tali panjang selempang +Rp 20K."] }, specs: [{ k: "Bahan", v: "Kanvas greige 577gsm" }, { k: "Ukuran", v: "40 × 35 × 15 cm (tinggi × lebar × alas) · portrait · tinggi tali 30 cm" }, { k: "Cetak", v: "Direct to Film" }, { k: "Daya angkut", v: "Sampai 8 kg, jahitan tali diperkuat silang" }, { k: "Perawatan", v: "Cuci tangan air dingin, jangan disetrika di atas cetakan" }], badge: "", image: "/assets/tote-peziarah-2.webp", shots: ["/assets/tote-peziarah.webp", "/assets/tote-peziarah-detail.webp", "/assets/tote-inside-1.webp", "/assets/tote-inside-2.webp"], slot: "[ tote peziarah ]", h: 470, tone: "light", rot: -1.3, stock: 47 },
+  { id: "tote-sendangsono", order: "preorder", kit: ESSENTIALS_KIT, name: "Tote Kanvas Ziarah — Sendangsono", cat: "merch", price: "Rp 219K", base: 219000,
     desc: "Gua Sendangsono digambar dari sisi yang biasanya luput: bukan wajah Bunda, tapi rimbun bugenvil yang menutup batu andesitnya dan barisan lilin yang tidak pernah benar-benar mati. Ilustrasi tinta dan cat air, dicetak di kanvas greige 577gsm — mata air pertama Katolik Jawa, dibawa pulang sebagai tas yang dipakai tiap hari.",
     specs: [{ k: "Bahan", v: "Kanvas greige 577gsm" }, { k: "Ukuran", v: "40 × 35 × 15 cm (tinggi × lebar × alas) · portrait · tinggi tali 30 cm" }, { k: "Cetak", v: "Direct to Film" }, { k: "Ilustrasi", v: "Sendangsono — Direct to Film" }, { k: "Daya angkut", v: "Sampai 8 kg, jahitan tali diperkuat silang" }, { k: "Perawatan", v: "Cuci tangan air dingin, jangan disetrika di atas cetakan" }],
     opt: { label: "TALI", values: ["Tali tangan (standar)", "Tali panjang selempang"], add: [0, 20000], note: ["", "Tali panjang selempang +Rp 20K."] }, badge: "BARU", image: "/assets/tote-sendangsono.webp", shots: ["/assets/tote-sendangsono-wall.webp", "/assets/tote-inside-1.webp", "/assets/tote-inside-2.webp"], slot: "[ tote ziarah sendangsono ]", h: 470, tone: "light", rot: 0, stock: 24 },
-  { id: "tote-ganjuran", name: "Tote Kanvas Ziarah — Ganjuran", cat: "merch", price: "Rp 219K", base: 219000,
+  { id: "tote-ganjuran", order: "preorder", name: "Tote Kanvas Ziarah — Ganjuran", cat: "merch", price: "Rp 219K", base: 219000,
     desc: "Candi Hati Kudus Ganjuran dalam sapuan tinta dan wash abu: batur candi Hindu-Jawa yang menaungi Kristus, tangga kembar yang harus dinaiki tanpa alas kaki. Dicetak di kanvas greige 577gsm, satu-satunya warna di tas ini adalah bayangan cat airnya.",
     specs: [{ k: "Bahan", v: "Kanvas greige 577gsm" }, { k: "Ukuran", v: "40 × 35 × 15 cm (tinggi × lebar × alas) · portrait · tinggi tali 30 cm" }, { k: "Cetak", v: "Direct to Film" }, { k: "Ilustrasi", v: "Ganjuran — Direct to Film" }, { k: "Daya angkut", v: "Sampai 8 kg, jahitan tali diperkuat silang" }, { k: "Perawatan", v: "Cuci tangan air dingin, jangan disetrika di atas cetakan" }],
     opt: { label: "TALI", values: ["Tali tangan (standar)", "Tali panjang selempang"], add: [0, 20000], note: ["", "Tali panjang selempang +Rp 20K."] }, badge: "BARU", image: "/assets/tote-ganjuran.webp", shots: ["/assets/tote-ganjuran-wall.webp", "/assets/tote-inside-1.webp", "/assets/tote-inside-2.webp"], slot: "[ tote ziarah ganjuran ]", h: 470, tone: "light", rot: 0, stock: 24 },
-  { id: "tote-puhsarang", name: "Tote Kanvas Ziarah — Gereja Puhsarang", cat: "merch", price: "Rp 219K", base: 219000,
+  { id: "tote-puhsarang", order: "preorder", name: "Tote Kanvas Ziarah — Gereja Puhsarang", cat: "merch", price: "Rp 219K", base: 219000,
     desc: "Puhsarang dari sisi barat: kubah batu kali tanpa semen, atap sirap merah bata yang melengkung seperti perahu, dan menara Maria di sebelahnya. Satu-satunya aksen warna di kanvas ini adalah terakota atapnya — sisanya tinta hitam di kanvas greige 577gsm.",
     specs: [{ k: "Bahan", v: "Kanvas greige 577gsm" }, { k: "Ukuran", v: "40 × 35 × 15 cm (tinggi × lebar × alas) · portrait · tinggi tali 30 cm" }, { k: "Cetak", v: "Direct to Film" }, { k: "Ilustrasi", v: "Gereja Puhsarang — Direct to Film" }, { k: "Daya angkut", v: "Sampai 8 kg, jahitan tali diperkuat silang" }, { k: "Perawatan", v: "Cuci tangan air dingin, jangan disetrika di atas cetakan" }],
     opt: { label: "TALI", values: ["Tali tangan (standar)", "Tali panjang selempang"], add: [0, 20000], note: ["", "Tali panjang selempang +Rp 20K."] }, badge: "BARU", image: "/assets/tote-puhsarang.webp", shots: ["/assets/tote-puhsarang-wall.webp", "/assets/tote-inside-1.webp", "/assets/tote-inside-2.webp"], slot: "[ tote ziarah gereja puhsarang ]", h: 470, tone: "light", rot: 0, stock: 24 },
-  { id: "tote-kerep", name: "Tote Kanvas Ziarah — Gua Maria Kerep", cat: "merch", price: "Rp 219K", base: 219000,
+  { id: "tote-kerep", order: "preorder", name: "Tote Kanvas Ziarah — Gua Maria Kerep", cat: "merch", price: "Rp 219K", base: 219000,
     desc: "Gua Kerep Ambarawa digambar dari seberang: tebing batu, Bunda dalam mantel biru — satu-satunya warna dingin di seluruh seri ini — dan menara gereja tua di belakang pohon randu. Kanvas greige 577gsm, cetak Direct to Film.",
     specs: [{ k: "Bahan", v: "Kanvas greige 577gsm" }, { k: "Ukuran", v: "40 × 35 × 15 cm (tinggi × lebar × alas) · portrait · tinggi tali 30 cm" }, { k: "Cetak", v: "Direct to Film" }, { k: "Ilustrasi", v: "Gua Maria Kerep — Direct to Film" }, { k: "Daya angkut", v: "Sampai 8 kg, jahitan tali diperkuat silang" }, { k: "Perawatan", v: "Cuci tangan air dingin, jangan disetrika di atas cetakan" }],
     opt: { label: "TALI", values: ["Tali tangan (standar)", "Tali panjang selempang"], add: [0, 20000], note: ["", "Tali panjang selempang +Rp 20K."] }, badge: "BARU", image: "/assets/tote-kerep.webp", shots: ["/assets/tote-kerep-wall.webp", "/assets/tote-inside-1.webp", "/assets/tote-inside-2.webp"], slot: "[ tote ziarah gua maria kerep ]", h: 470, tone: "light", rot: 0, stock: 24 },
-  { id: "tote-sawer-rahmat", name: "Tote Kanvas Ziarah — Gua Maria Sawer Rahmat", cat: "merch", price: "Rp 219K", base: 219000,
+  { id: "tote-sawer-rahmat", order: "preorder", name: "Tote Kanvas Ziarah — Gua Maria Sawer Rahmat", cat: "merch", price: "Rp 219K", base: 219000,
     desc: "Sawer Rahmat Cisantana dari depan: anggrek dan sulur menggantung menutupi mulut gua, Bunda Fatima bermahkota di tengah, semuanya terbayang lagi di air. Ilustrasi tinta dengan wash abu tua, dicetak di kanvas greige 577gsm.",
     specs: [{ k: "Bahan", v: "Kanvas greige 577gsm" }, { k: "Ukuran", v: "40 × 35 × 15 cm (tinggi × lebar × alas) · portrait · tinggi tali 30 cm" }, { k: "Cetak", v: "Direct to Film" }, { k: "Ilustrasi", v: "Gua Maria Sawer Rahmat — Direct to Film" }, { k: "Daya angkut", v: "Sampai 8 kg, jahitan tali diperkuat silang" }, { k: "Perawatan", v: "Cuci tangan air dingin, jangan disetrika di atas cetakan" }],
     opt: { label: "TALI", values: ["Tali tangan (standar)", "Tali panjang selempang"], add: [0, 20000], note: ["", "Tali panjang selempang +Rp 20K."] }, badge: "BARU", image: "/assets/tote-sawer-rahmat.webp", shots: ["/assets/tote-sawer-rahmat-wall.webp", "/assets/tote-inside-1.webp", "/assets/tote-inside-2.webp"], slot: "[ tote ziarah gua maria sawer rahmat ]", h: 470, tone: "light", rot: 0, stock: 24 },
-  { id: "bucket-peziarah", name: "Topi Bucket “Peziarah”", cat: "merch", price: "Rp 249K", base: 249000,
+  { id: "bucket-peziarah", order: "wa", name: "Topi Bucket “Peziarah”", cat: "merch", price: "Rp 249K", base: 249000,
     opt: { label: "UKURAN", values: ["S/M", "L/XL"], add: [0, 0] },
     badge: "", image: "/assets/bucket-peziarah.webp", shots: ["/assets/bucket-peziarah-full.webp"], slot: "[ bucket hat peziarah ]", h: 300, tone: "light", rot: 0, stock: 18 },
-  { id: "patch-mc-peziarah", name: "Patch Bordir “Peziarah Motorcycle Club”", cat: "merch", price: "Rp 165K", base: 165000,
+  { id: "patch-mc-peziarah", hidden: true, name: "Patch Bordir “Peziarah Motorcycle Club”", cat: "merch", price: "Rp 165K", base: 165000,
     opt: { label: "UKURAN", values: ["Pocket — 9×12 cm", "Back patch — 21×28 cm"], add: [0, 145000] },
     desc: "Back patch bordir di atas denim hitam: PEZIARAH melengkung dalam benang merah bata, mesin tua digambar sekali jalan dengan benang putih. Tepinya sengaja dibiarkan mentah — dijahit sendiri ke rompi atau flanel, makin lusuh makin benar. West Java, jalan pulang lewat gunung.",
     specs: [{ k: "Bahan", v: "Denim hitam 12 oz, benang poliester" }, { k: "Teknik", v: "Bordir mesin, kerapatan penuh" }, { k: "Pemasangan", v: "Jahit tangan/mesin — tanpa lem panas" }, { k: "Perawatan", v: "Cuci dingin, jangan diputihkan" }],
     badge: "BARU", image: "/assets/patch-mc.webp", shots: ["/assets/patch-mc-worn.webp"], slot: "[ patch peziarah mc ]", h: 440, tone: "dark", rot: 0.7, stock: 60 },
-  { id: "lilin-vespers", name: "Lilin Aroma “Vespers” — 220 g", cat: "lilin", price: "Rp 285K", base: 285000,
+  { id: "lilin-vespers", order: "wa", name: "Lilin Aroma “Vespers” — 220 g", cat: "lilin", price: "Rp 285K", base: 285000,
     opt: { label: "UKURAN", values: ["220 g — ±45 jam", "380 g — ±80 jam"], add: [0, 160000] },
     desc: "Profil aroma senja, dirancang untuk renungan di jam malam: Rose of Sharon di depan, Fig Leaf yang hijau dan getir di tengah, Vanilla Bean hangat di dasarnya. Lilin kedelai murni dengan sumbu katun, dituang tangan di gelas bening yang bisa dipakai ulang setelah habis.",
     specs: [{ k: "Aroma", v: "Rose of Sharon, Fig Leaf, Vanilla Bean" }, { k: "Lilin", v: "Kedelai 100%, sumbu katun tanpa timbal" }, { k: "Bakar", v: "±45 jam (220 g)" }, { k: "Wadah", v: "Gelas bening, label cetak letterpress" }],
     fit: "contain", badge: "BARU", image: "/assets/lilin-vespers.webp", slot: "[ lilin vespers ]", h: 400, tone: "light", rot: -0.8, stock: 30 },
   { id: "lilin-hortus", name: "Lilin Aroma “Hortus” — 220 g", cat: "lilin", price: "Rp 285K", badge: "", image: "", slot: "[ lilin hortus — cedar & myrrh ]", h: 320, tone: "light", rot: 0, stock: 24 },
-  { id: "dopp-kit-kulit", kit: ESSENTIALS_KIT, name: "Dopp Kit Kulit — Travel Kit", cat: "carry", price: "Rp 785K",
+  { id: "dopp-kit-kulit", order: "preorder", kit: ESSENTIALS_KIT, name: "Dopp Kit Kulit — Travel Kit", cat: "carry", price: "Rp 785K",
     desc: "Kulit sapi nabati tebal yang dijahit tangan, dibiarkan tanpa lapisan sintetis supaya warnanya menua sendiri — makin sering dibawa, makin gelap dan makin kamu. Ritsleting kuningan antik, ikat tangan di sisi, dan dasar rata supaya bisa berdiri sendiri di wastafel penginapan. Cukup untuk perlengkapan mandi tiga hari perjalanan.",
     specs: [{ k: "Bahan", v: "Kulit sapi samak nabati 2,0 mm" }, { k: "Ritsleting", v: "Kuningan antik, tarikan kulit" }, { k: "Ukuran", v: "24 × 12 × 11 cm" }, { k: "Lapis dalam", v: "Kanvas katun tahan air, bisa dilap" }],
     fit: "contain", badge: "BARU", image: "/assets/dopp-kit-kulit.webp", slot: "[ dopp kit kulit ]", h: 380, tone: "light", rot: -0.8, stock: 14 },
-  { id: "tas-romo", name: "Tas Romo — Dopp Kit Kulit Pull-up", cat: "carry", price: "Rp 785K", status: "PRE-ORDER",
+  { id: "tas-romo", order: "preorder", name: "Tas Romo — Dopp Kit Kulit Pull-up", cat: "carry", price: "Rp 785K", status: "PRE-ORDER",
     care: "Kulit pull-up tidak perlu dimanja: goresan halus cukup digosok ujung jari sampai warnanya menyatu lagi. Kalau terkena air, lap dan biarkan kering sendiri, jauh dari matahari langsung. Sesekali oles krim kulit netral tipis-tipis supaya minyaknya tidak habis.",
     rite: { title: "Sebelum dust bag ditutup", body: "Kedua ritsleting ditarik buka-tutup sampai ujung, jahitan ikat tangan dicek tangan, dan bagian dalam dilap. Dikirim dengan dust bag kain, tanpa plastik." },
     desc: "Dinamai dari tas kecil yang selalu dibawa romo saat turne ke stasi: isinya sederhana, tapi selalu siap. Kulit pull-up berminyak yang warnanya berubah ketika ditekuk dan ditarik — goresan kecil cukup digosok jari, lalu menyatu lagi. Ritsleting utama kuningan membuka lebar sampai dasar, kantong ritsleting vertikal di depan untuk barang yang perlu cepat diraih, kantong dalam untuk yang kecil-kecil, dan ikat tangan di sisi. Cukup untuk perlengkapan mandi seminggu, atau rosario, buku doa, dan obat harian.",
     specs: [{ k: "Bahan", v: "Kulit sapi pull-up" }, { k: "Ukuran", v: "21 × 16 × 8 cm" }, { k: "Ritsleting", v: "Kuningan — utama & kantong depan" }, { k: "Lapis dalam", v: "Kain lembut, kantong dalam beritsleting" }],
     fit: "contain", badge: "BARU", image: "/assets/tas-romo.webp", shots: ["/assets/tas-romo-dalam.webp", "/assets/tas-romo-guadalupe.webp"], slot: "[ tas romo ]", h: 420, tone: "light", rot: 0.5, stock: 99 },
-  { id: "dry-bag-20l", name: "Dry Bag 20L “Peziarah”", cat: "carry", price: "Rp 549K", base: 549000,
+  { id: "dry-bag-20l", order: "wa", name: "Dry Bag 20L “Peziarah”", cat: "carry", price: "Rp 549K", base: 549000,
     opt: { label: "KAPASITAS", values: ["20 L", "30 L"], add: [0, 120000] },
     desc: "Untuk ziarah yang hujannya tidak bisa dinegosiasi. Tarpaulin TPU dengan jahitan dilas frekuensi tinggi, tutup gulung tiga lipatan, dan kantong depan berritsleting kedap — isi tetap kering saat kamu basah kuyup. Tali bahu bisa dilepas, jadi bisa digendong atau ditenteng di bak pikap.",
     specs: [{ k: "Bahan", v: "Tarpaulin TPU 500D, jahitan dilas" }, { k: "Ketahanan", v: "IPX6 — hujan deras & percikan" }, { k: "Volume", v: "20 L (tersedia 30 L)" }, { k: "Tali", v: "Bahu empuk, bisa dilepas" }],
@@ -390,19 +399,75 @@ const ALL_PRODUCTS = [
     specs: [{ k: "Bahan", v: "Satin velvet" }, { k: "Ukuran", v: "55 × 55 cm" }, { k: "Motif", v: "Triquetra / simpul Trinitas, cetak putih" }, { k: "Warna", v: "Merah, pink, biru, hitam" }, { k: "Tepi", v: "Jahit lipat" }],
     care: "Cuci tangan dengan air dingin dan sabun lembut, jangan diperas keras. Jemur di tempat teduh, setrika suhu rendah dari sisi dalam.",
     badge: "BARU", image: "/assets/bandana-triquetra-merah.webp", shots: ["/assets/bandana-triquetra-pink.webp", "/assets/bandana-triquetra-biru.webp", "/assets/bandana-triquetra-hitam.webp", "/assets/bandana-triquetra-satin.webp"], slot: "[ bandana triquetra ]", h: 400, tone: "dark", rot: 1.1, stock: 55 },
-  { id: "buku-confessions", name: "The Confessions — St. Agustinus (Ignatius Critical Edition)", cat: "buku", price: "Rp 425K",
+  { id: "buku-confessions", order: "wa", name: "The Confessions — St. Agustinus (Ignatius Critical Edition)", cat: "buku", price: "Rp 425K",
     desc: "Pengakuan-pengakuan Agustinus dalam terjemahan Maria Boulding, O.S.B. — versi yang paling banyak dipakai karena bahasanya doa, bukan risalah. Edisi kritis Ignatius: teks penuh, catatan kaki, dan esai dari beberapa pembaca yang tidak selalu sepakat. Buku untuk dibaca pelan, sedikit tiap malam.",
     specs: [{ k: "Penulis", v: "Santo Agustinus dari Hippo" }, { k: "Terjemahan", v: "Maria Boulding, O.S.B." }, { k: "Penyunting", v: "David Vincent Meconi, S.J." }, { k: "Format", v: "Paperback, bahasa Inggris" }],
     fit: "contain", badge: "", image: "/assets/buku-confessions.webp", slot: "[ the confessions ]", h: 470, tone: "light", rot: -0.6, stock: 18 },
-  { id: "jurnal-koptik", name: "Jurnal Jahit Koptik — Kertas Tangan", cat: "buku", price: "Rp 465K",
-    desc: "Dijahit satu per satu dengan jahitan Koptik: punggungnya terbuka, benangnya kelihatan, dan halamannya bisa dibuka rata sampai 180° — enak untuk menulis sampai ke lipatan. Kertas katun buatan tangan bertepi sobek alami, sampul kain bata dengan mawar rosette dicetak timbul. Halaman terakhir sudah ada doanya; sisanya kamu yang isi.",
-    specs: [{ k: "Jilid", v: "Jahit Koptik, benang katun berlapis lilin" }, { k: "Kertas", v: "Katun buatan tangan 160 gsm, deckle edge" }, { k: "Isi", v: "144 halaman, tanpa garis" }, { k: "Ukuran", v: "14 × 19 cm, sampul kain bata" }],
-    fit: "contain", badge: "HANDMADE", image: "/assets/jurnal-koptik.webp", shots: ["/assets/jurnal-koptik-spread.webp"], slot: "[ jurnal jahit koptik ]", h: 500, tone: "light", rot: 0.7, stock: 12 },
-  { id: "buku-allegoria", name: "Allegoria — M. Dion Wicaksono", cat: "buku", price: "Rp 315K",
+  { id: "jurnal-koptik", order: "preorder", name: "Jurnal Jahit Koptik — Kertas Tangan", cat: "buku", price: "mulai Rp 150K", base: 150000,
+    opt: { label: "UKURAN", values: ["A6", "A5"], add: [0, 100000], note: ["", ""] },
+    desc: "Dijahit satu per satu dengan jahitan Koptik: punggungnya terbuka, benangnya kelihatan, dan halamannya bisa dibuka rata sampai 180° — enak untuk menulis sampai ke lipatan. Kertas katun buatan tangan bertepi sobek alami, sampul kain bata. Halaman terakhir sudah ada doanya; sisanya kamu yang isi.",
+    specs: [{ k: "Jilid", v: "Jahit Koptik, benang katun berlapis lilin" }, { k: "Kertas", v: "Katun buatan tangan 160 gsm, deckle edge" }, { k: "Isi", v: "144 halaman, tanpa garis" }, { k: "Ukuran", v: "A6 (10,5 × 14,8 cm) · A5 (14,8 × 21 cm)" }, { k: "Sampul", v: "Kain bata" }],
+    fit: "contain", badge: "HANDMADE", image: "/assets/jurnal-koptik-berdiri.webp", shots: ["/assets/jurnal-koptik-jahitan.webp"], slot: "[ jurnal jahit koptik ]", h: 500, tone: "light", rot: 0.7, stock: 12 },
+  { id: "buku-allegoria", hidden: true, name: "Allegoria — M. Dion Wicaksono", cat: "buku", price: "Rp 315K",
     desc: "Buku yang akhirnya selesai. Kata-kata pertamanya ditulis tahun 1998, sementara titik terakhir diketik di 2026. Autofiksi kehidupan si penulis. Ditaruh di sini sebagai sebuah manifestasi.",
     specs: [{ k: "Penulis", v: "M. Dion Wicaksono" }, { k: "Format", v: "Paperback, 288 halaman" }, { k: "Cetak", v: "Sampul satu warna, kertas book paper" }, { k: "Bahasa", v: "Indonesia" }],
     fit: "contain", badge: "BARU", image: "/assets/buku-allegoria.webp", slot: "[ allegoria ]", h: 440, tone: "light", rot: 0, stock: 20 }
 ];
 
-export const PRODUCTS = ALL_PRODUCTS.filter(p => p.image);
+export const PRODUCTS = ALL_PRODUCTS.filter(p => p.image && !p.hidden);
+
+// How a product can be bought. One place, so the product page, catalog,
+// Essentials and cart all agree.
+//   "sold"     stock 0 — SOLD OUT (or `soldLabel`), nothing to order
+//   "wa"       `order: "wa"` — checkout blocked; order through WhatsApp only
+//   "preorder" `order: "preorder"` (or status PRE-ORDER) — made after the order;
+//              `lead` = production time shown to the buyer (default PREORDER_LEAD)
+//   "ready"    everything else
+export const PREORDER_LEAD = "10–14 hari kerja";
+export function buyMode(p) {
+  if (!p) return "ready";
+  if (p.stock === 0) return "sold";
+  if (p.order === "wa") return "wa";
+  if (p.order === "preorder" || p.status === "PRE-ORDER") return "preorder";
+  return "ready";
+}
+// Status pill text for cards and the product page.
+export function statusLabel(p) {
+  const m = buyMode(p);
+  if (m === "sold") return p.soldLabel || "SOLD OUT";
+  if (m === "wa") return "TANYA VIA WA";
+  if (m === "preorder") return "PRE-ORDER";
+  return p.status || "SEGERA";
+}
+// Shop admin mode, per browser: open any shop page with ?admin=1 to turn it on,
+// ?admin=0 to turn it off (links on /admin/kuitansi/ and /admin/resi/). In admin
+// mode "wa" products can go in the cart again, so the admin can build an
+// invoice from /keranjang/ when a paused product is available after all.
+// Customers never see this; it only changes this browser.
+const ADMIN_KEY = "peziarah.admin";
+function readAdmin() {
+  try {
+    const q = new URLSearchParams(location.search).get("admin");
+    if (q === "1") localStorage.setItem(ADMIN_KEY, "1");
+    if (q === "0") localStorage.removeItem(ADMIN_KEY);
+    return localStorage.getItem(ADMIN_KEY) === "1";
+  } catch (e) { return false; }
+}
+export const ADMIN = typeof window !== "undefined" && readAdmin();
+// A small fixed pill on every shop page while admin mode is on.
+if (ADMIN && typeof document !== "undefined") {
+  const pill = () => {
+    if (document.getElementById("pz-admin-pill")) return;
+    const a = document.createElement("a");
+    a.id = "pz-admin-pill"; a.href = "?admin=0";
+    a.textContent = "MODE ADMIN TOKO · MATIKAN";
+    a.style.cssText = "position:fixed;left:14px;bottom:14px;z-index:9999;padding:9px 14px;border-radius:999px;background:#1A1712;color:#C9E45B;font:11px/1 'Space Mono',monospace;letter-spacing:0.1em;text-decoration:none;box-shadow:0 6px 20px rgba(26,23,18,0.25)";
+    document.body.appendChild(a);
+  };
+  if (document.body) pill(); else document.addEventListener("DOMContentLoaded", pill);
+}
+
+// Ids that may not sit in the cart: hidden, sold, or WhatsApp-only (except in admin mode).
+export const WA_ONLY = ALL_PRODUCTS.filter(p => !p.hidden && buyMode(p) === "wa").map(p => p.id);
+export const NO_CART = ALL_PRODUCTS.filter(p => p.hidden || buyMode(p) === "sold" || (buyMode(p) === "wa" && !ADMIN)).map(p => p.id);
 

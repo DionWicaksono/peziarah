@@ -25,8 +25,8 @@
 <meta name="theme-color" content="#F7F3EA">
 <link rel="icon" href="/assets/favicon.png" type="image/png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Tenun Ende yang hampir hilang","description":"Dari 40 penenun di satu kampung, tinggal sembilan. Delapan di antaranya berusia di atas 60.","mainEntityOfPage":"https://peziarah.com/jurnal/artikel/tenun-ende-yang-hampir-hilang/","author":{"@type":"Person","name":"Maria Kusumaningrum"},"publisher":{"@type":"Organization","name":"Peziarah","logo":{"@type":"ImageObject","url":"https://peziarah.com/assets/favicon.png"}},"inLanguage":"id-ID"}</script>
-<link rel="modulepreload" href="/data/products.js">
-<link rel="modulepreload" href="/data/cart.js">
+<link rel="modulepreload" href="/data/products.js?v=20261109">
+<link rel="modulepreload" href="/data/cart.js?v=20261109">
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/journal.js">
 <link rel="modulepreload" href="/data/post-bodies.js">
@@ -404,11 +404,11 @@ class Component extends DCLogic {
             verse: "“Sebab kami hidup karena percaya, bukan karena melihat” — 2 Kor 5:7" };
 
   componentDidMount() {
-    import("/data/products.js").then(m => {
+    import("/data/products.js?v=20261109").then(m => {
       const cl = {}; m.CATEGORIES.forEach(c => { cl[c.id] = c.name; });
       this.setState({ products: m.PRODUCTS, catLabel: cl });
     });
-    import("/data/cart.js").then(m => {
+    import("/data/cart.js?v=20261109").then(m => {
       this.setState({ cartCount: m.count() });
       this._offCart = m.subscribe(items => this.setState({ cartCount: items.reduce((n, i) => n + i.qty, 0) }));
     });

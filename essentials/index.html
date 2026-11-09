@@ -24,8 +24,8 @@
 <meta name="twitter:image" content="https://peziarah.com/assets/og/peziarah-essentials.jpg">
 <meta name="theme-color" content="#F7F3EA">
 <link rel="icon" href="/assets/favicon.png" type="image/png">
-<link rel="modulepreload" href="/data/products.js">
-<link rel="modulepreload" href="/data/cart.js">
+<link rel="modulepreload" href="/data/products.js?v=20261109">
+<link rel="modulepreload" href="/data/cart.js?v=20261109">
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/essentials.js">
 <script defer src="/support.js"></script>
@@ -343,8 +343,14 @@ class Component extends DCLogic {
     }).filter(Boolean).map(s => ({ ...s, n: String(++n).padStart(2, "0") }));
   }
 
+  // WhatsApp-only products (order: "wa" in data/products.js) never go in the cart.
+  waOnly(s) { return !!(s && s.p && (this.state.noCart || []).includes(s.p.id)); }
+  openWa(s) {
+    window.open("https://wa.me/6281542615445?text=" + encodeURIComponent("Halo Peziarah, saya mau tanya soal " + s.p.name + ". Apakah sudah bisa dipesan?"), "_blank", "noopener");
+  }
+
   addItem(s) {
-    if (!this._cart || !s.p) return;
+    if (!this._cart || !s.p || this.waOnly(s)) return;
     this._cart.add({ id: s.p.id, name: s.p.name, cat: s.p.cat, variant: s.variant || "",
       variantLabel: (s.p.opt && s.p.opt.label) || "", unit: s.unit,
       image: s.p.image || "", gift: false }, 1);
@@ -365,7 +371,7 @@ class Component extends DCLogic {
     const opts = spots.filter(s => s.role === "optional");
     const own = spots.filter(s => s.role === "own");
     const withOpt = this.state.withOpt;
-    const optOn = opts.filter(s => withOpt[s.product]);
+    const optOn = opts.filter(s => withOpt[s.product] && !this.waOnly(s));
     const separate = core.reduce((a, s) => a + s.unit, 0);
     const bundle = set ? set.bundle : 0;
     const total = bundle + optOn.reduce((a, s) => a + s.unit, 0);
@@ -379,8 +385,8 @@ class Component extends DCLogic {
       price: this.rp(s.unit || 0), href: s.p ? this.prodHref(s.p.id, s.opt) : "",
       aria: `Tunjukkan ${s.name} di foto`, pick: pick(idx(s)),
       numStyle: numStyle(s, this.state.pop === idx(s)),
-      toggle: () => this.setState(st => ({ withOpt: { ...st.withOpt, [s.product]: !st.withOpt[s.product] } })),
-      toggleLabel: withOpt[s.product] ? `✓ DITAMBAHKAN · ${this.rp(s.unit)}` : `+ TAMBAH · ${this.rp(s.unit)}`,
+      toggle: () => this.waOnly(s) ? this.openWa(s) : this.setState(st => ({ withOpt: { ...st.withOpt, [s.product]: !st.withOpt[s.product] } })),
+      toggleLabel: this.waOnly(s) ? `TANYA VIA WA ↗` : withOpt[s.product] ? `✓ DITAMBAHKAN · ${this.rp(s.unit)}` : `+ TAMBAH · ${this.rp(s.unit)}`,
       toggleStyle: `flex:none;padding:9px 14px;border-radius:999px;font-size:11px;letter-spacing:0.04em;white-space:nowrap;border:1px solid ${
         withOpt[s.product] ? "#6C4BA6" : "#D6CBB8"};background:${withOpt[s.product] ? "#6C4BA6" : "transparent"};color:${withOpt[s.product] ? "#F7F3EA" : "#1A1712"}`
     });
@@ -420,8 +426,8 @@ class Component extends DCLogic {
       popNoteStyle: pop && pop.note ? "margin:10px 0 0;font-size:14px;line-height:1.5;color:#5C5347" : "display:none",
       popActionsStyle: pop && pop.p ? "display:flex;gap:8px;margin-top:14px" : "display:none",
       popHref: pop && pop.p ? this.prodHref(pop.p.id, pop.opt) : "",
-      popAdd: () => { if (pop) { this.addItem(pop); this.flash(popKey); } },
-      popAddLabel: this.state.esAdded === popKey && popKey ? "✓ MASUK" : "+ KERANJANG",
+      popAdd: () => { if (pop && this.waOnly(pop)) return this.openWa(pop); if (pop) { this.addItem(pop); this.flash(popKey); } },
+      popAddLabel: this.waOnly(pop) ? "TANYA VIA WA ↗" : this.state.esAdded === popKey && popKey ? "✓ MASUK" : "+ KERANJANG",
       popAddStyle: `flex:1 1 auto;white-space:nowrap;padding:11px 14px;border-radius:999px;border:none;font-size:11px;letter-spacing:0.06em;background:${
         this.state.esAdded === popKey && popKey ? "#6C4BA6" : "#1A1712"};color:#F7F3EA`,
       esName: set ? set.name : "Peziarah Essentials",
@@ -451,11 +457,11 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
-    import("/data/products.js").then(m => {
+    import("/data/products.js?v=20261109").then(m => {
       const cl = {}; m.CATEGORIES.forEach(c => { cl[c.id] = c.name; });
-      this.setState({ products: m.PRODUCTS, catLabel: cl });
+      this.setState({ products: m.PRODUCTS, catLabel: cl, noCart: m.NO_CART || [] });
     });
-    import("/data/cart.js").then(m => {
+    import("/data/cart.js?v=20261109").then(m => {
       this._cart = m;
       this.setState({ cartCount: m.count() });
       this._offCart = m.subscribe(items => this.setState({ cartCount: items.reduce((n, i) => n + i.qty, 0) }));

@@ -30,7 +30,7 @@
 <link rel="modulepreload" href="/data/bible.js">
 <link rel="modulepreload" href="/data/xrefs-core.js">
 <link rel="prefetch" href="/data/xrefs-more.js">
-<link rel="modulepreload" href="/data/cart.js">
+<link rel="modulepreload" href="/data/cart.js?v=20261109">
 <script defer src="/support.js"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -546,12 +546,12 @@ class Component extends DCLogic {
         this._ro.observe(this.wrapRef.current);
       }
     });
-    import("/data/products.js").then(m => {
+    import("/data/products.js?v=20261109").then(m => {
       PRODUCTS = m.PRODUCTS; CAT_LABEL = {};
       m.CATEGORIES.forEach(c => { CAT_LABEL[c.id] = c.name; });
       this.forceUpdate();
     });
-    import("/data/cart.js").then(m => {
+    import("/data/cart.js?v=20261109").then(m => {
       this.cart = m;
       this.setState({ cartCount: m.count() });
       this._offCart = m.subscribe(items => this.setState({ cartCount: items.reduce((n, i) => n + i.qty, 0) }));

@@ -22,10 +22,10 @@
 <meta name="twitter:image" content="https://peziarah.com/assets/hampers-pernikahan.webp">
 <meta name="theme-color" content="#F7F3EA">
 <link rel="icon" href="/assets/favicon.png" type="image/png">
-<link rel="modulepreload" href="/data/cart.js">
+<link rel="modulepreload" href="/data/cart.js?v=20261109">
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/hampers.js">
-<link rel="modulepreload" href="/data/products.js">
+<link rel="modulepreload" href="/data/products.js?v=20261109">
 <script defer src="/support.js"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -424,12 +424,12 @@ class Component extends DCLogic {
 
   componentDidMount() {
     import("/data/verses.js").then(m => this.setState({ verse: m.currentVerse() })).catch(() => {});
-    import("/data/cart.js").then(m => {
+    import("/data/cart.js?v=20261109").then(m => {
       CARTMOD = m;
       this.setState({ cartCount: m.count() });
       this._offCart = m.subscribe(items => this.setState({ cartCount: items.reduce((n, i) => n + i.qty, 0) }));
     });
-    Promise.all([import("/data/hampers.js"), import("/data/products.js")]).then(([h, p]) => {
+    Promise.all([import("/data/hampers.js"), import("/data/products.js?v=20261109")]).then(([h, p]) => {
       const kalvari = h.HAMPERS.find(x => x.id === "hampers-kalvari");
       const picks = ["san-damiano-mini", "ichthys-kalung-perak"]
         .map(id => p.PRODUCTS.find(x => x.id === id))

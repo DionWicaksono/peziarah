@@ -92,6 +92,32 @@ export function clear() { return write([]); }
 
 export function keyOf(item) { return lineKey(item); }
 
+// Called by the cart page with the live catalog: drops lines that can no longer
+// be bought from the cart (hidden, sold, WhatsApp-only — NO_CART in
+// data/products.js) and re-reads variant prices that changed since the line was
+// added, so an old cart never checks out at an old price. Returns the ids dropped.
+export function refresh(products, noCart) {
+  const block = noCart || [];
+  const dropped = [];
+  let changed = false;
+  const out = [];
+  for (const i of read()) {
+    if (block.includes(i.id)) { dropped.push(i.id); changed = true; continue; }
+    const p = (products || []).find(x => x.id === i.id);
+    if (p && p.base && p.opt && p.opt.add && p.cat !== "bodyart") {
+      let k = p.opt.values.indexOf(i.variant);
+      if (k < 0 && !i.variant) { k = 0; i.variant = p.opt.values[0]; i.variantLabel = p.opt.label; changed = true; }
+      if (k > -1) {
+        const u = p.base + (p.opt.add[k] || 0);
+        if (u !== i.unit) { i.unit = u; changed = true; }
+      }
+    }
+    out.push(i);
+  }
+  if (changed) write(out);
+  return dropped;
+}
+
 // Re-render hook: returns an unsubscribe fn. Also listens to `storage` so the
 // counter stays right when the user has two tabs open.
 export function subscribe(fn) {

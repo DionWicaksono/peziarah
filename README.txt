@@ -108,6 +108,31 @@ File Manager, katalog langsung berubah TAPI 38 halaman produk masih memuat
 teks lama di <head> dan <noscript>-nya. Minta build ulang lalu upload lagi
 folder produk/ setiap kali ada perubahan harga atau copy produk.
 
+CARA BELI PER PRODUK (sejak 9 November 2026)
+Di data/products.js, setiap produk bisa diberi:
+  order: "preorder"  -> badge PRE-ORDER; halaman produk menjelaskan barang
+                        dibuat setelah dipesan (produksi `lead`, bawaan
+                        10–14 hari kerja, lalu 1–4 hari kerja kirim).
+                        Tetap bisa masuk keranjang.
+  order: "wa"        -> pemesanan ditunda: harga, pilihan, dan tombol keranjang
+                        di halaman produk diabu-abukan, ada kotak ungu
+                        "Tanya via WhatsApp". Tidak bisa masuk keranjang dari
+                        mana pun (termasuk Essentials) — kecuali mode admin.
+  hidden: true       -> tidak tampil di mana pun; halaman produknya
+                        dialihkan ke /katalog/.
+  stock: 0           -> SOLD OUT (atau teks soldLabel, mis. "TERJUAL").
+MODE ADMIN TOKO: buka halaman toko mana pun dengan ?admin=1 (atau klik
+"MODE ADMIN TOKO" di /admin/kuitansi/ atau /admin/resi/). Di browser itu saja,
+produk "wa" bisa dimasukkan ke keranjang lagi untuk membuat invoice/PDF dari
+/keranjang/ seperti biasa. Pil "MODE ADMIN TOKO · MATIKAN" di kiri bawah
+menandai mode ini aktif; klik untuk mematikan (atau ?admin=0). Pelanggan tidak
+melihat perubahan apa pun. Catatan: mode ini bukan pengaman — siapa pun yang
+tahu ?admin=1 bisa membukanya, tapi pesanan tetap dikonfirmasi manual.
+Keranjang lama otomatis membuang barang "wa"/terjual/tersembunyi dan
+menyesuaikan harga varian yang berubah. products.js dan cart.js dimuat
+dengan ?v=YYYYMMDD — naikkan angkanya di semua HTML setiap kali file itu
+berubah (cache JS 7 hari).
+
 MASIH PLACEHOLDER — GANTI SEBELUM DIIKLANKAN
 - Nomor WhatsApp (wa.me/6281542615445) di semua halaman, termasuk link WA
   di footer.

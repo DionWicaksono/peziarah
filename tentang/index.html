@@ -27,8 +27,8 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"AboutPage","name":"Tentang Peziarah","description":"Peziarah.com memetakan gua Maria dan titik doa di Indonesia, menyusun ziarah rombongan paroki, menerbitkan jurnal iman dan panduan devosi, serta membuat bekal rohani bersama pengrajin lokal. Dijalankan kolektif lintas profesi SMU Van Lith Angkatan 7, lulusan 2000, Muntilan.","url":"https://peziarah.com/tentang/","inLanguage":"id-ID","isPartOf":{"@type":"WebSite","name":"Peziarah","url":"https://peziarah.com/"},"about":{"@type":"Organization","name":"Peziarah","url":"https://peziarah.com/","logo":"https://peziarah.com/assets/favicon.png","areaServed":"ID","sameAs":["https://instagram.com/peziarahsociety","https://facebook.com/peziarahsociety"]}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://peziarah.com/"},{"@type":"ListItem","position":2,"name":"Tentang","item":"https://peziarah.com/tentang/"}]}</script>
 <link rel="modulepreload" href="/data/verses.js">
-<link rel="modulepreload" href="/data/products.js">
-<link rel="modulepreload" href="/data/cart.js">
+<link rel="modulepreload" href="/data/products.js?v=20261109">
+<link rel="modulepreload" href="/data/cart.js?v=20261109">
 <script defer src="/support.js"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -408,13 +408,13 @@ class Component extends DCLogic {
 
   componentDidMount() {
     import("/data/verses.js").then(m => this.setState({ verse: m.currentVerse() }));
-    import("/data/products.js").then(m => {
+    import("/data/products.js?v=20261109").then(m => {
       PRODUCTS = m.PRODUCTS;
       CAT_LABEL = {};
       m.CATEGORIES.forEach(c => { CAT_LABEL[c.id] = c.name; });
       this.forceUpdate();
     });
-    import("/data/cart.js").then(m => {
+    import("/data/cart.js?v=20261109").then(m => {
       this.setState({ cartCount: m.count() });
       this._offCart = m.subscribe(items => this.setState({ cartCount: items.reduce((n, i) => n + i.qty, 0) }));
     });

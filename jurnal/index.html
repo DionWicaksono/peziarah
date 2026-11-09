@@ -24,8 +24,8 @@
 <meta name="twitter:image" content="https://peziarah.com/assets/og-peziarah.jpg">
 <meta name="theme-color" content="#F7F3EA">
 <link rel="icon" href="/assets/favicon.png" type="image/png">
-<link rel="modulepreload" href="/data/products.js">
-<link rel="modulepreload" href="/data/cart.js">
+<link rel="modulepreload" href="/data/products.js?v=20261109">
+<link rel="modulepreload" href="/data/cart.js?v=20261109">
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/post-bodies.js">
 <link rel="modulepreload" href="/data/journal.js">
@@ -477,11 +477,11 @@ class Component extends DCLogic {
             pillar: "semua", mobile: false, menu: false, email: "", subbed: false, loaded: false };
 
   componentDidMount() {
-    import("/data/products.js").then(m => {
+    import("/data/products.js?v=20261109").then(m => {
       const cl = {}; m.CATEGORIES.forEach(c => { cl[c.id] = c.name; });
       this.setState({ products: m.PRODUCTS, catLabel: cl });
     });
-    import("/data/cart.js").then(m => {
+    import("/data/cart.js?v=20261109").then(m => {
       this.setState({ cartCount: m.count() });
       this._offCart = m.subscribe(items => this.setState({ cartCount: items.reduce((n, i) => n + i.qty, 0) }));
     });
