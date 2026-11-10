@@ -31,7 +31,7 @@
 <link rel="modulepreload" href="/data/journal.js?v=20261109">
 <link rel="modulepreload" href="/data/products.js?v=20261109">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
-<script defer src="/support.js"></script>
+<script defer src="/support.js?v=20261110"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -134,7 +134,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div style="{{ resultsStyle }}">
       <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172;padding:4px 6px 12px">{{ resultsLabel }}</div>
       <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
-        <a href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
+        <a dc-href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
           <span style="{{ r.thumbStyle }}"></span>
           <span style="flex:1;min-width:0">
             <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.02em">{{ r.name }}</span>
@@ -183,7 +183,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:30px">
         <a href="/ziarah/#form-ziarah" style="padding:16px 30px;border-radius:999px;background:#C9E45B;color:#1A1712;font-weight:600;font-size:15px" style-hover="background:#F7F3EA">Ajukan Rute Ini</a>
-        <a href="{{ postHref }}" style="{{ postBtnStyle }}">Baca Catatan Ziarahnya</a>
+        <a dc-href="{{ postHref }}" style="{{ postBtnStyle }}">Baca Catatan Ziarahnya</a>
       </div>
     </div>
   </section>
@@ -324,7 +324,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <section data-screen-label="Catatan Terkait" style="{{ postSectionStyle }}">
-    <a href="{{ postHref }}" style="display:flex;flex-wrap:wrap;gap:clamp(22px,3vw,44px);align-items:center;border-top:1px solid #D6CBB8;padding-top:28px" style-hover="opacity:0.78">
+    <a dc-href="{{ postHref }}" style="display:flex;flex-wrap:wrap;gap:clamp(22px,3vw,44px);align-items:center;border-top:1px solid #D6CBB8;padding-top:28px" style-hover="opacity:0.78">
       <div style="{{ postMediaStyle }}">
         <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#9A9083">{{ postSlot }}</span>
       </div>
@@ -344,7 +344,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:24px">
       <sc-for list="{{ produk }}" as="p" hint-placeholder-count="3">
-        <a href="{{ p.href }}" style="flex:1 1 240px;min-width:220px;max-width:340px" style-hover="opacity:0.8">
+        <a dc-href="{{ p.href }}" style="flex:1 1 240px;min-width:220px;max-width:340px" style-hover="opacity:0.8">
           <div style="{{ p.mediaStyle }}">
             <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#9A9083">{{ p.slot }}</span>
           </div>
@@ -383,7 +383,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:24px">
       <sc-for list="{{ others }}" as="o" hint-placeholder-count="5">
-        <a href="{{ o.href }}" style="flex:1 1 260px;min-width:240px;max-width:400px" style-hover="opacity:0.8">
+        <a dc-href="{{ o.href }}" style="flex:1 1 260px;min-width:240px;max-width:400px" style-hover="opacity:0.8">
           <div style="{{ o.mediaStyle }}">
             <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#9A9083">{{ o.slot }}</span>
           </div>

@@ -30,7 +30,7 @@
 <link rel="modulepreload" href="/data/routes.js">
 <link rel="modulepreload" href="/data/forms.js">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
-<script defer src="/support.js"></script>
+<script defer src="/support.js?v=20261110"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -134,7 +134,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div style="{{ resultsStyle }}">
       <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172;padding:4px 6px 12px">{{ resultsLabel }}</div>
       <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
-        <a href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
+        <a dc-href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
           <span style="{{ r.thumbStyle }}"></span>
           <span style="flex:1;min-width:0">
             <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.02em">{{ r.name }}</span>
@@ -305,7 +305,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div style="display:flex;flex-wrap:wrap;gap:24px">
       <sc-for list="{{ routes }}" as="r" hint-placeholder-count="5">
         <div style="{{ r.cardStyle }}">
-        <a href="{{ r.href }}" style="display:block" style-hover="opacity:0.82">
+        <a dc-href="{{ r.href }}" style="display:block" style-hover="opacity:0.82">
           <div style="{{ r.mediaStyle }}">
             <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#9A9083">{{ r.slot }}</span>
             <span style="{{ r.soonBadgeStyle }}">{{ r.soonBadge }}</span>
@@ -322,7 +322,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span style="display:inline-block;margin-top:14px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#6C4BA6;border-bottom:1px solid #C9B6E4;padding-bottom:3px">LIHAT RUTE LENGKAP →</span>
           </div>
         </a>
-        <a href="{{ r.postHref }}" style="{{ r.postLinkStyle }}" style-hover="color:#1A1712">CATATAN ZIARAH: {{ r.postTitle }}</a>
+        <a dc-href="{{ r.postHref }}" style="{{ r.postLinkStyle }}" style-hover="color:#1A1712">CATATAN ZIARAH: {{ r.postTitle }}</a>
         </div>
       </sc-for>
     </div>
@@ -450,7 +450,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <sc-if value="{{ isWa }}" hint-placeholder-val="{{ false }}">
           <div>
             <p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:#5B5347">Paling cepat lewat WhatsApp — sebutkan asal paroki/komunitas, perkiraan jumlah peserta, dan bulan yang diincar.</p>
-            <a href="{{ waHref }}" target="_blank" rel="noopener" style="display:block;text-align:center;padding:17px 24px;border-radius:999px;border:1px solid #1A1712;color:#1A1712;font-weight:600;font-size:15px" style-hover="background:#1A1712;color:#F7F3EA">Tanya via WhatsApp</a>
+            <a dc-href="{{ waHref }}" target="_blank" rel="noopener" style="display:block;text-align:center;padding:17px 24px;border-radius:999px;border:1px solid #1A1712;color:#1A1712;font-weight:600;font-size:15px" style-hover="background:#1A1712;color:#F7F3EA">Tanya via WhatsApp</a>
           </div>
         </sc-if>
 
@@ -461,7 +461,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6C4BA6">PERMINTAAN TERCATAT</span>
                 <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:22px;letter-spacing:-0.02em;margin:10px 0 14px">{{ refCode }}</div>
                 <p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:#5B5347">Kirim ringkasannya ke WhatsApp kami supaya langsung masuk antrean penyusunan rute.</p>
-                <a href="{{ sendHref }}" target="_blank" rel="noopener" style="display:block;text-align:center;padding:16px 24px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px" style-hover="background:#6C4BA6">Kirim Ringkasan</a>
+                <a dc-href="{{ sendHref }}" target="_blank" rel="noopener" style="display:block;text-align:center;padding:16px 24px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px" style-hover="background:#6C4BA6">Kirim Ringkasan</a>
               </div>
             </sc-if>
 
@@ -503,7 +503,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6C4BA6">RANCANGAN TERCATAT</span>
                 <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:22px;letter-spacing:-0.02em;margin:10px 0 14px">{{ byoCode }}</div>
                 <p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:#5B5347">Kirim rancangannya ke WhatsApp kami. Kami balas dengan rute, penginapan, dan estimasi biaya — biasanya dalam 2 hari kerja.</p>
-                <a href="{{ byoSendHref }}" target="_blank" rel="noopener" style="display:block;text-align:center;padding:16px 24px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px" style-hover="background:#6C4BA6">Kirim Rancangan</a>
+                <a dc-href="{{ byoSendHref }}" target="_blank" rel="noopener" style="display:block;text-align:center;padding:16px 24px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px" style-hover="background:#6C4BA6">Kirim Rancangan</a>
               </div>
             </sc-if>
 
@@ -597,7 +597,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p style="margin:0 0 30px;font-size:16px;line-height:1.6;color:#5B5347;max-width:56ch">Kami menulis dari tempat-tempat ini sebelum menjualnya sebagai perjalanan.</p>
     <div style="display:flex;flex-wrap:wrap;gap:26px">
       <sc-for list="{{ posts }}" as="p" hint-placeholder-count="6">
-        <a href="{{ p.href }}" style="flex:1 1 290px;min-width:260px;max-width:420px" style-hover="opacity:0.78">
+        <a dc-href="{{ p.href }}" style="flex:1 1 290px;min-width:260px;max-width:420px" style-hover="opacity:0.78">
           <div style="{{ p.mediaStyle }}">
             <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#9A9083">{{ p.slot }}</span>
           </div>

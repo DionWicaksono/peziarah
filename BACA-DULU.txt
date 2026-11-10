@@ -1,3 +1,47 @@
+# Upload — 10 November 2026: perbaikan 404 di Search Console
+
+Folder ini adalah SELURUH situs, disinkronkan dengan repo terbaru
+(commit 142d871 "Curhat") plus perubahan di bawah. Timpa semua isi
+repo / public_html dengan isi folder ini.
+
+## Yang berubah
+
+**Sumber 404: link template yang terbaca Google**
+- 56 dari 62 URL di laporan "Not found (404)" berbentuk
+  /produk/x/{{ p.href }}. Itu bukan halaman: Google membaca template mentah
+  di dalam <x-dc> sebelum JavaScript mengisinya.
+- Di 101 halaman, 633 atribut href="{{ ... }}" / src="{{ ... }}" di dalam
+  template diganti dc-href / dc-src. support.js mengembalikannya jadi
+  href/src saat render, jadi tampilan dan link di browser tidak berubah.
+  Bonus: browser tidak lagi meminta gambar /{{ p.image }} di beranda.
+- support.js dimuat dengan ?v=20261110 supaya browser lama tidak memakai
+  support.js versi cache (tanpa ini, link akan mati sampai 7 hari).
+- Sumber _src/landing dan _src/curhat ikut diubah; build ulang menghasilkan
+  file yang sama persis.
+
+**.htaccess**
+- URL lama yang mengandung {{ atau }} sekarang dijawab 410 Gone, bukan 404.
+  Google menghapus 410 lebih cepat.
+- 6 produk tanpa halaman (belum ada foto) dialihkan 301 ke bagian katalog:
+  krusifiks-jati, gelang-manik-tenun, batik-agnus, set-henna-salib,
+  lilin-hortus, rosario-via-lucis.
+- /jurnal/artikel/ugc-... dialihkan 301 ke kartunya di /jurnal/.
+- www.peziarah.com sudah dialihkan ke peziarah.com sejak sebelumnya; dua URL
+  www di laporan adalah crawl lama.
+
+## Setelah upload, cek
+1. Buka satu halaman produk dan beranda, klik beberapa link (produk lain,
+   kategori, WhatsApp). Semua harus jalan seperti biasa.
+2. Buka https://peziarah.com/produk/tas-romo/%7B%7B%20p.href%20%7D%7D
+   → harus muncul halaman 404 Peziarah dengan status 410
+   (cek di Search Console → URL Inspection → Test live URL).
+3. Buka https://peziarah.com/produk/krusifiks-jati/ → pindah ke /katalog/#salib.
+4. Search Console → Pages → Not found (404) → VALIDATE FIX.
+   Validasi butuh beberapa minggu. Jumlah akan turun bertahap; URL 410
+   pindah ke kategori lain lalu hilang.
+
+---
+
 # Upload — 9 November 2026 (malam): Curhat Katolik
 
 Folder ini adalah SELURUH situs, disinkronkan dengan repo terbaru

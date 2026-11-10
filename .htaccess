@@ -3,6 +3,7 @@
 # --- Error pages ---
 ErrorDocument 404 /404.html
 ErrorDocument 403 /404.html
+ErrorDocument 410 /404.html
 
 # --- Canonical host + HTTPS ---
 <IfModule mod_rewrite.c>
@@ -11,6 +12,24 @@ ErrorDocument 403 /404.html
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
   RewriteCond %{HTTP_HOST} ^www\.peziarah\.com$ [NC]
   RewriteRule ^ https://peziarah.com%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# --- Old template links + removed pages (Search Console 404 clean-up) ---
+# Google once crawled raw template links like /produk/x/{{ p.href }}.
+# Pages now write them as dc-href, so no new ones appear; answer the old
+# ones with 410 Gone so Google drops them faster than a 404.
+<IfModule mod_rewrite.c>
+  RewriteCond %{THE_REQUEST} (\{\{|%7B%7B|\}\}|%7D%7D) [NC]
+  RewriteRule ^ - [G,L]
+  # Products that never got a page (no photo yet) -> their catalog section
+  RewriteRule ^produk/(krusifiks-jati)/?$ /katalog/#salib [R=301,L,NE]
+  RewriteRule ^produk/(gelang-manik-tenun)/?$ /katalog/#perhiasan [R=301,L,NE]
+  RewriteRule ^produk/(batik-agnus)/?$ /katalog/#apparel [R=301,L,NE]
+  RewriteRule ^produk/(set-henna-salib)/?$ /katalog/#bodyart [R=301,L,NE]
+  RewriteRule ^produk/(lilin-hortus)/?$ /katalog/#lilin [R=301,L,NE]
+  RewriteRule ^produk/(rosario-via-lucis)/?$ /katalog/#rosario [R=301,L,NE]
+  # Reader story that is a card on /jurnal/, not its own article
+  RewriteRule ^jurnal/artikel/(ugc-[a-z0-9-]+)/?$ /jurnal/#$1 [R=301,L,NE]
 </IfModule>
 
 # --- MIME types ---

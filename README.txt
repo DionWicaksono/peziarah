@@ -70,6 +70,15 @@ data/post-bodies.js. Tidak perlu ditandai manual.
 CATATAN TEKNIS
 - Halaman ini HARUS diakses lewat http/https, bukan dibuka langsung
   dari file (data/*.js dimuat sebagai ES module).
+- LINK DI TEMPLATE PAKAI dc-href / dc-src, BUKAN href / src.
+  Di dalam blok <x-dc>, link dan gambar yang nilainya dari data ditulis
+  dc-href="{{ p.href }}" dan dc-src="{{ p.image }}". support.js mengubahnya
+  kembali jadi href/src saat halaman dirender. Kalau ditulis href="{{ ... }}",
+  Google membaca teks mentahnya sebagai URL (mis. /produk/x/{{ p.href }})
+  dan melaporkannya sebagai 404 di Search Console. Link biasa yang nilainya
+  tetap (href="/katalog/") tidak perlu diubah.
+- support.js dimuat dengan ?v=20261110. Kalau support.js diubah, naikkan
+  angka ini di semua halaman (cache browser 7 hari).
 - Semua path di dalam HTML bersifat absolut (/assets/, /data/,
   /support.js), jadi paket ini harus berada di web ROOT — bukan di
   subfolder seperti /toko/.

@@ -8,7 +8,7 @@
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#F7F3EA">
 <link rel="icon" href="/assets/favicon.png" type="image/png">
-<script defer src="/support.js"></script>
+<script defer src="/support.js?v=20261110"></script>
 <style>x-dc{display:none}</style>
 </head>
 <body>
@@ -116,7 +116,7 @@
       <button type="button" onClick="{{ download }}" style="{{ btnStyle }}">{{ btnLabel }}</button>
       <button type="button" onClick="{{ invoiceOnly }}" style="padding:14px 20px;border-radius:999px;border:1px solid #1A1712;background:transparent;color:#1A1712;font-size:12px;letter-spacing:0.1em">UNDUH INVOICE (BELUM LUNAS)</button>
       <sc-if value="{{ s.done }}" hint-placeholder-val="{{ false }}">
-        <a href="{{ waHref }}" target="_blank" rel="noopener" style="padding:14px 20px;border-radius:999px;border:1px solid #2E6A40;color:#2E6A40;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em">KIRIM KE WHATSAPP PEMBELI →</a>
+        <a dc-href="{{ waHref }}" target="_blank" rel="noopener" style="padding:14px 20px;border-radius:999px;border:1px solid #2E6A40;color:#2E6A40;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em">KIRIM KE WHATSAPP PEMBELI →</a>
       </sc-if>
     </div>
     <span style="font-size:13px;color:#8A3B2E">{{ s.err }}</span>

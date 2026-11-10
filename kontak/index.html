@@ -28,7 +28,7 @@
 <link rel="modulepreload" href="/data/products.js?v=20261109">
 <link rel="modulepreload" href="/data/forms.js">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
-<script defer src="/support.js"></script>
+<script defer src="/support.js?v=20261110"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -110,7 +110,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div style="{{ resultsStyle }}">
       <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172;padding:4px 6px 12px">{{ resultsLabel }}</div>
       <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
-        <a href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
+        <a dc-href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
           <span style="{{ r.thumbStyle }}"></span>
           <span style="flex:1;min-width:0">
             <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.02em">{{ r.name }}</span>
@@ -164,7 +164,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <p style="margin:0 0 26px;font-size:16px;line-height:1.6;color:#5B5347;max-width:44ch">Sembilan dari sepuluh pertanyaan pembeli soal status pesanan, ukuran, atau stok — semuanya lebih cepat dijawab langsung daripada lewat form.</p>
           <div style="display:flex;flex-direction:column;gap:12px">
             <sc-for list="{{ channels }}" as="c" hint-placeholder-count="4">
-              <a href="{{ c.href }}" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 22px;border-radius:20px;border:1px solid #D6CBB8;background:#F7F3EA" style-hover="background:#EFE8DA;border-color:#6C4BA6">
+              <a dc-href="{{ c.href }}" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 22px;border-radius:20px;border:1px solid #D6CBB8;background:#F7F3EA" style-hover="background:#EFE8DA;border-color:#6C4BA6">
                 <span>
                   <span style="display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#8A8172">{{ c.label }}</span>
                   <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:17px;letter-spacing:-0.02em;margin-top:5px">{{ c.value }}</span>
@@ -217,7 +217,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6C4BA6">PENGAJUAN DITERIMA</span>
               <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:24px;letter-spacing:-0.02em;margin:10px 0 14px">{{ vendorCode }}</div>
               <p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:#5B5347">Kami tinjau tiap dua minggu. Kalau cocok, kami hubungi untuk minta sampel. Kirim juga katalog atau tautan Instagram lewat WhatsApp supaya lebih cepat dinilai.</p>
-              <a href="{{ vendorWaHref }}" target="_blank" rel="noopener" style="display:block;text-align:center;padding:16px 24px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px" style-hover="background:#6C4BA6">Kirim Katalog via WhatsApp</a>
+              <a dc-href="{{ vendorWaHref }}" target="_blank" rel="noopener" style="display:block;text-align:center;padding:16px 24px;border-radius:999px;background:#1A1712;color:#F7F3EA;font-weight:600;font-size:15px" style-hover="background:#6C4BA6">Kirim Katalog via WhatsApp</a>
             </div>
           </sc-if>
           <sc-if value="{{ showVendorForm }}" hint-placeholder-val="{{ true }}">

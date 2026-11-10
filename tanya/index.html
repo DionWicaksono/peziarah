@@ -30,7 +30,7 @@
 <link rel="modulepreload" href="/data/products.js?v=20261109">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Tanya Awam — rubrik tanya umat Katolik, anonim","url":"https://peziarah.com/tanya/","description":"Pertanyaan pembaca tanpa nama, dijawab narasumber terverifikasi.","isPartOf":{"@type":"WebSite","name":"Peziarah","url":"https://peziarah.com/"},"hasPart":[{"@type":"QAPage","name":"Menikah di catatan sipil, bolehkah menyambut komuni?","url":"https://peziarah.com/tanya/menikah-catatan-sipil-komuni/"}]}</script>
-<script defer src="/support.js"></script>
+<script defer src="/support.js?v=20261110"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -112,7 +112,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div style="{{ resultsStyle }}">
       <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172;padding:4px 6px 12px">{{ resultsLabel }}</div>
       <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
-        <a href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
+        <a dc-href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
           <span style="{{ r.thumbStyle }}"></span>
           <span style="flex:1;min-width:0">
             <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.02em">{{ r.name }}</span>
@@ -162,7 +162,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
 
-    <a href="{{ latestHref }}" style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;width:100%;margin:0;padding:20px max(28px,calc(50% - 612px));box-sizing:border-box;background:#6C4BA6;color:#F7F3EA;box-sizing:border-box" style-hover="background:#5B3E90">
+    <a dc-href="{{ latestHref }}" style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;width:100%;margin:0;padding:20px max(28px,calc(50% - 612px));box-sizing:border-box;background:#6C4BA6;color:#F7F3EA;box-sizing:border-box" style-hover="background:#5B3E90">
       <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#E9F7B4;flex:0 0 auto">JAWABAN TERBARU</span>
       <span style="flex:1 1 320px;min-width:260px;font-family:'Archivo',sans-serif;font-weight:700;font-size:clamp(17px,1.9vw,21px);letter-spacing:-0.03em;line-height:1.28;color:inherit;text-wrap:pretty">{{ latestTitle }}</span>
       <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#D8CCEC;flex:0 0 auto">{{ latestMeta }}</span>
@@ -293,7 +293,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6C4BA6">{{ g.name }}</span>
             <div style="display:flex;flex-direction:column;margin-top:14px">
               <sc-for list="{{ g.items }}" as="a" hint-placeholder-count="3">
-                <a href="{{ a.href }}" style="display:block;border-top:1px solid #E7DFD1;padding:18px 16px;margin:0 -16px;border-radius:16px" style-hover="color:#6C4BA6;background:#EFE7FA">
+                <a dc-href="{{ a.href }}" style="display:block;border-top:1px solid #E7DFD1;padding:18px 16px;margin:0 -16px;border-radius:16px" style-hover="color:#6C4BA6;background:#EFE7FA">
                   <span style="display:block;font-style:italic;font-size:clamp(17px,1.9vw,20px);line-height:1.44;color:inherit;max-width:56ch;text-wrap:pretty">{{ a.q }}</span>
                   <span style="display:block;margin-top:9px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#8A8172">{{ a.meta }}</span>
                 </a>
@@ -334,7 +334,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(24px,3.4vw,40px);line-height:0.96;letter-spacing:-0.038em;margin:14px 0 12px;max-width:22ch">Rubrik ini bukan salurannya.</h2>
           <p style="margin:0;font-size:15px;line-height:1.66;color:rgba(247,243,234,0.82);max-width:50ch;text-wrap:pretty">Kalau Anda sedang dalam bahaya &#8212; kekerasan dalam rumah tangga, ancaman, atau krisis yang butuh pertolongan sekarang &#8212; kami tidak bisa menjawab cepat dan tidak bisa menghubungi Anda kembali. Carilah bantuan langsung: orang yang Anda percaya, pastor paroki, atau layanan pendampingan di kota Anda.</p>
         </div>
-        <a href="{{ waHref }}" target="_blank" rel="noopener" style="padding:16px 28px;border-radius:999px;background:#C9E45B;color:#1A1712;font-weight:600;font-size:15px" style-hover="background:#F7F3EA">Hubungi redaksi</a>
+        <a dc-href="{{ waHref }}" target="_blank" rel="noopener" style="padding:16px 28px;border-radius:999px;background:#C9E45B;color:#1A1712;font-weight:600;font-size:15px" style-hover="background:#F7F3EA">Hubungi redaksi</a>
       </div>
     </section>
 

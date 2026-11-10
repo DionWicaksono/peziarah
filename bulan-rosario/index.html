@@ -30,7 +30,7 @@
 <link rel="modulepreload" href="/data/products.js?v=20261109">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
 <link rel="modulepreload" href="/data/verses.js">
-<script defer src="/support.js"></script>
+<script defer src="/support.js?v=20261110"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -394,7 +394,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px">
         <sc-for list="{{ rosarios }}" as="r" hint-placeholder-count="2">
-          <a href="{{ r.href }}" style="display:flex;flex-direction:column;border-radius:24px;border:1px solid #D6CBB8;background:#FDFBF6;overflow:hidden">
+          <a dc-href="{{ r.href }}" style="display:flex;flex-direction:column;border-radius:24px;border:1px solid #D6CBB8;background:#FDFBF6;overflow:hidden">
             <div style="{{ r.mediaStyle }}">
               <span style="{{ r.badgeStyle }}">{{ r.badge }}</span>
             </div>
@@ -456,7 +456,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p style="margin:16px 0 0;font-size:15px;line-height:1.6;color:#E0D3F5;max-width:50ch">Pengerjaan ukiran butuh waktu tambahan. Untuk Oktober, pesan paling lambat pertengahan September.</p>
       </div>
       <div style="flex:1 1 300px;min-width:280px;display:flex;flex-direction:column;gap:14px">
-        <a href="{{ paketHref }}" target="_blank" rel="noopener" style="padding:17px 30px;border-radius:999px;background:#F7F3EA;color:#1A1712;font-weight:600;font-size:16px;text-align:center">Minta penawaran lingkungan</a>
+        <a dc-href="{{ paketHref }}" target="_blank" rel="noopener" style="padding:17px 30px;border-radius:999px;background:#F7F3EA;color:#1A1712;font-weight:600;font-size:16px;text-align:center">Minta penawaran lingkungan</a>
         <a href="/katalog/#rosario" style="padding:17px 30px;border-radius:999px;border:1px solid rgba(247,243,234,0.5);color:#F7F3EA;font-weight:600;font-size:16px;text-align:center">Lihat semua rosario</a>
       </div>
     </div>

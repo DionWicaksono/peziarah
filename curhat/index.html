@@ -29,7 +29,7 @@
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/products.js?v=20261109">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
-<script defer src="/support.js"></script>
+<script defer src="/support.js?v=20261110"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -133,7 +133,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div style="{{ resultsStyle }}">
       <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172;padding:4px 6px 12px">{{ resultsLabel }}</div>
       <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
-        <a href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
+        <a dc-href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
           <span style="{{ r.thumbStyle }}"></span>
           <span style="flex:1;min-width:0">
             <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.02em">{{ r.name }}</span>

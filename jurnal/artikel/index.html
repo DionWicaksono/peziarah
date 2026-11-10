@@ -29,7 +29,7 @@
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/journal.js?v=20261109">
 <link rel="modulepreload" href="/data/post-bodies.js?v=20261109">
-<script defer src="/support.js"></script>
+<script defer src="/support.js?v=20261110"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -136,7 +136,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div style="{{ resultsStyle }}">
       <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172;padding:4px 6px 12px">{{ resultsLabel }}</div>
       <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
-        <a href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
+        <a dc-href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
           <span style="{{ r.thumbStyle }}"></span>
           <span style="flex:1;min-width:0">
             <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.02em">{{ r.name }}</span>
@@ -194,7 +194,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <aside style="{{ railStyle }}">
         <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8A8172;margin-bottom:14px">DALAM TULISAN INI</div>
         <sc-for list="{{ toc }}" as="t" hint-placeholder-count="3">
-          <a href="{{ t.href }}" style="display:block;padding:9px 0;border-top:1px solid #E7DFD1;font-size:14px;line-height:1.35;color:#5C5347">{{ t.label }}</a>
+          <a dc-href="{{ t.href }}" style="display:block;padding:9px 0;border-top:1px solid #E7DFD1;font-size:14px;line-height:1.35;color:#5C5347">{{ t.label }}</a>
         </sc-for>
         <div style="margin-top:28px;padding-top:20px;border-top:1px solid #E7DFD1;display:flex;flex-direction:column;gap:9px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#8A8172">
           <span>BAGIKAN</span>
@@ -271,7 +271,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:clamp(20px,2.6vw,34px)">
       <sc-for list="{{ related }}" as="p" hint-placeholder-count="3">
-        <a href="{{ p.href }}" style="flex:1 1 300px;min-width:250px;max-width:400px;display:block">
+        <a dc-href="{{ p.href }}" style="flex:1 1 300px;min-width:250px;max-width:400px;display:block">
           <div style="{{ p.mediaStyle }}">
             <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#9A9083">{{ p.slot }}</div>
           </div>

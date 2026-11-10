@@ -560,6 +560,9 @@
     return Object.keys(out).length ? out : void 0;
   }
   function compileTemplate(html, host) {
+    // Pages write template links as dc-href / dc-src so crawlers never see
+    // "{{ x.href }}" as a real URL (Search Console 404s). Restore them here.
+    html = String(html).replace(/(\s)dc-(href|src)=/g, "$1$2=");
     const tpl = document.createElement("template");
     //! nosemgrep: direct-inner-html-assignment
     tpl.innerHTML = encodeCase(html);

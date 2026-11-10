@@ -29,7 +29,7 @@
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/post-bodies.js?v=20261109">
 <link rel="modulepreload" href="/data/journal.js?v=20261109">
-<script defer src="/support.js"></script>
+<script defer src="/support.js?v=20261110"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -156,7 +156,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div style="{{ resultsStyle }}">
       <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172;padding:4px 6px 12px">{{ resultsLabel }}</div>
       <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
-        <a href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
+        <a dc-href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
           <span style="{{ r.thumbStyle }}"></span>
           <span style="flex:1;min-width:0">
             <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.02em">{{ r.name }}</span>
@@ -212,7 +212,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <section data-screen-label="Sorotan" style="{{ leadSectionStyle }}">
     <sc-for list="{{ lead }}" as="p" hint-placeholder-count="1">
-      <a href="{{ p.href }}" style="display:flex;flex-wrap:wrap;gap:clamp(24px,3.5vw,52px);align-items:center">
+      <a dc-href="{{ p.href }}" style="display:flex;flex-wrap:wrap;gap:clamp(24px,3.5vw,52px);align-items:center">
         <div style="{{ p.mediaStyle }}">
           <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#9A9083">{{ p.slot }}</div>
         </div>
@@ -244,7 +244,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:clamp(20px,2.6vw,34px)">
       <sc-for list="{{ fresh }}" as="p" hint-placeholder-count="2">
-        <a href="{{ p.href }}" style="{{ p.cardStyle }}">
+        <a dc-href="{{ p.href }}" style="{{ p.cardStyle }}">
           <div style="{{ p.mediaStyle }}">
             <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#9A9083">{{ p.slot }}</div>
             <span style="position:absolute;top:14px;left:14px;padding:6px 12px;border-radius:999px;background:#C9E45B;color:#1A1712;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em">BARU</span>
@@ -275,7 +275,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p style="margin:0 0 30px;max-width:50ch;font-size:16px;line-height:1.55;color:#5C5347;text-wrap:pretty">Kiriman kami sunting seperlunya saja — untuk panjang dan ejaan, tidak untuk isi. Nama dan paroki dicantumkan sesuai izin pengirim.</p>
     <div style="display:flex;flex-wrap:wrap;gap:clamp(18px,2.4vw,28px)">
       <sc-for list="{{ voices }}" as="v" hint-placeholder-count="4">
-        <a href="{{ v.href }}" style="{{ v.cardStyle }}">
+        <a dc-href="{{ v.href }}" style="{{ v.cardStyle }}">
           <span style="font-family:'Archivo',sans-serif;font-weight:800;font-size:44px;line-height:0.7;color:#C9E45B">“</span>
           <blockquote style="margin:14px 0 0;font-family:'Archivo',sans-serif;font-weight:700;font-size:clamp(19px,2.2vw,25px);line-height:1.24;letter-spacing:-0.025em;text-wrap:pretty">{{ v.quote }}</blockquote>
           <p style="margin:18px 0 0;font-size:14px;line-height:1.5;color:#5C5347;text-wrap:pretty">{{ v.dek }}</p>
@@ -323,7 +323,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:clamp(16px,2.2vw,24px)">
       <sc-for list="{{ panduan }}" as="g" hint-placeholder-count="4">
-        <a href="{{ g.href }}" style="flex:1 1 220px;min-width:200px;padding:24px 22px;border-radius:20px;border:1px solid #E0D7C6;background:#FBF8F1;display:block">
+        <a dc-href="{{ g.href }}" style="flex:1 1 220px;min-width:200px;padding:24px 22px;border-radius:20px;border:1px solid #E0D7C6;background:#FBF8F1;display:block">
           <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6C4BA6;margin-bottom:14px">{{ g.mark }}</div>
           <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:17px;letter-spacing:-0.02em;line-height:1.2">{{ g.title }}</div>
           <div style="margin-top:10px;font-size:14px;line-height:1.5;color:#5C5347">{{ g.sub }}</div>
@@ -339,7 +339,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:clamp(20px,2.6vw,34px)">
       <sc-for list="{{ posts }}" as="p" hint-placeholder-count="6">
-        <a href="{{ p.href }}" style="{{ p.cardStyle }}">
+        <a dc-href="{{ p.href }}" style="{{ p.cardStyle }}">
           <div style="{{ p.mediaStyle }}">
             <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#9A9083">{{ p.slot }}</div>
           </div>

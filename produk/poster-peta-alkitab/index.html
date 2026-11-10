@@ -29,7 +29,7 @@
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
 <link rel="modulepreload" href="/data/products.js?v=20261109">
-<script defer src="/support.js"></script>
+<script defer src="/support.js?v=20261110"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -102,7 +102,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div style="{{ resultsStyle }}">
       <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172;padding:4px 6px 12px">{{ resultsLabel }}</div>
       <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
-        <a href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
+        <a dc-href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
           <span style="{{ r.thumbStyle }}"></span>
           <span style="flex:1;min-width:0">
             <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.02em">{{ r.name }}</span>
@@ -132,7 +132,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
   <nav style="padding:20px 28px 0;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#8A8172">
-    <a href="/">BERANDA</a> / <a href="{{ catHref }}">{{ catName }}</a> / <span style="color:#1A1712">{{ name }}</span>
+    <a href="/">BERANDA</a> / <a dc-href="{{ catHref }}">{{ catName }}</a> / <span style="color:#1A1712">{{ name }}</span>
   </nav>
 
   <section data-screen-label="Produk" style="padding:26px 28px 80px;display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
@@ -155,14 +155,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#6C4BA6">{{ catName }}</span>
       <h1 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(32px,4.6vw,58px);line-height:0.94;letter-spacing:-0.04em;margin:14px 0 16px">{{ name }}</h1>
       <sc-if value="{{ hasArtist }}" hint-placeholder-val="{{ false }}">
-        <a href="{{ artistHref }}" target="_blank" rel="noopener" style="display:inline-flex;gap:8px;align-items:baseline;margin:-4px 0 22px;font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:clamp(19px,2vw,23px);letter-spacing:0.04em;color:#6C4BA6;text-decoration:none" style-hover="color:#1A1712">oleh {{ artistName }} <span style="font-family:'Space Mono',monospace;font-size:14px">↗</span></a>
+        <a dc-href="{{ artistHref }}" target="_blank" rel="noopener" style="display:inline-flex;gap:8px;align-items:baseline;margin:-4px 0 22px;font-family:'Cinzel',Georgia,serif;font-weight:400;font-size:clamp(19px,2vw,23px);letter-spacing:0.04em;color:#6C4BA6;text-decoration:none" style-hover="color:#1A1712">oleh {{ artistName }} <span style="font-family:'Space Mono',monospace;font-size:14px">↗</span></a>
       </sc-if>
       <div style="{{ priceRowStyle }}">
         <span style="font-family:'Archivo',sans-serif;font-weight:700;font-size:30px;letter-spacing:-0.02em">{{ price }}</span>
         <span style="font-family:'Space Mono',monospace;font-size:12px;color:#8A8172">{{ stockLabel }}</span>
       </div>
       <p style="{{ priceNoteStyle }}">{{ priceNote }}</p>
-      <a href="{{ kitHref }}" style="{{ kitStyle }}">{{ kitLabel }}</a>
+      <a dc-href="{{ kitHref }}" style="{{ kitStyle }}">{{ kitLabel }}</a>
       <sc-if value="{{ hasQuote }}" hint-placeholder-val="{{ false }}">
         <figure style="margin:0 0 24px;padding:22px 0 20px;border-top:1px solid #D6CBB8;border-bottom:1px solid #D6CBB8;max-width:44ch">
           <span style="display:block;font-family:'Cinzel',Georgia,serif;font-size:56px;line-height:0.5;height:26px;color:#6C4BA6">“</span>
@@ -185,7 +185,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div style="{{ waBoxStyle }}">
         <span style="display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#C9E45B;margin-bottom:8px">PEMESANAN DITUNDA · TANYA LEWAT WHATSAPP</span>
         <p style="margin:0 0 16px;font-size:15px;line-height:1.55;color:#F7F3EA">{{ waBoxBody }}</p>
-        <a href="{{ waHref }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:999px;background:#C9E45B;color:#1A1712;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#F7F3EA;color:#1A1712"><span style="font-family:'Space Mono',monospace;font-size:12px">WA</span>Tanya via WhatsApp</a>
+        <a dc-href="{{ waHref }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:999px;background:#C9E45B;color:#1A1712;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#F7F3EA;color:#1A1712"><span style="font-family:'Space Mono',monospace;font-size:12px">WA</span>Tanya via WhatsApp</a>
         <span style="display:block;margin-top:12px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#BCB3A4">SENIN–SABTU 08.00–20.00 WIB · BALAS &lt; 1 JAM</span>
       </div>
 
@@ -229,9 +229,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </label>
 
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px">
-        <a href="{{ preorderHref }}" target="_blank" rel="noopener" style="{{ preorderStyle }}" style-hover="background:#1A1712;color:#F7F3EA">{{ preorderLabel }}</a>
+        <a dc-href="{{ preorderHref }}" target="_blank" rel="noopener" style="{{ preorderStyle }}" style-hover="background:#1A1712;color:#F7F3EA">{{ preorderLabel }}</a>
         <button onClick="{{ addToCart }}" style="{{ cartStyle }}">{{ cartLabel }}</button>
-        <a href="{{ askHref }}" target="_blank" rel="noopener" style="padding:16px 26px;border-radius:999px;border:1px solid #1A1712;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#1A1712;color:#F7F3EA">Tanya via WA</a>
+        <a dc-href="{{ askHref }}" target="_blank" rel="noopener" style="padding:16px 26px;border-radius:999px;border:1px solid #1A1712;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#1A1712;color:#F7F3EA">Tanya via WA</a>
       </div>
       </div>
 
@@ -253,7 +253,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <sc-for list="{{ specs }}" as="s" hint-placeholder-count="5">
           <div style="display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid #DFD6C4;font-size:14px">
             <span style="color:#8A8172">{{ s.k }}</span>
-            <a href="{{ s.href }}" target="_blank" rel="noopener" style="text-align:right;color:inherit;text-decoration:none" style-hover="color:#6C4BA6">{{ s.v }}</a>
+            <a dc-href="{{ s.href }}" target="_blank" rel="noopener" style="text-align:right;color:inherit;text-decoration:none" style-hover="color:#6C4BA6">{{ s.v }}</a>
           </div>
         </sc-for>
       </div>
@@ -275,7 +275,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
       <sc-for list="{{ related }}" as="p" hint-placeholder-count="4">
-        <a href="{{ p.href }}" style="{{ p.cardStyle }}">
+        <a dc-href="{{ p.href }}" style="{{ p.cardStyle }}">
           <div style="{{ p.mediaStyle }}">
             <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;color:{{ p.slotColor }}">{{ p.slot }}</div>
           </div>

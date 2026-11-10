@@ -34,7 +34,7 @@
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
 <link rel="modulepreload" href="/data/products.js?v=20261109">
-<script defer src="/support.js" onerror="var s=document.createElement('script');s.src='../support.js';document.head.appendChild(s)"></script>
+<script defer src="/support.js?v=20261110" onerror="var s=document.createElement('script');s.src='../support.js?v=20261110';document.head.appendChild(s)"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -149,7 +149,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div style="{{ resultsStyle }}">
       <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A8172;padding:4px 6px 12px">{{ resultsLabel }}</div>
       <sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
-        <a href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
+        <a dc-href="{{ r.href }}" style="display:flex;align-items:center;gap:14px;padding:10px 6px;border-top:1px solid #EFE8DA" style-hover="background:#F1EADC">
           <span style="{{ r.thumbStyle }}"></span>
           <span style="flex:1;min-width:0">
             <span style="display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.02em">{{ r.name }}</span>
@@ -190,7 +190,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div style="{{ s.copyStyle }}">
           <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.14em;color:#C9E45B">{{ s.eyebrow }}</span>
           <h1 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(38px,7.2vw,104px);line-height:0.9;letter-spacing:-0.045em;margin:14px 0 0;max-width:15ch">{{ s.l1 }}<br />{{ s.l2 }}<br /><span style="color:#C9E45B">{{ s.l3 }}</span></h1>
-          <a href="{{ s.href }}" style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#F7F3EA;border-bottom:1px solid rgba(247,243,234,0.42);padding-bottom:4px">{{ s.cta }}</a>
+          <a dc-href="{{ s.href }}" style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#F7F3EA;border-bottom:1px solid rgba(247,243,234,0.42);padding-bottom:4px">{{ s.cta }}</a>
         </div>
       </sc-for>
 
@@ -252,7 +252,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div style="display:flex;flex-wrap:wrap;gap:26px;align-items:flex-start">
       <sc-for list="{{ products }}" as="p" hint-placeholder-count="9">
-        <a href="{{ p.href }}" style="{{ p.cardStyle }}">
+        <a dc-href="{{ p.href }}" style="{{ p.cardStyle }}">
           <div style="{{ p.mediaStyle }}">
             <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;color:{{ p.slotColor }}">{{ p.slot }}</div>
             <span style="{{ p.badgeStyle }}">{{ p.badge }}</span>
