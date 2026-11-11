@@ -6,7 +6,7 @@ usage: python3 _src/curhat/build.py        (run from the repo root)
 - Header, drawer, footer and chrome()/search() are copied from
   produk/index.html (design system "Header" / "Footer"), like the landing.
 - JSON-LD (WebPage + Service with offers + FAQPage) and the static #__pr block
-  are generated from the data in body.dc.html (prices, steps, guides, faq), so
+  are generated from the data in body.dc.html (prices, steps, guides, human, faq), so
   what Google reads always matches the page.
 """
 import html, json, os, re
@@ -28,7 +28,7 @@ body = (body.replace("%%HEADER%%", header).replace("%%FOOTER%%", footer)
 def arr(name):
     m = re.search(r"\n      %s: \[(.*?)\n      \]" % name, body, re.S).group(1)
     return [dict(re.findall(r'(\w+): "((?:[^"\\]|\\.)*)"', item)) for item in re.findall(r"\{[^{}]*\}", m)]
-prices, steps, guides, faq, promises = (arr(n) for n in ("prices", "steps", "guides", "faq", "promises"))
+prices, steps, guides, faq, promises, human = (arr(n) for n in ("prices", "steps", "guides", "faq", "promises", "human"))
 
 URL = "https://peziarah.com/curhat/"
 num = lambda p: int(re.sub(r"\D", "", p)) * 1000
@@ -70,6 +70,9 @@ pr = f'''<div id="__pr" style="font-family:'Hanken Grotesk',Helvetica,Arial,sans
 <p style="{P}">Pengakuan dosa bukan bagian dari layanan ini. Sakramen selalu gratis, di paroki.</p>
 <h2 style="{H2}">Bukan untuk keadaan darurat</h2>
 <p style="{P}">Kalau kamu atau orang lain sedang dalam bahaya, hubungi 112 atau datang ke IGD terdekat.</p>
+<h2 style="{H2}">Orang, bukan mesin</h2>
+<p style="{P}">Kamu bisa curhat ke AI kapan saja, gratis. Kadang itu cukup. Tapi ada hal yang hanya bisa dilakukan orang.</p>
+{ul([f"<strong>{e(h['title'])}</strong> {e(h['body'])}" for h in human])}
 <h2 style="{H2}">Pertanyaan</h2>
 {"".join(f'<p style="{P}"><strong>{e(f["q"])}</strong> {e(f["a"])}</p>' for f in faq)}
 <p style="{P}">Lebih nyaman tanpa nama? <a href="/tanya/" style="color:#6C4BA6">Tanya Awam</a> tetap gratis dan anonim.</p>
