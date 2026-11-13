@@ -1,98 +1,3 @@
-/* --- asset path guard -------------------------------------------------------
-   Pages live in subfolders (/ziarah/, /produk/, /jurnal/artikel/...). A relative
-   image path ("assets/x.webp") therefore resolves against the subfolder and
-   404s. Two shapes need covering:
-     1. <img src> / <source srcset>  -> fires an error event, retried below.
-     2. inline style background:url() -> fires NOTHING, so inline styles are
-        rewritten as they are added. The route/journal cards use this shape,
-        which is exactly what kept blanking the Ziarah thumbnails.
-   No effect once paths are correct. Keep this FIRST in the file. */
-(function () {
-  var RX = /url\((['"]?)assets\//g;
-
-  function fixStyleAttr(el) {
-    if (!el || !el.getAttribute) return;
-    var s = el.getAttribute("style");
-    if (!s || s.indexOf("assets/") === -1) return;
-    var fixed = s.replace(RX, 'url($1/assets/');
-    if (fixed !== s) el.setAttribute("style", fixed);
-  }
-
-  function sweep(root) {
-    if (!root || !root.querySelectorAll) return;
-    fixStyleAttr(root);
-    var list = root.querySelectorAll('[style*="assets/"]');
-    for (var i = 0; i < list.length; i++) fixStyleAttr(list[i]);
-  }
-
-  if (typeof MutationObserver === "function") {
-    new MutationObserver(function (recs) {
-      for (var i = 0; i < recs.length; i++) {
-        var r = recs[i];
-        if (r.type === "attributes") fixStyleAttr(r.target);
-        else for (var j = 0; j < r.addedNodes.length; j++) sweep(r.addedNodes[j]);
-      }
-    }).observe(document.documentElement, {
-      subtree: true, childList: true, attributes: true, attributeFilter: ["style"]
-    });
-  }
-
-  function boot() { sweep(document.body || document.documentElement); }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
-  else boot();
-
-  var RETRIED = "__assetRetry";
-  document.addEventListener("error", function (e) {
-    var el = e.target;
-    if (!el || !el.tagName) return;
-    var tag = el.tagName.toLowerCase();
-    if (tag !== "img" && tag !== "source") return;
-    if (el[RETRIED]) return;
-    var attr = tag === "img" ? "src" : "srcset";
-    var raw = el.getAttribute(attr) || "";
-    var i = raw.indexOf("assets/");
-    if (!raw || i === -1 || raw.charAt(0) === "/") return;
-    el[RETRIED] = true;
-    el.setAttribute(attr, "/" + raw.slice(i));
-  }, true);
-})();
-
-/* --- hash jump guard --------------------------------------------------------
-   Every page renders client-side, so the browser performs its #anchor jump
-   before the target element exists and silently gives up. This waits for the
-   id to appear, then scrolls, and re-checks briefly afterwards in case a late
-   block (map, images) shifts the page under it. Also covers hashchange, which
-   the browser likewise no-ops when the target is not yet mounted. */
-(function () {
-  var OFFSET = 84;
-  function target() {
-    var h = window.location.hash;
-    if (!h || h.length < 2) return null;
-    var id = h.slice(1);
-    try { id = decodeURIComponent(id); } catch (e) {}
-    return document.getElementById(id);
-  }
-  function jump(el, smooth) {
-    var top = el.getBoundingClientRect().top + window.pageYOffset - OFFSET;
-    window.scrollTo({ top: top < 0 ? 0 : top, behavior: smooth ? "smooth" : "auto" });
-  }
-  function chase(smooth) {
-    var waits = 0, settles = 0;
-    (function tick() {
-      var el = target();
-      if (!el) { if (waits++ < 60) setTimeout(tick, 60); return; }
-      jump(el, smooth && settles === 0);
-      if (settles++ < 3) setTimeout(tick, 260);
-    })();
-  }
-  if (window.location.hash) {
-    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { chase(false); });
-    else chase(false);
-  }
-  window.addEventListener("hashchange", function () { chase(true); });
-})();
-
-
 // GENERATED from dc-runtime/src/*.ts — do not edit. Rebuild with `cd dc-runtime && bun run build`.
 "use strict";
 (() => {
@@ -560,9 +465,6 @@
     return Object.keys(out).length ? out : void 0;
   }
   function compileTemplate(html, host) {
-    // Pages write template links as dc-href / dc-src so crawlers never see
-    // "{{ x.href }}" as a real URL (Search Console 404s). Restore them here.
-    html = String(html).replace(/(\s)dc-(href|src)=/g, "$1$2=");
     const tpl = document.createElement("template");
     //! nosemgrep: direct-inner-html-assignment
     tpl.innerHTML = encodeCase(html);
@@ -1717,9 +1619,7 @@
   }
 
   // src/runtime.ts
-  // Root-absolute: pages live in subfolders, and a "." base made <dc-import>
-  // fetch /ziarah/rute/custom/GuaMariaMap.dc.html (404, empty map section).
-  var COMPONENT_DIR = "";
+  var COMPONENT_DIR = ".";
   function createRuntime(doc = document) {
     const registry = createRegistry();
     const pseudoClass = createPseudoSheet(doc);

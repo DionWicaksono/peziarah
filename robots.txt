@@ -1,15 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /admin/
 
-# AI crawlers — konten boleh dibaca untuk menjawab pertanyaan tentang toko ini
-User-agent: GPTBot
-Allow: /
-User-agent: ClaudeBot
-Allow: /
-User-agent: PerplexityBot
-Allow: /
-User-agent: Google-Extended
-Allow: /
-
-Sitemap: https://peziarah.com/sitemap.xml
+Sitemap: https://toimoietlamer.com/sitemap.xml

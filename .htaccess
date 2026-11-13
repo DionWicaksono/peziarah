@@ -1,84 +1,44 @@
-# Peziarah.com — Apache config for Hostinger (public_html)
-
-# --- Error pages ---
+# Toi, Moi et la Mer — Hostinger / Apache
+Options -Indexes
+DirectoryIndex index.html
 ErrorDocument 404 /404.html
-ErrorDocument 403 /404.html
-ErrorDocument 410 /404.html
 
-# --- Canonical host + HTTPS ---
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteCond %{HTTPS} !=on
-  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-  RewriteCond %{HTTP_HOST} ^www\.peziarah\.com$ [NC]
-  RewriteRule ^ https://peziarah.com%{REQUEST_URI} [L,R=301]
+  # Force HTTPS and drop www
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+  # Folder URLs always end with a slash
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^(.*[^/])$ /$1/ [L,R=301]
 </IfModule>
 
-# --- Old template links + removed pages (Search Console 404 clean-up) ---
-# Google once crawled raw template links like /produk/x/{{ p.href }}.
-# Pages now write them as dc-href, so no new ones appear; answer the old
-# ones with 410 Gone so Google drops them faster than a 404.
-<IfModule mod_rewrite.c>
-  RewriteCond %{THE_REQUEST} (\{\{|%7B%7B|\}\}|%7D%7D) [NC]
-  RewriteRule ^ - [G,L]
-  # Products that never got a page (no photo yet) -> their catalog section
-  RewriteRule ^produk/(krusifiks-jati)/?$ /katalog/#salib [R=301,L,NE]
-  RewriteRule ^produk/(gelang-manik-tenun)/?$ /katalog/#perhiasan [R=301,L,NE]
-  RewriteRule ^produk/(batik-agnus)/?$ /katalog/#apparel [R=301,L,NE]
-  RewriteRule ^produk/(set-henna-salib)/?$ /katalog/#bodyart [R=301,L,NE]
-  RewriteRule ^produk/(lilin-hortus)/?$ /katalog/#lilin [R=301,L,NE]
-  RewriteRule ^produk/(rosario-via-lucis)/?$ /katalog/#rosario [R=301,L,NE]
-  # Reader story that is a card on /jurnal/, not its own article
-  RewriteRule ^jurnal/artikel/(ugc-[a-z0-9-]+)/?$ /jurnal/#$1 [R=301,L,NE]
-</IfModule>
+AddType application/javascript .js .mjs
+AddType image/webp .webp
+AddType video/mp4 .mp4
+AddType application/xml .xml
+AddDefaultCharset utf-8
 
-# --- MIME types ---
-<IfModule mod_mime.c>
-  AddType image/webp .webp
-  AddType application/javascript .js
-  AddType application/manifest+json .webmanifest
-  AddType "text/csv; charset=utf-8" .csv
-</IfModule>
-
-# --- Compression ---
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml text/xml
+  AddOutputFilterByType DEFLATE text/html text/css text/plain application/javascript application/xml
 </IfModule>
 
-# --- Caching: hash-free assets stay fresh enough to edit, HTML never cached ---
 <IfModule mod_expires.c>
   ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType application/javascript "access plus 1 hour"
   ExpiresByType image/webp "access plus 30 days"
   ExpiresByType image/jpeg "access plus 30 days"
   ExpiresByType image/png "access plus 30 days"
-  ExpiresByType text/css "access plus 7 days"
-  ExpiresByType application/javascript "access plus 7 days"
-  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType video/mp4 "access plus 30 days"
 </IfModule>
 
-# --- Security headers ---
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
-  Header set X-Frame-Options "SAMEORIGIN"
-</IfModule>
-
-# --- Directory listing off ---
-Options -Indexes
-
-# --- Repo-only files: deployed by Git but never served ---
-# Tracking setup notes, GTM import file and the Meta CAPI Apps Script live in
-# the repo for safekeeping; visitors get the 404 page instead.
-<FilesMatch "^(README-TRACKING\.md|gtm-container-peziarah\.json|meta-capi-apps-script\.gs)$">
-  Require all denied
-</FilesMatch>
-
-# Git metadata, in case the deploy leaves a .git folder in public_html.
-<IfModule mod_rewrite.c>
-  RewriteRule (^|/)\.git(/|$) - [F,L]
-</IfModule>
-
-# Page sources (_src/): kept in the repo so pages can be rebuilt, never served.
-<IfModule mod_rewrite.c>
-  RewriteRule ^_src(/|$) - [F,L]
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
 </IfModule>

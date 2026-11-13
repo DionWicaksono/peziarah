@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  @keyframes v3bar-fade { 0% { opacity: 0 } 100% { opacity: 1 } }
+  @keyframes tmlm-fade { 0% { opacity: 0; transform: translateY(10px) } 100% { opacity: 1; transform: translateY(0) } }
+  @keyframes tmlm-slide { 0% { transform: translateX(100%); } 100% { transform: translateX(0); } }
+</style>
+</helmet>
+
+<div style="font-family:Jost,system-ui,sans-serif">
+  <nav ref="{{ navRef }}" style="position:fixed;top:0;left:0;right:0;z-index:100;box-sizing:border-box;padding:14px clamp(16px,3vw,44px);background:rgba(12,22,25,.86);backdrop-filter:blur(16px);border-bottom:1px solid rgba(242,238,230,.12);color:#F2EEE6">
+    <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:nowrap;white-space:nowrap">
+        <a href="/" style="font-family:'Bodoni Moda',serif;font-size:17px;letter-spacing:.16em;text-transform:uppercase;color:#F2EEE6;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">Toi, Moi <span style="font-style:italic;text-transform:none;letter-spacing:.02em">et la</span> Mer</a>
+        <div style="display:flex;align-items:center;gap:clamp(10px,1.7vw,32px);flex-wrap:nowrap;white-space:nowrap;min-width:0;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase">
+          <a href="/catalog/" style="color:{{ colCatalog }};text-decoration:none;white-space:nowrap" style-hover="{{ navHover }}">Collection</a>
+<a href="/lookbook/" style="color:{{ colLookbook }};text-decoration:none;white-space:nowrap" style-hover="{{ navHover }}">Lookbook</a>
+<a href="/editorial/" style="color:{{ colEditorial }};text-decoration:none;white-space:nowrap" style-hover="{{ navHover }}">Journal</a>
+          <a href="/contact/" style="color:{{ colContact }};text-decoration:none;white-space:nowrap" style-hover="{{ navHover }}">Contact</a>
+          <button type="button" onClick="{{ toggleCurrency }}" style="flex:none;background:transparent;border:1px solid rgba(242,238,230,.22);border-radius:100px;padding:10px 15px;color:rgba(242,238,230,.72);font-family:Jost,sans-serif;font-size:10.5px;letter-spacing:.2em;cursor:pointer;transition:all .4s cubic-bezier(.16,1,.3,1)" style-hover="{{ pillHover }}">{{ currencyLabel }}</button>
+          <button type="button" onClick="{{ openDrawer }}" style="flex:none;display:flex;align-items:center;gap:10px;padding:11px 20px;border:1px solid rgba(242,238,230,.28);border-radius:100px;background:transparent;color:#F2EEE6;font-family:Jost,sans-serif;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:all .4s cubic-bezier(.16,1,.3,1)" style-hover="{{ pillHover }}">Bag <span style="min-width:19px;height:19px;border-radius:100px;background:{{ bagDot }};color:#0E1A1F;display:inline-flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:0">{{ cartCount }}</span></button>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ compact }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;min-width:0">
+        <a href="/" style="min-width:0;font-family:'Bodoni Moda',serif;font-size:clamp(13px,3.9vw,16px);letter-spacing:.14em;text-transform:uppercase;color:#F2EEE6;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Toi, Moi <span style="font-style:italic;text-transform:none;letter-spacing:.02em">et la</span> Mer</a>
+        <button type="button" onClick="{{ openMenu }}" aria-label="Open menu" style="flex:none;display:flex;flex-direction:column;justify-content:center;gap:5px;width:56px;height:44px;padding:0 13px;border:1px solid rgba(242,238,230,.28);border-radius:100px;background:transparent;cursor:pointer;transition:all .4s cubic-bezier(.16,1,.3,1)" style-hover="{{ pillHover }}">
+          <span style="display:block;height:1px;background:#F2EEE6"></span>
+          <span style="display:block;height:1px;background:#F2EEE6"></span>
+        </button>
+      </div>
+    </sc-if>
+  </nav>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="Menu" style="position:fixed;inset:0;z-index:190;background:#0E1A1F;display:flex;flex-direction:column;padding:calc(14px + env(safe-area-inset-top,0px)) clamp(16px,5vw,44px) calc(24px + env(safe-area-inset-bottom,0px));overscroll-behavior:contain;box-sizing:border-box;animation:tmlm-fade .45s cubic-bezier(.16,1,.3,1) both;overflow-y:auto">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;min-width:0">
+        <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Bodoni Moda',serif;font-size:clamp(13px,3.9vw,16px);letter-spacing:.14em;text-transform:uppercase;color:#F2EEE6;text-align:center">Toi, Moi <span style="font-style:italic;text-transform:none;letter-spacing:.02em">et la</span> Mer</span>
+        <button type="button" onClick="{{ closeMenu }}" aria-label="Close menu" style="flex:none;width:48px;height:48px;border-radius:50%;border:1px solid rgba(242,238,230,.45);background:rgba(242,238,230,.08);color:#F2EEE6;font-family:Jost,sans-serif;font-size:26px;line-height:1;cursor:pointer;transition:all .35s ease" style-hover="{{ pillHover }}">×</button>
+      </div>
+      <nav style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:clamp(20px,6vh,44px) 0">
+        <sc-for list="{{ menuLinks }}" as="m" hint-placeholder-count="4">
+          <a href="{{ m.href }}" onClick="{{ closeMenu }}" style="font-family:'Bodoni Moda',serif;font-size:clamp(32px,min(9.5vw,7vh),58px);line-height:1.12;letter-spacing:-.02em;color:{{ m.color }};padding:8px 0" style-hover="{{ menuHover }}">{{ m.label }}</a>
+        </sc-for>
+        <button type="button" onClick="{{ openBagFromMenu }}" style="text-align:left;border:none;background:transparent;padding:8px 0;font-family:'Bodoni Moda',serif;font-size:clamp(32px,min(9.5vw,7vh),58px);line-height:1.12;letter-spacing:-.02em;color:#F5F2EB;cursor:pointer;display:flex;align-items:baseline;gap:14px" style-hover="{{ menuHover }}">Bag <span style="font-family:Jost,sans-serif;font-size:15px;letter-spacing:.16em;color:rgba(242,238,230,.55)">({{ cartCount }})</span></button>
+      </nav>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:16px;padding-top:22px;border-top:1px solid rgba(242,238,230,.14);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(242,238,230,.5)">
+        <div style="display:flex;align-items:center;gap:10px">
+          <button type="button" onClick="{{ toggleCurrency }}" style="background:transparent;border:1px solid rgba(242,238,230,.22);border-radius:100px;padding:11px 16px;color:rgba(242,238,230,.72);font-family:Jost,sans-serif;font-size:10.5px;letter-spacing:.2em;cursor:pointer" style-hover="{{ pillHover }}">{{ currencyLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="Your bag" style="position:fixed;inset:0;z-index:180;overscroll-behavior:contain;animation:v3bar-fade .4s ease both">
+      <div onClick="{{ closeDrawer }}" style="position:absolute;inset:0;background:rgba(8,16,19,.62);backdrop-filter:blur(6px)"></div>
+      <aside style="position:absolute;top:0;right:0;bottom:0;width:min(432px,100%);max-width:100%;box-sizing:border-box;background:#F2EEE6;color:#12222A;display:flex;flex-direction:column;box-shadow:-40px 0 90px rgba(8,16,19,.4);animation:tmlm-slide .5s cubic-bezier(.16,1,.3,1) both">
+        <div style="flex:none;padding:16px clamp(18px,5vw,28px) 14px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid rgba(18,34,42,.14)">
+          <div style="font-family:'Bodoni Moda',serif;font-size:clamp(22px,6vw,25px)">Your bag ({{ cartCount }})</div>
+          <button type="button" onClick="{{ closeDrawer }}" aria-label="Close bag" style="flex:none;width:44px;height:44px;border-radius:50%;border:1px solid rgba(18,34,42,.2);background:transparent;color:#12222A;font-family:Jost,sans-serif;font-size:17px;cursor:pointer;transition:all .3s ease" style-hover="{{ darkPillHover }}">×</button>
+        </div>
+        <div style="flex:none;padding:14px clamp(18px,5vw,28px);border-bottom:1px solid rgba(18,34,42,.14)">
+          <div style="font-size:12.5px;letter-spacing:.06em;color:rgba(18,34,42,.62);margin-bottom:11px">{{ shipNote }}</div>
+          <div style="height:2px;background:rgba(18,34,42,.14);overflow:hidden">
+            <div style="height:100%;width:{{ shipPct }};background:#C4553A;transition:width .6s cubic-bezier(.16,1,.3,1)"></div>
+          </div>
+        </div>
+        <div style="flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:4px clamp(18px,5vw,28px) 24px">
+          <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ true }}">
+            <div style="padding:52px 0;text-align:center;font-size:14px;line-height:1.8;font-weight:300;color:rgba(18,34,42,.55)">Nothing in here yet.<br />Pick a size from any look.<br /><a href="/catalog/" onClick="{{ closeDrawer }}" style="display:inline-flex;align-items:center;min-height:44px;margin-top:14px;padding:0 24px;border-radius:100px;background:#12222A;color:#F2EEE6;font-size:11px;letter-spacing:.22em;text-transform:uppercase">See the collection</a></div>
+          </sc-if>
+          <sc-for list="{{ cart }}" as="i" hint-placeholder-count="2">
+            <div style="display:flex;gap:14px;padding:16px 0;border-bottom:1px solid rgba(18,34,42,.1);min-width:0">
+              <div style="width:60px;height:78px;flex:none;background-color:{{ i.tone }};background-image:{{ i.bg }};background-size:cover;background-position:{{ i.pos }}"></div>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+                  <div style="min-width:0;font-family:'Bodoni Moda',serif;font-size:17px;line-height:1.2;overflow-wrap:anywhere">{{ i.name }}</div>
+                  <div style="flex:none;white-space:nowrap;font-family:'Bodoni Moda',serif;font-size:15px">{{ i.lineText }}</div>
+                </div>
+                <div style="margin-top:5px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(18,34,42,.5)">Size {{ i.size }}</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px">
+                  <div style="display:flex;align-items:center;border:1px solid rgba(18,34,42,.2);border-radius:100px">
+                    <button type="button" onClick="{{ i.dec }}" aria-label="Decrease quantity" style="width:40px;height:40px;border:none;background:transparent;padding:0;font-family:Jost,sans-serif;font-size:18px;color:#12222A;cursor:pointer;touch-action:manipulation">−</button>
+                    <span style="min-width:22px;text-align:center;font-size:13px">{{ i.qty }}</span>
+                    <button type="button" onClick="{{ i.inc }}" aria-label="Increase quantity" style="width:40px;height:40px;border:none;background:transparent;padding:0;font-family:Jost,sans-serif;font-size:18px;color:#12222A;cursor:pointer;touch-action:manipulation">+</button>
+                  </div>
+                  <button type="button" onClick="{{ i.remove }}" style="min-height:40px;border:none;background:transparent;padding:0 2px;font-family:Jost,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(18,34,42,.55);cursor:pointer;text-decoration:underline;text-underline-offset:4px">Remove</button>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+          <div style="margin:24px 0 14px;padding:18px;border:1px solid rgba(18,34,42,.16)">
+            <div style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px">Packed the island way</div>
+            <div style="font-size:13px;line-height:1.7;font-weight:300;color:rgba(18,34,42,.65)">Cassava-starch bag, recycled cotton wrap, zero plastic, no paper receipt.</div>
+          </div>
+          <button type="button" onClick="{{ toggleVilla }}" style="width:100%;text-align:left;cursor:pointer;margin-bottom:24px;padding:18px;background:{{ villaBg }};border:1px solid {{ villaBorder }};display:flex;gap:13px;align-items:flex-start;font-family:Jost,sans-serif;transition:all .35s ease">
+            <span style="width:15px;height:15px;border-radius:50%;flex:none;margin-top:3px;background:{{ villaFill }};border:1px solid {{ villaBorder }}"></span>
+            <span>
+              <span style="display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#12222A">Direct to your villa · Bali</span>
+              <span style="display:block;margin-top:6px;font-size:13px;line-height:1.65;font-weight:300;color:rgba(18,34,42,.65)">Scooter courier, same day before 18:00 — {{ villaPrice }}</span>
+            </span>
+          </button>
+          <div style="font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(18,34,42,.45);margin-bottom:13px">Goes with</div>
+          <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:6px">
+            <sc-for list="{{ upsell }}" as="u" hint-placeholder-count="3">
+              <button type="button" onClick="{{ u.add }}" style="flex:none;width:120px;text-align:left;border:1px solid rgba(18,34,42,.16);background:transparent;padding:9px;cursor:pointer;font-family:Jost,sans-serif;transition:border-color .35s ease" style-hover="{{ upsellHover }}">
+                <span style="display:block;height:88px;background-color:{{ u.tone }};background-image:{{ u.bg }};background-size:cover;background-position:{{ u.pos }}"></span>
+                <span style="display:block;margin-top:9px;font-family:'Bodoni Moda',serif;font-size:15px;line-height:1.2;color:#12222A">{{ u.name }}</span>
+                <span style="display:block;margin-top:4px;font-size:11px;color:rgba(18,34,42,.5)">{{ u.priceText }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="flex:none;padding:16px clamp(18px,5vw,28px) calc(18px + env(safe-area-inset-bottom,0px));border-top:1px solid rgba(18,34,42,.14);background:#F2EEE6">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:15px">
+            <span style="font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(18,34,42,.6)">Subtotal</span>
+            <span style="font-family:'Bodoni Moda',serif;font-size:22px">{{ cartTotalText }}</span>
+          </div>
+          <button type="button" style="width:100%;min-height:52px;padding:16px;border:none;border-radius:100px;background:#12222A;color:#F2EEE6;font-family:Jost,sans-serif;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .4s ease" style-hover="{{ checkoutHover }}" onClick="{{ checkout }}">Order on WhatsApp</button>
+          <div style="margin-top:11px;font-size:12px;line-height:1.55;font-weight:300;color:rgba(18,34,42,.55);text-align:center">We confirm size, delivery and payment with you in the chat.</div>
+        </div>
+      </aside>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:90},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;catalog&quot;,&quot;product&quot;,&quot;contact&quot;,&quot;editorial&quot;,&quot;lookbook&quot;,&quot;about&quot;],&quot;default&quot;:&quot;catalog&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;freeShipAt&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:350,&quot;min&quot;:100,&quot;max&quot;:800,&quot;step&quot;:25,&quot;tsType&quot;:&quot;number&quot;}}">
+const CART_KEY = "tmlm-cart-v1";
+const CUR_KEY = "tmlm-cur-v1";
+
+class Component extends DCLogic {
+  state = { cart: [], drawer: false, villa: false, clock: "06:45", currency: "IDR", mod: null, wide: true, compact: false, menu: false };
+
+  componentDidMount() {
+    this._read();
+    this._publishHeight();
+    this._menuState();
+    this._mq = window.matchMedia("(min-width: 960px)");
+    this._onMq = () => this.setState({ wide: this._mq.matches });
+    this._onMq();
+    this._mq.addEventListener ? this._mq.addEventListener("change", this._onMq) : this._mq.addListener(this._onMq);
+    try { const c = localStorage.getItem(CUR_KEY); if (c) this.setState({ currency: c }); } catch (e) {}
+    this._tick();
+    this._t = setInterval(() => this._tick(), 30000);
+    this._onAdd = e => this.add(e.detail.product, e.detail.size);
+    this._onStore = e => { if (!e || e.key === CART_KEY) this._read(); };
+    this._onKey = e => { if (e.key === "Escape") this.setState({ drawer: false, menu: false }); };
+    window.addEventListener("tmlm:add", this._onAdd);
+    window.addEventListener("storage", this._onStore);
+    window.addEventListener("keydown", this._onKey);
+    import(new URL("products.js", document.querySelector('script[src*="support.js"]').src).href).then(m => this.setState({ mod: m })).catch(() => {});
+  }
+
+
+  _menuState() {
+    this._mqC = window.matchMedia("(max-width: 959px)");
+    this._onMqC = () => this.setState(s => ({ compact: this._mqC.matches, menu: this._mqC.matches ? s.menu : false }));
+    this._onMqC();
+    this._mqC.addEventListener ? this._mqC.addEventListener("change", this._onMqC) : this._mqC.addListener(this._onMqC);
+  }
+
+  _menuVals() {
+    return {
+      compact: this.state.compact,
+      menuOpen: this.state.menu,
+      openMenu: () => this.setState({ menu: true }),
+      closeMenu: () => this.setState({ menu: false }),
+      openBagFromMenu: () => this.setState({ menu: false, drawer: true }),
+      menuHover: { color: "#C4553A" }
+    };
+  }
+
+  _publishHeight() {
+    const set = () => {
+      const h = this.navEl ? Math.round(this.navEl.getBoundingClientRect().height) : 73;
+      document.documentElement.style.setProperty("--v3nav", h + "px");
+    };
+    set();
+    if (window.ResizeObserver && this.navEl) {
+      this._ro = new ResizeObserver(set);
+      this._ro.observe(this.navEl);
+    }
+    this._onResize = set;
+    window.addEventListener("resize", this._onResize);
+  }
+
+  componentWillUnmount() {
+    if (this._ro) this._ro.disconnect();
+    if (this._mqC) { this._mqC.removeEventListener ? this._mqC.removeEventListener("change", this._onMqC) : this._mqC.removeListener(this._onMqC); }
+    if (this._mq) { this._mq.removeEventListener ? this._mq.removeEventListener("change", this._onMq) : this._mq.removeListener(this._onMq); }
+    window.removeEventListener("resize", this._onResize);
+    clearInterval(this._t);
+    window.removeEventListener("tmlm:add", this._onAdd);
+    window.removeEventListener("storage", this._onStore);
+    window.removeEventListener("keydown", this._onKey);
+  }
+
+  _tick() {
+    const bali = new Date(Date.now() + (8 * 3600 + new Date().getTimezoneOffset() * 60) * 1000);
+    this.setState({ clock: String(bali.getHours()).padStart(2, "0") + ":" + String(bali.getMinutes()).padStart(2, "0") });
+  }
+
+  _read() {
+    try {
+      const raw = localStorage.getItem(CART_KEY);
+      this.setState({ cart: raw ? JSON.parse(raw) : [] });
+    } catch (e) { this.setState({ cart: [] }); }
+  }
+
+  _save(cart) { try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (e) {} }
+
+  add(p, size) {
+    if (!p) return;
+    this.setState(s => {
+      const key = p.id + size, cart = s.cart.slice();
+      const hit = cart.findIndex(i => i.key === key);
+      if (hit > -1) cart[hit] = Object.assign({}, cart[hit], { qty: cart[hit].qty + 1 });
+      else cart.push({ key, id: p.id, name: p.name, size, qty: 1, price: p.price, tone: p.tone, img: p.img, pos: p.pos });
+      this._save(cart);
+      return { cart, drawer: true };
+    });
+  }
+
+  _qty(key, d) {
+    this.setState(s => {
+      const cart = s.cart.map(i => i.key === key ? Object.assign({}, i, { qty: i.qty + d }) : i).filter(i => i.qty > 0);
+      this._save(cart);
+      return { cart };
+    });
+  }
+
+  money(n) {
+    const c = this.state.currency;
+    if (this.state.mod) return this.state.mod.money(n, c);
+    return c === "IDR" ? "Rp " + Math.round(n * 15.6) + "K" : "$" + n.toLocaleString("en-US");
+  }
+
+  _lockScroll(on) {
+    if (this._locked === on) return;
+    this._locked = on;
+    const v = on ? "hidden" : "";
+    document.documentElement.style.overflow = v;
+    document.body.style.overflow = v;
+  }
+
+  renderVals() {
+    this._lockScroll(!!(this.state.menu || this.state.drawer));
+    const cart = this.state.cart;
+    const goods = cart.reduce((t, i) => t + i.price * i.qty, 0);
+    const free = Number(this.props.freeShipAt || 350), villaFee = 12;
+    const total = goods + (this.state.villa && goods > 0 ? villaFee : 0);
+    const remain = Math.max(0, free - goods);
+    const all = this.state.mod ? this.state.mod.PRODUCTS.filter(p => p.img) : [];
+    const ids = cart.map(i => i.id);
+    const upsell = all.filter(p => p.price <= 165 && ids.indexOf(p.id) < 0).slice(0, 3);
+    const sizesFor = p => (p && p.sizes) || ["XS", "S", "M", "L"];
+
+    return {
+      navRef: el => { this.navEl = el; if (el) this._publishHeight(); },
+      navHover: { color: "#F2EEE6" },
+      pillHover: { borderColor: "rgba(242,238,230,.7)", background: "rgba(242,238,230,.08)", color: "#F2EEE6" },
+      darkPillHover: { background: "#12222A", color: "#F2EEE6", borderColor: "#12222A" },
+      upsellHover: { borderColor: "#C4553A" },
+      checkout: () => { if (this.state.mod && this.state.mod.checkoutWhatsApp) this.state.mod.checkoutWhatsApp(this.state.cart, { villa: this.state.villa }); },
+      checkoutHover: { background: "#C4553A" },
+      colCatalog: this.props.active === "catalog" ? "#E6C3B1" : "rgba(242,238,230,.72)",
+      colLookbook: this.props.active === "lookbook" ? "#E6C3B1" : "rgba(242,238,230,.72)",
+      colEditorial: this.props.active === "editorial" ? "#E6C3B1" : "rgba(242,238,230,.72)",
+      colContact: this.props.active === "contact" ? "#E6C3B1" : "rgba(242,238,230,.72)",
+      wide: this.state.wide,
+      ...this._menuVals(),
+      menuLinks: [
+        { label: "Collection", href: "/catalog/", key: "catalog" },
+        { label: "Lookbook", href: "/lookbook/", key: "lookbook" },
+        { label: "The Journal", href: "/editorial/", key: "editorial" },
+        { label: "Our story", href: "/about/", key: "about" },
+        { label: "Contact", href: "/contact/", key: "contact" }
+      ].map(m => Object.assign(m, { color: m.key === this.props.active ? "#E6C3B1" : "#F5F2EB" })),
+      clock: this.state.clock,
+      currencyLabel: this.state.currency === "USD" ? "USD $" : "IDR Rp",
+      toggleCurrency: () => this.setState(s => {
+        const next = s.currency === "USD" ? "IDR" : "USD";
+        try { localStorage.setItem(CUR_KEY, next); } catch (e) {}
+        window.dispatchEvent(new CustomEvent("tmlm:currency", { detail: { currency: next } }));
+        return { currency: next };
+      }),
+      bagDot: cart.length ? "#C4553A" : "rgba(242,238,230,.8)",
+      cartCount: cart.reduce((t, i) => t + i.qty, 0),
+      cartEmpty: cart.length === 0,
+      cartTotalText: this.money(total),
+      cart: cart.map(i => ({
+        name: i.name, size: i.size, qty: i.qty, tone: i.tone,
+        bg: i.img ? "url(" + i.img + ")" : "none", pos: i.pos || "50% 50%",
+        lineText: this.money(i.price * i.qty),
+        inc: () => this._qty(i.key, 1),
+        dec: () => this._qty(i.key, -1),
+        remove: () => this.setState(s => {
+          const next = s.cart.filter(x => x.key !== i.key);
+          this._save(next);
+          return { cart: next };
+        })
+      })),
+      drawerOpen: this.state.drawer,
+      openDrawer: () => this.setState({ drawer: true }),
+      closeDrawer: () => this.setState({ drawer: false }),
+      shipNote: goods === 0 ? "Complimentary express over " + this.money(free)
+        : remain > 0 ? this.money(remain) + " to complimentary express" : "Complimentary express unlocked.",
+      shipPct: Math.min(100, Math.round((goods / free) * 100)) + "%",
+      toggleVilla: () => this.setState(s => ({ villa: !s.villa })),
+      villaFill: this.state.villa ? "#12222A" : "transparent",
+      villaBorder: this.state.villa ? "#12222A" : "rgba(18,34,42,.2)",
+      villaBg: this.state.villa ? "rgba(18,34,42,.05)" : "transparent",
+      villaPrice: this.money(villaFee),
+      upsell: upsell.map(u => ({
+        name: u.name, tone: u.tone, priceText: this.money(u.price),
+        bg: u.img ? "url(" + u.img + ")" : "none", pos: u.pos || "50% 50%",
+        add: () => this.add(u, sizesFor(u)[0])
+      }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

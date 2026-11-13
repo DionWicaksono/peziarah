@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lookbook — Toi, Moi et la Mer</title>
+<meta name="description" content="Ten looks from Bali in linen, gauze and hand-loomed kain. Shop each piece straight from the model.">
+<meta name="theme-color" content="#0E1A1F">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Toi, Moi et la Mer">
+<meta property="og:title" content="Lookbook — Toi, Moi et la Mer">
+<meta property="og:description" content="Ten looks from Bali in linen, gauze and hand-loomed kain. Shop each piece straight from the model.">
+<meta property="og:image" content="https://toimoietlamer.com/assets/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://toimoietlamer.com/lookbook/">
+<meta property="og:locale" content="en_US">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://toimoietlamer.com/lookbook/">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="twitter:card" content="summary_large_image">
+<script src="../support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  html { overflow-x: clip; }
+  body { margin: 0; background: #F2EEE6; color: #12222A; font-family: Jost, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: #C4553A; text-decoration: none; }
+  a:hover { color: #12222A; }
+  ::selection { background: #C4553A; color: #F2EEE6; }
+  @keyframes tmlm-veil { 0% { transform: scaleY(1); } 100% { transform: scaleY(0); } }
+  @keyframes lb-pulse { 0% { transform: scale(.7); opacity: .9; } 100% { transform: scale(1.9); opacity: 0; } }
+  @keyframes lb-fade { 0% { opacity: 0; } 100% { opacity: 1; } }
+</style>
+</helmet>
+
+<div style="position:relative;background:#F2EEE6">
+  <div style="position:fixed;inset:0;z-index:200;background:#0E1A1F;transform-origin:top;animation:tmlm-veil 1s cubic-bezier(.76,0,.24,1) .2s both;pointer-events:none"></div>
+  <dc-import name="V3Bar" active="lookbook" hint-size="100%,73px"></dc-import>
+
+  <main style="position:relative;box-sizing:border-box;height:100svh;min-height:560px;padding-top:var(--v3nav,73px);display:flex;flex-direction:column">
+    <section ref="{{ stageRef }}" onPointerDown="{{ onDown }}" style="position:relative;flex:1;min-height:0;overflow:hidden;isolation:isolate;background:#F2EEE6;touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;cursor:grab">
+
+      <div style="position:absolute;inset:0;background:#F2EEE6;transform:scale({{ ringScale }});opacity:{{ ringOp }};transition:transform .8s cubic-bezier(.16,1,.3,1),opacity .5s ease">
+        <sc-for list="{{ looks }}" as="k" hint-placeholder-count="0">
+          <div data-ring="" onClick="{{ k.tap }}" role="button" aria-label="{{ k.aria }}" style="position:absolute;left:50%;top:{{ g.top }};width:{{ g.w }};height:{{ g.h }};margin-left:{{ g.ml }};transform-origin:50% 100%;mix-blend-mode:multiply;will-change:transform;opacity:0;cursor:pointer">
+            <div style="position:absolute;inset:0;transform:{{ k.fit }};transform-origin:{{ k.origin }};pointer-events:none">
+              <div style="position:absolute;inset:0;background-image:{{ k.bg }};background-size:cover;background-position:50% 50%;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 20%,#000 80%,transparent 100%),linear-gradient(180deg,transparent 0,#000 3%,#000 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 20%,#000 80%,transparent 100%),linear-gradient(180deg,transparent 0,#000 3%,#000 100%);mask-composite:intersect"></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="position:absolute;top:0;left:0;right:0;z-index:150;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px clamp(18px,3vw,44px) 0;pointer-events:none">
+        <h1 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(26px,2.6vw,38px);letter-spacing:-.02em;color:#12222A">Look<span style="font-style:italic">book</span></h1>
+        <div style="pointer-events:auto;display:flex;padding:3px;border-radius:100px;border:1px solid rgba(18,34,42,.2);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase">
+          <span style="padding:9px 14px;border-radius:100px;background:#12222A;color:#F2EEE6">Ring</span>
+          <a href="{{ runwayHref }}" style="padding:9px 14px;border-radius:100px;color:#12222A" style-hover="{{ linkHover }}">Runway</a>
+        </div>
+      </div>
+
+      <sc-if value="{{ desk }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;left:0;right:0;top:50%;z-index:150;display:flex;justify-content:space-between;padding:0 clamp(18px,3vw,44px);transform:translateY(-50%);pointer-events:none;opacity:{{ ringOp }};transition:opacity .4s ease">
+          <button type="button" onClick="{{ prev }}" aria-label="Previous look" style="pointer-events:auto;width:56px;height:56px;border-radius:50%;border:1px solid rgba(18,34,42,.25);background:rgba(242,238,230,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#12222A;font-size:18px;cursor:pointer;font-family:inherit;transition:all .3s ease" style-hover="{{ btnHover }}">←</button>
+          <button type="button" onClick="{{ next }}" aria-label="Next look" style="pointer-events:auto;width:56px;height:56px;border-radius:50%;border:1px solid rgba(18,34,42,.25);background:rgba(242,238,230,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#12222A;font-size:18px;cursor:pointer;font-family:inherit;transition:all .3s ease" style-hover="{{ btnHover }}">→</button>
+        </div>
+      </sc-if>
+
+      <div style="position:absolute;left:0;right:0;bottom:0;z-index:150;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:0 clamp(18px,3vw,44px) calc(22px + env(safe-area-inset-bottom));pointer-events:none;opacity:{{ ringOp }};transition:opacity .4s ease">
+        <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+          <span style="font-family:'Bodoni Moda',serif;font-size:15px;font-variant-numeric:tabular-nums;color:#12222A">{{ cur }}<span style="color:rgba(18,34,42,.4)"> / {{ total }}</span></span>
+          <span style="font-family:'Bodoni Moda',serif;font-size:clamp(26px,2.6vw,38px);line-height:1;letter-spacing:-.02em;color:#12222A;white-space:nowrap">{{ al.name }}</span>
+          <span style="font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(18,34,42,.6);white-space:nowrap">{{ ringHint }}</span>
+        </div>
+        <sc-if value="{{ desk }}" hint-placeholder-val="{{ true }}">
+          <div style="display:{{ chipsDisplay }};flex-wrap:nowrap;justify-content:center;gap:8px;min-width:0;pointer-events:auto">
+            <sc-for list="{{ pieces }}" as="p" hint-placeholder-count="2">
+              <button type="button" onClick="{{ openLook }}" style="display:flex;align-items:center;gap:10px;padding:4px 16px 4px 4px;border-radius:100px;border:1px solid rgba(18,34,42,.2);background:rgba(242,238,230,.8);color:#12222A;font-family:inherit;cursor:pointer;transition:border-color .3s ease" style-hover="{{ chipHover }}">
+                <span style="width:34px;height:34px;border-radius:50%;flex:none;background-color:{{ p.tone }};background-image:{{ p.bg }};background-size:{{ p.zoom }};background-position:{{ p.pos }}"></span>
+                <span style="display:flex;flex-direction:column;align-items:flex-start;gap:2px">
+                  <span style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap">{{ p.name }}</span>
+                  <span style="font-size:11.5px;color:rgba(18,34,42,.65)">{{ p.price }}</span>
+                </span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <button type="button" onClick="{{ openLook }}" style="pointer-events:auto;flex:none;display:flex;align-items:center;gap:12px;padding:0;border:0;background:transparent;color:#12222A;font-family:inherit;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer">
+          <span style="white-space:nowrap">Shop this look</span>
+          <span style="width:52px;height:52px;border-radius:50%;background:#12222A;color:#F2EEE6;display:grid;place-items:center;font-size:22px;font-weight:300;line-height:1">+</span>
+        </button>
+      </div>
+
+      <div aria-hidden="{{ detailHidden }}" style="position:absolute;inset:0;z-index:200;background:#F2EEE6;opacity:{{ dOp }};visibility:{{ dVis }};transition:opacity .45s ease,visibility .45s;cursor:auto">
+        <div style="position:absolute;top:0;bottom:0;left:0;right:{{ areaRight }};display:flex;flex-direction:column">
+          <div style="flex:none;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px clamp(18px,3vw,44px) 0;position:relative;z-index:2">
+            <div style="display:flex;align-items:baseline;gap:14px;min-width:0">
+              <span style="font-family:'Bodoni Moda',serif;font-size:15px;font-variant-numeric:tabular-nums;color:rgba(18,34,42,.55)">{{ cur }}</span>
+              <h2 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:400;font-style:italic;font-size:clamp(28px,3vw,44px);line-height:1;letter-spacing:-.02em;color:#12222A;white-space:nowrap">{{ al.name }}</h2>
+            </div>
+            <div style="display:flex;gap:8px;flex:none">
+              <button type="button" onClick="{{ prev }}" aria-label="Previous look" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(18,34,42,.25);background:transparent;color:#12222A;font-size:15px;cursor:pointer;font-family:inherit;transition:all .3s ease" style-hover="{{ btnHover }}">←</button>
+              <button type="button" onClick="{{ next }}" aria-label="Next look" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(18,34,42,.25);background:transparent;color:#12222A;font-size:15px;cursor:pointer;font-family:inherit;transition:all .3s ease" style-hover="{{ btnHover }}">→</button>
+              <button type="button" onClick="{{ closeDetail }}" aria-label="Back to the ring" style="width:44px;height:44px;border-radius:50%;border:0;background:#12222A;color:#F2EEE6;font-size:18px;line-height:1;cursor:pointer;font-family:inherit">×</button>
+            </div>
+          </div>
+          <div style="flex:1;min-height:0;display:flex;align-items:flex-end;justify-content:center">
+            <div style="position:relative;flex:none;width:{{ d.w }};height:{{ d.h }};transform:scale({{ dScale }});transform-origin:50% 100%;transition:transform .8s cubic-bezier(.16,1,.3,1)">
+              <div style="position:absolute;inset:0;background:#F2EEE6;transform:{{ dl.fit }};transform-origin:{{ dl.origin }}">
+                <div role="img" aria-label="{{ dl.alt }}" style="position:absolute;inset:0;background-image:{{ dl.bg }};background-size:cover;background-position:50% 50%;mix-blend-mode:multiply;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 20%,#000 80%,transparent 100%),linear-gradient(180deg,transparent 0,#000 3%,#000 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 20%,#000 80%,transparent 100%),linear-gradient(180deg,transparent 0,#000 3%,#000 100%);mask-composite:intersect;pointer-events:none"></div>
+                <sc-for list="{{ spots }}" as="s" hint-placeholder-count="0">
+                  <div style="position:absolute;left:{{ s.left }};top:{{ s.top }};width:0;height:0;z-index:{{ s.z }};animation:lb-fade .5s ease {{ s.delay }} both">
+                    <button type="button" onClick="{{ s.tap }}" onMouseEnter="{{ s.enter }}" onMouseLeave="{{ s.leave }}" aria-label="{{ s.aria }}" style="position:absolute;left:-24px;top:-24px;width:48px;height:48px;border:0;padding:0;background:transparent;cursor:pointer;display:grid;place-items:center">
+                      <span style="position:absolute;inset:8px;border-radius:50%;border:1.5px solid #FFFFFF;animation:{{ s.pulse }}"></span>
+                      <span style="position:relative;width:20px;height:20px;border-radius:50%;background:{{ s.fill }};box-shadow:0 2px 12px rgba(0,0,0,.3);display:grid;place-items:center;color:{{ s.ink }};font-size:11px;line-height:1">{{ s.mark }}</span>
+                    </button>
+                    <button type="button" onClick="{{ s.tap }}" onMouseEnter="{{ s.enter }}" onMouseLeave="{{ s.leave }}" tabindex="-1" style="position:absolute;top:-15px;left:{{ s.tagL }};right:{{ s.tagR }};height:30px;max-width:46vw;display:flex;align-items:center;gap:8px;padding:0 12px;border-radius:100px;border:1px solid {{ s.tagLine }};background:{{ s.tagBg }};color:{{ s.tagCol }};font-family:inherit;font-size:10px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;cursor:pointer;box-shadow:0 4px 16px rgba(18,34,42,.08);transition:background .25s ease,color .25s ease">
+                      <span style="overflow:hidden;text-overflow:ellipsis">{{ s.name }}</span>
+                      <span style="flex:none;opacity:.7;letter-spacing:.04em">{{ s.price }}</span>
+                    </button>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <sc-if value="{{ m }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:none;display:flex;flex-direction:column;gap:8px;padding:10px 18px calc(16px + env(safe-area-inset-bottom))">
+              <span style="text-align:center;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(18,34,42,.6)">Tap a dot to add</span>
+              <button type="button" onClick="{{ openSheet }}" style="min-height:52px;border-radius:100px;border:0;background:#12222A;color:#F2EEE6;font-family:inherit;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer">Shop the look ({{ pickCount }})</button>
+            </div>
+          </sc-if>
+        </div>
+
+        <aside aria-hidden="{{ panelHidden }}" style="{{ panel }}">
+          <div style="padding:{{ headPad }};display:flex;flex-direction:column;gap:12px;border-bottom:1px solid rgba(18,34,42,.14)">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span style="font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:rgba(18,34,42,.6)">In this look · {{ cur }}</span>
+              <sc-if value="{{ m }}" hint-placeholder-val="{{ false }}">
+                <button type="button" onClick="{{ closeSheet }}" aria-label="Close" style="width:44px;height:44px;margin:-10px -12px -10px 0;border-radius:50%;border:0;background:transparent;color:#12222A;font-size:20px;line-height:1;cursor:pointer;font-family:inherit">×</button>
+              </sc-if>
+            </div>
+            <p style="margin:0;font-size:14px;line-height:1.65;font-weight:300;color:rgba(18,34,42,.72);text-wrap:pretty">{{ al.line }}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:6px 20px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(18,34,42,.6)">
+              <span>Model {{ al.height }}</span>
+              <span>Wears {{ al.wears }}</span>
+            </div>
+          </div>
+          <div style="flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:0 clamp(18px,2.2vw,32px)">
+            <sc-for list="{{ rows }}" as="r" hint-placeholder-count="2">
+              <div style="display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;padding:16px 0;border-bottom:1px solid rgba(18,34,42,.1)">
+                <a href="{{ r.href }}" aria-label="{{ r.name }}" style="display:block;aspect-ratio:3/4;background-color:{{ r.tone }};background-image:{{ r.bg }};background-size:{{ r.zoom }};background-position:{{ r.pos }}"></a>
+                <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+                  <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline">
+                    <a href="{{ r.href }}" style="color:#12222A;font-size:14.5px;line-height:1.35" style-hover="{{ linkHover }}">{{ r.name }}</a>
+                    <span style="flex:none;font-size:13px;color:rgba(18,34,42,.7)">{{ r.price }}</span>
+                  </div>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px">
+                    <sc-for list="{{ r.sizes }}" as="z" hint-placeholder-count="4">
+                      <button type="button" onClick="{{ z.pick }}" style="min-width:40px;height:36px;padding:0 10px;border-radius:100px;border:1px solid {{ z.line }};background:{{ z.bg }};color:{{ z.col }};font-family:inherit;font-size:11.5px;cursor:pointer">{{ z.label }}</button>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;gap:16px;align-items:center">
+                    <button type="button" onClick="{{ r.add }}" style="min-height:36px;padding:0 14px;border-radius:100px;border:1px solid {{ r.addLine }};background:transparent;color:{{ r.addCol }};font-family:inherit;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer">{{ r.addLabel }}</button>
+                    <a href="{{ r.href }}" style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(18,34,42,.6)" style-hover="{{ linkHover }}">View</a>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="padding:16px clamp(18px,2.2vw,32px) calc(20px + env(safe-area-inset-bottom));border-top:1px solid rgba(18,34,42,.14);display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;justify-content:space-between;font-size:13px;color:rgba(18,34,42,.7)"><span>{{ pickLabel }}</span><span style="color:#12222A">{{ pickTotal }}</span></div>
+            <button type="button" onClick="{{ shopLook }}" style="min-height:54px;border-radius:100px;border:0;background:{{ shopBg }};color:#F2EEE6;font-family:inherit;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .3s ease">Shop the look ({{ pickCount }})</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <dc-import name="V3Foot" hint-size="100%,460px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+// Ring lookbook (draft). Photos: /assets/look-01…10.webp (3:4, white bg, multiplied onto the page). Spot x/y are % of the full photo.
+const LOOKS = [
+  { name: "L'Aube", line: "The textured underwire, a sand wrap skirt knotted at the hip. First swim, nowhere to be.", img: "look-01.webp", top: 11.5, feet: 93, height: "172 cm", wears: "S",
+    spots: [{ id: "p19", x: 51, y: 31 }, { id: "p11", x: 56, y: 50 }] },
+  { name: "L'Encre", line: "The shirtdress in ink, tied once at the waist. Late checkout, slow lunch.", img: "look-02.webp", top: 3.5, feet: 93, height: "174 cm", wears: "S",
+    spots: [{ id: "p16", x: 54, y: 46 }] },
+  { name: "La Craie", line: "The same shirtdress in chalk, sleeves rolled, a hand on the hip.", img: "look-03.webp", top: 6, feet: 94, height: "174 cm", wears: "S",
+    spots: [{ id: "p17", x: 49, y: 54 }] },
+  { name: "L'Argile", line: "Clay-dyed double gauze. The colour the road turns at five o'clock.", img: "look-04.webp", top: 4.5, feet: 95, height: "174 cm", wears: "S",
+    spots: [{ id: "p18", x: 52, y: 50 }] },
+  { name: "L'Heure Bleue", line: "Satin and scalloped lace. Cut for a room, not a beach.", img: "look-05.webp", top: 10, feet: 94, height: "168 cm", wears: "S",
+    spots: [{ id: "p12", x: 50, y: 35 }] },
+  { name: "Le Nœud", line: "One long tie knotted at the hip. Goes on over a wet bikini and stays on through lunch.", img: "look-06.webp", top: 3, feet: 95, height: "170 cm", wears: "XS",
+    spots: [{ id: "p9", x: 54, y: 44 }] },
+  { name: "Le Soir", line: "Silk jacquard thrown over the set. After dark, still warm.", img: "look-07.webp", top: 10.5, feet: 94, height: "168 cm", wears: "S",
+    spots: [{ id: "p15", x: 33, y: 46 }, { id: "p12", x: 52, y: 34 }] },
+  { name: "La Plage", line: "Hand-blocked kain, cut short and knotted. Made for walking the tide line.", img: "look-08.webp", top: 3.5, feet: 95, height: "170 cm", wears: "XS",
+    spots: [{ id: "p22", x: 50, y: 51 }] },
+  { name: "L'Eau Calme", line: "White, textured, and nothing else. Still water at noon.", img: "look-09.webp", top: 3, feet: 94, height: "170 cm", wears: "S",
+    spots: [{ id: "p19", x: 47, y: 30 }] },
+  { name: "La Brise", line: "Undyed slub cotton tied loosely at the front, a triangle underneath.", img: "look-10.webp", top: 3, feet: 95, height: "170 cm", wears: "S",
+    spots: [{ id: "p20", x: 67, y: 42 }, { id: "p3", x: 44, y: 49 }] }
+];
+const PHOTO = 1100 / 1473, CARD = 3 / 5, SPAN = 91, FEET = 95;
+const N = LOOKS.length, A = Math.PI * 2 / N, OFF = 0; // rest with one look centred in front
+const PICK_KEY = "tmlm-look-v2", CUR_KEY = "tmlm-cur-v1";
+const pad = n => String(n).padStart(2, "0");
+const wmod = (a, n) => ((a % n) + n) % n;
+const wrap = d => { d = wmod(d, N); return d >= N / 2 ? d - N : d; };
+const fitOf = k => ({ fit: "translateY(" + (FEET - k.feet) + "%) scale(" + (SPAN / (k.feet - k.top)).toFixed(3) + ")", origin: "50% " + k.feet + "%" });
+
+class Component extends DCLogic {
+  state = { active: 0, open: false, sheet: false, hover: null, picks: {}, mod: null, currency: "IDR", m: false, W: 0, H: 0 };
+  els = []; rot = 0; target = 0;
+
+  componentDidMount() {
+    try { this.setState({ picks: JSON.parse(localStorage.getItem(PICK_KEY) || "{}") }); } catch (e) {}
+    try { const c = localStorage.getItem(CUR_KEY); if (c) this.setState({ currency: c }); } catch (e) {}
+    const h = (location.hash.match(/look-(\d+)/) || [])[1];
+    const start = h ? Math.max(0, Math.min(N - 1, +h - 1)) : 0;
+    this.target = start + OFF; this.rot = start + OFF - 2.5;
+    this.setState({ active: start });
+    this._onCur = e => this.setState({ currency: e.detail.currency });
+    window.addEventListener("tmlm:currency", this._onCur);
+    this._mq = window.matchMedia("(max-width: 819px)");
+    this._onMq = () => this.setState({ m: this._mq.matches }, () => this._paint());
+    this._onMq();
+    this._mq.addEventListener ? this._mq.addEventListener("change", this._onMq) : this._mq.addListener(this._onMq);
+    this._onKey = e => {
+      const t = e.target; if (t && t.closest && t.closest("input,textarea,select")) return;
+      if (e.key === "Escape") { if (this.state.sheet) this.setState({ sheet: false }); else this.setState({ open: false }); }
+      if (e.key === "ArrowRight") { e.preventDefault(); this.step(1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); this.step(-1); }
+      if (e.key === "Enter" && !this.state.open && !(t && t.closest && t.closest("button,a"))) this.setState({ open: true });
+    };
+    window.addEventListener("keydown", this._onKey);
+    this._onResize = () => this._measure();
+    window.addEventListener("resize", this._onResize);
+    [0, 150, 500].forEach(t => setTimeout(() => this._measure(), t));
+    setTimeout(() => this._loop(), 350);
+    import(new URL("products.js", document.querySelector('script[src*="support.js"]').src).href).then(m => this.setState({ mod: m })).catch(() => {});
+  }
+  componentWillUnmount() {
+    window.removeEventListener("tmlm:currency", this._onCur);
+    window.removeEventListener("keydown", this._onKey);
+    window.removeEventListener("resize", this._onResize);
+    if (this._mq) { this._mq.removeEventListener ? this._mq.removeEventListener("change", this._onMq) : this._mq.removeListener(this._onMq); }
+    if (this.st && this._wheel) this.st.removeEventListener("wheel", this._wheel);
+    if (this._ro) this._ro.disconnect();
+    cancelAnimationFrame(this._raf);
+  }
+  componentDidUpdate(_, ps) {
+    if (ps.active !== this.state.active) { try { history.replaceState(null, "", "#look-" + pad(this.state.active + 1)); } catch (e) {} }
+    this._paint();
+  }
+
+  _setStage(el) {
+    if (!el || this.st === el) return;
+    if (this.st && this._wheel) this.st.removeEventListener("wheel", this._wheel);
+    if (this._ro) this._ro.disconnect();
+    this.st = el;
+    if (window.ResizeObserver) { this._ro = new ResizeObserver(() => this._measure()); this._ro.observe(el); }
+    this._wheel = e => {
+      if (this.state.open || Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      this._wx = (this._wx || 0) + e.deltaX; clearTimeout(this._wxt); this._wxt = setTimeout(() => { this._wx = 0; }, 160);
+      if (Math.abs(this._wx) > 40 && Date.now() - (this._wt || 0) > 380) { this._wt = Date.now(); this.step(this._wx > 0 ? 1 : -1); this._wx = 0; }
+    };
+    el.addEventListener("wheel", this._wheel, { passive: false });
+    this._measure();
+  }
+  _measure() {
+    const el = this.st; if (!el) return;
+    const W = el.clientWidth, H = el.clientHeight;
+    if (W && H && (W !== this.state.W || H !== this.state.H)) this.setState({ W, H });
+  }
+
+  _geo() {
+    const { W, H, m } = this.state;
+    const top = m ? 70 : 84, bot = m ? 118 : 128;
+    const floor = H - bot;
+    const ch = Math.max(180, floor - top);
+    return { floor, ch, cw: Math.round(ch * CARD), X: m ? W * 1.02 : Math.min(W * .45, ch * 1.6), pw: m ? .6 : .75, lift: ch * .15, sMin: .38 };
+  }
+  _paint() {
+    if (!this.state.W) return;
+    const g = this._geo();
+    const els = this.st ? this.st.querySelectorAll("[data-ring]") : [];
+    for (let i = 0; i < N; i++) {
+      const el = els[i]; if (!el) continue;
+      const d = wrap(i - this.rot), th = d * A, t = (1 + Math.cos(th)) / 2;
+      const u = Math.abs(d) / (N / 2);
+      const x = Math.sign(d) * g.X * Math.pow(u, g.pw); // monotonic spread: every look keeps its own lane
+      const edge = u > .86 ? Math.max(0, (1 - u) / .14) : 1;
+      const s = (g.sMin + (1 - g.sMin) * Math.pow(t, 3.2)) * (1 + .1 * Math.max(0, 1 - Math.abs(d)));
+      el.style.transform = "translate3d(" + x.toFixed(1) + "px," + (-(1 - t) * g.lift).toFixed(1) + "px,0) scale(" + s.toFixed(4) + ")";
+      el.style.zIndex = String(Math.round(t * 100));
+      el.style.filter = "blur(" + ((1 - Math.pow(t, 1.5)) * 6).toFixed(2) + "px) saturate(" + (.5 + .5 * t).toFixed(2) + ")";
+      el.style.opacity = ((.45 + .55 * Math.pow(t, 1.5)) * edge).toFixed(3);
+    }
+  }
+  _loop() {
+    if (this._raf) return;
+    const step = () => {
+      this._raf = null;
+      if (!this._dragging) { const d = this.target - this.rot; this.rot += Math.abs(d) < .0008 ? d : d * .11; }
+      this._paint();
+      const a = wmod(Math.round(this.rot - OFF), N);
+      if (a !== this.state.active) this.setState({ active: a, hover: null });
+      if (this._dragging || Math.abs(this.target - this.rot) > .0001) this._raf = requestAnimationFrame(step);
+    };
+    this._raf = requestAnimationFrame(step);
+  }
+  go(i) { const b = Math.round(this.target - OFF); this.target = b + wrap(i - b) + OFF; this._loop(); }
+  step(dir) { this.target = Math.round(this.target - OFF) + dir + OFF; this._loop(); }
+
+  _down(e) {
+    if (this.state.open || (e.button && e.button !== 0)) return;
+    if (e.target.closest && e.target.closest("button,a")) return;
+    const x0 = e.clientX, y0 = e.clientY, r0 = this.rot, sp = Math.max(90, this._geo().X * .2);
+    let lock = null, lx = x0, lt = performance.now(), v = 0;
+    this._moved = false;
+    const move = ev => {
+      const dx = ev.clientX - x0, dy = ev.clientY - y0;
+      if (lock == null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+        lock = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+        if (lock === "x") { this._dragging = true; this._moved = true; this._loop(); }
+      }
+      if (lock !== "x") return;
+      const now = performance.now(); v = (ev.clientX - lx) / Math.max(1, now - lt); lx = ev.clientX; lt = now;
+      this.rot = r0 - dx / sp; this.target = this.rot;
+      if (this.st) this.st.style.cursor = "grabbing";
+    };
+    const up = () => {
+      window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up); window.removeEventListener("pointercancel", up);
+      if (this.st) this.st.style.cursor = "";
+      if (lock === "x") {
+        this._dragging = false;
+        if (performance.now() - lt > 80) v = 0;
+        this.target = Math.round(this.rot - OFF + Math.max(-2.5, Math.min(2.5, -v * 200 / sp))) + OFF;
+        this._loop();
+      }
+      setTimeout(() => { this._moved = false; }, 0);
+    };
+    window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); window.addEventListener("pointercancel", up);
+  }
+  _tapLook(i) {
+    if (this._moved || this.state.open) return;
+    if (Math.abs(wrap(i - this.rot)) < .75) { this.go(i); this.setState({ active: i, open: true, sheet: false }); } else this.go(i);
+  }
+
+  _savePicks(p) { try { localStorage.setItem(PICK_KEY, JSON.stringify(p)); } catch (e) {} }
+  _pick(li, pid, size) {
+    this.setState(s => {
+      const look = Object.assign({}, s.picks[li] || {});
+      if (size == null || look[pid] === size) delete look[pid]; else look[pid] = size;
+      const picks = Object.assign({}, s.picks, { [li]: look });
+      this._savePicks(picks);
+      return { picks };
+    });
+  }
+  _toBag(p, size) { window.dispatchEvent(new CustomEvent("tmlm:add", { detail: { product: p, size } })); }
+  money(n) { const m = this.state.mod; return m ? m.money(n, this.state.currency) : (this.state.currency === "USD" ? "$" + n : "Rp " + Math.round(n * 16) + "K"); }
+  prod(id) { const m = this.state.mod; return m ? m.PRODUCTS.find(p => p.id === id) : null; }
+  sizes(p) { const m = this.state.mod; return m && p ? m.sizesFor(p) : ["XS", "S", "M", "L"]; }
+  asset(src) { return src ? "url(" + src.replace(/^\/assets\//, "../assets/") + ")" : "none"; }
+
+  renderVals() {
+    const st = this.state, m = st.m, open = st.open, li = st.active;
+    const L = LOOKS[li] || LOOKS[0], lp = st.picks[li] || {};
+    const ids = L.spots.map(s => s.id).filter((v, k, a) => a.indexOf(v) === k);
+    const picked = ids.filter(id => lp[id]);
+    const sum = picked.reduce((t, id) => { const p = this.prod(id); return t + (p ? p.price : 0); }, 0);
+    const g = st.W ? this._geo() : null;
+    const panelW = Math.min(420, Math.max(340, st.W * .28));
+    const areaW = m ? st.W : st.W - panelW;
+    const dh = st.W ? Math.round(Math.min(m ? st.H - 70 - 104 : st.H - 84, (areaW * (m ? .98 : .8)) / CARD)) : 0;
+    const VIS = CARD / PHOTO;
+    const tapSpot = (s, on, sz) => e => { e.stopPropagation(); this._pick(li, s.id, on ? null : (sz.indexOf(L.wears) >= 0 ? L.wears : sz[0])); if (!on && m) this.setState({ sheet: true }); };
+    const sheetOpen = m ? st.sheet : open;
+
+    return {
+      desk: !m, m, runwayHref: /\/publish\//.test(location.pathname) || !/^\/lookbook-ring\//.test(location.pathname) ? "../lookbook/index.html" : "/lookbook/", chipsDisplay: st.W >= 1120 ? "flex" : "none",
+      stageRef: this._stRef || (this._stRef = el => this._setStage(el)),
+      onDown: e => this._down(e),
+      g: g ? { top: (g.floor - g.ch) + "px", w: g.cw + "px", h: g.ch + "px", ml: (-g.cw / 2) + "px" } : { top: "0px", w: "0px", h: "0px", ml: "0px" },
+      looks: LOOKS.map((k, i) => Object.assign({
+        bg: "url(../assets/" + k.img + ")",
+        aria: "Look " + pad(i + 1) + ", " + k.name,
+        tap: () => this._tapLook(i)
+      }, fitOf(k))),
+      ringScale: open ? 1.08 : 1, ringOp: open ? 0 : 1,
+      cur: pad(li + 1), total: pad(N),
+      al: { name: L.name, line: L.line, height: L.height, wears: L.wears },
+      ringHint: m ? "Swipe to turn · Tap to shop" : "Drag to turn · Click a look to shop",
+      pieces: ids.map(id => { const p = this.prod(id) || { name: "…", price: 0 }; return { name: p.name, price: this.money(p.price), tone: p.tone || "#E4DED2", bg: this.asset(p.img), pos: p.pos || "50% 50%", zoom: p.zoom || "cover" }; }),
+      openLook: () => this.setState({ open: true, sheet: false }),
+      prev: () => this.step(-1), next: () => this.step(1),
+      detailHidden: open ? "false" : "true", dOp: open ? 1 : 0, dVis: open ? "visible" : "hidden", dScale: open ? 1 : .94,
+      areaRight: m ? "0px" : panelW + "px",
+      d: { w: Math.round(dh * CARD) + "px", h: dh + "px" },
+      dl: Object.assign({ bg: "url(../assets/" + L.img + ")", alt: "Look " + pad(li + 1) + ", " + L.name }, fitOf(L)),
+      spots: open ? L.spots.map((s, j) => {
+        const p = this.prod(s.id), on = !!lp[s.id], key = s.id + "@" + s.x, sz = this.sizes(p);
+        const cx = VIS < 1 ? ((s.x / 100 - (1 - VIS) / 2) / VIS) * 100 : s.x;
+        const right = s.x < 40;
+        return { left: cx.toFixed(2) + "%", top: s.y + "%", z: st.hover === key ? 5 : 1, delay: (.3 + j * .1) + "s",
+          aria: (p ? p.name : "Piece") + (on ? ", picked" : ", add in " + L.wears),
+          name: p ? p.name : "", price: p ? this.money(p.price) : "",
+          fill: on ? "#C4553A" : "#FFFFFF", ink: on ? "#F2EEE6" : "#12222A", mark: on ? "✓" : "",
+          pulse: on ? "none" : "lb-pulse 1.8s ease-out infinite",
+          tagL: right ? "22px" : "auto", tagR: right ? "auto" : "22px",
+          tagBg: on ? "#12222A" : "#F2EEE6", tagCol: on ? "#F2EEE6" : "#12222A", tagLine: on || st.hover === key ? "#12222A" : "rgba(18,34,42,.28)",
+          enter: () => { if (!this.state.m) this.setState({ hover: key }); }, leave: () => { if (!this.state.m) this.setState({ hover: null }); },
+          tap: tapSpot(s, on, sz) };
+      }) : [],
+      closeDetail: () => this.setState({ open: false, sheet: false, hover: null }),
+      openSheet: () => this.setState({ sheet: true }),
+      closeSheet: () => this.setState({ sheet: false }),
+      panelHidden: sheetOpen ? "false" : "true",
+      headPad: m ? "20px 18px 16px" : "clamp(22px,2.4vw,32px) clamp(18px,2.2vw,32px) 20px",
+      panel: m
+        ? "position:fixed;left:0;right:0;bottom:0;z-index:60;max-height:72svh;display:flex;flex-direction:column;background:#F2EEE6;color:#12222A;border-radius:16px 16px 0 0;box-shadow:0 -10px 40px rgba(18,34,42,.18);transition:transform .5s cubic-bezier(.16,1,.3,1),visibility .5s;transform:" + (st.sheet && open ? "translateY(0);visibility:visible" : "translateY(105%);visibility:hidden")
+        : "position:absolute;top:0;right:0;bottom:0;width:" + panelW + "px;display:flex;flex-direction:column;background:#F2EEE6;color:#12222A;border-left:1px solid rgba(18,34,42,.12);transition:transform .7s cubic-bezier(.16,1,.3,1);transform:translateX(" + (open ? "0" : "40px") + ")",
+      rows: ids.map(id => {
+        const p = this.prod(id) || { id, name: "…", price: 0 };
+        const size = lp[id];
+        return { name: p.name, price: this.money(p.price), href: "/product/" + id + "/", tone: p.tone || "#E4DED2",
+          bg: this.asset(p.img), pos: p.pos || "50% 50%", zoom: p.zoom || "cover",
+          sizes: this.sizes(p).map(z => { const on = size === z; return { label: z, pick: e => { if (e) e.stopPropagation(); this._pick(li, id, z); },
+            bg: on ? "#12222A" : "transparent", col: on ? "#F2EEE6" : "#12222A", line: on ? "#12222A" : "rgba(18,34,42,.22)" }; }),
+          addLabel: size ? "Add to bag · " + size : "Pick a size",
+          addCol: size ? "#12222A" : "rgba(18,34,42,.45)", addLine: size ? "#12222A" : "rgba(18,34,42,.18)",
+          add: () => { if (size && p.id) { this._toBag(p, size); this._pick(li, id, null); } } };
+      }),
+      pickCount: picked.length,
+      pickLabel: picked.length ? picked.length + (picked.length === 1 ? " piece picked" : " pieces picked") : "Nothing picked yet",
+      pickTotal: this.money(sum),
+      shopBg: picked.length ? "#12222A" : "rgba(18,34,42,.35)",
+      shopLook: () => {
+        if (!picked.length) return;
+        picked.forEach(id => { const p = this.prod(id); if (p) this._toBag(p, lp[id]); });
+        const picks = Object.assign({}, st.picks, { [li]: {} });
+        this._savePicks(picks); this.setState({ picks });
+      },
+      btnHover: { background: "#12222A", color: "#F2EEE6", borderColor: "#12222A" },
+      chipHover: { borderColor: "#12222A" },
+      linkHover: { color: "#C4553A" }
+    };
+  }
+}
+</script>
+</body>
+</html>

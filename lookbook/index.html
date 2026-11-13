@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lookbook — Toi, Moi et la Mer</title>
+<meta name="description" content="Ten looks from Bali in linen, gauze and hand-loomed kain. Shop each piece straight from the model.">
+<meta name="theme-color" content="#0E1A1F">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Toi, Moi et la Mer">
+<meta property="og:title" content="Lookbook — Toi, Moi et la Mer">
+<meta property="og:description" content="Ten looks from Bali in linen, gauze and hand-loomed kain. Shop each piece straight from the model.">
+<meta property="og:image" content="https://toimoietlamer.com/assets/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://toimoietlamer.com/lookbook/">
+<meta property="og:locale" content="en_US">
+<link rel="canonical" href="https://toimoietlamer.com/lookbook/">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta name="twitter:card" content="summary_large_image">
+<script src="../support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  html { overflow-x: clip; }
+  body { margin: 0; background: #F2EEE6; color: #12222A; font-family: Jost, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: #C4553A; text-decoration: none; }
+  a:hover { color: #12222A; }
+  ::selection { background: #C4553A; color: #F2EEE6; }
+  [data-runway]::-webkit-scrollbar { display: none; }
+  @keyframes tmlm-veil { 0% { transform: scaleY(1); } 100% { transform: scaleY(0); } }
+  @keyframes lb-pulse { 0% { transform: scale(.7); opacity: .9; } 100% { transform: scale(1.9); opacity: 0; } }
+  @keyframes lb-in { 0% { opacity: 0; transform: translate(-50%,-50%) scale(.6); } 100% { opacity: 1; transform: translate(-50%,-50%) scale(1); } }
+  @keyframes lb-up { 0% { opacity: 0; transform: translate(-50%, 6px); } 100% { opacity: 1; transform: translate(-50%, 0); } }
+</style>
+</helmet>
+
+<div style="position:relative;background:#F2EEE6">
+  <div style="position:fixed;inset:0;z-index:200;background:#0E1A1F;transform-origin:top;animation:tmlm-veil 1s cubic-bezier(.76,0,.24,1) .2s both;pointer-events:none"></div>
+  <dc-import name="V3Bar" active="lookbook" hint-size="100%,73px"></dc-import>
+
+  <main style="position:relative;box-sizing:border-box;height:{{ L.mainH }};min-height:560px;padding-top:var(--v3nav,73px);display:flex;flex-direction:column;overflow:clip">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px clamp(18px,3vw,44px) 0;position:sticky;top:var(--v3nav,73px);z-index:3">
+      <div style="display:flex;align-items:baseline;gap:18px;min-width:0">
+        <h1 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(26px,2.6vw,38px);letter-spacing:-.02em;color:#12222A">Look<span style="font-style:italic">book</span></h1>
+        <span style="font-family:'Bodoni Moda',serif;font-size:17px;font-variant-numeric:tabular-nums;color:#12222A;white-space:nowrap">{{ cur }}<span style="color:rgba(18,34,42,.4)"> / {{ total }}</span></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+      <div style="display:flex;padding:3px;border-radius:100px;border:1px solid rgba(18,34,42,.2);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase">
+        <a href="{{ ringHref }}" style="padding:{{ swPad }};border-radius:100px;color:#12222A" style-hover="{{ linkHover }}">Ring</a>
+        <span style="padding:{{ swPad }};border-radius:100px;background:#12222A;color:#F2EEE6">Runway</span>
+      </div>
+      </div>
+    </div>
+
+    <section style="position:relative;flex:1;min-height:0;display:flex;flex-direction:column;margin-top:{{ L.secTop }}">
+      <sc-if value="{{ desk }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;z-index:5;pointer-events:none">
+          <div style="position:sticky;top:calc(50svh + 10px);height:0;display:flex;align-items:center;justify-content:space-between;padding:0 {{ arrowsShift }} 0 clamp(18px,3vw,44px);transition:padding .6s cubic-bezier(.16,1,.3,1)">
+            <button type="button" onClick="{{ prev }}" aria-label="Previous look" style="pointer-events:auto;width:56px;height:56px;border-radius:50%;border:1px solid rgba(18,34,42,.25);background:rgba(242,238,230,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#12222A;font-size:18px;cursor:pointer;font-family:inherit;opacity:{{ prevOp }};transition:all .3s ease" style-hover="{{ btnHover }}">←</button>
+            <button type="button" onClick="{{ next }}" aria-label="Next look" style="pointer-events:auto;width:56px;height:56px;border-radius:50%;border:1px solid rgba(18,34,42,.25);background:rgba(242,238,230,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#12222A;font-size:18px;cursor:pointer;font-family:inherit;opacity:{{ nextOp }};transition:all .3s ease" style-hover="{{ btnHover }}">→</button>
+          </div>
+        </div>
+        <div style="position:absolute;inset:0;z-index:4;pointer-events:none">
+          <div style="position:sticky;top:calc(100svh - 120px);padding:0 clamp(18px,3vw,44px);display:flex;flex-direction:column;gap:8px">
+            <span style="font-family:'Bodoni Moda',serif;font-size:clamp(26px,2.4vw,36px);line-height:1;letter-spacing:-.02em;color:#12222A;white-space:nowrap">{{ al.name }}</span>
+            <span style="font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(18,34,42,.6);white-space:nowrap">{{ deskHint }}</span>
+          </div>
+        </div>
+      </sc-if>
+      <div style="flex:1;min-height:0;display:flex;transform:translateX({{ shift }});transition:transform .6s cubic-bezier(.16,1,.3,1)">
+        <div data-runway="" ref="{{ runwayRef }}" onPointerDown="{{ onDown }}" style="flex:1;min-width:0;overflow:hidden;touch-action:pan-y;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;padding-top:4px;padding-bottom:{{ L.runBottom }};box-sizing:border-box;cursor:{{ L.cursor }}">
+          <div ref="{{ trackRef }}" style="height:100%;display:flex;transform:translateX({{ trackX }});transition:transform .75s cubic-bezier(.65,0,.2,1)">
+          <sc-for list="{{ looks }}" as="k" hint-placeholder-count="4">
+            <div ref="{{ k.itemRef }}" style="position:relative;flex:none;width:{{ itemW }};height:100%;display:flex;flex-direction:column;align-items:center;scroll-snap-align:center">
+              <div onClick="{{ k.tap }}" onMouseDown="{{ noFocus }}" onMouseEnter="{{ k.enter }}" onMouseLeave="{{ k.leave }}" role="button" aria-label="{{ k.aria }}" style="position:relative;flex:none;width:{{ cardW }};height:{{ cardH }};max-height:{{ L.cardMax }};aspect-ratio:{{ L.ar }};overflow:hidden;background:#F2EEE6;cursor:pointer;transform:scale({{ k.scale }});transform-origin:50% 100%;transition:transform .7s cubic-bezier(.16,1,.3,1)">
+                <div style="position:absolute;inset:0;background:#F2EEE6;transform:{{ k.fit }};transform-origin:{{ k.origin }}">
+                <div role="img" aria-label="{{ k.alt }}" style="position:absolute;inset:0;background-image:{{ k.bg }};background-size:cover;background-position:50% 50%;mix-blend-mode:multiply;opacity:{{ k.op }};filter:saturate({{ k.sat }});-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 20%,#000 80%,transparent 100%),linear-gradient(180deg,transparent 0,#000 3%,#000 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 20%,#000 80%,transparent 100%),linear-gradient(180deg,transparent 0,#000 3%,#000 100%);mask-composite:intersect;transition:opacity .6s ease,filter .6s ease;pointer-events:none"></div>
+                <sc-for list="{{ k.spots }}" as="s" hint-placeholder-count="0">
+                  <div style="position:absolute;left:{{ s.left }};top:{{ s.top }};z-index:{{ s.z }};transform:translate(-50%,-50%);animation:lb-in .5s cubic-bezier(.16,1,.3,1) {{ s.delay }} both">
+                    <button type="button" onClick="{{ s.tap }}" onMouseEnter="{{ s.enter }}" onMouseLeave="{{ s.leave }}" aria-label="{{ s.aria }}" style="position:relative;width:48px;height:48px;border:0;padding:0;background:transparent;cursor:pointer;display:grid;place-items:center">
+                      <span style="position:absolute;inset:8px;border-radius:50%;border:1.5px solid #FFFFFF;animation:{{ s.pulse }}"></span>
+                      <span style="position:relative;width:20px;height:20px;border-radius:50%;background:{{ s.fill }};box-shadow:0 2px 12px rgba(0,0,0,.3);display:grid;place-items:center;color:{{ s.ink }};font-size:11px;line-height:1">{{ s.mark }}</span>
+                    </button>
+                    <sc-if value="{{ s.showTag }}" hint-placeholder-val="{{ false }}">
+                      <div style="position:absolute;left:50%;bottom:calc(100% + 2px);transform:translateX(-50%);white-space:nowrap;padding:9px 14px;border-radius:100px;background:#12222A;color:#F2EEE6;font-size:12.5px;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:lb-up .2s ease both;pointer-events:none">{{ s.name }} — {{ s.price }}</div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+                </div>
+              </div>
+              <div style="{{ L.cap }};display:flex;flex-direction:column;gap:6px;opacity:{{ k.capOp }};transition:opacity .4s ease">
+                <span style="font-family:'Bodoni Moda',serif;font-size:{{ L.capSize }};line-height:1;letter-spacing:-.02em;color:#12222A;white-space:nowrap">{{ k.name }}</span>
+                <span style="font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(18,34,42,.6);white-space:nowrap">{{ k.hint }}</span>
+              </div>
+            </div>
+          </sc-for>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside aria-hidden="{{ panelHidden }}" style="{{ L.panel }}">
+      <div style="padding:{{ L.headPad }};display:flex;flex-direction:column;gap:12px;border-bottom:1px solid rgba(18,34,42,.14)">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+          <span style="font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:rgba(18,34,42,.6)">In this look · {{ cur }}</span>
+          <button type="button" onClick="{{ close }}" aria-label="Close" style="width:44px;height:44px;margin:-10px -12px -10px 0;border-radius:50%;border:0;background:transparent;color:#12222A;font-size:20px;line-height:1;cursor:pointer;font-family:inherit" style-hover="{{ closeHover }}">×</button>
+        </div>
+        <h2 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(30px,2.8vw,44px);line-height:.98;letter-spacing:-.025em;color:#12222A">{{ al.name }}</h2>
+        <p style="margin:0;font-size:14px;line-height:1.65;font-weight:300;color:rgba(18,34,42,.72);text-wrap:pretty">{{ al.line }}</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px 20px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(18,34,42,.6)">
+          <span>Model {{ al.height }}</span>
+          <span>Wears {{ al.wears }}</span>
+        </div>
+      </div>
+      <div style="flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:0 clamp(18px,2.2vw,32px)">
+        <sc-for list="{{ rows }}" as="r" hint-placeholder-count="2">
+          <div style="display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;padding:16px 0;border-bottom:1px solid rgba(18,34,42,.1)">
+            <a href="{{ r.href }}" aria-label="{{ r.name }}" style="display:block;aspect-ratio:3/4;background-color:{{ r.tone }};background-image:{{ r.bg }};background-size:{{ r.zoom }};background-position:{{ r.pos }}"></a>
+            <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+              <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline">
+                <a href="{{ r.href }}" style="color:#12222A;font-size:14.5px;line-height:1.35" style-hover="{{ linkHover }}">{{ r.name }}</a>
+                <span style="flex:none;font-size:13px;color:rgba(18,34,42,.7)">{{ r.price }}</span>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <sc-for list="{{ r.sizes }}" as="z" hint-placeholder-count="4">
+                  <button type="button" onClick="{{ z.pick }}" style="min-width:40px;height:36px;padding:0 10px;border-radius:100px;border:1px solid {{ z.line }};background:{{ z.bg }};color:{{ z.col }};font-family:inherit;font-size:11.5px;cursor:pointer">{{ z.label }}</button>
+                </sc-for>
+              </div>
+              <div style="display:flex;gap:16px;align-items:center">
+                <button type="button" onClick="{{ r.add }}" style="min-height:36px;padding:0 14px;border-radius:100px;border:1px solid {{ r.addLine }};background:transparent;color:{{ r.addCol }};font-family:inherit;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer">{{ r.addLabel }}</button>
+                <a href="{{ r.href }}" style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(18,34,42,.6)" style-hover="{{ linkHover }}">View</a>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="padding:16px clamp(18px,2.2vw,32px) calc(20px + env(safe-area-inset-bottom));border-top:1px solid rgba(18,34,42,.14);display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:rgba(18,34,42,.7)"><span>{{ pickLabel }}</span><span style="color:#12222A">{{ pickTotal }}</span></div>
+        <button type="button" onClick="{{ shopLook }}" style="min-height:54px;border-radius:100px;border:0;background:{{ shopBg }};color:#F2EEE6;font-family:inherit;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .3s ease">Shop the look ({{ pickCount }})</button>
+      </div>
+    </aside>
+  </main>
+
+  <dc-import name="V3Foot" hint-size="100%,460px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+// Runway lookbook. Photos: /assets/look-01…10.webp (3:4). Spot x/y are % of the full photo.
+const LOOKS = [
+  { name: "L'Aube", line: "The textured underwire, a sand wrap skirt knotted at the hip. First swim, nowhere to be.", img: "look-01.webp", top: 11.5, feet: 93, height: "172 cm", wears: "S",
+    spots: [{ id: "p19", x: 51, y: 31 }, { id: "p11", x: 56, y: 50 }] },
+  { name: "L'Encre", line: "The shirtdress in ink, tied once at the waist. Late checkout, slow lunch.", img: "look-02.webp", top: 3.5, feet: 93, height: "174 cm", wears: "S",
+    spots: [{ id: "p16", x: 54, y: 46 }] },
+  { name: "La Craie", line: "The same shirtdress in chalk, sleeves rolled, a hand on the hip.", img: "look-03.webp", top: 6, feet: 94, height: "174 cm", wears: "S",
+    spots: [{ id: "p17", x: 49, y: 54 }] },
+  { name: "L'Argile", line: "Clay-dyed double gauze. The colour the road turns at five o'clock.", img: "look-04.webp", top: 4.5, feet: 95, height: "174 cm", wears: "S",
+    spots: [{ id: "p18", x: 52, y: 50 }] },
+  { name: "L'Heure Bleue", line: "Satin and scalloped lace. Cut for a room, not a beach.", img: "look-05.webp", top: 10, feet: 94, height: "168 cm", wears: "S",
+    spots: [{ id: "p12", x: 50, y: 35 }] },
+  { name: "Le Nœud", line: "One long tie knotted at the hip. Goes on over a wet bikini and stays on through lunch.", img: "look-06.webp", top: 3, feet: 95, height: "170 cm", wears: "XS",
+    spots: [{ id: "p9", x: 54, y: 44 }] },
+  { name: "Le Soir", line: "Silk jacquard thrown over the set. After dark, still warm.", img: "look-07.webp", top: 10.5, feet: 94, height: "168 cm", wears: "S",
+    spots: [{ id: "p15", x: 33, y: 46 }, { id: "p12", x: 52, y: 34 }] },
+  { name: "La Plage", line: "Hand-blocked kain, cut short and knotted. Made for walking the tide line.", img: "look-08.webp", top: 3.5, feet: 95, height: "170 cm", wears: "XS",
+    spots: [{ id: "p22", x: 50, y: 51 }] },
+  { name: "L'Eau Calme", line: "White, textured, and nothing else. Still water at noon.", img: "look-09.webp", top: 3, feet: 94, height: "170 cm", wears: "S",
+    spots: [{ id: "p19", x: 47, y: 30 }] },
+  { name: "La Brise", line: "Undyed slub cotton tied loosely at the front, a triangle underneath.", img: "look-10.webp", top: 3, feet: 95, height: "170 cm", wears: "S",
+    spots: [{ id: "p20", x: 67, y: 42 }, { id: "p3", x: 44, y: 49 }] }
+];
+const PHOTO = 1100 / 1473;
+const cardAR = m => 3 / 5;
+const ZOOM = 1.75; // desktop: model is this many viewport-heights tall; page scroll travels head → feet
+const SPAN = 91, FEET = 95; // every model normalised to the same head-to-toe height, feet on one line
+const PICK_KEY = "tmlm-look-v2";
+const CUR_KEY = "tmlm-cur-v1";
+const pad = n => String(n).padStart(2, "0");
+
+class Component extends DCLogic {
+  state = { active: 0, open: false, hover: null, picks: {}, mod: null, currency: "IDR", m: false };
+  items = [];
+
+  componentDidMount() {
+    try { this.setState({ picks: JSON.parse(localStorage.getItem(PICK_KEY) || "{}") }); } catch (e) {}
+    try { const c = localStorage.getItem(CUR_KEY); if (c) this.setState({ currency: c }); } catch (e) {}
+    const h = (location.hash.match(/look-(\d+)/) || [])[1];
+    if (h) this._start = Math.max(0, Math.min(LOOKS.length - 1, +h - 1));
+    this._onCur = e => this.setState({ currency: e.detail.currency });
+    window.addEventListener("tmlm:currency", this._onCur);
+    this._mq = window.matchMedia("(max-width: 819px)");
+    this._onMq = () => this.setState({ m: this._mq.matches }, () => this._relayout());
+    this._onMq();
+    this._mq.addEventListener ? this._mq.addEventListener("change", this._onMq) : this._mq.addListener(this._onMq);
+    this._onKey = e => {
+      const t = e.target; if (t && t.closest && t.closest("input,textarea,select")) return;
+      if (e.key === "Escape") this.setState({ open: false });
+      if (e.key === "ArrowRight") { e.preventDefault(); this.go(this.state.active + 1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); this.go(this.state.active - 1); }
+      if (e.key === "Enter" && !this.state.open && !(t && t.closest && t.closest("button,a"))) this.setState({ open: true });
+    };
+    window.addEventListener("keydown", this._onKey);
+    this._onResize = () => this._relayout();
+    const kick = () => this._relayout(this._start);
+    [0, 120, 400, 1000].forEach(t => setTimeout(kick, t));
+    window.addEventListener("load", kick, { once: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(kick);
+    window.addEventListener("resize", this._onResize);
+    import(new URL("products.js", document.querySelector('script[src*="support.js"]').src).href).then(m => this.setState({ mod: m })).catch(() => {});
+  }
+  componentWillUnmount() {
+    window.removeEventListener("tmlm:currency", this._onCur);
+    window.removeEventListener("keydown", this._onKey);
+    window.removeEventListener("resize", this._onResize);
+    if (this._mq) { this._mq.removeEventListener ? this._mq.removeEventListener("change", this._onMq) : this._mq.removeListener(this._onMq); }
+    if (this.rw && this._wheel) this.rw.removeEventListener("wheel", this._wheel);
+    if (this._ro) this._ro.disconnect();
+  }
+  componentDidUpdate(_, ps) {
+    if (!this.state.cw && this.rw) requestAnimationFrame(() => this._relayout(this._start));
+    if (ps.active !== this.state.active) { try { history.replaceState(null, "", "#look-" + pad(this.state.active + 1)); } catch (e) {} }
+  }
+
+  _setRunway(el) {
+    if (this.rw === el || !el) return;
+    if (this.rw && this._wheel) this.rw.removeEventListener("wheel", this._wheel);
+    if (this._ro) this._ro.disconnect();
+    this.rw = el;
+    if (window.ResizeObserver) { this._ro = new ResizeObserver(() => this._relayout()); this._ro.observe(el); }
+    this._wheel = e => {
+      const ax = Math.abs(e.deltaX), ay = Math.abs(e.deltaY);
+      if (ax > ay) { e.preventDefault(); this._wx = (this._wx || 0) + e.deltaX; clearTimeout(this._wxt); this._wxt = setTimeout(() => { this._wx = 0; }, 160);
+        if (Math.abs(this._wx) > 50 && Date.now() - (this._wt || 0) > 650) { this._wt = Date.now(); this.go(this.state.active + (this._wx > 0 ? 1 : -1)); this._wx = 0; } return; }
+      if (!this.state.m) return;
+      e.preventDefault();
+      if (ay < 4 || Date.now() - (this._wt || 0) < 650) return;
+      this._wt = Date.now();
+      this.go(this.state.active + (e.deltaY > 0 ? 1 : -1));
+    };
+    el.addEventListener("wheel", this._wheel, { passive: false });
+    requestAnimationFrame(() => this._relayout(this._start));
+  }
+
+  _relayout(start) {
+    const el = this.rw || document.querySelector("[data-runway]"); if (!el) return;
+    if (!this.rw) this._setRunway(el);
+    const m = this.state.m, CARD = cardAR(m);
+    const h = m ? Math.max(240, el.clientHeight - 72) : Math.round(Math.max(420, window.innerHeight - 73) * ZOOM);
+    const w = Math.round(Math.min(h * CARD, el.clientWidth * (m ? .86 : .78)));
+    if (h < 100) return;
+    const s = {}; if (w !== this.state.cw || el.clientWidth !== this.state.iw) Object.assign(s, { cw: w, ch: Math.round(w / CARD), iw: el.clientWidth });
+    if (start != null) { s.active = start; this._start = null; }
+    if (Object.keys(s).length) this.setState(s);
+  }
+
+  go(i) {
+    const n = Math.max(0, Math.min(LOOKS.length - 1, i));
+    if (n !== this.state.active) this.setState({ active: n, hover: null, hv: this.state.m ? false : this.state.hv });
+  }
+
+  _down(e) {
+    if (e.button && e.button !== 0) return;
+    if (e.target.closest && e.target.closest("button")) return;
+    const el = this.rw, tr = this.tr; if (!el || !tr) return;
+    const x0 = e.clientX, y0 = e.clientY, base = -this.state.active * (this.state.iw || el.clientWidth);
+    this._drag = { moved: false };
+    let dx = 0, lock = null;
+    const move = ev => {
+      dx = ev.clientX - x0; const dy = ev.clientY - y0;
+      if (lock == null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) lock = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+      if (lock !== "x") return;
+      this._drag.moved = true;
+      const edge = (this.state.active === 0 && dx > 0) || (this.state.active === LOOKS.length - 1 && dx < 0);
+      tr.style.transition = "none"; tr.style.transform = "translateX(" + (base + (edge ? dx * .3 : dx)) + "px)";
+      el.style.cursor = "grabbing";
+    };
+    const up = () => {
+      window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up); window.removeEventListener("pointercancel", up);
+      el.style.cursor = "";
+      if (lock !== "x") return setTimeout(() => { if (this._drag) this._drag.moved = false; }, 0);
+      tr.style.transition = "";
+      const go = Math.abs(dx) > Math.min(90, (this.state.iw || 400) * .12);
+      const n = Math.max(0, Math.min(LOOKS.length - 1, this.state.active + (go ? (dx < 0 ? 1 : -1) : 0)));
+      tr.style.transform = "translateX(" + (-n * (this.state.iw || el.clientWidth)) + "px)";
+      if (n !== this.state.active) this.go(n);
+      setTimeout(() => { if (this._drag) this._drag.moved = false; }, 0);
+    };
+    window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); window.addEventListener("pointercancel", up);
+  }
+
+  _tapLook(i) {
+    if (this._drag && this._drag.moved) return;
+    if (i !== this.state.active) return;
+    if (this.state.m) { this.setState(s => s.open ? { open: false, hv: true } : { hv: !s.hv }); return; }
+    this.setState(s => ({ open: !s.open, hover: null }));
+  }
+
+  _savePicks(p) { try { localStorage.setItem(PICK_KEY, JSON.stringify(p)); } catch (e) {} }
+  _pick(li, pid, size) {
+    this.setState(s => {
+      const look = Object.assign({}, s.picks[li] || {});
+      if (size == null || look[pid] === size) delete look[pid]; else look[pid] = size;
+      const picks = Object.assign({}, s.picks, { [li]: look });
+      this._savePicks(picks);
+      return { picks };
+    });
+  }
+  _toBag(p, size) { window.dispatchEvent(new CustomEvent("tmlm:add", { detail: { product: p, size } })); }
+  money(n) { const mod = this.state.mod; return mod ? mod.money(n, this.state.currency) : (this.state.currency === "USD" ? "$" + n : "Rp " + Math.round(n * 16) + "K"); }
+  prod(id) { const mod = this.state.mod; return mod ? mod.PRODUCTS.find(p => p.id === id) : null; }
+  sizes(p) { const mod = this.state.mod; return mod && p ? mod.sizesFor(p) : ["XS", "S", "M", "L"]; }
+  asset(src) { return src ? "url(" + src.replace(/^\/assets\//, "../assets/") + ")" : "none"; }
+
+  _layout(m, open) {
+    if (m) return {
+      mainH: "100svh", secTop: "0px",
+      cursor: "auto", runBottom: "12px", ar: "3/5", cardMax: "calc(100% - 48px)", capSize: "20px",
+      cap: "flex:none;height:48px;align-items:center;justify-content:center", headPad: "20px 18px 16px",
+      panel: "position:fixed;left:0;right:0;bottom:0;z-index:60;max-height:72svh;display:flex;flex-direction:column;background:#F2EEE6;color:#12222A;border-radius:16px 16px 0 0;box-shadow:0 -10px 40px rgba(18,34,42,.18);transition:transform .5s cubic-bezier(.16,1,.3,1),visibility .5s;transform:" + (open ? "translateY(0);visibility:visible" : "translateY(105%);visibility:hidden")
+    };
+    return {
+      mainH: "auto", secTop: "-64px",
+      cursor: "grab", runBottom: "56px", ar: "3/5", cardMax: "none", capSize: "0px",
+      cap: "display:none", headPad: "clamp(22px,2.4vw,32px) clamp(18px,2.2vw,32px) 20px",
+      panel: "position:fixed;top:var(--v3nav,73px);right:0;bottom:0;z-index:20;width:clamp(340px,28vw,420px);display:flex;flex-direction:column;background:#F2EEE6;color:#12222A;border-left:1px solid rgba(18,34,42,.12);box-shadow:-24px 0 60px rgba(18,34,42,.06);transition:transform .6s cubic-bezier(.16,1,.3,1),visibility .6s;transform:" + (open ? "translateX(0);visibility:visible" : "translateX(100%);visibility:hidden")
+    };
+  }
+
+  renderVals() {
+    const st = this.state, m = st.m, open = st.open;
+    const li = st.active;
+    const L = LOOKS[li] || LOOKS[0];
+    const lp = st.picks[li] || {};
+    const ids = L.spots.map(s => s.id).filter((v, k, a) => a.indexOf(v) === k);
+    const chips = (p, pid) => this.sizes(p).map(z => {
+      const on = lp[pid] === z;
+      return { label: z, pick: e => { if (e) e.stopPropagation(); this._pick(li, pid, z); },
+        bg: on ? "#12222A" : "transparent", col: on ? "#F2EEE6" : "#12222A", line: on ? "#12222A" : "rgba(18,34,42,.22)" };
+    });
+    const picked = ids.filter(id => lp[id]);
+    const sum = picked.reduce((t, id) => { const p = this.prod(id); return t + (p ? p.price : 0); }, 0);
+    const spotsFor = (k, i) => (i === li && (open || st.hv)) ? k.spots.map((s, j) => {
+      const p = this.prod(s.id), on = !!lp[s.id], key = s.id + "@" + s.x, sz = this.sizes(p);
+      const VIS = cardAR(m) / PHOTO;
+      const cx = VIS < 1 ? ((s.x / 100 - (1 - VIS) / 2) / VIS) * 100 : s.x;
+      return { left: cx.toFixed(2) + "%", top: s.y + "%", z: st.hover === key ? 5 : 1, delay: (.25 + j * .08) + "s",
+        aria: (p ? p.name : "Piece") + (on ? ", picked" : ", add in " + L.wears),
+        name: p ? p.name : "", price: p ? this.money(p.price) : "",
+        fill: on ? "#C4553A" : "#FFFFFF", ink: on ? "#F2EEE6" : "#12222A", mark: on ? "✓" : "",
+        pulse: on ? "none" : "lb-pulse 1.8s ease-out infinite",
+        showTag: st.hover === key && !m,
+        enter: () => { if (!this.state.m) this.setState({ hover: key }); }, leave: () => { if (!this.state.m) this.setState({ hover: null }); },
+        tap: e => { e.stopPropagation(); this._pick(li, s.id, on ? null : (sz.indexOf(L.wears) >= 0 ? L.wears : sz[0])); if (!on && !st.open) this.setState({ open: true }); } };
+    }) : [];
+
+    return {
+      L: this._layout(m, open), desk: !m, swPad: m ? "8px 11px" : "9px 14px",
+      ringHref: /\/publish\//.test(location.pathname) || !/^\/lookbook\//.test(location.pathname) ? "../lookbook-ring/index.html" : "/lookbook-ring/",
+      deskHint: open ? "Click a dot to add" : "Scroll to see the look · Hover for pieces",
+      itemW: st.iw ? st.iw + "px" : "100%", cardW: st.cw ? st.cw + "px" : "auto", cardH: st.ch ? st.ch + "px" : "calc(100% - 48px)",
+      cur: pad(li + 1), total: pad(LOOKS.length),
+      shift: open && !m ? "calc(clamp(340px,28vw,420px) / -2)" : "0px",
+      arrowsShift: open && !m ? "calc(clamp(340px,28vw,420px) + 24px)" : "clamp(18px,3vw,44px)",
+      m, prevOp: li === 0 ? .35 : 1, nextOp: li === LOOKS.length - 1 ? .35 : 1,
+      noFocus: e => e.preventDefault(),
+      prev: () => this.go(st.active - 1), next: () => this.go(st.active + 1),
+      runwayRef: this._rwRef || (this._rwRef = el => this._setRunway(el)),
+      trackRef: el => { this.tr = el; },
+      trackX: (-li * (st.iw || 0)) + "px",
+      onDown: e => this._down(e),
+      looks: LOOKS.map((k, i) => {
+        const on = i === li;
+        return { name: k.name, bg: "url(../assets/" + k.img + ")", alt: "Look " + pad(i + 1) + ", " + k.name,
+          aria: "Look " + pad(i + 1) + ", " + k.name + (on ? (open ? ", close" : ", shop this look") : ""),
+          fit: "translateY(" + (FEET - k.feet) + "%) scale(" + (SPAN / (k.feet - k.top)).toFixed(3) + ")", origin: "50% " + k.feet + "%",
+          itemRef: el => { this.items[i] = el; },
+          tap: () => this._tapLook(i),
+          enter: () => { if (!this.state.m && i === this.state.active && !this.state.hv) this.setState({ hv: true }); },
+          leave: () => { if (!this.state.m && this.state.hv) this.setState({ hv: false, hover: null }); },
+          op: on ? 1 : (open ? .16 : .3), sat: on ? 1 : .4, scale: on && open ? 1.03 : 1,
+          capOp: on ? 1 : 0, hint: open ? "Tap a dot to add" : (m ? (st.hv ? "Tap a dot to shop" : "Tap to see pieces") : "Click to shop"),
+          spots: spotsFor(k, i) };
+      }),
+      panelHidden: open ? "false" : "true",
+      close: () => this.setState({ open: false, hover: null }),
+      al: { name: L.name, line: L.line, height: L.height, wears: L.wears },
+      rows: ids.map(id => {
+        const p = this.prod(id) || { id, name: "…", price: 0 };
+        const size = lp[id];
+        return { name: p.name, price: this.money(p.price), href: "/product/" + id + "/", tone: p.tone || "#E4DED2",
+          bg: this.asset(p.img), pos: p.pos || "50% 50%", zoom: p.zoom || "cover",
+          sizes: chips(p, id),
+          addLabel: size ? "Add to bag · " + size : "Pick a size",
+          addCol: size ? "#12222A" : "rgba(18,34,42,.45)", addLine: size ? "#12222A" : "rgba(18,34,42,.18)",
+          add: () => { if (size && p.id) { this._toBag(p, size); this._pick(li, id, null); } } };
+      }),
+      pickCount: picked.length,
+      pickLabel: picked.length ? picked.length + (picked.length === 1 ? " piece picked" : " pieces picked") : "Nothing picked yet",
+      pickTotal: this.money(sum),
+      shopBg: picked.length ? "#12222A" : "rgba(18,34,42,.35)",
+      shopLook: () => {
+        if (!picked.length) return;
+        picked.forEach(id => { const p = this.prod(id); if (p) this._toBag(p, lp[id]); });
+        const picks = Object.assign({}, st.picks, { [li]: {} });
+        this._savePicks(picks);
+        this.setState({ picks });
+      },
+      btnHover: { background: "#12222A", color: "#F2EEE6", borderColor: "#12222A" },
+      closeHover: { background: "rgba(18,34,42,.08)" },
+      linkHover: { color: "#C4553A" }
+    };
+  }
+}
+</script>
+</body>
+</html>
