@@ -151,6 +151,14 @@ MASIH PLACEHOLDER — GANTI SEBELUM DIIKLANKAN
   /syarat-ketentuan/ (sekarang masih generik).
 - Sekitar sepertiga foto produk masih placeholder bergaris.
 
+BARU 13 NOVEMBER 2026
+- Produk baru: Rosario 1 Dekade — Batu Giok (/produk/rosario-1-dekade/),
+  Rp 250K, siap kirim, 4 model (pilihan MODEL mengganti foto). Perangkai:
+  Minuet Petite Rosary. products.js sekarang ?v=20261113.
+- Produk baru: Bag Charm NFC “Berkah Dalem” (/produk/bagcharm-berkah-dalem/),
+  Rp 250K, pre-order, kategori Merch. Pilihan chip: Mandiri e-Money atau
+  BCA Flazz (bisa untuk tol, KRL, MRT, TransJakarta, parkir).
+
 BARU 20 AGUSTUS
 - Produk baru: Jaket Bomber Bordir Custom (/produk/bomber-bordir-angkatan/),
   masuk kategori Merch. Foto asli: contoh Van Lith angkatan 32.

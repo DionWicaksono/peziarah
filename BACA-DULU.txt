@@ -1,43 +1,64 @@
-# Upload — 11 November 2026: Curhat Katolik, FAQ baru + bagian "Orang, bukan mesin"
+# Upload — 13 November 2026: dua produk baru — Rosario 1 Dekade & Bag Charm "Berkah Dalem"
 
 Folder ini adalah SELURUH situs, disinkronkan dengan repo terbaru
-(commit 340f183 "Fix 404") plus perubahan di bawah. Timpa semua isi
+(commit a7096a4 "Add FAQ Curhat") plus perubahan di bawah. Timpa semua isi
 repo / public_html dengan isi folder ini.
 
 ## Yang berubah
 
-**/curhat/ (dibangun ulang dari _src/curhat/)**
-- Bagian baru "05 — ORANG, BUKAN MESIN", sebelum Pertanyaan:
-  "Mesin bisa membalas. Orang bisa menemani." Mengakui AI gratis dan kadang
-  cukup, lalu empat hal yang hanya bisa dilakukan orang: memilih hadir,
-  jujur bukan sekadar mengiyakan, menyambungkan ke romo/psikolog/konselor,
-  bertindak saat genting.
-- Pertanyaan (sekarang "06") bertambah 5, total 11:
-  - Kenapa berbayar? Bukankah mendengarkan itu pelayanan?
-  - Kenapa tidak curhat ke AI saja?
-  - Admin membalas pakai AI?
-  - Apa bedanya dengan curhat ke teman?
-  - Kalau sedang tidak mampu bayar?
-- JSON-LD FAQPage dan teks statis (#__pr) ikut diperbarui otomatis oleh
-  build.py, termasuk bagian baru.
-- Perintah build: python3 _src/curhat/build.py (dari root repo).
+**Halaman baru 1: /produk/rosario-1-dekade/**
+- Rosario 1 Dekade — Batu Giok, Rp 250K, kategori Rosario, badge BARU,
+  status SIAP KIRIM (stok 10, bisa langsung masuk keranjang).
+- Pilihan MODEL (4), tiap model mengganti foto utama:
+  1. Giok hijau tua · tali hijau · krusifiks
+  2. Giok putih lavender · tali tosca · salib Ekaristi
+  3. Giok hijau tua · tali abu · krusifiks INRI
+  4. Giok hijau · tali cokelat tua · salib Ekaristi
+- Spesifikasi: giok tipe A (Guatemala/Burma), panjang 27 cm, spacer stainless
+  atau silver plated, salib & medali Italia (zamak), tali nilon.
+  Perangkai: Minuet Petite Rosary.
 
-**Lainnya**
-- llms.txt: paragraf Curhat Katolik ditambah alasan berbayar dan beda dengan AI.
-- sitemap.xml: lastmod /curhat/ → 2026-11-11.
+**Halaman baru 2: /produk/bagcharm-berkah-dalem/**
+- Bag Charm NFC "Berkah Dalem" — E-Money / Flazz, Rp 250K, kategori Merch,
+  badge BARU, PRE-ORDER (10–14 hari kerja + 1–4 hari kirim).
+- Pilihan CHIP KARTU: Mandiri e-Money atau BCA Flazz — tap di gerbang tol,
+  KRL, MRT, TransJakarta, parkir; saldo diisi lewat aplikasi bank di ponsel
+  ber-NFC.
+- Medali cetak 3D Ø 4,5 cm, faux carabiner 7 cm (hiasan, bukan alat panjat),
+  tali prusik 10 cm (terikat). Ditautkan sebagai pasangan Hoodie
+  "Berkah Dalem".
 
-Jumlah file berubah: 5 (_src/curhat/body.dc.html, _src/curhat/build.py,
-curhat/index.html, llms.txt, sitemap.xml) + BACA-DULU.txt ini.
+**Kedua halaman** sudah di-prerender: title, meta description, OG/Twitter,
+JSON-LD Product + BreadcrumbList, teks statis. Alur pesan sama seperti produk
+lain (template tidak diubah). Copy ditulis untuk SEO tanpa klaim
+keberuntungan/perlindungan.
 
-## Perlu dipastikan pemilik
-- FAQ "Admin membalas pakai AI?" menjanjikan bahwa yang membalas selalu admin
-  manusia. Pastikan ini memang aturan kerja admin.
-- "Kami tidak memasang iklan dan tidak menjual data" — benar untuk layanan
-  curhat (iklan Meta/Google untuk promosi situs tetap boleh; itu bukan iklan
-  di dalam layanan).
+**File & aset**
+- data/products.js: dua entri baru.
+- Foto: assets/rosario-1-dekade*.webp (5), assets/bagcharm-berkah-dalem*.webp
+  (3), salinan .jpg di assets/meta/ (8, untuk katalog Meta), gambar share
+  assets/og/rosario-1-dekade.jpg & assets/og/bagcharm-berkah-dalem.jpg.
+- katalog/index.html: kartu statis + JSON-LD ItemList (sekarang 34 item).
+- produk/index.html: link di daftar Rosario dan Merch.
+- meta-catalog.csv: 4 baris rosario (item_group_id rosario-1-dekade) +
+  2 baris bag charm (item_group_id bagcharm-berkah-dalem, varian di kolom size).
+- sitemap.xml: dua URL baru, lastmod 2026-11-13.
+- llms.txt: baris Rosario dan Merch menyebut kedua produk.
+- README.txt: catatan "BARU 13 NOVEMBER 2026".
+- products.js sekarang dimuat ?v=20261113 (sebelumnya 20261109) di semua
+  HTML, supaya cache 7 hari tidak menyembunyikan produk baru.
+
+Jumlah file: 20 baru (2 halaman, 18 gambar) + 102 diubah (97 file hanya
+karena ?v= products.js; sisanya products.js, katalog, produk/index,
+meta-catalog.csv, sitemap.xml, llms.txt, README.txt) + BACA-DULU.txt ini.
 
 ## Setelah upload, cek
-1. Buka https://peziarah.com/curhat/ → bagian "Orang, bukan mesin" muncul
-   setelah kotak 112, lalu 11 pertanyaan.
-2. Rich Results Test untuk /curhat/ → FAQPage berisi 11 pertanyaan.
-3. Search Console → URL Inspection /curhat/ → Request indexing.
+1. https://peziarah.com/produk/rosario-1-dekade/ → klik tiap MODEL, foto
+   utama berganti; Tambah ke Keranjang jalan.
+2. https://peziarah.com/produk/bagcharm-berkah-dalem/ → pilih chip
+   (e-Money / Flazz), Pre-order ke Keranjang jalan, link Hoodie muncul.
+3. https://peziarah.com/katalog/ → kedua kartu tampil di Rosario dan Merch.
+4. Hard refresh (Ctrl+Shift+R) sekali; pastikan products.js?v=20261113.
+5. Rich Results Test untuk kedua halaman → Product + Breadcrumb valid.
+6. Search Console → URL Inspection kedua URL → Request indexing.
+7. Meta Commerce Manager → data source katalog → ambil ulang meta-catalog.csv.

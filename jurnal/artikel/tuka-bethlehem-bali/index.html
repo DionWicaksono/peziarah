@@ -26,7 +26,7 @@
 <link rel="icon" href="/assets/favicon.png" type="image/png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Lima menit dari rumah, dan aku tidak tahu","alternativeHeadline":"Gereja Tuka, gereja Katolik pertama di Bali","description":"Gereja Tritunggal Mahakudus Tuka di Dalung, Badung adalah gereja Katolik pertama di Bali — batu pertama 12 Juli 1936, diresmikan 14 Februari 1937, dijuluki The Bethlehem of Bali. Sejarah, inkulturasi Bali, dan kaitannya dengan eksodus ke Palasari.","mainEntityOfPage":"https://peziarah.com/jurnal/artikel/tuka-bethlehem-bali/","datePublished":"2026-09-14","dateModified":"2026-09-14","articleSection":"Editorial","inLanguage":"id-ID","wordCount":1750,"author":{"@type":"Person","name":"Dion Wicaksono"},"publisher":{"@type":"Organization","name":"Peziarah","url":"https://peziarah.com/","logo":{"@type":"ImageObject","url":"https://peziarah.com/assets/favicon.png"}},"image":["https://peziarah.com/assets/tuka-hero.webp"],"about":{"@type":"PlaceOfWorship","name":"Gereja Tritunggal Mahakudus Tuka","alternateName":["Gereja Tuka","The Bethlehem of Bali"],"description":"Gereja Katolik pertama di Bali. Batu pertama 12 Juli 1936, selesai 14 Februari 1937; bangunan sekarang diberkati 14 Februari 1984.","address":{"@type":"PostalAddress","streetAddress":"Jalan Raya Tuka No. 23","addressLocality":"Dalung, Kuta Utara","addressRegion":"Bali","addressCountry":"ID"},"religion":"Catholic","sameAs":"https://www.parokituka.com/sejarah-gereja"},"mentions":[{"@type":"PlaceOfWorship","name":"Gereja Hati Kudus Yesus Palasari","address":{"@type":"PostalAddress","addressLocality":"Palasari, Jembrana","addressRegion":"Bali","addressCountry":"ID"}},{"@type":"Person","name":"Johannes Kersten SVD"},{"@type":"Person","name":"Simon Buis SVD"}],"isPartOf":{"@type":"Blog","name":"Jurnal Peziarah","url":"https://peziarah.com/jurnal/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://peziarah.com/"},{"@type":"ListItem","position":2,"name":"Jurnal","item":"https://peziarah.com/jurnal/"},{"@type":"ListItem","position":3,"name":"Gereja Tuka, Bali","item":"https://peziarah.com/jurnal/artikel/tuka-bethlehem-bali/"}]}</script>
-<link rel="modulepreload" href="/data/products.js?v=20261109">
+<link rel="modulepreload" href="/data/products.js?v=20261113">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/journal.js?v=20261109">
@@ -423,7 +423,7 @@ class Component extends DCLogic {
             verse: "“Sebab kami hidup karena percaya, bukan karena melihat” — 2 Kor 5:7" };
 
   componentDidMount() {
-    import("/data/products.js?v=20261109").then(m => {
+    import("/data/products.js?v=20261113").then(m => {
       const cl = {}; m.CATEGORIES.forEach(c => { cl[c.id] = c.name; });
       this.setState({ products: m.PRODUCTS, catLabel: cl });
     });

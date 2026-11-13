@@ -32,7 +32,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Kategori Peziarah","itemListElement":[{"@type":"ListItem","position":1,"name":"Rosario","url":"https://peziarah.com/katalog/#rosario"},{"@type":"ListItem","position":2,"name":"Salib & Krusifiks","url":"https://peziarah.com/katalog/#salib"},{"@type":"ListItem","position":3,"name":"Perhiasan & Aksesori","url":"https://peziarah.com/katalog/#perhiasan"},{"@type":"ListItem","position":4,"name":"Tenun & Batik","url":"https://peziarah.com/katalog/#apparel"},{"@type":"ListItem","position":5,"name":"Wall Art","url":"https://peziarah.com/katalog/#wallart"},{"@type":"ListItem","position":6,"name":"Merch","url":"https://peziarah.com/katalog/#merch"},{"@type":"ListItem","position":7,"name":"Lilin Aroma","url":"https://peziarah.com/katalog/#lilin"},{"@type":"ListItem","position":8,"name":"Carry Goods","url":"https://peziarah.com/katalog/#carry"},{"@type":"ListItem","position":9,"name":"Buku","url":"https://peziarah.com/katalog/#buku"},{"@type":"ListItem","position":10,"name":"Body Art","url":"https://peziarah.com/katalog/#bodyart"}],"numberOfItems":10}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://peziarah.com/#website","name":"Peziarah","url":"https://peziarah.com/","inLanguage":"id-ID","publisher":{"@id":"https://peziarah.com/#store"}}</script>
 <link rel="modulepreload" href="/data/verses.js">
-<link rel="modulepreload" href="/data/products.js?v=20261109">
+<link rel="modulepreload" href="/data/products.js?v=20261113">
 <link rel="modulepreload" href="/data/hampers.js">
 <link rel="modulepreload" href="/data/journal.js?v=20261109">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
@@ -440,7 +440,7 @@ class Component extends DCLogic {
   componentDidMount() {
     import("/data/verses.js").then(m => this.setState({ verse: m.currentVerse() }));
     // Same single source of truth as the Katalog page — swap for fetch() later.
-    import("/data/products.js?v=20261109").then(m => {
+    import("/data/products.js?v=20261113").then(m => {
       PRODUCTS = m.PRODUCTS;
       this.setState({ cats: m.CATEGORIES });
     });

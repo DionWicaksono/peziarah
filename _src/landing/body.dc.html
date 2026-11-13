@@ -306,7 +306,7 @@ class Component extends DCLogic {
       this.setState({ cartCount: m.count() });
       this._offCart = m.subscribe(items => this.setState({ cartCount: items.reduce((n, i) => n + i.qty, 0) }));
     });
-    import("/data/products.js?v=20261109").then(m => {
+    import("/data/products.js?v=20261113").then(m => {
       PRODUCTS = m.PRODUCTS;
       CATS = m.CATEGORIES.filter(c => !c.parent);
       const label = m.statusLabel || (p => p.status || "SEGERA");

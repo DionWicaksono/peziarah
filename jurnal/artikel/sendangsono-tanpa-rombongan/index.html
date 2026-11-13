@@ -25,7 +25,7 @@
 <meta name="theme-color" content="#F7F3EA">
 <link rel="icon" href="/assets/favicon.png" type="image/png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Sendangsono tanpa rombongan","description":"Datang sendiri di hari kerja, tanpa bus, tanpa jadwal. Catatan perjalanan yang tidak direncanakan.","mainEntityOfPage":"https://peziarah.com/jurnal/artikel/sendangsono-tanpa-rombongan/","author":{"@type":"Person","name":"Maria Kusumaningrum"},"publisher":{"@type":"Organization","name":"Peziarah","logo":{"@type":"ImageObject","url":"https://peziarah.com/assets/favicon.png"}},"inLanguage":"id-ID","image":["https://peziarah.com/assets/sendangsono-gua.webp"]}</script>
-<link rel="modulepreload" href="/data/products.js?v=20261109">
+<link rel="modulepreload" href="/data/products.js?v=20261113">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/journal.js?v=20261109">
@@ -404,7 +404,7 @@ class Component extends DCLogic {
             verse: "“Sebab kami hidup karena percaya, bukan karena melihat” — 2 Kor 5:7" };
 
   componentDidMount() {
-    import("/data/products.js?v=20261109").then(m => {
+    import("/data/products.js?v=20261113").then(m => {
       const cl = {}; m.CATEGORIES.forEach(c => { cl[c.id] = c.name; });
       this.setState({ products: m.PRODUCTS, catLabel: cl });
     });

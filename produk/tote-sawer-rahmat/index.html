@@ -34,7 +34,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://peziarah.com/"},{"@type":"ListItem","position":2,"name":"Katalog","item":"https://peziarah.com/katalog/"},{"@type":"ListItem","position":3,"name":"Merch","item":"https://peziarah.com/katalog/#merch"},{"@type":"ListItem","position":4,"name":"Tote Kanvas Ziarah — Gua Maria Sawer Rahmat","item":"https://peziarah.com/produk/tote-sawer-rahmat/"}]}</script>
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
-<link rel="modulepreload" href="/data/products.js?v=20261109">
+<link rel="modulepreload" href="/data/products.js?v=20261113">
 <script defer src="/support.js?v=20261110"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -553,7 +553,7 @@ class Component extends DCLogic {
     const fromPath = (location.pathname.match(/\/produk\/([^/]+)\/?$/) || [])[1];
     const id = (fromPath && fromPath !== "index.html" ? decodeURIComponent(fromPath) : null)
       || new URLSearchParams(location.search).get("id");
-    import("/data/products.js?v=20261109").then(m => {
+    import("/data/products.js?v=20261113").then(m => {
       PRODUCTS = m.PRODUCTS;
       CATS = m.CATEGORIES;
       RATE = m.BODYART_RATE;

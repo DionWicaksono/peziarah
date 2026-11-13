@@ -27,7 +27,7 @@
 <link rel="modulepreload" href="/data/tanya.js">
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/forms.js">
-<link rel="modulepreload" href="/data/products.js?v=20261109">
+<link rel="modulepreload" href="/data/products.js?v=20261113">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Tanya Awam — rubrik tanya umat Katolik, anonim","url":"https://peziarah.com/tanya/","description":"Pertanyaan pembaca tanpa nama, dijawab narasumber terverifikasi.","isPartOf":{"@type":"WebSite","name":"Peziarah","url":"https://peziarah.com/"},"hasPart":[{"@type":"QAPage","name":"Menikah di catatan sipil, bolehkah menyambut komuni?","url":"https://peziarah.com/tanya/menikah-catatan-sipil-komuni/"}]}</script>
 <script defer src="/support.js?v=20261110"></script>
@@ -468,7 +468,7 @@ class Component extends DCLogic {
     import("/data/verses.js").then(m => this.setState({ verse: m.currentVerse() })).catch(() => {});
     import("/data/tanya.js").then(m => this.setState({ tanya: m })).catch(() => {});
     import("/data/forms.js").then(m => this.setState({ formReady: m.hasEndpoint("tanya") })).catch(() => {});
-    import("/data/products.js?v=20261109").then(m => {
+    import("/data/products.js?v=20261113").then(m => {
       PRODUCTS = m.PRODUCTS;
       CAT_LABEL = {};
       m.CATEGORIES.forEach(c => { CAT_LABEL[c.id] = c.name; });

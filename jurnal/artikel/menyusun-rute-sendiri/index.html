@@ -25,7 +25,7 @@
 <meta name="theme-color" content="#F7F3EA">
 <link rel="icon" href="/assets/favicon.png" type="image/png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Menyusun rute ziarah rombonganmu sendiri","description":"Rute terbaik biasanya bukan yang paling terkenal, tapi yang punya alasan. Cara menyusunnya dari nol.","mainEntityOfPage":"https://peziarah.com/jurnal/artikel/menyusun-rute-sendiri/","author":{"@type":"Person","name":"Dion Wicaksono"},"publisher":{"@type":"Organization","name":"Peziarah","logo":{"@type":"ImageObject","url":"https://peziarah.com/assets/favicon.png"}},"inLanguage":"id-ID","image":["https://peziarah.com/assets/og/artikel-menyusun-rute-sendiri.jpg"]}</script>
-<link rel="modulepreload" href="/data/products.js?v=20261109">
+<link rel="modulepreload" href="/data/products.js?v=20261113">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/journal.js?v=20261109">
@@ -807,7 +807,7 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
-    import("/data/products.js?v=20261109").then(m => {
+    import("/data/products.js?v=20261113").then(m => {
       const cl = {}; m.CATEGORIES.forEach(c => { cl[c.id] = c.name; });
       this.setState({ products: m.PRODUCTS, catLabel: cl });
     });
