@@ -13,7 +13,7 @@ The site code (`data/track.js`) only pushes events into `dataLayer` as `pz_<even
 1. tagmanager.google.com → open the **peziarah.com** container (GTM-NQS6GCB7).
 2. **Admin → Import Container** → choose `gtm-container-peziarah.json`.
 3. Workspace: **Existing → Default Workspace**. Option: **Merge → Overwrite conflicting tags, triggers and variables**.
-4. Confirm. You should see 17 tags, 10 triggers, 17 variables.
+4. Confirm. You should see 24 tags, 16 triggers, 22 variables.
 5. Click **Submit → Publish**.
 
 Note: "Meta - Pixel base" is set to fire **Once per page**. It is also the setup tag for every Meta event tag; with "Once per event" it re-ran `fbq('init')` + `PageView` before each ViewContent/AddToCart/Lead, inflating PageViews.
@@ -49,6 +49,12 @@ Shortcut without GTM: open any page with `?track_debug=1` and every event logs t
 | `pz_invoice_download` | invoice_download (+ Meta custom `InvoiceDownload`) | "Unduh Invoice (PDF)" on /keranjang/ | ecommerce: transaction_id (invoice no.), value, items |
 | `pz_generate_lead` | generate_lead | Any other form | form_type, lead_id, route, group_size, style, pace, duration, sacrament, city, category |
 | `pz_whatsapp_click` / `pz_phone_click` / `pz_email_click` | same | wa.me / tel: / mailto: click | link_text, page_type |
+| `pz_view_item_list` | view_item_list | `/christian-core/`: a persona's detail opens | ecommerce: item_list_id (persona slug), item_list_name, items |
+| `pz_select_item` | select_item | `/christian-core/`: a hotspot dot or product chip is clicked | ecommerce: item_list_id, items |
+| `pz_share` | share | `/christian-core/`: "Kirim ke WhatsApp" / "Salin tautan" | method (`whatsapp` / `copy_link`), content_type (`persona`), item_id (persona slug) |
+| `pz_quiz_start` / `pz_quiz_complete` | quiz_start / quiz_complete | `/christian-core/` quiz opened / finished | quiz (`katolik-yang-mana`), persona (result) |
+
+The lookbook's share button opens WhatsApp with `window.open`, not a `wa.me` link, so sharing is not counted as `whatsapp_click` (that one means "contacted us"). Added 19 Nov 2026: re-import the container (Step 1) before pushing the lookbook. For GA4 reports, add Event-scoped dimensions `persona` and `method`.
 
 `form_type`: `ziarah`, `ziarah-susun-sendiri`, `concierge` (grup kecil), `shuttle`, `paroki`, `vendor`, `tanya`.
 

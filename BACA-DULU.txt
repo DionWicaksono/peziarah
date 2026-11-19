@@ -1,64 +1,93 @@
-# Upload — 13 November 2026: dua produk baru — Rosario 1 Dekade & Bag Charm "Berkah Dalem"
+# Upload — 19 November 2026: "Katolik Yang Mana Kamu?" (lookbook Christian-core baru)
 
 Folder ini adalah SELURUH situs, disinkronkan dengan repo terbaru
-(commit a7096a4 "Add FAQ Curhat") plus perubahan di bawah. Timpa semua isi
-repo / public_html dengan isi folder ini.
+(commit 3e2dae3 "Remove files pushed from the wrong folder") plus perubahan
+di bawah. Timpa semua isi repo / public_html dengan isi folder ini.
+
+## ⚠️ Urutan upload
+1. GTM dulu: import ulang gtm-container-peziarah.json (README-TRACKING.md,
+   Step 1 — Merge, Overwrite) lalu Submit → Publish. Harus terlihat
+   24 tags, 16 triggers, 22 variables. Tanpa ini event kuis/bagikan/lookbook
+   tetap masuk dataLayer tapi tidak sampai ke GA4.
+2. Baru commit + push repo.
 
 ## Yang berubah
 
-**Halaman baru 1: /produk/rosario-1-dekade/**
-- Rosario 1 Dekade — Batu Giok, Rp 250K, kategori Rosario, badge BARU,
-  status SIAP KIRIM (stok 10, bisa langsung masuk keranjang).
-- Pilihan MODEL (4), tiap model mengganti foto utama:
-  1. Giok hijau tua · tali hijau · krusifiks
-  2. Giok putih lavender · tali tosca · salib Ekaristi
-  3. Giok hijau tua · tali abu · krusifiks INRI
-  4. Giok hijau · tali cokelat tua · salib Ekaristi
-- Spesifikasi: giok tipe A (Guatemala/Burma), panjang 27 cm, spacer stainless
-  atau silver plated, salib & medali Italia (zamak), tali nilon.
-  Perangkai: Minuet Petite Rosary.
+**/christian-core/ — halaman baru seluruhnya**
+- Judul "Katolik Yang Mana Kamu?". Tujuh persona umat paroki:
+  OMK Boys, Katolik KTP, Choir Diva (berfoto) + Satpam Rohani,
+  Pasukan Elit Doa, VIP Lounge Altar, Sekte Kipas Angin (foto menyusul,
+  tampil sebagai sosok garis, ceritanya sudah bisa dibaca).
+- Desktop: lingkar 3D (geser, panah, trackpad). HP: mode Runway (geser
+  kiri-kanan). Tombol Lingkar/Runway di kanan atas.
+- Detail tiap persona: cerita + kalimat penutup, titik barang di foto,
+  pilihan ukuran/warna, tabel ukuran hoodie, lalu satu tombol
+  "Masukkan n ke keranjang" → masuk ke keranjang situs yang sama
+  (/keranjang/). OMK Boys punya foto Depan/Belakang.
+- Barang order "wa" (Tato Kalvari, Kalung & Anting Ichthys) tidak bisa
+  masuk keranjang; tampil "Tanya via WA". Choir Diva isinya hanya barang
+  WA, jadi tombolnya "Tanya via WhatsApp". Mode admin (?admin=1) tetap
+  membuka keranjang untuk barang WA, kecuali body art.
+- Kuis 5 pertanyaan ("Cari tahu lewat kuis →", atau buka #kuis) →
+  hasil persona → lihat tampilannya / kirim ke WhatsApp.
+- Tombol bagikan di setiap persona: "Kirim ke WhatsApp" dan "Salin tautan".
+- Header dan footer sama dengan situs (cari produk, menu HP, ayat footer).
+- Harga, nama, opsi, status pre-order/WA dibaca langsung dari
+  data/products.js — ganti harga di sana, lookbook ikut berubah.
 
-**Halaman baru 2: /produk/bagcharm-berkah-dalem/**
-- Bag Charm NFC "Berkah Dalem" — E-Money / Flazz, Rp 250K, kategori Merch,
-  badge BARU, PRE-ORDER (10–14 hari kerja + 1–4 hari kirim).
-- Pilihan CHIP KARTU: Mandiri e-Money atau BCA Flazz — tap di gerbang tol,
-  KRL, MRT, TransJakarta, parkir; saldo diisi lewat aplikasi bank di ponsel
-  ber-NFC.
-- Medali cetak 3D Ø 4,5 cm, faux carabiner 7 cm (hiasan, bukan alat panjat),
-  tali prusik 10 cm (terikat). Ditautkan sebagai pasangan Hoodie
-  "Berkah Dalem".
+**Tautan bagikan per persona (7 halaman baru)**
+- /christian-core/omk-boys/, /katolik-ktp/, /choir-diva/, /satpam-rohani/,
+  /pasukan-elit-doa/, /vip-lounge-altar/, /sekte-kipas-angin/
+- Isinya halaman yang sama, membuka persona itu, dengan judul dan kartu
+  share sendiri ("Aku Katolik KTP. Kamu Katolik yang mana?").
+  Canonical tetap ke /christian-core/ (tidak dobel di Google), jadi
+  sitemap hanya memuat /christian-core/.
 
-**Kedua halaman** sudah di-prerender: title, meta description, OG/Twitter,
-JSON-LD Product + BreadcrumbList, teks statis. Alur pesan sama seperti produk
-lain (template tidak diubah). Copy ditulis untuk SEO tanpa klaim
-keberuntungan/perlindungan.
+**Halaman produk (49 file: 48 /produk/<id>/ + /produk/index.html)**
+- Link kecil baru di bawah harga: "Dipakai di lookbook: OMK Boys,
+  Katolik KTP →" — hanya muncul di produk yang ada di foto persona
+  (hoodie, bandana, tote Sendangsono, knuckle duster, bag charm,
+  tato Kalvari, kalung & anting Ichthys). Tombol order tidak diubah.
 
-**File & aset**
-- data/products.js: dua entri baru.
-- Foto: assets/rosario-1-dekade*.webp (5), assets/bagcharm-berkah-dalem*.webp
-  (3), salinan .jpg di assets/meta/ (8, untuk katalog Meta), gambar share
-  assets/og/rosario-1-dekade.jpg & assets/og/bagcharm-berkah-dalem.jpg.
-- katalog/index.html: kartu statis + JSON-LD ItemList (sekarang 34 item).
-- produk/index.html: link di daftar Rosario dan Merch.
-- meta-catalog.csv: 4 baris rosario (item_group_id rosario-1-dekade) +
-  2 baris bag charm (item_group_id bagcharm-berkah-dalem, varian di kolom size).
-- sitemap.xml: dua URL baru, lastmod 2026-11-13.
-- llms.txt: baris Rosario dan Merch menyebut kedua produk.
-- README.txt: catatan "BARU 13 NOVEMBER 2026".
-- products.js sekarang dimuat ?v=20261113 (sebelumnya 20261109) di semua
-  HTML, supaya cache 7 hari tidak menyembunyikan produk baru.
+**Data & sumber**
+- data/looks.js ditulis ulang: PERSONAS (cerita, foto, titik), QUIZ,
+  looksFor(). Dimuat ?v=20261119.
+- _src/christian-core/: page.html + build.py + fonts/ (untuk kartu OG).
+  Ubah looks.js atau page.html → `python3 _src/christian-core/build.py`.
+  `--preview <folder>` membuat versi pratinjau mandiri (untuk claude.ai).
 
-Jumlah file: 20 baru (2 halaman, 18 gambar) + 102 diubah (97 file hanya
-karena ?v= products.js; sisanya products.js, katalog, produk/index,
-meta-catalog.csv, sitemap.xml, llms.txt, README.txt) + BACA-DULU.txt ini.
+**Aset**
+- assets/lookbook/: omk-boys-depan, omk-boys-belakang, katolik-ktp,
+  choir-diva (.webp, 900×1118, latar putih).
+- assets/og/christian-core.jpg + 7 kartu christian-core-<persona>.jpg.
+
+**Tracking (gtm-container-peziarah.json, README-TRACKING.md)**
+- Event baru: pz_view_item_list, pz_select_item, pz_share, pz_quiz_start,
+  pz_quiz_complete (+ tag GA4, trigger, 5 variabel DLV). Bagikan ke
+  WhatsApp TIDAK dihitung sebagai whatsapp_click (itu khusus "kontak kami").
+
+**Catatan lain**
+- sitemap.xml: lastmod /christian-core/ → 2026-11-19.
+- llms.txt: baris baru untuk "Katolik Yang Mana Kamu?".
+- README.txt: catatan "BARU 19 NOVEMBER 2026".
+
+Jumlah file: 29 baru (7 halaman persona, 4 foto, 8 kartu OG, 10 file sumber + font + lisensi OFL) +
+56 diubah (christian-core/index.html, data/looks.js, 49 halaman produk,
+gtm-container-peziarah.json, README-TRACKING.md, README.txt, llms.txt,
+sitemap.xml) + BACA-DULU.txt ini.
 
 ## Setelah upload, cek
-1. https://peziarah.com/produk/rosario-1-dekade/ → klik tiap MODEL, foto
-   utama berganti; Tambah ke Keranjang jalan.
-2. https://peziarah.com/produk/bagcharm-berkah-dalem/ → pilih chip
-   (e-Money / Flazz), Pre-order ke Keranjang jalan, link Hoodie muncul.
-3. https://peziarah.com/katalog/ → kedua kartu tampil di Rosario dan Merch.
-4. Hard refresh (Ctrl+Shift+R) sekali; pastikan products.js?v=20261113.
-5. Rich Results Test untuk kedua halaman → Product + Breadcrumb valid.
-6. Search Console → URL Inspection kedua URL → Request indexing.
-7. Meta Commerce Manager → data source katalog → ambil ulang meta-catalog.csv.
+1. https://peziarah.com/christian-core/ → lingkar berputar, klik tampilan
+   depan → detail; "Masukkan 3 ke keranjang" → KERANJANG (n) naik,
+   /keranjang/ berisi barangnya dengan ukuran yang benar.
+2. "Cari tahu lewat kuis" → jawab 5 → hasil → "Lihat tampilannya".
+3. https://peziarah.com/christian-core/katolik-ktp/ → langsung membuka
+   Katolik KTP. Tempel tautannya di WhatsApp: kartu share KTP muncul
+   (kalau masih kartu lama, tunggu cache WA atau pakai developers.facebook.com
+   /tools/debug untuk "Scrape Again").
+4. Choir Diva → tombol "Tanya via WhatsApp" membuka WA dengan pesan terisi.
+5. HP: halaman terbuka di Runway, geser antar persona, ketuk foto → titik.
+6. https://peziarah.com/produk/bandana-triquetra/ → link "Dipakai di
+   lookbook: OMK Boys, Katolik KTP →" muncul dan membuka OMK Boys.
+7. GTM Preview: buka detail persona, klik titik, kuis, bagikan →
+   tag GA4 view_item_list / select_item / quiz_* / share Fired.
