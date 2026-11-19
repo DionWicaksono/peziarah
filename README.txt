@@ -151,6 +151,24 @@ MASIH PLACEHOLDER — GANTI SEBELUM DIIKLANKAN
   /syarat-ketentuan/ (sekarang masih generik).
 - Sekitar sepertiga foto produk masih placeholder bergaris.
 
+BARU 19 NOVEMBER 2026
+- /christian-core/ jadi "Katolik Yang Mana Kamu?": lookbook tujuh persona
+  umat paroki (lingkar 3D + mode Runway), kuis 5 pertanyaan, detail per
+  persona dengan cerita, titik barang, dan satu tombol "Masukkan n ke
+  keranjang" (data/cart.js yang sama dengan seluruh situs).
+- Isi persona, cerita, kuis, dan titik foto ada di data/looks.js
+  (?v=20261119). Harga, opsi, dan status pre-order/WA tetap dari
+  data/products.js. Sumber halaman: _src/christian-core/ —
+  jalankan `python3 _src/christian-core/build.py` setelah mengubah
+  looks.js atau page.html (butuh node dan Pillow). Build juga membuat
+  /christian-core/<persona>/ (tautan bagikan, kartu OG sendiri) dan
+  assets/og/christian-core*.jpg.
+- Foto persona: assets/lookbook/*.webp, 900×1118, latar putih (dibuat
+  putih bersih supaya menyatu dengan kertas). Persona tanpa foto
+  ditulis `photo: false` di looks.js.
+- Halaman produk yang barangnya ada di foto persona menampilkan link
+  "Dipakai di lookbook: … →" (dibaca dari looks.js).
+
 BARU 13 NOVEMBER 2026
 - Produk baru: Rosario 1 Dekade — Batu Giok (/produk/rosario-1-dekade/),
   Rp 250K, siap kirim, 4 model (pilihan MODEL mengganti foto). Perangkai:

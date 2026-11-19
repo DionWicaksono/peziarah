@@ -180,6 +180,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <p style="{{ priceNoteStyle }}">{{ priceNote }}</p>
       <a dc-href="{{ kitHref }}" style="{{ kitStyle }}">{{ kitLabel }}</a>
+      <a dc-href="{{ lookHref }}" style="{{ lookStyle }}">{{ lookLabel }}</a>
       <sc-if value="{{ hasQuote }}" hint-placeholder-val="{{ false }}">
         <figure style="margin:0 0 24px;padding:22px 0 20px;border-top:1px solid #D6CBB8;border-bottom:1px solid #D6CBB8;max-width:44ch">
           <span style="display:block;font-family:'Cinzel',Georgia,serif;font-size:56px;line-height:0.5;height:26px;color:#6C4BA6">“</span>
@@ -395,6 +396,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 // comes from data/products.js — the same module the Katalog page reads, so a new
 // product needs no new page. On a real backend: fetch(`/api/products/${slug}`).
 let PRODUCTS = [];
+let LOOKSFOR = null; // data/looks.js looksFor(): lookbook personas wearing this product
 let CATS = [];
 let RATE = null;
 let CCOPY = {};
@@ -538,6 +540,7 @@ class Component extends DCLogic {
 
   componentDidMount() {
     import("/data/verses.js").then(m => this.setState({ verse: m.currentVerse() }));
+    import("/data/looks.js?v=20261119").then(m => { LOOKSFOR = m.looksFor; this.setState({ looksReady: true }); }).catch(() => {});
     import("/data/cart.js?v=20261109").then(m => {
       CARTMOD = m;
       this.setState({ cartCount: m.count() });
@@ -728,7 +731,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const p = this.state.p;
-    if (!p) return { ...this.chrome(), ...this.search(), cartCount: this.state.cartCount, name: "Memuat…", heroVideo: null, hasQuote: false, quoteLines: [], hasArtist: false, kitStyle: "display:none", thumbs: [], options: [], specs: [], related: [], assurances: [] };
+    if (!p) return { ...this.chrome(), ...this.search(), cartCount: this.state.cartCount, name: "Memuat…", heroVideo: null, hasQuote: false, quoteLines: [], hasArtist: false, kitStyle: "display:none", lookStyle: "display:none", thumbs: [], options: [], specs: [], related: [], assurances: [] };
 
     const cat = CATS.find(c => c.id === p.cat) || { name: "", id: "" };
     const cc = this.copy(p);
@@ -785,6 +788,10 @@ class Component extends DCLogic {
       kitHref: p.kit ? p.kit.href : "",
       kitLabel: p.kit ? `Bagian dari ${p.kit.name} →` : "",
       kitStyle: p.kit ? "display:inline-flex;margin:0 0 22px;padding:9px 16px;border-radius:999px;border:1px solid #D6CBB8;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#6C4BA6;text-decoration:none" : "display:none",
+      ...(() => { const L = LOOKSFOR ? LOOKSFOR(p.id) : []; return {
+        lookHref: L.length ? `/christian-core/${L[0].slug}/` : "",
+        lookLabel: L.length ? `Dipakai di lookbook: ${L.map(x => x.name).join(", ")} →` : "",
+        lookStyle: L.length ? "display:inline-flex;margin:0 0 22px;padding:9px 16px;border-radius:999px;border:1px solid #D6CBB8;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#6C4BA6;text-decoration:none" : "display:none" }; })(),
       hasArtist: !!p.artist,
       artistName: p.artist ? p.artist.name : "",
       artistHref: p.artist ? p.artist.href : "",
