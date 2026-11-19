@@ -18,24 +18,6 @@
       {
         "accountId": "0",
         "containerId": "0",
-        "tagId": "1",
-        "name": "GA4 - Google tag",
-        "type": "googtag",
-        "parameter": [
-          {
-            "type": "TEMPLATE",
-            "key": "tagId",
-            "value": "G-H8J9GKJ2NT"
-          }
-        ],
-        "firingTriggerId": [
-          "2147479573"
-        ],
-        "tagFiringOption": "ONCE_PER_EVENT"
-      },
-      {
-        "accountId": "0",
-        "containerId": "0",
         "tagId": "2",
         "name": "GA4 - view_item",
         "type": "gaawe",

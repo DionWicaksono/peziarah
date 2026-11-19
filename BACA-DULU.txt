@@ -7,7 +7,9 @@ di bawah. Timpa semua isi repo / public_html dengan isi folder ini.
 ## ⚠️ Urutan upload
 1. GTM dulu: import ulang gtm-container-peziarah.json (README-TRACKING.md,
    Step 1 — Merge, Overwrite) lalu Submit → Publish. Harus terlihat
-   24 tags, 16 triggers, 22 variables. Tanpa ini event kuis/bagikan/lookbook
+   23 tags, 16 triggers, 22 variables (tag "GA4 - Google tag" sudah
+   tidak ada: GA4 dimuat dari Google tag "Peziarah Website" lewat
+   Consolidate, 19 Nov 2026). Tanpa ini event kuis/bagikan/lookbook
    tetap masuk dataLayer tapi tidak sampai ke GA4.
 2. Baru commit + push repo.
 

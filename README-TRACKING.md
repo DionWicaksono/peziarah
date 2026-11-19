@@ -13,7 +13,9 @@ The site code (`data/track.js`) only pushes events into `dataLayer` as `pz_<even
 1. tagmanager.google.com → open the **peziarah.com** container (GTM-NQS6GCB7).
 2. **Admin → Import Container** → choose `gtm-container-peziarah.json`.
 3. Workspace: **Existing → Default Workspace**. Option: **Merge → Overwrite conflicting tags, triggers and variables**.
-4. Confirm. You should see 24 tags, 16 triggers, 22 variables.
+4. Confirm. You should see 23 tags, 16 triggers, 22 variables.
+
+Note (19 Nov 2026): the container is linked to the Google tag "Peziarah Website" (IDs G-H8J9GKJ2NT, GT-K82MXNPS, GTM-5L67MTXP) through GTM's **Consolidate** step, so GA4 loads from the container itself. That is why this file has no "GA4 - Google tag" any more; importing an old copy that still has it brings back the "Conflicting Google tag" error (fix: press Consolidate).
 5. Click **Submit → Publish**.
 
 Note: "Meta - Pixel base" is set to fire **Once per page**. It is also the setup tag for every Meta event tag; with "Once per event" it re-ran `fbq('init')` + `PageView` before each ViewContent/AddToCart/Lead, inflating PageViews.
