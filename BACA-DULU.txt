@@ -1,93 +1,39 @@
-# Upload — 19 November 2026: "Katolik Yang Mana Kamu?" (lookbook Christian-core baru)
+# Upload — 20 November 2026: Bag Charm "Berkah Dalem" — Flazz +Rp 20K
 
 Folder ini adalah SELURUH situs, disinkronkan dengan repo terbaru
-(commit 3e2dae3 "Remove files pushed from the wrong folder") plus perubahan
-di bawah. Timpa semua isi repo / public_html dengan isi folder ini.
+(commit fe34668, merge PR #1 lookbook) plus perubahan di bawah.
+Timpa semua isi repo / public_html dengan isi folder ini.
 
-## ⚠️ Urutan upload
-1. GTM dulu: import ulang gtm-container-peziarah.json (README-TRACKING.md,
-   Step 1 — Merge, Overwrite) lalu Submit → Publish. Harus terlihat
-   24 tags, 16 triggers, 22 variables. Tanpa ini event kuis/bagikan/lookbook
-   tetap masuk dataLayer tapi tidak sampai ke GA4.
-2. Baru commit + push repo.
+## Urutan upload
+Tidak ada perubahan tracking/GTM. Langsung commit + push repo.
 
 ## Yang berubah
 
-**/christian-core/ — halaman baru seluruhnya**
-- Judul "Katolik Yang Mana Kamu?". Tujuh persona umat paroki:
-  OMK Boys, Katolik KTP, Choir Diva (berfoto) + Satpam Rohani,
-  Pasukan Elit Doa, VIP Lounge Altar, Sekte Kipas Angin (foto menyusul,
-  tampil sebagai sosok garis, ceritanya sudah bisa dibaca).
-- Desktop: lingkar 3D (geser, panah, trackpad). HP: mode Runway (geser
-  kiri-kanan). Tombol Lingkar/Runway di kanan atas.
-- Detail tiap persona: cerita + kalimat penutup, titik barang di foto,
-  pilihan ukuran/warna, tabel ukuran hoodie, lalu satu tombol
-  "Masukkan n ke keranjang" → masuk ke keranjang situs yang sama
-  (/keranjang/). OMK Boys punya foto Depan/Belakang.
-- Barang order "wa" (Tato Kalvari, Kalung & Anting Ichthys) tidak bisa
-  masuk keranjang; tampil "Tanya via WA". Choir Diva isinya hanya barang
-  WA, jadi tombolnya "Tanya via WhatsApp". Mode admin (?admin=1) tetap
-  membuka keranjang untuk barang WA, kecuali body art.
-- Kuis 5 pertanyaan ("Cari tahu lewat kuis →", atau buka #kuis) →
-  hasil persona → lihat tampilannya / kirim ke WhatsApp.
-- Tombol bagikan di setiap persona: "Kirim ke WhatsApp" dan "Salin tautan".
-- Header dan footer sama dengan situs (cari produk, menu HP, ayat footer).
-- Harga, nama, opsi, status pre-order/WA dibaca langsung dari
-  data/products.js — ganti harga di sana, lookbook ikut berubah.
+**/produk/bagcharm-berkah-dalem/**
+- Pilihan CHIP KARTU: Mandiri e-Money Rp 250K, BCA Flazz Rp 270K (+Rp 20K).
+  Harga di halaman dan di keranjang ikut berubah saat Flazz dipilih;
+  catatan di bawah harga menulis "Chip BCA Flazz +Rp 20K."
+- Spesifikasi "Chip": "… atau BCA Flazz (+Rp 20K), pilih salah satu".
+- Versi statis halaman (untuk Google): daftar pilihan "BCA Flazz — +Rp 20K",
+  meta description menyebut "Flazz Rp 270K", JSON-LD Product sekarang
+  AggregateOffer 250000–270000 (sama seperti card holder).
 
-**Tautan bagikan per persona (7 halaman baru)**
-- /christian-core/omk-boys/, /katolik-ktp/, /choir-diva/, /satpam-rohani/,
-  /pasukan-elit-doa/, /vip-lounge-altar/, /sekte-kipas-angin/
-- Isinya halaman yang sama, membuka persona itu, dengan judul dan kartu
-  share sendiri ("Aku Katolik KTP. Kamu Katolik yang mana?").
-  Canonical tetap ke /christian-core/ (tidak dobel di Google), jadi
-  sitemap hanya memuat /christian-core/.
+**data/products.js** — `add: [0, 20000]` dan catatan per pilihan untuk
+bagcharm-berkah-dalem. Versi dinaikkan ke ?v=20261120 di semua file HTML
+(105 file), supaya cache 7 hari tidak menahan harga lama.
 
-**Halaman produk (49 file: 48 /produk/<id>/ + /produk/index.html)**
-- Link kecil baru di bawah harga: "Dipakai di lookbook: OMK Boys,
-  Katolik KTP →" — hanya muncul di produk yang ada di foto persona
-  (hoodie, bandana, tote Sendangsono, knuckle duster, bag charm,
-  tato Kalvari, kalung & anting Ichthys). Tombol order tidak diubah.
+**meta-catalog.csv** — baris bagcharm-berkah-dalem-2 (BCA Flazz) jadi
+270000.00 IDR.
 
-**Data & sumber**
-- data/looks.js ditulis ulang: PERSONAS (cerita, foto, titik), QUIZ,
-  looksFor(). Dimuat ?v=20261119.
-- _src/christian-core/: page.html + build.py + fonts/ (untuk kartu OG).
-  Ubah looks.js atau page.html → `python3 _src/christian-core/build.py`.
-  `--preview <folder>` membuat versi pratinjau mandiri (untuk claude.ai).
+**llms.txt, sitemap.xml (lastmod halaman ini), README.txt** — disesuaikan.
 
-**Aset**
-- assets/lookbook/: omk-boys-depan, omk-boys-belakang, katolik-ktp,
-  choir-diva (.webp, 900×1118, latar putih).
-- assets/og/christian-core.jpg + 7 kartu christian-core-<persona>.jpg.
+## Jumlah file berubah
+- 1 data (products.js), 1 halaman produk, 104 HTML lain (hanya ?v=),
+  meta-catalog.csv, llms.txt, sitemap.xml, README.txt, BACA-DULU.txt.
 
-**Tracking (gtm-container-peziarah.json, README-TRACKING.md)**
-- Event baru: pz_view_item_list, pz_select_item, pz_share, pz_quiz_start,
-  pz_quiz_complete (+ tag GA4, trigger, 5 variabel DLV). Bagikan ke
-  WhatsApp TIDAK dihitung sebagai whatsapp_click (itu khusus "kontak kami").
-
-**Catatan lain**
-- sitemap.xml: lastmod /christian-core/ → 2026-11-19.
-- llms.txt: baris baru untuk "Katolik Yang Mana Kamu?".
-- README.txt: catatan "BARU 19 NOVEMBER 2026".
-
-Jumlah file: 29 baru (7 halaman persona, 4 foto, 8 kartu OG, 10 file sumber + font + lisensi OFL) +
-56 diubah (christian-core/index.html, data/looks.js, 49 halaman produk,
-gtm-container-peziarah.json, README-TRACKING.md, README.txt, llms.txt,
-sitemap.xml) + BACA-DULU.txt ini.
-
-## Setelah upload, cek
-1. https://peziarah.com/christian-core/ → lingkar berputar, klik tampilan
-   depan → detail; "Masukkan 3 ke keranjang" → KERANJANG (n) naik,
-   /keranjang/ berisi barangnya dengan ukuran yang benar.
-2. "Cari tahu lewat kuis" → jawab 5 → hasil → "Lihat tampilannya".
-3. https://peziarah.com/christian-core/katolik-ktp/ → langsung membuka
-   Katolik KTP. Tempel tautannya di WhatsApp: kartu share KTP muncul
-   (kalau masih kartu lama, tunggu cache WA atau pakai developers.facebook.com
-   /tools/debug untuk "Scrape Again").
-4. Choir Diva → tombol "Tanya via WhatsApp" membuka WA dengan pesan terisi.
-5. HP: halaman terbuka di Runway, geser antar persona, ketuk foto → titik.
-6. https://peziarah.com/produk/bandana-triquetra/ → link "Dipakai di
-   lookbook: OMK Boys, Katolik KTP →" muncul dan membuka OMK Boys.
-7. GTM Preview: buka detail persona, klik titik, kuis, bagikan →
-   tag GA4 view_item_list / select_item / quiz_* / share Fired.
+## Cek setelah upload
+1. Buka /produk/bagcharm-berkah-dalem/ → pilih BCA Flazz → harga jadi
+   Rp 270K; pilih Mandiri e-Money → Rp 250K.
+2. Flazz ke keranjang → /keranjang/ menunjukkan Rp 270K.
+3. Kalau Meta Commerce memakai feed meta-catalog.csv, tunggu sinkron
+   berikutnya (atau sinkron manual) supaya varian Flazz Rp 270K.

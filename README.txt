@@ -151,6 +151,11 @@ MASIH PLACEHOLDER — GANTI SEBELUM DIIKLANKAN
   /syarat-ketentuan/ (sekarang masih generik).
 - Sekitar sepertiga foto produk masih placeholder bergaris.
 
+BARU 20 NOVEMBER 2026
+- Bag Charm NFC “Berkah Dalem”: pilihan chip BCA Flazz sekarang +Rp 20K
+  (Rp 270K); Mandiri e-Money tetap Rp 250K. Diatur lewat `add: [0, 20000]`
+  di data/products.js. products.js sekarang ?v=20261120.
+
 BARU 19 NOVEMBER 2026
 - /christian-core/ jadi "Katolik Yang Mana Kamu?": lookbook tujuh persona
   umat paroki (lingkar 3D + mode Runway), kuis 5 pertanyaan, detail per

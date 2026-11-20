@@ -26,7 +26,7 @@
 <link rel="icon" href="/assets/favicon.png" type="image/png">
 <link rel="modulepreload" href="/data/verses.js">
 <link rel="modulepreload" href="/data/cart.js?v=20261109">
-<link rel="modulepreload" href="/data/products.js?v=20261113">
+<link rel="modulepreload" href="/data/products.js?v=20261120">
 <script defer src="/support.js?v=20261110"></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -555,7 +555,7 @@ class Component extends DCLogic {
     const fromPath = (location.pathname.match(/\/produk\/([^/]+)\/?$/) || [])[1];
     const id = (fromPath && fromPath !== "index.html" ? decodeURIComponent(fromPath) : null)
       || new URLSearchParams(location.search).get("id");
-    import("/data/products.js?v=20261113").then(m => {
+    import("/data/products.js?v=20261120").then(m => {
       PRODUCTS = m.PRODUCTS;
       CATS = m.CATEGORIES;
       RATE = m.BODYART_RATE;
